@@ -26,7 +26,6 @@ namespace _StoryGame
         {
             RootVisualElement = GetComponent<UIDocument>().rootVisualElement;
             if (RootVisualElement == null) throw new NullReferenceException("RootVisualElement is null");
-            if (ViewModel == null) throw new NullReferenceException("ViewModel is null");
             InitElements();
             Init();
         }
@@ -43,6 +42,9 @@ namespace _StoryGame
 
         protected void Init()
         {
+            if (ViewModel == null)
+                throw new NullReferenceException("ViewModel is null in " + name);
+
             _movementRoot.RegisterCallback<PointerDownEvent>(OnPointerDown);
             _movementRoot.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             _movementRoot.RegisterCallback<PointerUpEvent>(OnPointerUp);
