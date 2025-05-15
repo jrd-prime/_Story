@@ -1,0 +1,11 @@
+﻿
+
+using _StoryGame.Infrastructure.Bootstrap;
+
+namespace _StoryGame.Infrastructure.Localization
+{
+    public interface ILocalizationProvider : IBootable
+    {
+        string Localize(string key, WordTransform wordTransform = WordTransform.None);
+    }
+}
