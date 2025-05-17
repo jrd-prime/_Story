@@ -1,4 +1,4 @@
-﻿namespace _game.Scripts.Infrastructure.Assets
+﻿namespace _StoryGame.Infrastructure.Assets
 {
     public static class AssetNameConst
     {

@@ -4,9 +4,7 @@ using _StoryGame.Core.Managers.HSM.Impls.States.Gameplay;
 using _StoryGame.Core.Managers.HSM.Impls.States.Menu;
 using _StoryGame.Core.Managers.HSM.Interfaces;
 using _StoryGame.Core.Managers.HSM.Signals;
-using ModestTree;
 using R3;
-using Zenject;
 
 namespace _StoryGame.Core.Managers.HSM.Impls
 {
@@ -21,7 +19,9 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         private readonly ReactiveProperty<IState> _currentState = new();
         private readonly Dictionary<Type, IState> _states = new();
 
-        public HSM(SignalBus signalBus)
+        public HSM(
+            // SignalBus signalBus
+            )
         {
             InitializeMainStates();
 
@@ -46,7 +46,7 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         /// </summary>
         public void Start()
         {
-            Log.Info($"<color=green>[{nameof(HSM)}]</color> Start with state  {_currentState.Value.GetType().Name}");
+            // Log.Info($"<color=green>[{nameof(HSM)}]</color> Start with state  {_currentState.Value.GetType().Name}");
             _currentState.Value.Enter(_previousState);
         }
 
@@ -55,7 +55,7 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         /// </summary>
         public void Update()
         {
-            Log.Warn($"<color=green>[{nameof(HSM)}]</color> Update!");
+            // Log.Warn($"<color=green>[{nameof(HSM)}]</color> Update!");
             _currentState.Value.Update();
             var nextState = _currentState.Value.HandleTransition();
             if (nextState != null && nextState != _currentState.Value) TransitionTo(nextState.GetType());
@@ -69,8 +69,8 @@ namespace _StoryGame.Core.Managers.HSM.Impls
             if (!_states.TryGetValue(stateType, out var newState))
                 throw new Exception($"state {stateType.Name} not found");
 
-            Log.Info(
-                $"<color=green>[{nameof(HSM)}]</color> {_currentState.Value.GetType().Name} > {newState.GetType().Name}");
+            // Log.Info(
+            //     $"<color=green>[{nameof(HSM)}]</color> {_currentState.Value.GetType().Name} > {newState.GetType().Name}");
             _previousState = _currentState.Value;
             _currentState.Value.Exit(_previousState);
             _currentState.Value = newState;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _StoryGame.Core.Extensions;
+using UnityEngine;
 
 namespace _StoryGame.Core.Character.Player
 {
@@ -10,6 +11,10 @@ namespace _StoryGame.Core.Character.Player
 
         public PlayerService(PlayerModel model) => _model = model;
 
-        public void SetPosition(Vector3 position) => _model.Position = position;
+        public void SetPosition(Vector3 position)
+        {
+            _model.CheckOnNull(nameof(PlayerService));
+            _model.Position = position;
+        }
     }
 }

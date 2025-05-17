@@ -1,43 +1,84 @@
-﻿using _StoryGame.Infrastructure.Bootstrap;
+﻿using System;
+using _StoryGame.Infrastructure.Bootstrap;
+using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
-using Zenject;
+using VContainer;
+using VContainer.Unity;
 
 namespace _StoryGame.Infrastructure
 {
     public sealed class AppStarter : IInitializable
     {
-        private const int PseudoDelayMs = 100;
+        private const int PseudoDelayMs = 300;
         private const float FadeOutDurationSeconds = 1f;
 
-        private readonly DiContainer _container;
+        private readonly IObjectResolver _container;
+        private readonly IJLog _log;
+        private readonly BootstrapLoader bootstrapLoader;
+        private readonly FirstSceneProvider firstSceneProvider;
+        private readonly IBootstrapUIController bootstrapUIController;
 
-        public AppStarter(DiContainer container) => _container = container;
+        public AppStarter(IObjectResolver container)
+        {
+            _container = container;
+            bootstrapLoader = _container.Resolve<BootstrapLoader>();
+            firstSceneProvider = _container.Resolve<FirstSceneProvider>();
+            bootstrapUIController = _container.Resolve<IBootstrapUIController>();
+            _log = container.Resolve<IJLog>();
+        }
 
         public void Initialize() => InitializeAsync().Forget();
 
         private async UniTask InitializeAsync()
         {
-            var bootstrapLoader = _container.Resolve<BootstrapLoader>();
-            var bootstrapUIController = _container.Resolve<IBootstrapUIController>();
-
             // Bootable services
-            var firstSceneProvider = _container.Resolve<FirstSceneProvider>();
+            var settingsProvider = _container.Resolve<ISettingsProvider>();
 
-            bootstrapLoader.EnqueueBootable(firstSceneProvider);
+            bootstrapLoader.EnqueueBootable(settingsProvider);
 
-            Debug.Log("<color=green><b>Starting Services initialization...</b></color>");
-            await bootstrapLoader.StartServicesInitializationAsync(PseudoDelayMs);
-            Debug.Log("<color=green><b>End Services initialization...</b></color>");
+            _log.Info("<color=green><b>Starting Services initialization...</b></color>");
+
+            await UniTask.WhenAll(
+                bootstrapLoader.StartServicesInitializationAsync(PseudoDelayMs),
+                firstSceneProvider.LoadFirstSceneAsync()
+            );
+
+            _log.Info("<color=green><b>End Services initialization...</b></color>");
+
+            var firstScene = firstSceneProvider.FirstScene;
+            if (firstScene.Scene.IsValid())
+            {
+                try
+                {
+                    await SwitchToFirstSceneAsync(firstScene);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Failed to switch to first scene.", e);
+                }
+                finally
+                {
+                    _log.Info("<color=green><b>=== APP STARTED! ===</b></color>");
+                }
+            }
+        }
+
+        private async UniTask SwitchToFirstSceneAsync(SceneInstance firstScene)
+        {
+            var bootstrapScene = SceneManager.GetActiveScene();
 
             await bootstrapUIController.FadeOutAsync(FadeOutDurationSeconds);
 
-            var bootstrapScene = SceneManager.GetActiveScene();
-            SceneManager.SetActiveScene(firstSceneProvider.FirstScene.Scene);
-            await SceneManager.UnloadSceneAsync(bootstrapScene);
+            //TODO добавить исчесновение первой, и через черную на вторую
+            await UniTask.Delay(333);
 
-            Debug.LogWarning("<color=green><b>=== APP STARTED! ===</b></color>");
+            SceneManager.SetActiveScene(firstScene.Scene);
+
+            await SceneManager.UnloadSceneAsync(bootstrapScene);
         }
     }
 }

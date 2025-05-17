@@ -1,7 +1,6 @@
 ﻿using _StoryGame.Core.Managers.HSM.Common;
 using _StoryGame.Core.Managers.HSM.Impls.States.Gameplay;
 using _StoryGame.Core.Managers.HSM.Interfaces;
-using ModestTree;
 
 namespace _StoryGame.Core.Managers.HSM.Impls.States.Menu
 {
@@ -28,7 +27,7 @@ namespace _StoryGame.Core.Managers.HSM.Impls.States.Menu
             // Если пришли из геймплея в меню, то по возврату в геймплей
             if (previousState is GameplayState)
             {
-                Log.Info("previous state is gameplay");
+                // Log.Info("previous state is gameplay");
             }
         }
 

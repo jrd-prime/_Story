@@ -1,10 +1,9 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
-using ModestTree;
 using R3;
 using UnityEngine;
-using Zenject;
+using VContainer;
 
 namespace _StoryGame.Gameplay.Character.Player.Impls
 {
@@ -25,7 +24,15 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         public int MaxHealth => _interactor.MaxHealth;
         public CharacterState State { get; private set; } = CharacterState.Idle;
 
-        [Inject] private PlayerInteractor _interactor;
+        private PlayerInteractor _interactor;
+
+        [Inject]
+        private void Construct(IObjectResolver resolver)
+        {
+            Debug.LogWarning(resolver);
+            _interactor = resolver.Resolve<PlayerInteractor>();
+            resolver.Inject(frontTriggerArea);
+        }
 
         private Rigidbody _rb;
         private Vector3 _currentVelocity;
@@ -34,7 +41,11 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
 
         private void Start()
         {
-            if (!frontTriggerArea) throw new NullReferenceException($"{nameof(frontTriggerArea)} is null. {name}");
+            if (!frontTriggerArea)
+                throw new NullReferenceException($"{nameof(frontTriggerArea)} is null. {name}");
+
+            if (_interactor == null)
+                throw new NullReferenceException($"{nameof(_interactor)} is null. {name}");
 
             frontTriggerArea.Init(this);
             Animator = GetComponent<Animator>();
@@ -44,11 +55,13 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
 
         private void FixedUpdate()
         {
-            if (State == CharacterState.Interacting) return;
+            if (State == CharacterState.Interacting)
+                return;
 
-            if (_interactor.MoveDirection != Vector3.zero) Log.Warn(_interactor.MoveDirection.ToString());
             Move(_interactor.MoveDirection);
-            if (_previousPosition != transform.position) UpdatePosition();
+
+            if (_previousPosition != transform.position)
+                UpdatePosition();
         }
 
         private void UpdatePosition()
@@ -63,6 +76,11 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         {
             if (moveDirection != Vector3.zero)
             {
+                _mainCamera ??= _interactor.MainCamera;
+
+                if (!_mainCamera)
+                    throw new NullReferenceException($"MainCamera is null. {this}");
+
                 State = CharacterState.Moving;
                 var cameraForward = _mainCamera.transform.forward;
                 var cameraRight = _mainCamera.transform.right;
@@ -71,23 +89,19 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
                 cameraForward = cameraForward.normalized;
                 cameraRight = cameraRight.normalized;
 
-                // Вычисляем направление без нормализации
                 var adjustedDirection = cameraForward * moveDirection.z + cameraRight * moveDirection.x;
-                // Учитываем величину входного вектора
-                var inputMagnitude = moveDirection.magnitude; // Величина входного вектора (от 0 до 1)
-                Log.Warn($"Adjusted Direction: {adjustedDirection}, Input Magnitude: {inputMagnitude}");
+                var inputMagnitude = moveDirection.magnitude;
+                var targetVelocity = adjustedDirection.normalized * (moveSpeed * inputMagnitude);
 
-                // Целевая скорость зависит от величины ввода
-                var targetVelocity = adjustedDirection.normalized * moveSpeed * inputMagnitude;
                 _currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, acceleration);
                 _rb.linearVelocity = new Vector3(_currentVelocity.x, _rb.linearVelocity.y, _currentVelocity.z);
 
-                // Поворот в сторону движения, только если направление не нулевое
-                if (adjustedDirection != Vector3.zero)
-                {
-                    var targetRotation = Quaternion.LookRotation(adjustedDirection.normalized);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-                }
+                if (adjustedDirection == Vector3.zero)
+                    return;
+
+                var targetRotation = Quaternion.LookRotation(adjustedDirection.normalized);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,
+                    rotationSpeed * Time.fixedDeltaTime);
             }
             else
             {

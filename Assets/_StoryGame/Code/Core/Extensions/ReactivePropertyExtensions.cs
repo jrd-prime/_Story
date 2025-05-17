@@ -6,7 +6,8 @@ namespace _StoryGame.Core.Extensions
     {
         public static void NotifyIfDataIsClass<T>(this ReactiveProperty<T> property)
         {
-            if (typeof(T).IsClass) property.ForceNotify();
+            if (typeof(T).IsClass)
+                property.ForceNotify();
         }
     }
 }

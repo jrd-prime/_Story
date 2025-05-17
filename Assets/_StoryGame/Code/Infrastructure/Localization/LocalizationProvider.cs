@@ -6,7 +6,6 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Zenject;
 
 namespace _StoryGame.Infrastructure.Localization
 {
@@ -16,7 +15,7 @@ namespace _StoryGame.Infrastructure.Localization
         public string Description => "Localization Provider";
 
         private string _defaultLanguage;
-        private ISettingsProvider _settingsProvider;
+        private readonly ISettingsProvider _settingsProvider;
 
         private readonly Dictionary<string, string> _localisationCache = new();
 
@@ -26,8 +25,7 @@ namespace _StoryGame.Infrastructure.Localization
             { Language.Russian, "ru" }
         };
 
-        [Inject]
-        private void Construct(ISettingsProvider settingsProvider)
+        public LocalizationProvider(ISettingsProvider settingsProvider)
         {
             _settingsProvider = settingsProvider;
         }
@@ -38,7 +36,13 @@ namespace _StoryGame.Infrastructure.Localization
                 throw new NullReferenceException("Settings provider is null. + " + nameof(LocalizationProvider));
             var languageSettings = _settingsProvider.GetSettings<LocalizationSettings>();
 
+            if (languageSettings == null)
+                throw new NullReferenceException("Localization settings is null. + " + nameof(LocalizationProvider));
+
             _defaultLanguage = _languages[languageSettings.DefaultLanguage];
+
+            if (_defaultLanguage == null)
+                throw new NullReferenceException("Default language is null. + " + nameof(LocalizationProvider));
 
             try
             {
@@ -61,7 +65,7 @@ namespace _StoryGame.Infrastructure.Localization
             return wordTransform switch
             {
                 WordTransform.None => value,
-                WordTransform.Capitalize =>  "CAPITALIZE NOT IMPLEMENTED", //; value.Capitalize(),
+                WordTransform.Capitalize => "CAPITALIZE NOT IMPLEMENTED", //; value.Capitalize(),
                 WordTransform.Low => value.ToLower(),
                 WordTransform.Upper => value.ToUpper(),
                 _ => throw new ArgumentOutOfRangeException(nameof(wordTransform), wordTransform, null)

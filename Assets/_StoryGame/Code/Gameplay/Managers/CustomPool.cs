@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
+using VContainer;
 using Object = UnityEngine.Object;
 
 namespace _StoryGame.Gameplay.Managers
@@ -12,13 +12,13 @@ namespace _StoryGame.Gameplay.Managers
         private readonly bool _allowGrowth;
         private readonly int _poolSize;
         private readonly Transform _parent;
-        private readonly DiContainer _container;
+        private readonly IObjectResolver _container;
 
         private readonly Queue<T> _cache = new();
         private readonly HashSet<T> _activeObjects = new(); // Для проверки активных объектов
 
 
-        public CustomPool(T prefab, int poolSize, Transform parent, DiContainer container, bool allowGrowth = false)
+        public CustomPool(T prefab, int poolSize, Transform parent, IObjectResolver container, bool allowGrowth = false)
         {
             _prefab = prefab;
             _poolSize = poolSize;

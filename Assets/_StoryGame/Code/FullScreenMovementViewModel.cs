@@ -1,113 +1,80 @@
-﻿using _StoryGame.Data;
-using ModestTree;
+﻿using System;
+using _StoryGame.Infrastructure;
+using _StoryGame.Infrastructure.Logging;
 using R3;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Zenject;
+using VContainer.Unity;
 
 namespace _StoryGame
 {
-    public class FullScreenMovementViewModel : IInitializable
+    public sealed class FullScreenMovementViewModel : IInitializable, IDisposable
     {
         public ReactiveProperty<Vector3> MoveDirection { get; } = new(Vector3.zero);
         public ReactiveProperty<bool> IsTouchPositionVisible { get; } = new(false);
         public ReactiveProperty<Vector2> RingPosition { get; } = new(Vector2.zero);
 
-        private bool _isTouchActive;
-        private float _offsetForFullSpeed = 100f;
-        private Vector3 _moveInput;
-        private Vector3 _startTouchPosition;
+        private readonly IJLog _log;
+        private readonly IJInput _input;
 
-        private ISettingsManager _settingsManager;
+        private bool _isTouchActive;
+        private const float OffsetForFullSpeed = 100f;
+        private Vector2 _startTouchPosition;
+        private readonly CompositeDisposable _disposables = new();
+
+        public FullScreenMovementViewModel(IJInput input, IJLog log)
+        {
+            _input = input;
+            _log = log;
+        }
 
         public void Initialize()
         {
-            // if (_settingsManager != null)
-            // {
-            //     var movementControlSettings = _settingsManager.GetConfig<MovementControlSettings>();
-            //     // _offsetForFullSpeed = movementControlSettings.offsetForFullSpeed;
-            //     return;
-            // }
-            //
-            // Debug.LogError("SettingsManager is null. Use default settings.");
+            if (_input == null)
+                return;
+
+            _input.TouchBegan.Subscribe(OnTouchBegan).AddTo(_disposables);
+            _input.TouchMoved.Subscribe(OnTouchMoved).AddTo(_disposables);
+            _input.TouchEnded.Subscribe(OnTouchEnded).AddTo(_disposables);
         }
 
-        private void SetMoveDirection(Vector3 value) => MoveDirection.Value = value;
-
-
-        public void OnDownEvent(PointerDownEvent evt)
+        private void OnTouchBegan(Vector2 position)
         {
-            Log.Warn(" OnDownEvent");
-            if (_isTouchActive) return;
+            if (_isTouchActive)
+                return;
+
+            _log.Debug($"OnTouchBegan at {position}");
 
             _isTouchActive = true;
-            _startTouchPosition = evt.localPosition;
-
-            ShowRingAtTouchPosition(_startTouchPosition);
+            _startTouchPosition = position;
+            RingPosition.Value = position;
+            IsTouchPositionVisible.Value = true;
         }
 
-        public void OnMoveEvent(PointerMoveEvent evt)
+        private void OnTouchEnded(Vector2 position)
         {
-            if (!_isTouchActive) return;
-            Log.Warn("OnMoveEvent");
-            var currentPosition = evt.localPosition;
+            _log.Debug($"OnTouchEnded, _isTouchActive: {_isTouchActive}");
+            _isTouchActive = false;
+            MoveDirection.Value = Vector3.zero;
+            IsTouchPositionVisible.Value = false;
+        }
+
+        private void OnTouchMoved(Vector2 currentPosition)
+        {
+            if (!_isTouchActive)
+                return;
+
+            _log.Debug($"OnTouchMoved at {currentPosition}");
+
             var offset = currentPosition - _startTouchPosition;
             var distance = offset.magnitude;
 
-            if (distance > _offsetForFullSpeed) offset = offset.normalized * _offsetForFullSpeed;
+            if (distance > OffsetForFullSpeed)
+                offset = offset.normalized * OffsetForFullSpeed;
 
-            _moveInput = offset / _offsetForFullSpeed;
-            _moveInput = Vector2.ClampMagnitude(_moveInput, 1.0f);
-
-            Log.Warn(_moveInput.ToString());
-
-            SetMoveDirection(new Vector3(_moveInput.x, 0, _moveInput.y * -1f));
+            var moveInput = offset / OffsetForFullSpeed;
+            MoveDirection.Value = new Vector3(moveInput.x, 0, moveInput.y);
         }
 
-        public void OnUpEvent(PointerUpEvent _)
-        {
-            if (!_isTouchActive) return;
-
-            Log.Warn(" OnUpEvent");
-            ResetTouch();
-        }
-
-        public void OnOutEvent(PointerOutEvent _)
-        {
-            if (!_isTouchActive) return;
-
-            Log.Warn(" OnOutEvent");
-            ResetTouch();
-        }
-
-        private void ResetTouch()
-        {
-            _isTouchActive = false;
-            _moveInput = Vector2.zero;
-
-            SetMoveDirection(Vector3.zero);
-            HideRing();
-        }
-
-        private void ShowRingAtTouchPosition(Vector3 position)
-        {
-            RingPosition.Value = new Vector2(position.x, position.y);
-
-            ShowRing();
-        }
-
-        private void HideRing() => IsTouchPositionVisible.Value = false;
-        private void ShowRing() => IsTouchPositionVisible.Value = true;
-    }
-
-    public class MovementControlSettings : SettingsBase
-    {
-        public float offsetForFullSpeed;
-        public override string ConfigName { get; }
-    }
-
-    internal interface ISettingsManager
-    {
-        T GetConfig<T>();
+        public void Dispose() => _disposables.Dispose();
     }
 }

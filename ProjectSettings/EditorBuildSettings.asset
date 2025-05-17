@@ -8,10 +8,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_StoryGame/Static/Scenes/Bootstrap.unity
     guid: 537ac41811fb25d418de865cee46fb70
-  - enabled: 0
+  - enabled: 1
     path: Assets/_StoryGame/Static/Scenes/GameScene.unity
     guid: c80eaec6e6a4bf24191f47519e390eb4
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1255378d89814c34e9ff7e6a94f094ef, type: 2}
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.input.settings: {fileID: 11400000, guid: 167a9278f598e3e4aabb1c296816c1e9, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 00dca6ae5abae5040ad0cc3344eb70b4, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -1,13 +1,11 @@
 <linker>
   <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-    <type fullname="_game.Scripts.Infrastructure.Installers.Game.SignalsInstaller" preserve="all" />
     <type fullname="_StoryGame.Gameplay.Character.Player.Impls.Player" preserve="all" />
     <type fullname="_StoryGame.Gameplay.Character.Player.Impls.PlayerFrontTriggerArea" preserve="all" />
     <type fullname="_StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera.CameraManager" preserve="all" />
     <type fullname="_StoryGame.Gameplay.Managers.Impls.GameManager" preserve="all" />
     <type fullname="_StoryGame.GameUIToolkitView" preserve="all" />
-    <type fullname="_StoryGame.Infrastructure.Installers.Game.GameInstaller" preserve="all" />
-    <type fullname="_StoryGame.Infrastructure.Installers.Game.PlayerInstaller" preserve="all" />
+    <type fullname="_StoryGame.Infrastructure.Scopes.Game.GameScope" preserve="all" />
   </assembly>
   <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
     <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
@@ -48,8 +46,6 @@
     <type fullname="UnityEngine.SkinnedMeshRenderer" preserve="all" />
     <type fullname="UnityEngine.Texture2D" preserve="all" />
     <type fullname="UnityEngine.Transform" preserve="all" />
-    <type fullname="UnityEngine.Events.PersistentCallGroup" preserve="nothing" serialized="true" />
-    <type fullname="UnityEngine.Events.UnityEvent" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.BoxCollider" preserve="all" />
@@ -84,7 +80,7 @@
     <type fullname="UnityEngine.UIElements.VisualElement/UxmlSerializedData" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.UIElements.VisualElementAsset" preserve="nothing" serialized="true" />
   </assembly>
-  <assembly fullname="Zenject, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-    <type fullname="Zenject.SceneContext" preserve="all" />
+  <assembly fullname="VContainer">
+    <type fullname="VContainer.Unity.ParentReference" preserve="nothing" serialized="true" />
   </assembly>
 </linker>

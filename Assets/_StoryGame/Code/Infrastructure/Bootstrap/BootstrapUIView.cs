@@ -1,8 +1,8 @@
-﻿using _StoryGame.Gameplay.Extensions;
+﻿using System;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Zenject;
+using VContainer;
 
 namespace _StoryGame.Infrastructure.Bootstrap
 {
@@ -20,13 +20,22 @@ namespace _StoryGame.Infrastructure.Bootstrap
         private Label _appName;
         private Label _loadingLabel;
 
-        private void Awake()
+        private async void Start()
         {
-            var root = gameObject.GetComponent<UIDocument>().rootVisualElement;
+            var uiDoc = GetComponent<UIDocument>();
+            await UIToolkitReadyAwaiter.WaitForReadyAsync(uiDoc);
 
-            _container = root.GetVisualElement<VisualElement>(BootstrapContainerId, name);
-            _loadingLabel = root.GetVisualElement<Label>(LoadingLabelId, name);
-            _appName = root.GetVisualElement<Label>(AppNameLabelId, name);
+            var root = uiDoc.rootVisualElement;
+
+            if (root == null)
+                throw new NullReferenceException("RootVisualElement is null on start in " + name);
+
+            _container = root.Q<VisualElement>("bootstrap-container") ??
+                         throw new NullReferenceException("Bootstrap container is null. " + nameof(BootstrapUIView));
+            _loadingLabel = root.Q<Label>("desc-label") ??
+                            throw new NullReferenceException("Loading label is null. " + nameof(BootstrapUIView));
+            _appName = root.Q<Label>("title-label") ??
+                       throw new NullReferenceException("App name label is null. " + nameof(BootstrapUIView));
 
             _appName.text = AppName;
 
@@ -35,6 +44,9 @@ namespace _StoryGame.Infrastructure.Bootstrap
 
         private void Subscribe()
         {
+            if (_controller == null)
+                throw new NullReferenceException("BootstrapUIController is null. " + nameof(BootstrapUIView));
+
             _controller.LoadingText
                 .Subscribe(OnSetDesc)
                 .AddTo(_disposables);
@@ -48,9 +60,27 @@ namespace _StoryGame.Infrastructure.Bootstrap
                 .AddTo(_disposables);
         }
 
-        private void OnSetDesc(string value) => _loadingLabel.text = !string.IsNullOrEmpty(value) ? value : "Not set";
-        private void OnSetOpacity(float value) => _container.style.opacity = value;
-        private void OnClear(Unit _) => _loadingLabel.text = _appName.text = string.Empty;
+        private void OnSetDesc(string value)
+        {
+            if (_loadingLabel == null)
+                throw new NullReferenceException("Loading label is null. " + nameof(BootstrapUIView));
+            _loadingLabel.text = !string.IsNullOrEmpty(value) ? value : "Not set";
+        }
+
+        private void OnSetOpacity(float value)
+        {
+            if (_container == null)
+                throw new NullReferenceException("Bootstrap container is null. " + nameof(BootstrapUIView));
+            _container.style.opacity = value;
+        }
+
+        private void OnClear(Unit _)
+        {
+            if (_loadingLabel == null)
+                throw new NullReferenceException("Loading label is null. " + nameof(BootstrapUIView));
+            _loadingLabel.text = _appName.text = string.Empty;
+        }
+
         private void OnDestroy() => _disposables?.Dispose();
     }
 }

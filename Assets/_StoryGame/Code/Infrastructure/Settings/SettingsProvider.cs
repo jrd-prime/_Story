@@ -4,7 +4,6 @@ using System.Reflection;
 using _StoryGame.Data;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 
 namespace _StoryGame.Infrastructure.Settings
 {
@@ -16,13 +15,15 @@ namespace _StoryGame.Infrastructure.Settings
         private MainSettings _mainSettings;
         private readonly Dictionary<Type, object> _cache = new();
 
-        [Inject]
-        private void Construct(MainSettings mainSettings) => _mainSettings = mainSettings;
+        public SettingsProvider(MainSettings mainSettings) => _mainSettings = mainSettings;
 
         public async UniTask InitializeOnBoot()
         {
-            if (!_mainSettings) throw new Exception("MainSettings is null");
+            if (!_mainSettings)
+                throw new Exception("MainSettings is null " + nameof(SettingsProvider));
+
             await AddSettingsToCacheAsync();
+
             IsInitialized = true;
         }
 
@@ -33,7 +34,8 @@ namespace _StoryGame.Infrastructure.Settings
 
             foreach (var field in fields)
             {
-                if (!typeof(SettingsBase).IsAssignableFrom(field.FieldType)) continue;
+                if (!typeof(SettingsBase).IsAssignableFrom(field.FieldType))
+                    continue;
 
                 var settings = field.GetValue(_mainSettings) as SettingsBase;
 
@@ -47,7 +49,7 @@ namespace _StoryGame.Infrastructure.Settings
                     throw new Exception($"Duplicate settings type {settings.GetType()} found in cache.");
             }
 
-            Debug.Log($"Settings added to cache: {_cache.Count}");
+            // Log.Info($"Settings added to cache: {_cache.Count}");
             await UniTask.CompletedTask;
         }
 

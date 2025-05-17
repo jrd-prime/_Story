@@ -6,6 +6,8 @@ namespace _StoryGame.Core.Managers.HSM.Common
 {
     public abstract class BaseState : IState
     {
+        public IState PreviousState;
+        
         protected internal readonly Impls.HSM StateMachine;
         protected IState CurrentSubState;
         protected readonly Dictionary<Type, IState> SubStates = new();
@@ -41,7 +43,9 @@ namespace _StoryGame.Core.Managers.HSM.Common
 
         protected void TransitionToSubState<T>() where T : IState
         {
-            if (SubStates.TryGetValue(typeof(T), out IState newState)) TransitionToSubState(newState);
+            if (SubStates.TryGetValue(typeof(T), out IState newState))
+                TransitionToSubState(newState);
+            else throw new Exception($"state {typeof(T).Name} not found");
         }
 
         private void TransitionToSubState(IState newState)
@@ -53,7 +57,5 @@ namespace _StoryGame.Core.Managers.HSM.Common
             CurrentSubState = newState;
             CurrentSubState?.Enter(PreviousState);
         }
-
-        public IState PreviousState;
     }
 }

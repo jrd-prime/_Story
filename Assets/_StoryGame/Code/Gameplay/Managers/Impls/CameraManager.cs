@@ -1,9 +1,10 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Gameplay.Managers.Inerfaces;
-using ModestTree;
+using _StoryGame.Infrastructure.Logging;
 using R3;
 using UnityEngine;
+using VContainer;
 
 namespace _StoryGame.Gameplay.Managers.Impls
 {
@@ -15,11 +16,16 @@ namespace _StoryGame.Gameplay.Managers.Impls
             private Camera _mainCamera;
             private readonly CompositeDisposable _disposables = new();
             private IFollowable _target;
+            [Inject] private IJLog _log;
 
             private void Start()
             {
+                _log.Info("CameraManager started.");
                 _mainCamera = Camera.main;
-                if (!_mainCamera) throw new NullReferenceException($"MainCamera is null. {this}");
+
+                if (!_mainCamera)
+                    throw new NullReferenceException($"MainCamera is null. {this}");
+
                 _mainCamera.transform.position = cameraOffset;
             }
 
@@ -32,12 +38,11 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
             public void SetTarget(IFollowable target)
             {
-                if (target == null) throw new ArgumentNullException($"Target is null. {this}");
+                if (target == null)
+                    throw new ArgumentNullException($"Target is null. {this}");
+
                 if (_target == target)
-                {
-                    Log.Warn("target already set");
                     return;
-                }
 
                 _disposables.Clear();
                 _target = target;
@@ -51,8 +56,24 @@ namespace _StoryGame.Gameplay.Managers.Impls
             }
 
             public Camera GetMainCamera() => _mainCamera;
-            public Vector3 GetCamEulerAngles() => _mainCamera.transform.eulerAngles;
-            public Quaternion GetCamRotation() => _mainCamera.transform.rotation;
+
+
+            public Vector3 GetCamEulerAngles()
+            {
+                if (!_mainCamera)
+                    throw new NullReferenceException($"MainCamera is null. {this}");
+
+                return _mainCamera.transform.eulerAngles;
+            }
+
+            public Quaternion GetCamRotation()
+            {
+                if (!_mainCamera)
+                    throw new NullReferenceException($"MainCamera is null. {this}");
+
+                return _mainCamera.transform.rotation;
+            }
+
             private void OnDestroy() => _disposables?.Dispose();
         }
     }

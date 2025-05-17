@@ -6,7 +6,6 @@ using _StoryGame.Core.Currency;
 using _StoryGame.Gameplay.Managers.Inerfaces;
 using R3;
 using UnityEngine;
-using Zenject;
 
 namespace _StoryGame.Gameplay.Character.Player.Impls
 {
@@ -25,15 +24,16 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         private readonly ICameraManager _cameraManager;
         private readonly IWallet _wallet;
         private readonly IPlayerAnimationService _playerAnimationService;
-        private CompositeDisposable Disposables = new();
+        private readonly CompositeDisposable Disposables = new();
 
         public PlayerInteractor(PlayerService service, ICameraManager cameraManager,
-            ICurrencyService currencyService, IPlayerAnimationService playerAnimationService,
+            ICurrencyService currencyService, 
+            // IPlayerAnimationService playerAnimationService,
             FullScreenMovementViewModel move)
         {
             _service = service;
             _cameraManager = cameraManager;
-            _playerAnimationService = playerAnimationService;
+            // _playerAnimationService = playerAnimationService;
 
             _wallet = currencyService.CreateWallet("player_test_id");
 
@@ -45,10 +45,19 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         /// <summary>
         /// Такое себе решение. // TODO: Подумать как лучше сделать с учетом плеера
         /// </summary>
-        public void SetPosition(Vector3 position) => _service.SetPosition(position);
+        public void SetPosition(Vector3 position)
+        {
+            if (_service == null)
+                throw new NullReferenceException($"Service is null in {nameof(PlayerInteractor)}");
+
+            _service.SetPosition(position);
+        }
 
         public void AnimateWithTrigger(string triggerName, string animationStateName, Action onAnimationComplete)
         {
+            if (_playerAnimationService == null)
+                throw new NullReferenceException($"Service is null in {nameof(PlayerInteractor)}");
+
             _playerAnimationService.AnimateWithTrigger(triggerName, animationStateName, onAnimationComplete);
         }
     }

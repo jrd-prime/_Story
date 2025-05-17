@@ -3,32 +3,33 @@ using _StoryGame.Core.Managers.Game.Interfaces;
 using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Gameplay.Managers.Inerfaces;
 using _StoryGame.Infrastructure.Settings;
-using ModestTree;
 using UnityEngine;
-using Zenject;
+using VContainer;
+using VContainer.Unity;
 
 namespace _StoryGame.Gameplay.Managers.Impls
 {
     public class GameManager : MonoBehaviour, IGameManager, IInitializable
     {
-        [Inject] private DiContainer _container;
+        [Inject] private IObjectResolver _container;
 
         private ISettingsProvider SettingsManager;
         private HSM _hsm;
         private IGameService _gameService;
-        private SignalBus _signalBus;
+        // private SignalBus _signalBus;
 
         public void Initialize()
         {
-            Log.Warn("Init game manager");
+            // Log.Warn("Init game manager");
             _hsm = _container.Resolve<HSM>();
             SettingsManager = _container.Resolve<ISettingsProvider>();
             var player = _container.Resolve<IPlayer>();
 
-            _signalBus = _container.Resolve<SignalBus>();
+            // _signalBus = _container.Resolve<SignalBus>(nameof(GameManager));
             _gameService = _container.Resolve<IGameService>();
 
             var cameraManager = _container.Resolve<ICameraManager>();
+
             cameraManager.SetTarget(player);
         }
 
@@ -58,7 +59,7 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
         public void Pause()
         {
-            Log.Warn("GAME PAUSED");
+            // Log.Warn("GAME PAUSED");
             _gameService.Pause();
             // _signalBus.Fire(new DisableInputSignal());
             Time.timeScale = 0;
@@ -66,7 +67,7 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
         public void UnPause()
         {
-            Log.Warn("GAME UNPAUSED");
+            // Log.Warn("GAME UNPAUSED");
             _gameService.UnPause();
             // _signalBus.Fire(new EnableInputSignal());
             Time.timeScale = 1;
@@ -74,7 +75,7 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
         public void ContinueGame()
         {
-            Log.Warn("GAME CONTINUED");
+            // Log.Warn("GAME CONTINUED");
             _gameService.ContinueGame();
         }
 

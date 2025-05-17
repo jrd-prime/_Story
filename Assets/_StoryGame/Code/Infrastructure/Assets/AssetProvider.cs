@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace _game.Scripts.Infrastructure.Assets
+namespace _StoryGame.Infrastructure.Assets
 {
     public interface IAssetProvider : IBootable
     {

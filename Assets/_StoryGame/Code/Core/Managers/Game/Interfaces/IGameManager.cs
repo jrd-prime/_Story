@@ -1,6 +1,4 @@
-﻿using Zenject;
-
-namespace _StoryGame.Core.Managers.Game.Interfaces
+﻿namespace _StoryGame.Core.Managers.Game.Interfaces
 {
     public interface IGameManager 
     {

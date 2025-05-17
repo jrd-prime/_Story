@@ -1,0 +1,5 @@
+C:/Users/jrd/_unity_jrd_projects/_Story/.utmp/Debug/lz246e5x/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/jrd/_unity_jrd_projects/_Story/.utmp/Debug/lz246e5x/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+C:/Users/jrd/_unity_jrd_projects/_Story/.utmp/Debug/lz246e5x/armeabi-v7a/GameActivity/CMakeFiles/game.dir
+C:/Users/jrd/_unity_jrd_projects/_Story/.utmp/Debug/lz246e5x/armeabi-v7a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/jrd/_unity_jrd_projects/_Story/.utmp/Debug/lz246e5x/armeabi-v7a/GameActivity/CMakeFiles/rebuild_cache.dir
