@@ -29,7 +29,6 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         [Inject]
         private void Construct(IObjectResolver resolver)
         {
-            Debug.LogWarning(resolver);
             _interactor = resolver.Resolve<PlayerInteractor>();
             resolver.Inject(frontTriggerArea);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Data;
+using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
@@ -84,7 +85,6 @@ namespace _StoryGame.Infrastructure.Bootstrap
                 {
                     FirstScene = handle.Result;
                     IsInitialized = true;
-                    _log.Warn("Scene loaded: " + _bootstrapSettings.FirstScene);
                 }
                 else
                     _log.Error($"Failed to load scene: {_bootstrapSettings.FirstScene}. " + nameof(FirstSceneProvider));

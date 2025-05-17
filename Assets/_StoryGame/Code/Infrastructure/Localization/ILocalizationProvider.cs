@@ -1,6 +1,4 @@
-﻿
-
-using _StoryGame.Infrastructure.Bootstrap;
+﻿using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 
 namespace _StoryGame.Infrastructure.Localization
 {

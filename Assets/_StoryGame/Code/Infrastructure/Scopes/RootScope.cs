@@ -1,12 +1,13 @@
 ﻿using System;
 using _StoryGame.Core.Managers.Game.Impls;
-using _StoryGame.Core.Managers.Game.Interfaces;
 using _StoryGame.Data;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;
+using _StoryGame.Infrastructure.Input;
 using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
+using _StoryGame.Infrastructure.Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VContainer;
@@ -53,7 +54,9 @@ namespace _StoryGame.Infrastructure.Scopes
                 throw new NullReferenceException("log is null.");
             builder.RegisterComponentInNewPrefab(log, Lifetime.Singleton).As<IJLog>();
 
-            builder.Register<FullScreenMovementViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<FullScreenMovementProcessor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+
+            builder.Register<FPSCounter>(Lifetime.Singleton).AsSelf().As<ITickable>();
         }
     }
 }

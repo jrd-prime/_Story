@@ -27,12 +27,10 @@ namespace _StoryGame.Infrastructure.Scopes.Bootstrap
             var view = Instantiate(bootstrapUIView);
 
             builder.RegisterComponent(view);
-
-
+            
             builder.Register<BootstrapUIController>(Lifetime.Singleton).AsImplementedInterfaces();
             // builder.RegisterComponentInNewPrefab(bootstrapUIView, Lifetime.Singleton);
             builder.Register<BootstrapLoader>(Lifetime.Singleton);
-            Debug.LogWarning(" <color=green><b>=== BOOTSTRAP SCOPE INITIALIZED! ===</b></color>");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace _StoryGame.Infrastructure.Bootstrap
         private readonly Queue<IBootable> _loadingQueue = new();
         private readonly IBootstrapUIController _controller;
         private readonly IJLog _log;
-        private int servicesCount;
 
         public BootstrapLoader(IBootstrapUIController controller, IJLog log)
         {

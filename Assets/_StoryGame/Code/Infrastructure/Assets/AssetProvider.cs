@@ -1,4 +1,4 @@
-﻿using _StoryGame.Infrastructure.Bootstrap;
+﻿using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;

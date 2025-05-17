@@ -1,8 +1,5 @@
 ﻿using System;
-using _StoryGame.Core.Animations.Interfaces;
 using _StoryGame.Core.Character.Player;
-using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Gameplay.Anima.Impls;
 using _StoryGame.Gameplay.Character.Player.Impls;
 using UnityEngine;
 using VContainer;
@@ -12,27 +9,30 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 {
     public sealed class PlayerInstaller
     {
-        public PlayerInstaller(IContainerBuilder builder, Player playerInstance, Transform spawnPoint)
+        private readonly IContainerBuilder _builder;
+        private readonly Player _instance;
+        private readonly Transform _point;
+
+        public PlayerInstaller(IContainerBuilder builder, Player instance, Transform spawnPoint) =>
+            (_builder, _instance, _point) = (builder, instance, spawnPoint);
+
+        public bool Install()
         {
             Debug.Log($"<color=cyan>{nameof(PlayerInstaller)}</color>");
 
-            if (builder == null)
-                throw new NullReferenceException("resolver is null.");
+            if (_builder == null || !_instance || !_point)
+                return false;
 
-            if (!playerInstance)
-                throw new NullReferenceException("playerInstance is null.");
+            _instance.transform.position = _point.position;
 
-            if (!spawnPoint)
-                throw new NullReferenceException("spawnPoint is null.");
+            _builder.RegisterComponent(_instance).AsImplementedInterfaces();
 
-            playerInstance.transform.position = spawnPoint.position;
-
-            builder.RegisterComponent(playerInstance).AsImplementedInterfaces();
-            
-            builder.Register<PlayerInteractor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<PlayerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<PlayerModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            _builder.Register<PlayerInteractor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            _builder.Register<PlayerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            _builder.Register<PlayerModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             // builder.Register<PlayerAnimationService>(Lifetime.Singleton).As<IPlayerAnimationService>();
+
+            return true;
         }
     }
 }

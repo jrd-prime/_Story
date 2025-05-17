@@ -4,6 +4,7 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Currency;
 using _StoryGame.Gameplay.Managers.Inerfaces;
+using _StoryGame.Infrastructure.Input;
 using R3;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         public PlayerInteractor(PlayerService service, ICameraManager cameraManager,
             ICurrencyService currencyService, 
             // IPlayerAnimationService playerAnimationService,
-            FullScreenMovementViewModel move)
+            FullScreenMovementProcessor move)
         {
             _service = service;
             _cameraManager = cameraManager;

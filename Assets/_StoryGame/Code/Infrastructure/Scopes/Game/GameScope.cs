@@ -2,12 +2,13 @@
 using _StoryGame.Core.Currency;
 using _StoryGame.Core.Currency.Impls;
 using _StoryGame.Core.Managers.Game.Impls;
-using _StoryGame.Core.Managers.Game.Interfaces;
 using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Gameplay.Character.Player.Impls;
 using _StoryGame.Gameplay.Managers.Impls;
 using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Gameplay.Managers.Inerfaces;
+using _StoryGame.Gameplay.UI;
+using _StoryGame.Gameplay.UI.GameplayUI;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -37,13 +38,17 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             // Регистрация сервисов
             builder.Register<GameService>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<CurrencyService>(Lifetime.Singleton).As<ICurrencyService>();
+            builder.Register<GameplayUIViewModel>(Lifetime.Singleton).As<IGameplayUIViewModel>();
 
             InitializeManagers(builder);
             InitializeUIModelsAndViewModels(builder);
             InitializeViewStates(builder);
 
             var playerInstance = Instantiate(playerPrefab);
-            new PlayerInstaller(builder, playerInstance, spawnPoint);
+            var playerInstaller = new PlayerInstaller(builder, playerInstance, spawnPoint);
+
+            if (!playerInstaller.Install())
+                throw new Exception("PlayerInstaller is not installed.");
         }
 
 
