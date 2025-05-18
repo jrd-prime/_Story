@@ -7,6 +7,7 @@ using _StoryGame.Gameplay.Character.Player.Impls;
 using _StoryGame.Gameplay.Managers.Impls;
 using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Gameplay.Managers.Inerfaces;
+using _StoryGame.Gameplay.UI;
 using _StoryGame.Gameplay.UI.GameplayUI;
 using UnityEngine;
 using VContainer;
@@ -35,6 +36,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<GameService>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<CurrencyService>(Lifetime.Singleton).As<ICurrencyService>();
             builder.Register<GameplayUIViewModel>(Lifetime.Singleton).As<IGameplayUIViewModel>();
+            builder.Register<MenuUIViewModel>(Lifetime.Singleton).As<IMenuUIViewModel>();
 
             InitializeManagers(builder);
             InitializeUIModelsAndViewModels(builder);

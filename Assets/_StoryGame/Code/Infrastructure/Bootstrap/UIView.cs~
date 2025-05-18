@@ -47,7 +47,6 @@ namespace _StoryGame.Infrastructure.Bootstrap
 
         public override void HideBase()
         {
-            Debug.Log("Hide " + name);
             Container.style.display = DisplayStyle.None;
         }
 

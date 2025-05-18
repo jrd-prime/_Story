@@ -2,9 +2,7 @@
 using _StoryGame.Gameplay.Extensions;
 using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using R3;
-using UnityEngine;
 using UnityEngine.UIElements;
-using VContainer;
 
 namespace _StoryGame.Infrastructure.Bootstrap
 {

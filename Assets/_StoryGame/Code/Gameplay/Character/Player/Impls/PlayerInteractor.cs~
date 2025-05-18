@@ -28,11 +28,9 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         private readonly CompositeDisposable Disposables = new();
 
         public PlayerInteractor(PlayerService service, ICameraManager cameraManager,
-            ICurrencyService currencyService
-            // , 
+            ICurrencyService currencyService, 
             // IPlayerAnimationService playerAnimationService,
-            // FullScreenMovementProcessor move
-            )
+            FullScreenMovementProcessor move)
         {
             _service = service;
             _cameraManager = cameraManager;
@@ -40,7 +38,7 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
 
             _wallet = currencyService.CreateWallet("player_test_id");
 
-            // move.MoveDirection.Subscribe(OnMoveDirectionSignal).AddTo(Disposables);
+            move.MoveDirection.Subscribe(OnMoveDirectionSignal).AddTo(Disposables);
         }
 
         private void OnMoveDirectionSignal(Vector3 direction) => MoveDirection = direction;

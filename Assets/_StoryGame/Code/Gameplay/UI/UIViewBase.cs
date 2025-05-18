@@ -8,5 +8,8 @@ namespace _StoryGame.Gameplay.UI
         [SerializeField] private string viewId;
 
         public string Id => viewId;
+
+        public abstract void ShowBase();
+        public abstract void HideBase();
     }
 }

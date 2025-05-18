@@ -40,6 +40,12 @@ namespace _StoryGame.Gameplay.Managers.Impls
             _hsm.CurrentStateType.Subscribe(OnStateChange).AddTo(_disposables);
         }
 
+        private void Start()
+        {
+            foreach (var uiView in _viewsCache)
+                uiView.Value.HideBase();
+        }
+
         private void OnStateChange(GameStateType state)
         {
             if (state == GameStateType.NotSet)

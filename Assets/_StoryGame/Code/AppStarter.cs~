@@ -5,6 +5,7 @@ using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
+using R3;
 using UnityEngine;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -89,5 +90,12 @@ namespace _StoryGame
 
             await SceneManager.UnloadSceneAsync(bootstrapScene);
         }
+    }
+
+    public class AppStartHandler
+    {
+        public Subject<Unit> IsAppStarted { get; } = new();
+
+        public void AppStarted() => IsAppStarted.OnNext(Unit.Default);
     }
 }

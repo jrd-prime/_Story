@@ -34,6 +34,8 @@ namespace _StoryGame.Gameplay.UI
 
             _marea = Root.GetVisualElement<VisualElement>("movement-area", name);
 
+            Debug.LogWarning(_marea);
+
             _marea.RegisterCallback<PointerDownEvent>(OnPointerDown);
             _marea.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             _marea.RegisterCallback<PointerUpEvent>(OnPointerUp);

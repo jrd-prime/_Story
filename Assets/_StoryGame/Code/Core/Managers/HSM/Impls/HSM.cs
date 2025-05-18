@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Core.Managers.HSM.Impls.States;
 using _StoryGame.Core.Managers.HSM.Impls.States.Gameplay;
 using _StoryGame.Core.Managers.HSM.Impls.States.Menu;
 using _StoryGame.Core.Managers.HSM.Interfaces;
@@ -15,11 +16,12 @@ namespace _StoryGame.Core.Managers.HSM.Impls
     /// </summary>
     public sealed class HSM : IDisposable
     {
-        public Observable<IState> CurrentState => _currentState;
+        public Observable<GameStateType> CurrentStateType => _currentStateType;
 
+        private IState _currentState;
         private IState _previousState;
-        private readonly ReactiveProperty<IState> _currentState = new(null);
-        private readonly Dictionary<Type, IState> _states = new();
+        private readonly ReactiveProperty<GameStateType> _currentStateType = new();
+        private readonly Dictionary<GameStateType, IState> _states = new();
 
         private readonly CompositeDisposable _disposables = new();
         private readonly IJLog _log;
@@ -36,8 +38,8 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         /// </summary>
         private void InitializeMainStates()
         {
-            RegisterState<MenuState>(new MenuState(this));
-            RegisterState<GameplayState>(new GameplayState(this));
+            RegisterState<MenuState>(new MenuState(this), GameStateType.Menu);
+            RegisterState<GameplayState>(new GameplayState(this), GameStateType.Gameplay);
         }
 
         /// <summary>
@@ -45,10 +47,11 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         /// </summary>
         public void Start()
         {
-            var rootState = _states[typeof(MenuState)];
+            var rootState = _states[GameStateType.Menu];
             _previousState = null;
-            _currentState.Value = rootState;
-            _currentState.CurrentValue.Enter(_previousState);
+            _currentState = rootState;
+            _currentStateType.Value = _currentState.StateType;
+            _currentState.Enter(_previousState);
         }
 
         /// <summary>
@@ -57,34 +60,36 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         public void Update()
         {
             _log.Warn($"<color=green>[{nameof(HSM)}]</color> Update!");
-            _currentState.Value.Update();
+            _currentState.Update();
 
-            var nextState = _currentState.Value.HandleTransition();
+            var nextState = _currentState.HandleTransition();
 
-            if (nextState != null && nextState != _currentState.Value)
-                TransitionTo(nextState.GetType());
+            if (nextState != null && nextState != _currentState)
+                TransitionTo(nextState.StateType);
         }
 
         /// <summary>
         /// Смена состояния
         /// </summary>
-        private void TransitionTo<T>(T stateType) where T : Type
+        private void TransitionTo(GameStateType stateType)
         {
             if (!_states.TryGetValue(stateType, out var newState))
-                throw new Exception($"state {stateType.Name} not found");
+                throw new Exception($"state {stateType} not found");
 
             _log.Info(
-                $"<color=green>[{nameof(HSM)}]</color> {_currentState.Value.GetType().Name} > {newState.GetType().Name}");
-            _previousState = _currentState.Value;
-            _currentState.Value.Exit(_previousState);
-            _currentState.Value = newState;
-            _currentState.Value.Enter(_previousState);
+                $"<color=green>[{nameof(HSM)}]</color> {_currentStateType.Value.GetType().Name} > {newState.GetType().Name}");
+            _previousState = _currentState;
+            _currentState.Exit(_previousState);
+            _currentState = newState;
+            _currentStateType.Value = _currentState.StateType;
+            _currentState.Enter(_previousState);
         }
 
         /// <summary>
         /// Регистрация глобального состояния
         /// </summary>
-        private void RegisterState<T>(IState state) where T : IState => _states[typeof(T)] = state;
+        private void RegisterState<T>(IState state, GameStateType gameplay) where T : IState =>
+            _states[gameplay] = state;
 
         private void HandleMessage(IHSMMessage msg)
         {
@@ -100,7 +105,7 @@ namespace _StoryGame.Core.Managers.HSM.Impls
 
         public void Dispose()
         {
-            _currentState?.Dispose();
+            _currentStateType?.Dispose();
             _disposables?.Dispose();
         }
     }

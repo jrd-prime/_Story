@@ -21,7 +21,7 @@ namespace _StoryGame.Infrastructure.Bootstrap
 
         protected override void InitElements()
         {
-            _container = Root.GetVisualElement<VisualElement>("bootstrap-container", name);
+            _container = Root.GetVisualElement<VisualElement>("main-container", name);
             _loadingLabel = Root.GetVisualElement<Label>("desc-label", name);
             _appName = Root.GetVisualElement<Label>("title-label", name);
 
