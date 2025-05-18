@@ -20,7 +20,6 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
             private void Start()
             {
-                _log.Info("CameraManager started.");
                 _mainCamera = Camera.main;
 
                 if (!_mainCamera)

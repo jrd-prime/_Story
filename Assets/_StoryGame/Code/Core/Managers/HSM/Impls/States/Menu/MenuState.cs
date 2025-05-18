@@ -1,12 +1,11 @@
-﻿using _StoryGame.Core.Managers.HSM.Common;
-using _StoryGame.Core.Managers.HSM.Impls.States.Gameplay;
+﻿using _StoryGame.Core.Managers.HSM.Impls.States.Gameplay;
 using _StoryGame.Core.Managers.HSM.Interfaces;
 
 namespace _StoryGame.Core.Managers.HSM.Impls.States.Menu
 {
     public sealed class MenuState : BaseState
     {
-        public MenuState(HSM stateMachine) : base(stateMachine)
+        public MenuState(HSM hsm) : base(hsm)
         {
         }
 

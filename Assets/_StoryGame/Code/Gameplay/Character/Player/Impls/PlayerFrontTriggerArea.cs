@@ -30,12 +30,13 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
 
         public void Init(IPlayer player)
         {
-            _log = _container.Resolve<IJLog>();
-            _colliderOwner = player ??
-                             throw new NullReferenceException($"Player is null. {nameof(PlayerFrontTriggerArea)}");
-
             if (_container == null)
                 throw new NullReferenceException($"DiContainer is null. {nameof(PlayerFrontTriggerArea)}");
+
+            _log = _container.Resolve<IJLog>();
+
+            _colliderOwner = player ??
+                             throw new NullReferenceException($"Player is null. {nameof(PlayerFrontTriggerArea)}");
 
             // _signalBus = _container.Resolve<SignalBus>(nameof(PlayerFrontTriggerArea));
             _localizationProvider = _container.Resolve<ILocalizationProvider>();
@@ -53,6 +54,7 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
 
             if (!other || !IsLayerInMask(other.gameObject.layer))
                 return;
+            _log.Debug("OnTriggerEnter");
 
             var interactable = other.gameObject.GetComponent<IInteractable>();
             if (interactable == null)
@@ -145,10 +147,20 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
 
             try
             {
-                var note = _localizationProvider?.Localize(interactable.LocalizationKey, WordTransform.Upper) ??
-                           "Unknown";
-                var action = _localizationProvider?.Localize(interactable.InteractionTipNameId, WordTransform.Upper) ??
-                             "Interact";
+                if (_localizationProvider == null)
+                    throw new NullReferenceException("Localization provider is null.");
+
+                var key = interactable.LocalizationKey;
+                var tip = interactable.InteractionTipNameId;
+
+                var note = string.IsNullOrEmpty(key)
+                    ? "Not set"
+                    : _localizationProvider.LocalizeWord(interactable.LocalizationKey, WordTransform.Upper);
+
+                var action = string.IsNullOrEmpty(tip)
+                    ? "Not set"
+                    : _localizationProvider.LocalizeWord(interactable.InteractionTipNameId, WordTransform.Upper);
+
                 return (note, action);
             }
             catch (Exception ex)

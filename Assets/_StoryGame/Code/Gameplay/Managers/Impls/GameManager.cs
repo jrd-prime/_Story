@@ -1,8 +1,13 @@
-﻿using _StoryGame.Core.Character.Player.Interfaces;
+﻿using System;
+using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Managers.Game.Interfaces;
 using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Gameplay.Managers.Inerfaces;
+using _StoryGame.Infrastructure.Input.Interfaces;
+using _StoryGame.Infrastructure.Input.Messages;
+using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
+using MessagePipe;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -11,26 +16,36 @@ namespace _StoryGame.Gameplay.Managers.Impls
 {
     public class GameManager : MonoBehaviour, IGameManager, IInitializable
     {
-        [Inject] private IObjectResolver _container;
-
-        private ISettingsProvider SettingsManager;
+        private ISettingsProvider _settingsManager;
         private HSM _hsm;
         private IGameService _gameService;
-        // private SignalBus _signalBus;
+        private IPublisher<IInputMessage> _inputPublisher;
+        private IJLog _log;
+        private IPlayer _player;
+        private ICameraManager _cameraManager;
+
+        private EnableInputMessage _enableInputCachedMessage;
+        private DisableInputMessage _disableInputCachedMessage;
+
+        [Inject]
+        private void Construct(IObjectResolver resolver)
+        {
+            _inputPublisher = resolver.Resolve<IPublisher<IInputMessage>>();
+            _hsm = resolver.Resolve<HSM>();
+            _settingsManager = resolver.Resolve<ISettingsProvider>();
+            _gameService = resolver.Resolve<IGameService>();
+            _log = resolver.Resolve<IJLog>();
+            _player = resolver.Resolve<IPlayer>();
+            _cameraManager = resolver.Resolve<ICameraManager>();
+        }
 
         public void Initialize()
         {
-            // Log.Warn("Init game manager");
-            _hsm = _container.Resolve<HSM>();
-            SettingsManager = _container.Resolve<ISettingsProvider>();
-            var player = _container.Resolve<IPlayer>();
+            _cameraManager.SetTarget(_player);
 
-            // _signalBus = _container.Resolve<SignalBus>(nameof(GameManager));
-            _gameService = _container.Resolve<IGameService>();
-
-            var cameraManager = _container.Resolve<ICameraManager>();
-
-            cameraManager.SetTarget(player);
+            _enableInputCachedMessage = new EnableInputMessage();
+            _disableInputCachedMessage = new DisableInputMessage();
+            _log.Info("<color=green>GAME MANAGER INITIALIZED</color>");
         }
 
         private void Start()
@@ -40,47 +55,43 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
         public void GameOver()
         {
-            Debug.LogWarning("<color=red>GAME OVER</color>");
+            _log.Info("<color=red>GAME OVER</color>");
             _gameService.GameOver();
         }
 
         public void StopTheGame()
         {
-            Debug.LogWarning("<color=red>GAME STOPPED</color>");
+            _log.Info("<color=red>GAME STOPPED</color>");
             _gameService.StopTheGame();
         }
 
         public void StartNewGame()
         {
-            Debug.LogWarning("<color=green>GAME STARTED</color>");
+            _log.Info("<color=green>GAME STARTED</color>");
             _gameService.StartNewGame();
-            // _signalBus.Fire(new EnableInputSignal());
+            _inputPublisher.Publish(_enableInputCachedMessage);
         }
 
         public void Pause()
         {
-            // Log.Warn("GAME PAUSED");
+            _log.Info("GAME PAUSED");
             _gameService.Pause();
-            // _signalBus.Fire(new DisableInputSignal());
+            _inputPublisher.Publish(_disableInputCachedMessage);
             Time.timeScale = 0;
         }
 
         public void UnPause()
         {
-            // Log.Warn("GAME UNPAUSED");
+            _log.Info("GAME UNPAUSED");
             _gameService.UnPause();
-            // _signalBus.Fire(new EnableInputSignal());
+            _inputPublisher.Publish(_enableInputCachedMessage);
             Time.timeScale = 1;
         }
 
         public void ContinueGame()
         {
-            // Log.Warn("GAME CONTINUED");
+            _log.Info("GAME CONTINUED");
             _gameService.ContinueGame();
-        }
-
-        private void OnDestroy()
-        {
         }
     }
 }

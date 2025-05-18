@@ -1,97 +1,102 @@
 ﻿using System;
-using System.Collections.Generic;
 using _StoryGame.Data;
+using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 namespace _StoryGame.Infrastructure.Localization
 {
     public sealed class LocalizationProvider : ILocalizationProvider
     {
         public bool IsInitialized { get; private set; }
-        public string Description => "Localization Provider";
+        public string Description => "Unity Localization Provider";
 
-        private string _defaultLanguage;
+        private const string WordsTable = "Words";
+
+        private StringTable _wordsTable;
+
         private readonly ISettingsProvider _settingsProvider;
+        private readonly IJLog _log;
 
-        private readonly Dictionary<string, string> _localisationCache = new();
-
-        private readonly Dictionary<Language, string> _languages = new()
-        {
-            { Language.English, "en" },
-            { Language.Russian, "ru" }
-        };
-
-        public LocalizationProvider(ISettingsProvider settingsProvider)
+        public LocalizationProvider(ISettingsProvider settingsProvider, IJLog log)
         {
             _settingsProvider = settingsProvider;
+            _log = log;
         }
 
         public async UniTask InitializeOnBoot()
         {
-            if (_settingsProvider == null)
-                throw new NullReferenceException("Settings provider is null. + " + nameof(LocalizationProvider));
-            var languageSettings = _settingsProvider.GetSettings<LocalizationSettings>();
+            var settings = _settingsProvider.GetSettings<JLocalizationSettings>();
 
-            if (languageSettings == null)
-                throw new NullReferenceException("Localization settings is null. + " + nameof(LocalizationProvider));
+            if (settings == null)
+                throw new NullReferenceException("Localization settings is null.");
 
-            _defaultLanguage = _languages[languageSettings.DefaultLanguage];
-
-            if (_defaultLanguage == null)
-                throw new NullReferenceException("Default language is null. + " + nameof(LocalizationProvider));
-
-            try
+            var localeCode = settings.DefaultLanguage switch
             {
-                await LoadLocalizationDataAsync(_defaultLanguage);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Failed to load localization data: {e.Message}");
-            }
+                Language.English => "en",
+                Language.Russian => "ru",
+                _ => "en"
+            };
+
+            var locale = LocalizationSettings.AvailableLocales.Locales
+                .Find(l => l.Identifier.Code == localeCode);
+
+            if (locale == null)
+                throw new Exception($"Locale not found for code: {localeCode}");
+
+            await LocalizationSettings.InitializationOperation.Task;
+
+            LocalizationSettings.SelectedLocale = locale;
+
+            _wordsTable = await LocalizationSettings.StringDatabase.GetTableAsync(WordsTable);
+
+            if (_wordsTable == null)
+                throw new Exception($"Localization table {WordsTable} not found.");
 
             IsInitialized = true;
-            Debug.Log("Localization system initialization completed. Default language: " + _defaultLanguage);
         }
 
-        public string Localize(string key, WordTransform wordTransform = WordTransform.None)
+        public string LocalizeWord(string key, WordTransform transform = WordTransform.None)
         {
-            if (!_localisationCache.TryGetValue(key, out var value))
-                throw new KeyNotFoundException($"Localization key '{key}' not found.");
+            if (!IsInitialized)
+                throw new Exception("LocalizationProvider is not initialized.");
 
-            return wordTransform switch
+            var entry = _wordsTable.GetEntry(key);
+
+            string value;
+            if (entry == null)
+            {
+                _log.Error($"Localization key '{key}' not found.");
+                value = "Not localized";
+            }
+            else value = entry.GetLocalizedString();
+            
+            return transform switch
             {
                 WordTransform.None => value,
-                WordTransform.Capitalize => "CAPITALIZE NOT IMPLEMENTED", //; value.Capitalize(),
+                WordTransform.Capitalize => CapitalizeFirst(value),
                 WordTransform.Low => value.ToLower(),
                 WordTransform.Upper => value.ToUpper(),
-                _ => throw new ArgumentOutOfRangeException(nameof(wordTransform), wordTransform, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(transform), transform, null)
             };
         }
 
-        private async UniTask LoadLocalizationDataAsync(string address)
+        private static string CapitalizeFirst(string text)
         {
-            try
-            {
-                var handle = Addressables.LoadAssetAsync<TextAsset>(address);
-                var textAsset = await handle.Task;
+            if (string.IsNullOrEmpty(text))
+                return text;
 
-                if (textAsset)
-                {
-                    var jsonContent = textAsset.text;
-                    var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent);
-
-                    foreach (var entry in data) _localisationCache.TryAdd(entry.Key, entry.Value);
-                }
-                else Debug.LogError($"Localization file not found at address: {address}");
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Failed to load localization data: {e.Message}");
-            }
+            return char.ToUpper(text[0]) + text[1..].ToLower();
         }
+    }
+
+    public enum WordTransform
+    {
+        None = -1,
+        Capitalize,
+        Low,
+        Upper
     }
 }

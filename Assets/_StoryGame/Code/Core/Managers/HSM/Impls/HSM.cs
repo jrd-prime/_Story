@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using _StoryGame.Core.Managers.HSM.Impls.States.Gameplay;
 using _StoryGame.Core.Managers.HSM.Impls.States.Menu;
 using _StoryGame.Core.Managers.HSM.Interfaces;
-using _StoryGame.Core.Managers.HSM.Signals;
+using _StoryGame.Core.Managers.HSM.Messages;
+using _StoryGame.Infrastructure.Logging;
+using MessagePipe;
 using R3;
 
 namespace _StoryGame.Core.Managers.HSM.Impls
@@ -11,25 +13,22 @@ namespace _StoryGame.Core.Managers.HSM.Impls
     /// <summary>
     /// Hierarchical State Machine
     /// </summary>
-    public sealed class HSM
+    public sealed class HSM : IDisposable
     {
-        public ReadOnlyReactiveProperty<IState> CurrentState => _currentState;
+        public Observable<IState> CurrentState => _currentState;
 
         private IState _previousState;
-        private readonly ReactiveProperty<IState> _currentState = new();
+        private readonly ReactiveProperty<IState> _currentState = new(null);
         private readonly Dictionary<Type, IState> _states = new();
 
-        public HSM(
-            // SignalBus signalBus
-            )
+        private readonly CompositeDisposable _disposables = new();
+        private readonly IJLog _log;
+
+        public HSM(ISubscriber<IHSMMessage> hsmSubscriber, IJLog log)
         {
+            _log = log;
             InitializeMainStates();
-
-            var rootState = _states[typeof(MenuState)];
-            _previousState = null;
-            _currentState.Value = rootState;
-
-            // signalBus.Subscribe<ChangeGameStateSignalVo>(OnChangeGameStateSignal);
+            hsmSubscriber.Subscribe(HandleMessage).AddTo(_disposables);
         }
 
         /// <summary>
@@ -46,8 +45,10 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         /// </summary>
         public void Start()
         {
-            // Log.Info($"<color=green>[{nameof(HSM)}]</color> Start with state  {_currentState.Value.GetType().Name}");
-            _currentState.Value.Enter(_previousState);
+            var rootState = _states[typeof(MenuState)];
+            _previousState = null;
+            _currentState.Value = rootState;
+            _currentState.CurrentValue.Enter(_previousState);
         }
 
         /// <summary>
@@ -55,10 +56,13 @@ namespace _StoryGame.Core.Managers.HSM.Impls
         /// </summary>
         public void Update()
         {
-            // Log.Warn($"<color=green>[{nameof(HSM)}]</color> Update!");
+            _log.Warn($"<color=green>[{nameof(HSM)}]</color> Update!");
             _currentState.Value.Update();
+
             var nextState = _currentState.Value.HandleTransition();
-            if (nextState != null && nextState != _currentState.Value) TransitionTo(nextState.GetType());
+
+            if (nextState != null && nextState != _currentState.Value)
+                TransitionTo(nextState.GetType());
         }
 
         /// <summary>
@@ -69,19 +73,35 @@ namespace _StoryGame.Core.Managers.HSM.Impls
             if (!_states.TryGetValue(stateType, out var newState))
                 throw new Exception($"state {stateType.Name} not found");
 
-            // Log.Info(
-            //     $"<color=green>[{nameof(HSM)}]</color> {_currentState.Value.GetType().Name} > {newState.GetType().Name}");
+            _log.Info(
+                $"<color=green>[{nameof(HSM)}]</color> {_currentState.Value.GetType().Name} > {newState.GetType().Name}");
             _previousState = _currentState.Value;
             _currentState.Value.Exit(_previousState);
             _currentState.Value = newState;
             _currentState.Value.Enter(_previousState);
         }
 
-        private void OnChangeGameStateSignal(ChangeGameStateSignalVo signal) => TransitionTo(signal.StateType);
-
         /// <summary>
         /// Регистрация глобального состояния
         /// </summary>
         private void RegisterState<T>(IState state) where T : IState => _states[typeof(T)] = state;
+
+        private void HandleMessage(IHSMMessage msg)
+        {
+            switch (msg)
+            {
+                case ChangeGameStateMessage stateMessage:
+                    TransitionTo(stateMessage.StateType);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(msg));
+            }
+        }
+
+        public void Dispose()
+        {
+            _currentState?.Dispose();
+            _disposables?.Dispose();
+        }
     }
 }

@@ -1,11 +1,10 @@
-﻿using _StoryGame.Core.Managers.HSM.Common;
-using _StoryGame.Core.Managers.HSM.Interfaces;
+﻿using _StoryGame.Core.Managers.HSM.Interfaces;
 
 namespace _StoryGame.Core.Managers.HSM.Impls.States.Gameplay
 {
     public class GameplayState : BaseState
     {
-        public GameplayState(HSM stateMachine) : base(stateMachine)
+        public GameplayState(HSM hsm) : base(hsm)
         {
         }
 

@@ -1,0 +1,103 @@
+﻿using System;
+using _StoryGame.Data;
+using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Infrastructure.Settings;
+using Cysharp.Threading.Tasks;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
+
+namespace _StoryGame.Infrastructure.Localization
+{
+    public sealed class LocalizationProvider : ILocalizationProvider
+    {
+        public bool IsInitialized { get; private set; }
+        public string Description => "Unity Localization Provider";
+
+        private const string WordsTable = "Words";
+
+        private StringTable _wordsTable;
+
+        private readonly ISettingsProvider _settingsProvider;
+        private readonly IJLog _log;
+
+        public LocalizationProvider(ISettingsProvider settingsProvider, IJLog log)
+        {
+            _settingsProvider = settingsProvider;
+            _log = log;
+        }
+
+        public async UniTask InitializeOnBoot()
+        {
+            var settings = _settingsProvider.GetSettings<JLocalizationSettings>();
+
+            if (settings == null)
+                throw new NullReferenceException("Localization settings is null.");
+
+            var localeCode = settings.DefaultLanguage switch
+            {
+                Language.English => "en",
+                Language.Russian => "ru",
+                _ => "en"
+            };
+
+            var locale = LocalizationSettings.AvailableLocales.Locales
+                .Find(l => l.Identifier.Code == localeCode);
+
+            if (locale == null)
+                throw new Exception($"Locale not found for code: {localeCode}");
+
+            await LocalizationSettings.InitializationOperation.Task;
+
+            LocalizationSettings.SelectedLocale = locale;
+
+            _wordsTable = await LocalizationSettings.StringDatabase.GetTableAsync(WordsTable);
+
+            if (_wordsTable == null)
+                throw new Exception($"Localization table {WordsTable} not found.");
+
+            IsInitialized = true;
+        }
+
+        public string LocalizeWord(string key, WordTransform transform = WordTransform.None)
+        {
+            if (!IsInitialized)
+                throw new Exception("LocalizationProvider is not initialized.");
+
+            var entry = _wordsTable.GetEntry(key);
+
+            string value;
+            if (entry == null)
+            {
+                _log.Error($"Localization key '{key}' not found.");
+                value = "Not localized";
+            }
+            else value = entry.GetLocalizedString();
+
+
+            return transform switch
+            {
+                WordTransform.None => value,
+                WordTransform.Capitalize => CapitalizeFirst(value),
+                WordTransform.Low => value.ToLower(),
+                WordTransform.Upper => value.ToUpper(),
+                _ => throw new ArgumentOutOfRangeException(nameof(transform), transform, null)
+            };
+        }
+
+        private static string CapitalizeFirst(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+
+            return char.ToUpper(text[0]) + text[1..].ToLower();
+        }
+    }
+
+    public enum WordTransform
+    {
+        None = -1,
+        Capitalize,
+        Low,
+        Upper
+    }
+}
