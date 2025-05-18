@@ -1,4 +1,4 @@
-namespace Game.Core.Interfaces
+namespace _StoryGame.Core.Interfaces
 {
     public interface IDamageable
     {

@@ -5,14 +5,14 @@ namespace _StoryGame.Gameplay.Room
 {
     public interface IRoom
     {
-        string Name { get; } 
-        float Progress { get; } 
-        List<Loot> LootPool { get; } 
-        List<Transition> Transitions { get; } 
-        void Inspect(); 
-        void DeepSearch(); 
+        string Name { get; }
+        float Progress { get; }
+        List<Loot> LootPool { get; }
+        List<Transition> Transitions { get; }
+        void Inspect();
+        void DeepSearch();
         void UnlockObject();
-        bool CanTransition(Transition transition); 
+        bool CanTransition(Transition transition);
     }
 
     [Serializable]

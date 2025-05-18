@@ -1,6 +1,6 @@
 using R3;
 
-namespace Game.Core.Interfaces
+namespace _StoryGame.Core.Interfaces
 {
     /// <summary>
     /// Интерфейс для объектов, которые можно очищать

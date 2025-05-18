@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Infrastructure.Input.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 using R3;
 using UnityEngine;

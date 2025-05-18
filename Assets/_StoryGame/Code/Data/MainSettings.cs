@@ -12,7 +12,7 @@ namespace _StoryGame.Data
     {
         public override string ConfigName { get; }
         [field: SerializeField] public AssetReference FirstScene { get; private set; }
-        [field: SerializeField] public LocalizationSettings LocalizationSettings { get; private set; }
+        [field: SerializeField] public JLocalizationSettings LocalizationSettings { get; private set; }
         [field: SerializeField] public HeroSettings HeroSettings { get; private set; }
         [field: SerializeField] public UIViewsSettings UIViewsSettings { get; private set; }
 

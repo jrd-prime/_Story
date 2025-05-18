@@ -17,17 +17,14 @@ namespace _StoryGame.Infrastructure.Scopes.Game
     public sealed class GameScope : LifetimeScope
     {
         [SerializeField] private Player playerPrefab;
-
         [SerializeField] private Transform spawnPoint;
-
-        // [SerializeField] private UIManager uiManagerPrefab; // Закомментировано, как в исходном коде
         private GameObject _mainEmpty;
 
         protected override void Configure(IContainerBuilder builder)
         {
             Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
-            // Регистрация HSM как Singleton с немедленной активацией
-            builder.RegisterEntryPoint<HSM>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+
+            RegisterStateMachine(builder);
 
             // Поиск объекта --- MAIN
             _mainEmpty = GameObject.Find("--- MAIN");
@@ -50,11 +47,17 @@ namespace _StoryGame.Infrastructure.Scopes.Game
                 throw new Exception("PlayerInstaller is not installed.");
         }
 
+        private void RegisterStateMachine(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<HSM>().AsSelf().As<IDisposable>();
+        }
+
 
         private void InitializeManagers(IContainerBuilder builder)
         {
             builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
             builder.RegisterComponentInHierarchy<GameManager>().AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<UIManager>().AsImplementedInterfaces();
         }
 
         private void InitializeViewStates(IContainerBuilder builder)

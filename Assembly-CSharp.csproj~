@@ -46,28 +46,14 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.34f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuest.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestManager.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestObjective.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestReward.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\FakeQuestsProvider.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestEventIdConst.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestEventSignal.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestManagerTest.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestObjectiveTest.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestTest.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\RewardTest.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IDecoration.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IFurniture.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IRoom.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\ITavernManager.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\ITavernUpgrade.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Gameplay\Managers\Inerfaces\IUIManager.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Gameplay\UI\UIViewBase.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\IUIViewModel.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\Messages\EnableInputMessage.cs" />
     <Compile Include="Assets\ToggleInspectorLock.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\IWalletOwner.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\ICurrencyService.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Signals\ChangeGameStateSignalVo.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IGameManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Impls\CurrencyService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\MobileInput.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interactables\Interfaces\IInteractable.cs" />
@@ -77,19 +63,31 @@
     <Compile Include="Assets\_StoryGame\Code\Data\SOPathConst.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Extensions\UIToolkitExtensions.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Character\Player\Impls\PlayerFrontTriggerArea.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IDecoration.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestManager.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\ICleanable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Localization\LocalizationProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\ICharacterInteractor.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\Messages\DisableInputMessage.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuest.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\UIView.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IBuffable.cs" />
     <Compile Include="Assets\Packages\Hierarchy Designer\Runtime\Scripts\HierarchyDesignerFolder.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Localization\ILocalizationProvider.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\ITavernUpgrade.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Settings\SettingsProvider.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\ReactivePropertyExtensions.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Gameplay\Buffs\BuffSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\IUIView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\FirstSceneProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Assets\AssetProvider.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestReward.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\Interfaces\IInputMessage.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\ITavernManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\BootstrapSettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Infrastructure\Localization\WordTransform.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\ICharacter.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\JLocalizationSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interactables\LootableObjectData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\BootstrapUIController.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\BootstrapUIView.cs" />
@@ -101,20 +99,26 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\Game\Impls\GameService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Enemy\Interfaces\IEnemy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\IWallet.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Gameplay\Buffs\IBuff.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IFurniture.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IJMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interactables\OpenableObjectData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\Game\Interfaces\IGameService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Bootstrap\BootstrapScope.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Managers\Impls\GameManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\PlayerModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interactables\GatherableObjectData.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IEquippable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Settings\ISettingsProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\PlayerService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Logging\JLog.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\Interfaces\IBootstrapUIController.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Room\IRoom.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IInteractable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\ProjectConstant.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\CheckerExtension.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Tools\FPSCounter.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestObjective.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Impls\States\Gameplay\GameplayState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interactables\CollectableObjData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Managers\Impls\CameraManager.cs" />
@@ -122,22 +126,25 @@
     <Compile Include="Assets\_StoryGame\Code\AppStarter.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\UI\GameplayUI\GameplayUIViewModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\UI\UIConst.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IDebuffable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\MainSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Character\Player\Impls\PlayerInteractor.cs" />
     <Compile Include="Assets\EditSceneHelper.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Impls\States\Menu\MenuState.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Common\BaseState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Impls\HSM.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Impls\Wallet.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Animations\Interfaces\IPlayerAnimationService.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Gameplay\Managers\Impls\UIManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Anima\Data\Interactables\InteractableAnimationName.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Infrastructure\Localization\LocalizationNameID.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Interfaces\IHSMMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\RootScope.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\IJInput.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\Interfaces\IBootable.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\Interfaces\IJInput.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Messages\ChangeGameStateMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\IMovable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\IFollowable.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\LocalizationSettings.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Uids\Uid.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IRoom.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\Game\Interfaces\IGameManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\Extensions\AnimatorExtensions.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Game\PlayerInstaller.cs" />
@@ -145,13 +152,18 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Assets\AssetNameConst.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Game\GameScope.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Gameplay\Interactables\Interactable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\ContainerExtensions.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IGatherable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Gameplay\UI\GameplayUIView.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Uids\UidGenerator.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\UIViewsSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\InteractableSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\HeroSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\BootstrapLoader.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IUpgradable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Interfaces\IState.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Managers\HSM\Impls\States\BaseState.cs" />
     <None Include="Library\PackageCache\com.unity.modules.subsystems\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.jsonserialize\package.json" />
@@ -182,6 +194,7 @@
     <None Include="Library\PackageCache\com.unity.modules.terrainphysics\package.json" />
     <None Include="Library\PackageCache\com.unity.mathematics\package.json" />
     <None Include="Library\PackageCache\com.unity.scriptablebuildpipeline\package.json" />
+    <None Include="Library\PackageCache\com.unity.localization\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.burst\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.visualscripting\package.json" />
     <None Include="Library\PackageCache\com.unity.collab-proxy\package.json" />
@@ -210,9 +223,12 @@
     <None Include="Library\PackageCache\com.unity.modules.vr\package.json" />
     <None Include="Library\PackageCache\com.unity.visualscripting\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.ide.visualstudio\ValidationExceptions.json" />
+    <None Include="Library\PackageCache\com.unity.nuget.newtonsoft-json\link.xml" />
     <None Include="Library\PackageCache\com.unity.modules.wind\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.umbra\package.json" />
     <None Include="Assets\Packages\Microsoft.Bcl.TimeProvider.8.0.0\useSharedDesignerContext.txt" />
+    <None Include="Library\PackageCache\com.unity.nuget.newtonsoft-json\package.json" />
+    <None Include="Library\PackageCache\com.unity.localization\package.json" />
     <None Include="Assets\Packages\System.ComponentModel.Annotations.5.0.0\version.txt" />
     <None Include="Library\PackageCache\com.unity.inputsystem\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.modules.audio\package.json" />
@@ -232,6 +248,7 @@
     <None Include="Library\PackageCache\com.unity.modules.xr\package.json" />
     <None Include="Library\PackageCache\com.unity.profiling.core\package.json" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_Properties.cginc" />
+    <None Include="Library\PackageCache\com.unity.nuget.newtonsoft-json\Runtime\AOT\Newtonsoft.Json.xml" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_SDF Internal Editor.shader" />
     <None Include="Library\PackageCache\com.unity.device-simulator.devices\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.director\package.json" />
@@ -249,6 +266,7 @@
     <None Include="Library\PackageCache\com.unity.mathematics\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.modules.animation\package.json" />
     <None Include="Assets\_StoryGame\Static\UI\main.uss" />
+    <None Include="Library\PackageCache\com.unity.nuget.newtonsoft-json\Runtime\Newtonsoft.Json.xml" />
     <None Include="Library\PackageCache\com.unity.collections\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.burst\Unity.Burst.Unsafe.xml" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal\ValidationConfig.json" />
@@ -1236,6 +1254,10 @@
       <Project>{bcb0c6d7-8007-3752-8624-941c6793373b}</Project>
       <Name>Unity.Burst.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Localization.Editor.csproj">
+      <Project>{3bff13b5-f7e6-b39a-2e21-006388b9eb1c}</Project>
+      <Name>Unity.Localization.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Burst.csproj">
       <Project>{b7a17995-4b30-aa9b-29c0-faec9d9195f3}</Project>
       <Name>Unity.Burst</Name>
@@ -1256,6 +1278,10 @@
       <Project>{7651f265-7c05-4f56-2928-aeaaafb4a12f}</Project>
       <Name>Unity.Rendering.LightTransport.Runtime</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Localization.csproj">
+      <Project>{708d956c-04b4-2642-b655-9592a1cd54f0}</Project>
+      <Name>Unity.Localization</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.csproj">
       <Project>{2200bb99-8f3f-85f6-9fb6-dc6f99c219aa}</Project>
       <Name>Unity.InputSystem</Name>
@@ -1268,33 +1294,6 @@
       <Project>{8ab2b084-bcf5-3871-b422-e3b249e5bbfe}</Project>
       <Name>Unity.RenderPipelines.Universal.2D.Runtime</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\Interfaces.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuest.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestManager.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestManager.cs~" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestObjective.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestReward.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\FakeQuestsProvider.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\FakeQuestsProvider.cs~" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestData.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestEventIdConst.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestEventSignal.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestEventSignal.cs~" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestManagerTest.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestManagerTest.cs~" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestObjectiveTest.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestReward.cs~" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\QuestTest.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Quest\TestImpl\RewardTest.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IDecoration.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IFurniture.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IRoom.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\ITavernManager.cs.meta" />
-    <Content Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\ITavernUpgrade.cs.meta" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

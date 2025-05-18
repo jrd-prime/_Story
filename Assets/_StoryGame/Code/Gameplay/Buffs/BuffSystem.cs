@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Game.Buffs.Interfaces;
-using Game.Core.Interfaces;
+using _StoryGame.Core.Interfaces;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Game.Buffs
+namespace _StoryGame.Gameplay.Buffs
 {
     public sealed class BuffSystem : IFixedTickable
     {

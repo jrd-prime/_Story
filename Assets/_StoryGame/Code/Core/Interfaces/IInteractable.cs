@@ -3,7 +3,7 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Game.Core.Interfaces
+namespace _StoryGame.Core.Interfaces
 {
     /// <summary>
     /// Интерфейс для объектов, с которыми можно взаимодействовать

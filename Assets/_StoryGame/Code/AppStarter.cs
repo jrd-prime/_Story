@@ -1,6 +1,7 @@
 ﻿using System;
 using _StoryGame.Infrastructure.Bootstrap;
 using _StoryGame.Infrastructure.Bootstrap.Interfaces;
+using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace _StoryGame
             bootstrapLoader = _container.Resolve<BootstrapLoader>();
             firstSceneProvider = _container.Resolve<FirstSceneProvider>();
             bootstrapUIController = _container.Resolve<IBootstrapUIController>();
-            _log = container.Resolve<IJLog>();
+            _log = _container.Resolve<IJLog>();
         }
 
         public void Initialize() => InitializeAsync().Forget();
@@ -38,8 +39,10 @@ namespace _StoryGame
         {
             // Bootable services
             var settingsProvider = _container.Resolve<ISettingsProvider>();
+            var localizationProvider = _container.Resolve<ILocalizationProvider>();
 
             bootstrapLoader.EnqueueBootable(settingsProvider);
+            bootstrapLoader.EnqueueBootable(localizationProvider);
 
             _log.Info("<color=green><b>Starting Services initialization...</b></color>");
 

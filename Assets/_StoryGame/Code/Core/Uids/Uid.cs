@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Game.Core.Uids
+namespace _StoryGame.Core.Uids
 {
 	[Serializable]
 	public struct Uid : IEquatable<Uid>

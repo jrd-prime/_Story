@@ -14,44 +14,41 @@ namespace _StoryGame.Infrastructure.Bootstrap
 
         public BootstrapLoader(IBootstrapUIController controller, IJLog log)
         {
-            _controller = controller;
-            _log = log;
+            _controller = controller ?? throw new ArgumentNullException(nameof(controller));
+            _log = log ?? throw new ArgumentNullException(nameof(log));
         }
 
-        public void EnqueueBootable(IBootable bootable) => _loadingQueue.Enqueue(bootable);
+        public void EnqueueBootable(IBootable bootable)
+        {
+            if (bootable == null)
+                throw new ArgumentNullException(nameof(bootable));
+
+            _loadingQueue.Enqueue(bootable);
+        }
 
         public async UniTask StartServicesInitializationAsync(int pseudoDelay = 0)
         {
             if (_loadingQueue.Count == 0)
-                throw new Exception("No services to initialize! Use EnqueueBootable first.");
+                return;
 
-            foreach (var service in _loadingQueue)
+            while (_loadingQueue.Count > 0)
             {
+                var service = _loadingQueue.Dequeue();
                 try
                 {
-                    if (_controller != null)
-                    {
-                        _controller.SetLoadingText($"Loading: {service.Description}..");
+                    _controller.SetLoadingText($"Loading: {service.Description}...");
 
-                        await service.InitializeOnBoot();
+                    await service.InitializeOnBoot();
 
-                        if (pseudoDelay > 0)
-                            await UniTask.Delay(pseudoDelay); // fake delay per service
-
-                        _log.Info($"Service {service.GetType().Name} initialized.");
-                        return;
-                    }
-
-                    _log.Error("BootstrapUIController is null. " + nameof(BootstrapLoader));
+                    if (pseudoDelay > 0)
+                        await UniTask.Delay(pseudoDelay);
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Failed to initialize {service.GetType().Name}: {ex.Message}");
+                    _log.Error($"Failed to initialize {service.GetType().Name}: {ex.Message}");
+                    throw;
                 }
             }
-
-            _log.Info("All services initialized.");
-            await UniTask.CompletedTask;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace Game.Core.Uids
+namespace _StoryGame.Core.Uids
 {
     public static unsafe class UidGenerator
     {

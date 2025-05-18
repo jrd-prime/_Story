@@ -1,6 +1,6 @@
-using Game.Core.Interfaces;
+using _StoryGame.Core.Interfaces;
 
-namespace Game.Buffs.Interfaces
+namespace _StoryGame.Gameplay.Buffs
 {
     public interface IBuff
     {

@@ -1,6 +1,6 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 
-namespace Game.Core.Interfaces
+namespace _StoryGame.Core.Interfaces
 {
     public interface IBuffable : ICharacter
     {

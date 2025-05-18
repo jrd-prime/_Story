@@ -1,6 +1,6 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 
-namespace Game.Core.Interfaces
+namespace _StoryGame.Core.Interfaces
 {
     /// <summary>
     /// TODO надо подумать о бафах/дебафах. либо мб по-умолчанию все чарактеры подойдут по интерфейс для дебафов от оружия.

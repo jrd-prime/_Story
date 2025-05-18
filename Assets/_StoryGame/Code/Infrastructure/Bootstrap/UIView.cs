@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Gameplay.Extensions;
+using _StoryGame.Gameplay.UI;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,11 +9,8 @@ using VContainer;
 namespace _StoryGame.Infrastructure.Bootstrap
 {
     [RequireComponent(typeof(UIDocument))]
-    public abstract class UIView<TController> : MonoBehaviour, IUIView where TController : IUIViewModel
+    public abstract class UIView<TController> : UIViewBase where TController : IUIViewModel
     {
-        [SerializeField] private string viewId;
-
-        public string Id => viewId;
 
         [Inject] protected TController ViewModel;
 

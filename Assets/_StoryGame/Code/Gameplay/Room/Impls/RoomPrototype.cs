@@ -5,12 +5,12 @@ namespace _StoryGame.Gameplay.Room.Impls
 {
     public sealed class RoomPrototype : MonoBehaviour, IRoom
     {
-        [SerializeField] private string name;
+        [SerializeField] private string roomName;
         [SerializeField] private float progress;
         [SerializeField] private List<Loot> lootPool;
         [SerializeField] private List<Transition> transitions;
 
-        public string Name => name;
+        public string Name => roomName;
         public float Progress => progress;
         public List<Loot> LootPool => lootPool;
         public List<Transition> Transitions => transitions;

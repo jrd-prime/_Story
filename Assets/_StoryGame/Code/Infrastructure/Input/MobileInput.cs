@@ -1,4 +1,5 @@
-﻿using R3;
+﻿using _StoryGame.Infrastructure.Input.Interfaces;
+using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

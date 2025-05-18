@@ -1,4 +1,4 @@
-namespace Game.Core.Interfaces
+namespace _StoryGame.Core.Interfaces
 {
     /// <summary>
     /// Можно одеть/взять в руки (пылесос, метла)
