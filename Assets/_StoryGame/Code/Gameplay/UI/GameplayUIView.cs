@@ -2,9 +2,9 @@
 using _StoryGame.Gameplay.Extensions;
 using _StoryGame.Gameplay.UI.GameplayUI;
 using _StoryGame.Infrastructure.Bootstrap;
+using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
-using R3;
 
 namespace _StoryGame.Gameplay.UI
 {

@@ -1,0 +1,111 @@
+using System.Collections.Generic;
+using _StoryGame.Core.Character.Common.Interfaces;
+using R3;
+using UnityEngine;
+
+namespace Game.Tavern.Interfaces
+{
+    /// <summary>
+    /// Интерфейс для декораций в таверне
+    /// </summary>
+    public interface IDecoration
+    {
+        /// <summary>
+        /// Идентификатор декорации
+        /// </summary>
+        string Id { get; }
+        
+        /// <summary>
+        /// Название декорации
+        /// </summary>
+        string Name { get; }
+        
+        /// <summary>
+        /// Описание декорации
+        /// </summary>
+        string Description { get; }
+        
+        /// <summary>
+        /// Тип декорации
+        /// </summary>
+        DecorationType Type { get; }
+        
+        /// <summary>
+        /// Уровень декорации
+        /// </summary>
+        ReactiveProperty<int> Level { get; }
+        
+        /// <summary>
+        /// Состояние декорации
+        /// </summary>
+        ReactiveProperty<float> Condition { get; }
+        
+        /// <summary>
+        /// Позиция декорации в мире
+        /// </summary>
+        Vector3 Position { get; set; }
+        
+        /// <summary>
+        /// Размер декорации
+        /// </summary>
+        Vector3 Size { get; }
+        
+        /// <summary>
+        /// Стоимость декорации
+        /// </summary>
+        int Cost { get; }
+        
+        /// <summary>
+        /// Требуемый уровень таверны для покупки
+        /// </summary>
+        int RequiredTavernLevel { get; }
+        
+        /// <summary>
+        /// Влияние на атмосферу
+        /// </summary>
+        float AtmosphereBonus { get; }
+        
+        /// <summary>
+        /// Ремонт декорации
+        /// </summary>
+        /// <param name="value">Значение ремонта</param>
+        void Repair(float value);
+        
+        /// <summary>
+        /// Улучшить декорацию
+        /// </summary>
+        void Upgrade();
+        
+        /// <summary>
+        /// Получить бонусы декорации
+        /// </summary>
+        /// <returns>Словарь бонусов</returns>
+        Dictionary<BonusType, float> GetBonuses();
+        
+        /// <summary>
+        /// Взаимодействие с декорацией
+        /// </summary>
+        /// <param name="character">Персонаж, взаимодействующий с декорацией</param>
+        void Interact(ICharacter character);
+    }
+    
+    /// <summary>
+    /// Типы декораций
+    /// </summary>
+    public enum DecorationType
+    {
+        Painting,       // Картина
+        Statue,         // Статуя
+        Candle,         // Свеча
+        Torch,          // Факел
+        Carpet,         // Ковер
+        Curtain,        // Занавеска
+        Plant,          // Растение
+        Skull,          // Череп
+        Crystal,        // Кристалл
+        Mirror,         // Зеркало
+        Chandelier,     // Люстра
+        Rune,           // Руна
+        Pentagram       // Пентаграмма
+    }
+} 
