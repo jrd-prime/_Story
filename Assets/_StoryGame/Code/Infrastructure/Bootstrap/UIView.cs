@@ -1,39 +1,19 @@
 ﻿using System;
-using _StoryGame.Gameplay.Extensions;
 using _StoryGame.Gameplay.UI;
-using R3;
+using _StoryGame.Gameplay.UI.Impls;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace _StoryGame.Infrastructure.Bootstrap
 {
-    [RequireComponent(typeof(UIDocument))]
     public abstract class UIView<TController> : UIViewBase where TController : IUIViewModel
     {
-        [Inject] private IObjectResolver _resolver;
-
         protected TController ViewModel;
-        protected VisualElement Root;
-        protected readonly CompositeDisposable Disposables = new();
-        private VisualElement Container;
 
-        private void Awake()
+        private void Start()
         {
             ResolveDependencies();
-
-
-            if (Equals(ViewModel, default(TController)))
-                throw new NullReferenceException("ViewModel is null in " + name);
-
-            var uiDocument = GetComponent<UIDocument>();
-            // await uiDocument.WaitForReadyAsync();
-
-            Root = uiDocument.rootVisualElement ??
-                   throw new NullReferenceException("RootVisualElement is null on start in " + name);
-
-            Container = Root.GetVisualElement<VisualElement>("main-container", name);
-
 
             InitElements();
             Subscribe();
@@ -42,23 +22,24 @@ namespace _StoryGame.Infrastructure.Bootstrap
         public override void ShowBase()
         {
             Debug.Log("Show " + name);
-            Container.style.display = DisplayStyle.Flex;
+            MainContainer.style.display = DisplayStyle.Flex;
         }
 
         public override void HideBase()
         {
             Debug.Log("Hide " + name);
-            Container.style.display = DisplayStyle.None;
+            MainContainer.style.display = DisplayStyle.None;
         }
 
         private void ResolveDependencies()
         {
-            if (_resolver == null)
+            if (Resolver == null)
                 throw new NullReferenceException("Resolver is null in " + name);
 
-            ViewModel = _resolver.Resolve<TController>();
+            ViewModel = Resolver.Resolve<TController>() ??
+                        throw new NullReferenceException("ViewModel is null in " + name);
 
-            ResolveDependencies(_resolver);
+            ResolveDependencies(Resolver);
         }
 
         protected virtual void ResolveDependencies(IObjectResolver resolver)

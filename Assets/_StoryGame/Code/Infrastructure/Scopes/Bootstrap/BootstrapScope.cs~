@@ -1,4 +1,5 @@
-﻿using _StoryGame.Infrastructure.Bootstrap;
+﻿using System;
+using _StoryGame.Infrastructure.Bootstrap;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

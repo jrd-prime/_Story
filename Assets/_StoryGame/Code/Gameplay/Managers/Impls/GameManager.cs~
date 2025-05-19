@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Character.Player.Interfaces;
+﻿using System;
+using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Managers.Game.Interfaces;
 using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Gameplay.Managers.Inerfaces;
@@ -11,6 +12,7 @@ using R3;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using DisposableBag = R3.DisposableBag;
 
 namespace _StoryGame.Gameplay.Managers.Impls
 {

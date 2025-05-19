@@ -1,14 +1,12 @@
 ﻿using System;
 using _StoryGame.Data.UI;
 using _StoryGame.Gameplay.Extensions;
-using _StoryGame.Gameplay.UI.GameplayUI;
 using _StoryGame.Infrastructure.Bootstrap;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VContainer;
 
-namespace _StoryGame.Gameplay.UI
+namespace _StoryGame.Gameplay.UI.Impls.Gameplay
 {
     public class GameplayUIView : UIView<IGameplayUIViewModel>
     {

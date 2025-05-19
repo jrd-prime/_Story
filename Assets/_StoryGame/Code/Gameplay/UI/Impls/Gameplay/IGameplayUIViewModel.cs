@@ -3,7 +3,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace _StoryGame.Gameplay.UI.GameplayUI
+namespace _StoryGame.Gameplay.UI.Impls.Gameplay
 {
     public interface IGameplayUIViewModel : IUIViewModel
     {

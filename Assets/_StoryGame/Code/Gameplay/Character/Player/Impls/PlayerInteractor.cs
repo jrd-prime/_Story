@@ -4,7 +4,6 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Currency;
 using _StoryGame.Gameplay.Managers.Inerfaces;
-using _StoryGame.Infrastructure.Input;
 using R3;
 using UnityEngine;
 

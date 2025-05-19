@@ -2,8 +2,6 @@
 using _StoryGame.Data;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;
-using _StoryGame.Infrastructure.Input;
-using _StoryGame.Infrastructure.Input.Interfaces;
 using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;

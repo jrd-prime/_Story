@@ -10,13 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 9218340579184873537}
   - component: {fileID: 1860305290657493160}
-  - component: {fileID: 4639068072159354758}
   m_Layer: 0
   m_Name: MenuUIView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &9218340579184873537
 Transform:
@@ -45,23 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2fddd897344b5795b85d259c36c9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewId: sfg
---- !u!114 &4639068072159354758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3246321222287312305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 559f0240299f1c846830f0ad273f1e1c, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: a65d1910ec12ecf46a058830eb6388ee, type: 3}
-  m_SortingOrder: 222
-  m_WorldSpaceSizeMode: 1
-  m_WorldSpaceWidth: 1920
-  m_WorldSpaceHeight: 1080
+  viewId: menu
+  viewName: Menu
+  viewBaseDocument: {fileID: 9197481963319205126, guid: a65d1910ec12ecf46a058830eb6388ee, type: 3}

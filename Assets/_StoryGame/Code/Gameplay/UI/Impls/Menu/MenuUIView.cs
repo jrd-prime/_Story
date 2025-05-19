@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
-namespace _StoryGame.Gameplay.UI
+namespace _StoryGame.Gameplay.UI.Impls.Menu
 {
     public sealed class MenuUIView : UIView<IMenuUIViewModel>
     {
