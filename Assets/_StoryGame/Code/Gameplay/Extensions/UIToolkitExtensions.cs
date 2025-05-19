@@ -41,6 +41,7 @@ namespace _StoryGame.Gameplay.Extensions
             var style = element.style;
             style.position = Position.Absolute;
             style.left = style.top = style.right = style.bottom = 0f;
+            style.marginLeft = style.marginTop = style.marginRight = style.marginBottom = 0f;
             return element;
         }
 

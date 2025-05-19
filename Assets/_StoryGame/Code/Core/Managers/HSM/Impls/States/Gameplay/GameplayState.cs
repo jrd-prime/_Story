@@ -4,9 +4,12 @@ namespace _StoryGame.Core.Managers.HSM.Impls.States.Gameplay
 {
     public class GameplayState : BaseState
     {
+        public override GameStateType StateType => GameStateType.Gameplay;
+
         public GameplayState(HSM hsm) : base(hsm)
         {
         }
+
 
         public override void Enter(IState previousState)
         {

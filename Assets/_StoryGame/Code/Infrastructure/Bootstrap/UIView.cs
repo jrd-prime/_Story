@@ -1,36 +1,47 @@
 ﻿using System;
-using _StoryGame.Gameplay.Extensions;
-using _StoryGame.Gameplay.UI;
-using R3;
+using _StoryGame.Gameplay.UI.Impls;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace _StoryGame.Infrastructure.Bootstrap
 {
-    [RequireComponent(typeof(UIDocument))]
     public abstract class UIView<TController> : UIViewBase where TController : IUIViewModel
     {
+        protected TController ViewModel;
 
-        [Inject] protected TController ViewModel;
-
-        protected VisualElement Root;
-
-        protected readonly CompositeDisposable Disposables = new();
-
-        private async void Start()
+        private void Start()
         {
-            if (ViewModel == null)
-                throw new NullReferenceException("ViewModel is null in " + name);
-
-            var uiDocument = GetComponent<UIDocument>();
-            await uiDocument.WaitForReadyAsync();
-
-            Root = uiDocument.rootVisualElement ??
-                   throw new NullReferenceException("RootVisualElement is null on start in " + name);
+            ResolveDependencies();
 
             InitElements();
             Subscribe();
+        }
+
+        public override void ShowBase()
+        {
+            Debug.Log("Show " + name);
+            Root.style.display = DisplayStyle.Flex;
+        }
+
+        public override void HideBase()
+        {
+            Debug.Log("Hide " + name);
+            Root.style.display = DisplayStyle.None;
+        }
+
+        private void ResolveDependencies()
+        {
+            if (Resolver == null)
+                throw new NullReferenceException("Resolver is null in " + name);
+
+            ViewModel = Resolver.Resolve<TController>();
+
+            ResolveDependencies(Resolver);
+        }
+
+        protected virtual void ResolveDependencies(IObjectResolver resolver)
+        {
         }
 
         protected abstract void InitElements();

@@ -18,11 +18,13 @@ namespace _StoryGame
         private const int PseudoDelayMs = 300;
         private const float FadeOutDurationSeconds = 1f;
 
+
         private readonly IObjectResolver _container;
         private readonly IJLog _log;
         private readonly BootstrapLoader bootstrapLoader;
         private readonly FirstSceneProvider firstSceneProvider;
         private readonly IBootstrapUIController bootstrapUIController;
+        private readonly AppStartHandler _appStartHandler;
 
         public AppStarter(IObjectResolver container)
         {
@@ -31,9 +33,16 @@ namespace _StoryGame
             firstSceneProvider = _container.Resolve<FirstSceneProvider>();
             bootstrapUIController = _container.Resolve<IBootstrapUIController>();
             _log = _container.Resolve<IJLog>();
+            _appStartHandler = _container.Resolve<AppStartHandler>();
         }
 
-        public void Initialize() => InitializeAsync().Forget();
+
+        public void Initialize()
+        {
+            QualitySettings.vSyncCount = 0; // Отключаем VSync
+            Application.targetFrameRate = 60; // Устанавливаем желаемую частоту кадров
+            InitializeAsync().Forget();
+        }
 
         private async UniTask InitializeAsync()
         {
@@ -67,6 +76,7 @@ namespace _StoryGame
                 finally
                 {
                     _log.Info("<color=green><b>=== APP STARTED! ===</b></color>");
+                    _appStartHandler.AppStarted();
                 }
             }
         }
@@ -75,10 +85,9 @@ namespace _StoryGame
         {
             var bootstrapScene = SceneManager.GetActiveScene();
 
-            await bootstrapUIController.FadeOutAsync(FadeOutDurationSeconds);
+            // await bootstrapUIController.FadeOutAsync(FadeOutDurationSeconds);
 
             //TODO добавить исчесновение первой, и через черную на вторую
-            await UniTask.Delay(333);
 
             SceneManager.SetActiveScene(firstScene.Scene);
 

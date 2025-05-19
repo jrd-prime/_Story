@@ -1,5 +1,4 @@
 ﻿using System;
-using _StoryGame.Infrastructure.Input.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 using R3;
 using UnityEngine;
@@ -14,23 +13,22 @@ namespace _StoryGame.Infrastructure.Input
         public ReactiveProperty<Vector2> RingPosition { get; } = new(Vector2.zero);
 
         private readonly IJLog _log;
-        private readonly IJInput _input;
 
         private bool _isTouchActive;
         private const float OffsetForFullSpeed = 100f;
         private Vector2 _startTouchPosition;
         private readonly CompositeDisposable _disposables = new();
 
-        public FullScreenMovementProcessor(IJInput input, IJLog log) => (_input, _log) = (input, log);
+        public FullScreenMovementProcessor(IJLog log) => (_log) = log;
 
         public void Initialize()
         {
-            if (_input == null)
-                return;
+            // if (_input == null)
+            // return;
 
-            _input.TouchBegan.Subscribe(OnTouchBegan).AddTo(_disposables);
-            _input.TouchMoved.Subscribe(OnTouchMoved).AddTo(_disposables);
-            _input.TouchEnded.Subscribe(OnTouchEnded).AddTo(_disposables);
+            // _input.TouchBegan.Subscribe(OnTouchBegan).AddTo(_disposables);
+            // _input.TouchMoved.Subscribe(OnTouchMoved).AddTo(_disposables);
+            // _input.TouchEnded.Subscribe(OnTouchEnded).AddTo(_disposables);
         }
 
         private void OnTouchBegan(Vector2 position)

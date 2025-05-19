@@ -2,6 +2,8 @@
 {
     public static class UIConst
     {
+        public const string MainContainer = "main-container";
+
         public const string MenuButtonIDName = "menu-btn";
         public const string StartButtonIDName = "start-btn";
         public const string SettingsButtonIDName = "settings-btn";

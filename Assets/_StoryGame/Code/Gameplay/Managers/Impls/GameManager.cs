@@ -1,5 +1,4 @@
-﻿using System;
-using _StoryGame.Core.Character.Player.Interfaces;
+﻿using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Managers.Game.Interfaces;
 using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Gameplay.Managers.Inerfaces;
@@ -8,6 +7,7 @@ using _StoryGame.Infrastructure.Input.Messages;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
 using MessagePipe;
+using R3;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -26,6 +26,9 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
         private EnableInputMessage _enableInputCachedMessage;
         private DisableInputMessage _disableInputCachedMessage;
+        private AppStartHandler _appStarter;
+
+        private readonly CompositeDisposable _disposables = new();
 
         [Inject]
         private void Construct(IObjectResolver resolver)
@@ -37,6 +40,7 @@ namespace _StoryGame.Gameplay.Managers.Impls
             _log = resolver.Resolve<IJLog>();
             _player = resolver.Resolve<IPlayer>();
             _cameraManager = resolver.Resolve<ICameraManager>();
+            _appStarter = resolver.Resolve<AppStartHandler>();
         }
 
         public void Initialize()
@@ -45,11 +49,15 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
             _enableInputCachedMessage = new EnableInputMessage();
             _disableInputCachedMessage = new DisableInputMessage();
-            _log.Info("<color=green>GAME MANAGER INITIALIZED</color>");
+
+            _appStarter.IsAppStarted
+                .Subscribe(OnAppStarted)
+                .AddTo(_disposables);
         }
 
-        private void Start()
+        private void OnAppStarted(Unit _)
         {
+            _log.Info("App started!");
             _gameService.StartHSM();
         }
 

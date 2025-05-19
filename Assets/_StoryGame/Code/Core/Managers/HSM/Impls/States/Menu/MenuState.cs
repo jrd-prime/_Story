@@ -5,9 +5,12 @@ namespace _StoryGame.Core.Managers.HSM.Impls.States.Menu
 {
     public sealed class MenuState : BaseState
     {
+        public override GameStateType StateType => GameStateType.Menu;
+
         public MenuState(HSM hsm) : base(hsm)
         {
         }
+
 
         public override void Enter(IState previousState)
         {

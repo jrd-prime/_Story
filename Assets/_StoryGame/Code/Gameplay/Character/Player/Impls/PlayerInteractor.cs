@@ -4,7 +4,7 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Currency;
 using _StoryGame.Gameplay.Managers.Inerfaces;
-using _StoryGame.Infrastructure.Input;
+using _StoryGame.Gameplay.Movement;
 using R3;
 using UnityEngine;
 
@@ -25,20 +25,21 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         private readonly ICameraManager _cameraManager;
         private readonly IWallet _wallet;
         private readonly IPlayerAnimationService _playerAnimationService;
-        private readonly CompositeDisposable Disposables = new();
+        
+        private readonly CompositeDisposable _disposables = new();
 
-        public PlayerInteractor(PlayerService service, ICameraManager cameraManager,
-            ICurrencyService currencyService, 
-            // IPlayerAnimationService playerAnimationService,
-            FullScreenMovementProcessor move)
+        public PlayerInteractor(PlayerService service, ICameraManager cameraManager, ICurrencyService currencyService,
+            IMovementHandler movementHandler)
         {
             _service = service;
             _cameraManager = cameraManager;
-            // _playerAnimationService = playerAnimationService;
 
+            // _playerAnimationService = playerAnimationService;
             _wallet = currencyService.CreateWallet("player_test_id");
 
-            move.MoveDirection.Subscribe(OnMoveDirectionSignal).AddTo(Disposables);
+            movementHandler.MoveDirection
+                .Subscribe(OnMoveDirectionSignal)
+                .AddTo(_disposables);
         }
 
         private void OnMoveDirectionSignal(Vector3 direction) => MoveDirection = direction;

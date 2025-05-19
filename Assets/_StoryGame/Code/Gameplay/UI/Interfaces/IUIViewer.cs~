@@ -1,0 +1,7 @@
+﻿namespace _StoryGame.Gameplay.UI.Interfaces
+{
+    public class IUIViewer
+    {
+        
+    }
+}

@@ -2,14 +2,18 @@
 using _StoryGame.Gameplay.Extensions;
 using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using R3;
+using UnityEngine;
 using UnityEngine.UIElements;
+using VContainer;
 
 namespace _StoryGame.Infrastructure.Bootstrap
 {
-    public sealed class BootstrapUIView : UIView<IBootstrapUIController>
+    public sealed class BootstrapUIView : MonoBehaviour
     {
+        [Inject] private IBootstrapUIController _viewModel;
+
         private const string AppName = "App name";
-        private const string BootstrapContainerId = "bootstrap-container";
+        private const string BootstrapContainerId = "main-container";
         private const string LoadingLabelId = "desc-label";
         private const string AppNameLabelId = "title-label";
 
@@ -19,26 +23,30 @@ namespace _StoryGame.Infrastructure.Bootstrap
         private Label _appName;
         private Label _loadingLabel;
 
-        protected override void InitElements()
+        private async void Awake()
         {
-            _container = Root.GetVisualElement<VisualElement>("bootstrap-container", name);
-            _loadingLabel = Root.GetVisualElement<Label>("desc-label", name);
-            _appName = Root.GetVisualElement<Label>("title-label", name);
+            var doc = GetComponent<UIDocument>();
+            await doc.WaitForReadyAsync();
+            var root = doc.rootVisualElement;
+
+            _container = root.GetVisualElement<VisualElement>(BootstrapContainerId, name);
+            _loadingLabel = root.GetVisualElement<Label>(LoadingLabelId, name);
+            _appName = root.GetVisualElement<Label>(AppNameLabelId, name);
 
             _appName.text = AppName;
         }
 
-        protected override void Subscribe()
+        private void Start()
         {
-            ViewModel.LoadingText
+            _viewModel.LoadingText
                 .Subscribe(OnSetDesc)
                 .AddTo(_disposables);
 
-            ViewModel.Opacity
+            _viewModel.Opacity
                 .Subscribe(OnSetOpacity)
                 .AddTo(_disposables);
 
-            ViewModel.OnClear
+            _viewModel.OnClear
                 .Subscribe(OnClear)
                 .AddTo(_disposables);
         }

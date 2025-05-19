@@ -2,8 +2,6 @@
 using _StoryGame.Data;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;
-using _StoryGame.Infrastructure.Input;
-using _StoryGame.Infrastructure.Input.Interfaces;
 using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
@@ -23,7 +21,6 @@ namespace _StoryGame.Infrastructure.Scopes
     {
         [SerializeField] private BootstrapSettings bootstrapSettings;
         [SerializeField] private MainSettings mainSettings;
-        [SerializeField] private MobileInput input;
         [SerializeField] private EventSystem eventSystem;
         [SerializeField] private JLog log;
 
@@ -46,10 +43,6 @@ namespace _StoryGame.Infrastructure.Scopes
             builder.Register<LocalizationProvider>(Lifetime.Singleton).As<ILocalizationProvider>();
             builder.Register<FirstSceneProvider>(Lifetime.Singleton);
 
-            if (!input)
-                throw new NullReferenceException("input is null.");
-            builder.RegisterComponent(input).As<IJInput>();
-
             if (!eventSystem)
                 throw new NullReferenceException("eventSystem is null.");
             builder.RegisterComponent(eventSystem);
@@ -58,9 +51,9 @@ namespace _StoryGame.Infrastructure.Scopes
                 throw new NullReferenceException("log is null.");
             builder.RegisterComponentInNewPrefab(log, Lifetime.Singleton).As<IJLog>();
 
-            builder.Register<FullScreenMovementProcessor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-
             builder.Register<FPSCounter>(Lifetime.Singleton).AsSelf().As<ITickable>();
+
+            builder.Register<AppStartHandler>(Lifetime.Singleton).AsSelf();
         }
 
         private void RegisterMessagePipe(IContainerBuilder builder)

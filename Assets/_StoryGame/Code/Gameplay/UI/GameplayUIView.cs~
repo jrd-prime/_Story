@@ -1,0 +1,78 @@
+﻿using System;
+using _StoryGame.Data.UI;
+using _StoryGame.Gameplay.Extensions;
+using _StoryGame.Gameplay.UI.GameplayUI;
+using _StoryGame.Infrastructure.Bootstrap;
+using R3;
+using UnityEngine;
+using UnityEngine.UIElements;
+using VContainer;
+
+namespace _StoryGame.Gameplay.UI
+{
+    public class GameplayUIView : UIView<IGameplayUIViewModel>
+    {
+        private VisualElement _ring;
+        private Button _menuButton;
+
+        private Label _fpsLabel;
+        private VisualElement _marea;
+
+
+        protected override void InitElements()
+        {
+            _ring = Root.Q<VisualElement>(UIConst.FullScreenRingIDName);
+            _menuButton = Root.Q<Button>("menu-btn");
+            _fpsLabel = Root.GetVisualElement<Label>("fps", name);
+
+            _ring = Root.Q<VisualElement>(UIConst.FullScreenRingIDName);
+            if (_ring == null)
+                throw new NullReferenceException($"VisualElement with ID '{UIConst.FullScreenRingIDName}' not found.");
+
+            ViewModel.IsTouchPositionVisible.Subscribe(IsTouchPositionVisible).AddTo(Disposables);
+            ViewModel.RingPosition.Subscribe(SetRingPosition).AddTo(Disposables);
+
+            _marea = Root.GetVisualElement<VisualElement>("movement-area", name);
+
+            Debug.LogWarning(_marea);
+
+            _marea.RegisterCallback<PointerDownEvent>(OnPointerDown);
+            _marea.RegisterCallback<PointerMoveEvent>(OnPointerMove);
+            _marea.RegisterCallback<PointerUpEvent>(OnPointerUp);
+            _marea.RegisterCallback<PointerOutEvent>(OnPointerCancel);
+        }
+
+        protected override void Subscribe()
+        {
+            ViewModel.FPS
+                .Subscribe(OnFpsUpdate)
+                .AddTo(Disposables);
+        }
+
+        private void OnFpsUpdate(float value) => _fpsLabel.text = value.ToString("0.0");
+
+        private void SetRingPosition(Vector2 position)
+        {
+            _ring.style.left = position.x;
+            _ring.style.top = position.y;
+        }
+
+        private void IsTouchPositionVisible(bool value) =>
+            _ring.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+
+
+        private void OnPointerCancel(PointerOutEvent evt) => ViewModel.OnOutEvent(evt);
+        private void OnPointerDown(PointerDownEvent evt) => ViewModel.OnDownEvent(evt);
+        private void OnPointerMove(PointerMoveEvent evt) => ViewModel.OnMoveEvent(evt);
+        private void OnPointerUp(PointerUpEvent evt) => ViewModel.OnUpEvent(evt);
+
+        private void OnDestroy()
+        {
+            Disposables.Dispose();
+            _marea.UnregisterCallback<PointerDownEvent>(OnPointerDown);
+            _marea.UnregisterCallback<PointerMoveEvent>(OnPointerMove);
+            _marea.UnregisterCallback<PointerUpEvent>(OnPointerUp);
+            _marea.UnregisterCallback<PointerOutEvent>(OnPointerCancel);
+        }
+    }
+}
