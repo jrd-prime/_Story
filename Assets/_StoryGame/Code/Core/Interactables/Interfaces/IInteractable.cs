@@ -9,5 +9,7 @@ namespace _StoryGame.Core.Interactables.Interfaces
         string InteractionTipNameId { get; }
         string LocalizationKey { get; }
         UniTask InteractAsync(ICharacter character);
+        void ShowInteractionTip((string, string) interactionTip);
+        void HideInteractionTip();
     }
 }

@@ -137,6 +137,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIViewer
       objectReference: {fileID: 0}
+    - target: {fileID: 8690862940021355930, guid: 3dcc595217ba6ed49bad7a0b6ed46d79, type: 3}
+      propertyPath: popUpTreeAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 8de0cf495f9c9c5468c81bcf6916862b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

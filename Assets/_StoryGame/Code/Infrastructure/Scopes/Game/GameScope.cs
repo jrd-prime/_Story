@@ -4,6 +4,7 @@ using _StoryGame.Core.Currency.Impls;
 using _StoryGame.Core.Managers.Game.Impls;
 using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Gameplay.Character.Player.Impls;
+using _StoryGame.Gameplay.Interactables;
 using _StoryGame.Gameplay.Managers.Impls;
 using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Gameplay.Managers.Inerfaces;
@@ -14,6 +15,7 @@ using _StoryGame.Gameplay.UI.Impls.Menu;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Object = UnityEngine.Object;
 
 namespace _StoryGame.Infrastructure.Scopes.Game
 {
@@ -51,6 +53,17 @@ namespace _StoryGame.Infrastructure.Scopes.Game
                 throw new Exception("PlayerInstaller is not installed.");
 
             builder.Register<MovementHandler>(Lifetime.Singleton).As<IMovementHandler>().As<IInitializable>();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            var interactables =
+                Object.FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            Debug.Log($"Interactables on scene: {interactables.Length}");
+            foreach (var interactable in interactables)
+                Container.Inject(interactable);
         }
 
         private void RegisterStateMachine(IContainerBuilder builder)

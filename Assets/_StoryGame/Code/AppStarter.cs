@@ -37,7 +37,12 @@ namespace _StoryGame
         }
 
 
-        public void Initialize() => InitializeAsync().Forget();
+        public void Initialize()
+        {
+            QualitySettings.vSyncCount = 0; // Отключаем VSync
+            Application.targetFrameRate = 60; // Устанавливаем желаемую частоту кадров
+            InitializeAsync().Forget();
+        }
 
         private async UniTask InitializeAsync()
         {
@@ -80,10 +85,9 @@ namespace _StoryGame
         {
             var bootstrapScene = SceneManager.GetActiveScene();
 
-            await bootstrapUIController.FadeOutAsync(FadeOutDurationSeconds);
+            // await bootstrapUIController.FadeOutAsync(FadeOutDurationSeconds);
 
             //TODO добавить исчесновение первой, и через черную на вторую
-            await UniTask.Delay(333);
 
             SceneManager.SetActiveScene(firstScene.Scene);
 

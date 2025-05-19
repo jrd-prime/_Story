@@ -134,7 +134,7 @@ PlayerSettings:
   switchNVNGraphicsFirmwareMemory: 32
   vulkanNumSwapchainBuffers: 3
   vulkanEnableSetSRGBWrite: 0
-  vulkanEnablePreTransform: 1
+  vulkanEnablePreTransform: 0
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
@@ -145,6 +145,7 @@ PlayerSettings:
   - {fileID: -944628639613478452, guid: 00dca6ae5abae5040ad0cc3344eb70b4, type: 3}
   - {fileID: 11400000, guid: 167a9278f598e3e4aabb1c296816c1e9, type: 2}
   - {fileID: 11400000, guid: ca75b3f1cf31c3b4cbb5767502672050, type: 2}
+  - {fileID: 11400000, guid: 73b4cd435e6c75c408bd6b2e24a52913, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

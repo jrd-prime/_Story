@@ -4,8 +4,10 @@ using System.Linq;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
+using _StoryGame.Gameplay.UI.Impls;
 using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
+using MessagePipe;
 using UnityEngine;
 using VContainer;
 
@@ -27,6 +29,7 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         // private SignalBus _signalBus;
         private ILocalizationProvider _localizationProvider;
         private IJLog _log;
+        private IPublisher<IUIViewerMessage> _uiPublisher;
 
         public void Init(IPlayer player)
         {
@@ -34,6 +37,8 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
                 throw new NullReferenceException($"DiContainer is null. {nameof(PlayerFrontTriggerArea)}");
 
             _log = _container.Resolve<IJLog>();
+
+            _uiPublisher = _container.Resolve<IPublisher<IUIViewerMessage>>();
 
             _colliderOwner = player ??
                              throw new NullReferenceException($"Player is null. {nameof(PlayerFrontTriggerArea)}");
@@ -81,6 +86,11 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
             if (_currentInteractable == null)
                 return;
 
+            _log.Debug($"Interactable {other.gameObject.name} triggered.");
+
+            
+            _currentInteractable.ShowInteractionTip(GetInteractionTip(_currentInteractable));
+
             try
             {
                 var position = other.transform?.position ?? Vector3.zero;
@@ -109,6 +119,7 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
                 _currentInteractable = _interactablesInTrigger.FirstOrDefault();
                 if (_currentInteractable == null)
                 {
+                    _currentInteractable.HideInteractionTip();
                     // _signalBus.Fire(new HideInteractTipSignal());
                 }
             }
