@@ -13,7 +13,7 @@ namespace _StoryGame.Gameplay.Character.Player.Impls
         [SerializeField] private PlayerFrontTriggerArea frontTriggerArea;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationSpeed = 10f;
-        [SerializeField] private float acceleration = 0.1f;
+        [SerializeField] private float acceleration = 0f;
 
         public ReactiveProperty<Vector3> Position { get; } = new();
         public string Id => _interactor.Id;

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using _StoryGame.Data.UI;
 using _StoryGame.Gameplay.Extensions;
 using _StoryGame.Infrastructure.Bootstrap;
 using R3;
@@ -17,19 +17,17 @@ namespace _StoryGame.Gameplay.UI.Impls
         [Inject] protected IObjectResolver Resolver;
 
         protected VisualElement Root;
-        protected VisualElement MainContainer;
 
         protected readonly CompositeDisposable Disposables = new();
+        public TemplateContainer Template { get; private set; }
 
-        private async void Awake()
+        private void Awake()
         {
-            var uiDocument = GetComponent<UIDocument>();
-            await uiDocument.WaitForReadyAsync();
+            Template = viewBaseDocument.Instantiate();
+            Template.SetFullScreen();
+            Template.pickingMode = PickingMode.Ignore;
 
-            Root = uiDocument.rootVisualElement ??
-                   throw new NullReferenceException("RootVisualElement is null on start in " + name);
-
-            MainContainer = Root.GetVisualElement<VisualElement>("main-container", name);
+            Root = Template.GetVisualElement<VisualElement>(UIConst.MainContainer, name);
         }
 
         public string Id => viewId;

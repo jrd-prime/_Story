@@ -53,8 +53,6 @@ namespace _StoryGame.Gameplay.Managers.Impls
             _appStarter.IsAppStarted
                 .Subscribe(OnAppStarted)
                 .AddTo(_disposables);
-
-            _log.Info("<color=green>GAME MANAGER INITIALIZED</color>");
         }
 
         private void OnAppStarted(Unit _)

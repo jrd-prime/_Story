@@ -1,5 +1,4 @@
 ﻿using System;
-using _StoryGame.Gameplay.UI;
 using _StoryGame.Gameplay.UI.Impls;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -22,13 +21,13 @@ namespace _StoryGame.Infrastructure.Bootstrap
         public override void ShowBase()
         {
             Debug.Log("Show " + name);
-            MainContainer.style.display = DisplayStyle.Flex;
+            Root.style.display = DisplayStyle.Flex;
         }
 
         public override void HideBase()
         {
             Debug.Log("Hide " + name);
-            MainContainer.style.display = DisplayStyle.None;
+            Root.style.display = DisplayStyle.None;
         }
 
         private void ResolveDependencies()
@@ -36,8 +35,7 @@ namespace _StoryGame.Infrastructure.Bootstrap
             if (Resolver == null)
                 throw new NullReferenceException("Resolver is null in " + name);
 
-            ViewModel = Resolver.Resolve<TController>() ??
-                        throw new NullReferenceException("ViewModel is null in " + name);
+            ViewModel = Resolver.Resolve<TController>();
 
             ResolveDependencies(Resolver);
         }

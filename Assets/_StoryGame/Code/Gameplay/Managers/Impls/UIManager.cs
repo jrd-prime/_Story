@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Core.Managers.HSM.Impls.States;
 using _StoryGame.Gameplay.Managers.Inerfaces;
-using _StoryGame.Gameplay.UI;
 using _StoryGame.Gameplay.UI.Impls;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace _StoryGame.Gameplay.Managers.Impls
         private IJLog _log;
         private HSM _hsm;
 
-        private UIViewBase _currentBaseView;
+        private GameStateType _currentBaseView;
 
         private readonly Dictionary<GameStateType, UIViewBase> _viewsCache = new();
         private readonly CompositeDisposable _disposables = new();
@@ -36,8 +35,6 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
         public void Initialize()
         {
-            _log.Info("<color=green>UI MANAGER INITIALIZED</color>");
-
             if (!viewer)
                 throw new NullReferenceException("Viewer is null. " + nameof(UIManager));
 
@@ -52,6 +49,8 @@ namespace _StoryGame.Gameplay.Managers.Impls
                 .AddTo(_disposables);
         }
 
+        private void Start() => viewer.Initialize(_viewsCache);
+
         private async void OnStateChange(GameStateType state)
         {
             if (state == GameStateType.NotSet)
@@ -61,17 +60,8 @@ namespace _StoryGame.Gameplay.Managers.Impls
 
             _log.Info($"SHOW UI FOR: {state}");
 
-            SwitchGlobalView(_viewsCache[state]);
-        }
-
-        private void SwitchGlobalView(UIViewBase uiViewBase)
-        {
-            if (_currentBaseView == uiViewBase)
-                return;
-
-            _currentBaseView?.HideBase();
-            _currentBaseView = uiViewBase;
-            _currentBaseView.ShowBase();
+            _currentBaseView = state;
+            viewer.SwitchTo(state);
         }
     }
 }

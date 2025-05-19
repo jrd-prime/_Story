@@ -7,7 +7,8 @@ using _StoryGame.Gameplay.Character.Player.Impls;
 using _StoryGame.Gameplay.Managers.Impls;
 using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Gameplay.Managers.Inerfaces;
-using _StoryGame.Gameplay.UI;
+using _StoryGame.Gameplay.Movement;
+using _StoryGame.Gameplay.UI.Impls;
 using _StoryGame.Gameplay.UI.Impls.Gameplay;
 using _StoryGame.Gameplay.UI.Impls.Menu;
 using UnityEngine;
@@ -48,6 +49,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             if (!playerInstaller.Install())
                 throw new Exception("PlayerInstaller is not installed.");
+
+            builder.Register<MovementHandler>(Lifetime.Singleton).As<IMovementHandler>().As<IInitializable>();
         }
 
         private void RegisterStateMachine(IContainerBuilder builder)
@@ -61,6 +64,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
             builder.RegisterComponentInHierarchy<GameManager>().AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<UIManager>().AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<UIViewer>().AsImplementedInterfaces();
         }
 
         private void InitializeViewStates(IContainerBuilder builder)
