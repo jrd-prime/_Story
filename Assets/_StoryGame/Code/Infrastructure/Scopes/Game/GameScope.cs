@@ -1,17 +1,18 @@
 ﻿using System;
 using _StoryGame.Core.Currency;
 using _StoryGame.Core.Currency.Impls;
+using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Managers.Game.Impls;
-using _StoryGame.Core.Managers.HSM.Impls;
-using _StoryGame.Gameplay.Character.Player.Impls;
-using _StoryGame.Gameplay.Interactables;
-using _StoryGame.Gameplay.Managers.Impls;
-using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
-using _StoryGame.Gameplay.Managers.Inerfaces;
-using _StoryGame.Gameplay.Movement;
-using _StoryGame.Gameplay.UI.Impls.Gameplay;
-using _StoryGame.Gameplay.UI.Impls.Menu;
-using _StoryGame.Gameplay.UI.Impls.Viewer;
+using _StoryGame.Game.Character.Player.Impls;
+using _StoryGame.Game.Interactables;
+using _StoryGame.Game.Managers.Impls;
+using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
+using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Movement;
+using _StoryGame.Game.UI.Impls;
+using _StoryGame.Game.UI.Impls.Gameplay;
+using _StoryGame.Game.UI.Impls.Menu;
+using _StoryGame.Game.UI.Impls.Viewer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -45,13 +46,14 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             InitializeUIModelsAndViewModels(builder);
             InitializeViewStates(builder);
 
-            var playerInstance = Instantiate(playerPrefab);
-            var playerInstaller = new PlayerInstaller(builder, playerInstance, spawnPoint);
+            // var playerInstance = Instantiate(playerPrefab);
+            var playerInstaller = new PlayerInstaller(builder,  null, spawnPoint);
 
             if (!playerInstaller.Install())
                 throw new Exception("PlayerInstaller is not installed.");
 
-            builder.Register<MovementHandler>(Lifetime.Singleton).As<IMovementHandler>().As<IInitializable>();
+            // builder.Register<MovementHandler>(Lifetime.Singleton).As<IMovementHandler>().As<IInitializable>();
+            builder.RegisterComponentInHierarchy<NewMovementHandler>().As<IMovementHandler>().As<IInitializable>();
         }
 
         protected override void Awake()

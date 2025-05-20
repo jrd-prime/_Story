@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Core.Character.Player;
-using _StoryGame.Gameplay.Character.Player.Impls;
+using _StoryGame.Core.Character.Player.Interfaces;
+using _StoryGame.Game.Character.Player.Impls;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -19,12 +20,16 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         {
             Debug.Log($"<color=cyan>{nameof(PlayerInstaller)}</color>");
 
-            if (_builder == null || !_instance || !_point)
+            if (_builder == null
+                // || !_instance
+                || !_point)
                 return false;
 
-            _instance.transform.position = _point.position;
+            // _instance.transform.position = _point.position;
 
-            _builder.RegisterComponent(_instance).AsImplementedInterfaces();
+            // _builder.RegisterComponent(_instance).AsImplementedInterfaces();
+
+            _builder.RegisterComponentInHierarchy<Player>().AsImplementedInterfaces();
 
             _builder.Register<PlayerInteractor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             _builder.Register<PlayerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

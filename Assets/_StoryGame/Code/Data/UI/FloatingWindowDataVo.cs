@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Gameplay.UI.Impls.Viewer.Layers;
+using _StoryGame.Game.UI.Impls.Viewer.Layers;
 using UnityEngine.UIElements;
 
 namespace _StoryGame.Data.UI

@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Data;
+using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;
 using _StoryGame.Infrastructure.Localization;

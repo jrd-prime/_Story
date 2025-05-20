@@ -1,6 +1,0 @@
-﻿namespace _StoryGame.Gameplay.UI.Impls.Viewer
-{
-    public interface IUIViewerLayerHandler
-    {
-    }
-}
