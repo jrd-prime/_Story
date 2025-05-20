@@ -4,6 +4,7 @@ using _StoryGame.Core.Managers.HSM.Impls;
 using _StoryGame.Core.Managers.HSM.Impls.States;
 using _StoryGame.Gameplay.Managers.Inerfaces;
 using _StoryGame.Gameplay.UI.Impls;
+using _StoryGame.Gameplay.UI.Impls.Viewer;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 using R3;

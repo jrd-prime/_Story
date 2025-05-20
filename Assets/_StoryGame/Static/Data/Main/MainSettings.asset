@@ -20,4 +20,4 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   <LocalizationSettings>k__BackingField: {fileID: 11400000, guid: 6f7f7f7567ecea34f989b99b1091101e, type: 2}
   <HeroSettings>k__BackingField: {fileID: 11400000, guid: 99f4c134c16b89940a9cbf72023724f4, type: 2}
-  <UIViewsSettings>k__BackingField: {fileID: 11400000, guid: 30a2691ab062a5e4baba504da75ddd4b, type: 2}
+  <UISettings>k__BackingField: {fileID: 11400000, guid: 30a2691ab062a5e4baba504da75ddd4b, type: 2}

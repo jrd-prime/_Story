@@ -4,7 +4,7 @@ using System.Linq;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
-using _StoryGame.Gameplay.UI.Impls;
+using _StoryGame.Gameplay.UI.Interfaces;
 using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;

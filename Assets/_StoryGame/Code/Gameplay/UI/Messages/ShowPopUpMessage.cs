@@ -1,7 +1,9 @@
-﻿using R3;
-using UnityEngine.UIElements;
+﻿using _StoryGame.Gameplay.UI.Impls.Viewer;
+using _StoryGame.Gameplay.UI.Impls.Viewer.Layers;
+using _StoryGame.Gameplay.UI.Interfaces;
+using R3;
 
-namespace _StoryGame.Gameplay.UI.Impls
+namespace _StoryGame.Gameplay.UI.Messages
 {
     public record ShowPopUpMessage(
         string Id,

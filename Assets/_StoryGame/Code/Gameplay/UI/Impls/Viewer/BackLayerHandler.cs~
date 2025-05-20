@@ -1,0 +1,42 @@
+﻿using UnityEngine.UIElements;
+
+namespace _StoryGame.Gameplay.UI.Impls
+{
+    public sealed class BackLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    {
+        public BackLayerHandler(VisualElement layerBack) : base(layerBack)
+        {
+        }
+    }
+
+    public sealed class MovementLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    {
+        public MovementLayerHandler(VisualElement layerBack) : base(layerBack)
+        {
+        }
+    }
+
+    public sealed class LayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    {
+        public BackLayerHandler(VisualElement layerBack) : base(layerBack)
+        {
+        }
+    }
+
+    public sealed class HUDLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    {
+        public HUDLayerHandler(VisualElement layerBack) : base(layerBack)
+        {
+        }
+    }
+
+    public abstract class UIViewerHandlerBase
+    {
+        protected VisualElement LayerRoot;
+
+        protected UIViewerHandlerBase(VisualElement layerRoot)
+        {
+            LayerRoot = layerRoot;
+        }
+    }
+}

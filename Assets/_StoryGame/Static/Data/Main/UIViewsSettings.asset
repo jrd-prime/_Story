@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0881ea4ee664c12820b7b78b49278a0, type: 3}
   m_Name: UIViewsSettings
   m_EditorClassIdentifier: 
+  FloatingWindowDataVo: {fileID: 11400000, guid: b97bca76d5b3ba24c8d734c33544374d, type: 2}

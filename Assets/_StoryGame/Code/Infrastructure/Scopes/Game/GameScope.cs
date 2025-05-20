@@ -9,13 +9,12 @@ using _StoryGame.Gameplay.Managers.Impls;
 using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Gameplay.Managers.Inerfaces;
 using _StoryGame.Gameplay.Movement;
-using _StoryGame.Gameplay.UI.Impls;
 using _StoryGame.Gameplay.UI.Impls.Gameplay;
 using _StoryGame.Gameplay.UI.Impls.Menu;
+using _StoryGame.Gameplay.UI.Impls.Viewer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using Object = UnityEngine.Object;
 
 namespace _StoryGame.Infrastructure.Scopes.Game
 {
@@ -60,7 +59,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             base.Awake();
 
             var interactables =
-                Object.FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             Debug.Log($"Interactables on scene: {interactables.Length}");
             foreach (var interactable in interactables)
                 Container.Inject(interactable);

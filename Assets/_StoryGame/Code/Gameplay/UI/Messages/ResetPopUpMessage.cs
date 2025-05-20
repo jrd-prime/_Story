@@ -1,6 +1,6 @@
-﻿using _StoryGame.Gameplay.UI.Impls;
+﻿using _StoryGame.Gameplay.UI.Interfaces;
 
-namespace _StoryGame.Gameplay.Interactables
+namespace _StoryGame.Gameplay.UI.Messages
 {
     public record ResetPopUpMessage(string Id) : IUIViewerMessage
     {
