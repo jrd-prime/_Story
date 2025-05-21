@@ -45,7 +45,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
         private void ShowFps(float value)
         {
             UniTask.Post(
-                () => _fpsLabel.text = value.ToString("F1")
+                () => _fpsLabel.text = value.ToString()
             );
         }
 

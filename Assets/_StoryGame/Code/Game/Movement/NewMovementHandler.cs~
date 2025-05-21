@@ -8,7 +8,6 @@ using R3;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using VContainer;
 
 namespace _StoryGame.Game.Movement
@@ -28,9 +27,9 @@ namespace _StoryGame.Game.Movement
         private readonly ReactiveProperty<bool> _isTouchVisible = new(false);
         private readonly ReactiveProperty<Vector2> _ringPosition = new(Vector2.zero);
 
-        [SerializeField] private Camera mainCamera;
-        [SerializeField] private LayerMask interactableLayer;
-        [SerializeField] private LayerMask groundLayer;
+        [SerializeField] private Camera _mainCamera;
+        [SerializeField] private LayerMask _interactableLayer;
+        [SerializeField] private LayerMask _groundLayer;
 
         private IJLog _log;
         private IPlayer _player;
@@ -47,7 +46,7 @@ namespace _StoryGame.Game.Movement
 
         private void Start()
         {
-            if (!mainCamera)
+            if (!_mainCamera)
                 throw new NullReferenceException($"MainCamera is null. {this}");
         }
 
@@ -88,7 +87,7 @@ namespace _StoryGame.Game.Movement
             if (_isTouchActive)
                 return;
 
-            if (!mainCamera)
+            if (!_mainCamera)
             {
                 _log.Error("Cannot process world click: Main Camera is null!");
                 ResetTouch();
@@ -107,11 +106,11 @@ namespace _StoryGame.Game.Movement
             _isTouchActive = true;
             _startTouchPosition = inputPosition;
 
-            Ray ray = mainCamera.ScreenPointToRay(inputPosition);
-
+            Ray ray = _mainCamera.ScreenPointToRay(inputPosition);
             Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
 
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, interactableLayer))
+// Проверяем сначала интерактивный объект
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _interactableLayer))
             {
                 _log.Debug($"Hit Interactable object: {hit.collider.gameObject.name}");
 
@@ -126,15 +125,24 @@ namespace _StoryGame.Game.Movement
                 return;
             }
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
+// Если нет интерактивного объекта, проверяем NavMesh
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _groundLayer))
             {
                 _log.Debug($"Hit Ground object: {hit.collider.gameObject.name}");
 
                 if (NavMesh.SamplePosition(hit.point, out var navMeshHit, 0.5f, NavMesh.AllAreas))
+                {
                     NewPositionForMove(navMeshHit.position);
-                else _log.Debug("Clicked position is not valid on NavMesh!");
+                }
+                else
+                {
+                    _log.Debug("Clicked position is not valid on NavMesh!");
+                }
             }
-            else _log.Debug("No hit on Ground layer!");
+            else
+            {
+                _log.Debug("No hit on Ground layer!");
+            }
 
             ResetTouch();
         }

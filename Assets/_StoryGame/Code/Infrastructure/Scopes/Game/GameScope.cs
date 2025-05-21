@@ -47,13 +47,13 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             InitializeViewStates(builder);
 
             // var playerInstance = Instantiate(playerPrefab);
-            var playerInstaller = new PlayerInstaller(builder,  null, spawnPoint);
+            var playerInstaller = new PlayerInstaller(builder, null, spawnPoint);
 
             if (!playerInstaller.Install())
                 throw new Exception("PlayerInstaller is not installed.");
 
             // builder.Register<MovementHandler>(Lifetime.Singleton).As<IMovementHandler>().As<IInitializable>();
-            builder.RegisterComponentInHierarchy<NewMovementHandler>().As<IMovementHandler>().As<IInitializable>();
+            builder.RegisterComponentInHierarchy<NewMovementHandler>().As<IMovementHandler>();
         }
 
         protected override void Awake()

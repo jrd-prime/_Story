@@ -13,6 +13,7 @@ namespace _StoryGame.Game.Character.Player.Impls
     public sealed class PlayerInteractor : ICharacterInteractor
     {
         public Vector3 MoveDirection { get; private set; } = Vector3.zero;
+        public readonly ReactiveProperty<Vector3> NewMovePosition = new();
         public Camera MainCamera => _cameraManager.GetMainCamera();
         public string Id => _service.Id;
         public string Name { get; private set; }
@@ -25,12 +26,15 @@ namespace _StoryGame.Game.Character.Player.Impls
         private readonly ICameraManager _cameraManager;
         private readonly IWallet _wallet;
         private readonly IPlayerAnimationService _playerAnimationService;
-        
+
         private readonly CompositeDisposable _disposables = new();
 
-        public PlayerInteractor(PlayerService service, ICameraManager cameraManager, ICurrencyService currencyService
-            // , IMovementHandler movementHandler
-            )
+        public PlayerInteractor(
+            PlayerService service,
+            ICameraManager cameraManager,
+            ICurrencyService currencyService,
+            IMovementHandler movementHandler
+        )
         {
             _service = service;
             _cameraManager = cameraManager;
@@ -38,12 +42,10 @@ namespace _StoryGame.Game.Character.Player.Impls
             // _playerAnimationService = playerAnimationService;
             _wallet = currencyService.CreateWallet("player_test_id");
 
-            // movementHandler.MoveDirection
-            //     .Subscribe(OnMoveDirectionSignal)
-            //     .AddTo(_disposables);
+            movementHandler.NewMovePosition
+                .Subscribe(SetDestination)
+                .AddTo(_disposables);
         }
-
-        private void OnMoveDirectionSignal(Vector3 direction) => MoveDirection = direction;
 
         /// <summary>
         /// Такое себе решение. // TODO: Подумать как лучше сделать с учетом плеера
@@ -63,10 +65,12 @@ namespace _StoryGame.Game.Character.Player.Impls
 
             _playerAnimationService.AnimateWithTrigger(triggerName, animationStateName, onAnimationComplete);
         }
-    }
 
-    public record MoveDirectionSignal(Vector3 Direction)
-    {
-        public Vector3 Direction { get; } = Direction;
+        public void SetDestination(Vector3 destination)
+        {
+            Debug.Log($"SetDestination intera" +
+                      $"ctor {destination}");
+            NewMovePosition.Value = destination;
+        }
     }
 }

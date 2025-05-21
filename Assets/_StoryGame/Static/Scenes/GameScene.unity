@@ -1306,11 +1306,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11df0764c1ab4bdc9f83c7b1767b116c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 2048250502}
-  _interactableLayer:
+  mainCamera: {fileID: 2048250502}
+  interactableLayer:
     serializedVersion: 2
     m_Bits: 2147483648
-  _groundLayer:
+  groundLayer:
     serializedVersion: 2
     m_Bits: 8
 --- !u!4 &1302629277

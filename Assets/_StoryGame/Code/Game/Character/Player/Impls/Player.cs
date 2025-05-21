@@ -31,11 +31,24 @@ namespace _StoryGame.Game.Character.Player.Impls
         private Vector3 _currentVelocity;
         private Vector3 _previousPosition;
 
+        private readonly CompositeDisposable _disposables = new();
+
         [Inject]
         private void Construct(IObjectResolver resolver)
         {
             _interactor = resolver.Resolve<PlayerInteractor>();
             resolver.Inject(frontTriggerArea);
+
+            _interactor.NewMovePosition
+                .Skip(1)
+                .Subscribe(OnNewMovePosition)
+                .AddTo(_disposables);
+        }
+
+        private void OnNewMovePosition(Vector3 position)
+        {
+            Debug.Log($"<color=green>Player move to {position}</color>");
+            NavMeshAgent.SetDestination(position);
         }
 
         private void Awake()
