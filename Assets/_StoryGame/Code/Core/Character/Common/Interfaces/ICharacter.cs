@@ -8,7 +8,6 @@
         object Animator { get; }
         int Health { get; }
         int MaxHealth { get; }
-        ICharacterInteractor GetInteractor();
         CharacterState State { get; }
         void SetState(CharacterState state);
     }

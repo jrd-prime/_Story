@@ -67,7 +67,6 @@ namespace _StoryGame.Core.Interfaces
 
         // Костыль для квесто, надо будет убрать
         UniTask StartDelayAsync(int i);
-        Vector3 GetEntryPoint();
     }
 
     /// <summary>

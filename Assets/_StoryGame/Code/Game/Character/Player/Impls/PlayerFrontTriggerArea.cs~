@@ -20,6 +20,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         [Inject] private IObjectResolver _container;
 
+        private ICharacter _player;
         private ILocalizationProvider _localizationProvider;
         private IJLog _log;
         private IPublisher<IUIViewerMessage> _uiPublisher;
@@ -29,8 +30,13 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         private readonly HashSet<IInteractable> _interactablesInTrigger = new();
 
-        public void Init()
+        public void Init(IPlayer player)
         {
+            _player = player;
+
+            if (player == null)
+                throw new NullReferenceException($"{nameof(player)} is null. {nameof(PlayerFrontTriggerArea)}");
+
             if (_container == null)
                 throw new NullReferenceException($"Resolver is null. {nameof(PlayerFrontTriggerArea)}");
 

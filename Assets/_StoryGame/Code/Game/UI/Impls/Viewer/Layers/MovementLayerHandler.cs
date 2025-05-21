@@ -34,8 +34,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 
         protected override void Subscribe()
         {
-            _movementHandler.IsTouchVisible.Subscribe(IsTouchPositionVisible).AddTo(Disposables);
-            _movementHandler.RingPosition.Subscribe(SetRingPosition).AddTo(Disposables);
+            // _movementHandler.IsTouchVisible.Subscribe(IsTouchPositionVisible).AddTo(Disposables);
+            // _movementHandler.RingPosition.Subscribe(SetRingPosition).AddTo(Disposables);
 
             // _movementArea.RegisterCallback<PointerDownEvent>(_movementHandler.OnPointerDown);
             // _movementArea.RegisterCallback<PointerMoveEvent>(_movementHandler.OnPointerMove);

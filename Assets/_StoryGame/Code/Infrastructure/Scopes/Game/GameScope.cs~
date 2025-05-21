@@ -14,7 +14,6 @@ using _StoryGame.Game.UI.Impls.Gameplay;
 using _StoryGame.Game.UI.Impls.Menu;
 using _StoryGame.Game.UI.Impls.Viewer;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -22,7 +21,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 {
     public sealed class GameScope : LifetimeScope
     {
-        [FormerlySerializedAs("playerPrefab")] [SerializeField] private PlayerView playerViewPrefab;
+        [SerializeField] private Player playerPrefab;
         [SerializeField] private Transform spawnPoint;
         private GameObject _mainEmpty;
 

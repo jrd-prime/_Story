@@ -7,7 +7,7 @@ namespace _StoryGame.Game.Movement
 {
     public sealed class MovementHandler : IMovementHandler, IInitializable
     {
-        public ReadOnlyReactiveProperty<Vector3> DestinationPoint { get; }
+        public ReadOnlyReactiveProperty<Vector3> NewMovePosition { get; }
         public ReadOnlyReactiveProperty<Vector3> MoveDirection => _moveDirection;
         public ReadOnlyReactiveProperty<bool> IsTouchVisible => _isTouchVisible;
         public ReadOnlyReactiveProperty<Vector2> RingPosition => _ringPosition;
