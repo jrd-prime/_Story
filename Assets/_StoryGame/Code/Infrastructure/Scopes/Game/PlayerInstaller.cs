@@ -1,5 +1,4 @@
 ﻿using _StoryGame.Core.Character.Player;
-using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using UnityEngine;
 using VContainer;

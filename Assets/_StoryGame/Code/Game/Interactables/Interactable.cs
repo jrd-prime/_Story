@@ -13,12 +13,16 @@ namespace _StoryGame.Game.Interactables
 {
     public sealed class Interactable : MonoBehaviour, IInteractable
     {
+        [SerializeField] private string objName;
         [SerializeField] private string interactionTipNameId;
         [SerializeField] private string localizationKey;
+        [SerializeField] private Transform _entrance;
+        public Vector3 GetEntryPoint() => _entrance.position;
 
         public bool CanInteract { get; }
         public string InteractionTipNameId => interactionTipNameId;
         public string LocalizationKey => localizationKey;
+        public string Name => objName;
 
         private IPublisher<IUIViewerMessage> _uiViewerMessagePublisher;
         private string tipId;
@@ -51,6 +55,7 @@ namespace _StoryGame.Game.Interactables
             _disposables.Clear();
             _uiViewerMessagePublisher.Publish(new ResetFloatingWindowMessage(tipId));
         }
+
 
         private void OnCommand(Unit _)
         {

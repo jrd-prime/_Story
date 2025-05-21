@@ -44,15 +44,19 @@ namespace _StoryGame.Game.Character.Player.Impls
             PlayerView playerView,
             ICameraManager cameraManager,
             ICurrencyService currencyService,
-            ISubscriber<DestinationPointMsg> destinationPointMsgSubscriber)
+            ISubscriber<IMovementProcessorMsg> movementProcessorMsgSubscriber)
         {
             _playerView = playerView;
             _service = service;
             _cameraManager = cameraManager;
 
 
-            destinationPointMsgSubscriber
-                .Subscribe(msg => SetDestinationPoint(msg.Position))
+            movementProcessorMsgSubscriber
+                .Subscribe(msg =>
+                {
+                    if (msg is DestinationPointMsg pointMsg)
+                        SetDestinationPoint(pointMsg.Position);
+                })
                 .AddTo(_disposables);
 
             // _playerAnimationService = playerAnimationService;
@@ -82,6 +86,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         {
             Debug.Log($"SetDestination interactor {destination}");
             _destinationPoint.Value = destination;
+            _playerView.MoveTo(destination);
         }
 
         public void SetNavMeshAgent(NavMeshAgent agent) => NavMeshAgent = agent;

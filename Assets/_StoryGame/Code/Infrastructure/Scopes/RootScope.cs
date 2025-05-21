@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Data;
+using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;
@@ -65,6 +66,8 @@ namespace _StoryGame.Infrastructure.Scopes
 
             // RegisterMessageBroker: Register for IPublisher<T>/ISubscriber<T>, includes async and buffered.
             // builder.RegisterMessageBroker<ChangeGameStateSignalVo>(options);
+            // builder.RegisterMessageBroker<IMovementHandlerMsg>(options);
+            // builder.RegisterMessageBroker<IMovementProcessorMsg>(options);
         }
 
 #if UNITY_EDITOR

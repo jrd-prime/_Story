@@ -15,6 +15,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 {
     public sealed class PlayerInteractor : IPlayer
     {
+        public Vector3 MoveDirection { get; private set; } = Vector3.zero;
         public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint;
         public Camera MainCamera => _cameraManager.GetMainCamera();
         public string Id => _service.Id;
@@ -28,13 +29,12 @@ namespace _StoryGame.Game.Character.Player.Impls
         public CharacterState State { get; }
         public void SetState(CharacterState state) => _playerView.SetState(state);
 
-        public NavMeshAgent NavMeshAgent { get; private set; }
+        public NavMeshAgent NavMeshAgent => _playerView.NavMeshAgent;
 
         private readonly ReactiveProperty<Vector3> _destinationPoint = new();
         private readonly PlayerService _service;
         private readonly ICameraManager _cameraManager;
         private readonly IWallet _wallet;
-        private readonly IPlayerAnimationService _playerAnimationService;
         private readonly CompositeDisposable _disposables = new();
         private readonly PlayerView _playerView;
 
@@ -43,45 +43,29 @@ namespace _StoryGame.Game.Character.Player.Impls
             PlayerView playerView,
             ICameraManager cameraManager,
             ICurrencyService currencyService,
-            ISubscriber<DestinationPointMsg> destinationPointMsgSubscriber)
+            ISubscriber<IMovementProcessorMsg> movementProcessorMsgSubscriber)
         {
             _playerView = playerView;
             _service = service;
             _cameraManager = cameraManager;
 
-            destinationPointMsgSubscriber
-                .Subscribe(msg => SetDestinationPoint(msg.Position))
+
+            movementProcessorMsgSubscriber
+                .Subscribe(msg =>
+                {
+                    if (msg is DestinationPointMsg pointMsg)
+                        SetDestinationPoint(pointMsg.Position);
+                })
                 .AddTo(_disposables);
 
-            // _playerAnimationService = playerAnimationService;
             _wallet = currencyService.CreateWallet("player_test_id");
-        }
-
-        /// <summary>
-        /// Такое себе решение. // TODO: Подумать как лучше сделать с учетом плеера
-        /// </summary>
-        public void SetPosition(Vector3 position)
-        {
-            if (_service == null)
-                throw new NullReferenceException($"Service is null in {nameof(PlayerInteractor)}");
-
-            _service.SetPosition(position);
-        }
-
-        public void AnimateWithTrigger(string triggerName, string animationStateName, Action onAnimationComplete)
-        {
-            if (_playerAnimationService == null)
-                throw new NullReferenceException($"Service is null in {nameof(PlayerInteractor)}");
-
-            _playerAnimationService.AnimateWithTrigger(triggerName, animationStateName, onAnimationComplete);
         }
 
         public void SetDestinationPoint(Vector3 destination)
         {
             Debug.Log($"SetDestination interactor {destination}");
             _destinationPoint.Value = destination;
+            _playerView.MoveTo(destination);
         }
-
-        public void SetNavMeshAgent(NavMeshAgent agent) => NavMeshAgent = agent;
     }
 }

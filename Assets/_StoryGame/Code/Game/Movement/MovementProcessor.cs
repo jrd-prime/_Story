@@ -1,6 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Interfaces;
+using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
 using R3;
@@ -12,33 +12,33 @@ namespace _StoryGame.Game.Movement
 {
     public sealed class MovementProcessor : IMovementProcessor, IStartable, IDisposable
     {
-        private readonly IJLog _log;
-        private readonly IPlayer _player;
-        private NavMeshAgent _navMeshAgent;
+        private NavMeshAgent _navMeshAgent => _player.NavMeshAgent;
 
         private readonly IMovementProcessorMsg _noneStateMsg = new MovementProcessorStateMsg(EMoveState.None);
 
-        private readonly IMovementProcessorMsg _moveToInteractableStateMsg =
-            new MovementProcessorStateMsg(EMoveState.MoveToInteractable);
+        private readonly IMovementProcessorMsg
+            _toInteractStateMsg = new MovementProcessorStateMsg(EMoveState.ToInteract);
 
-        private readonly IMovementProcessorMsg _moveToPointStateMsg =
-            new MovementProcessorStateMsg(EMoveState.MoveToPoint);
+        private readonly IMovementProcessorMsg _toPointStateMsg = new MovementProcessorStateMsg(EMoveState.ToPoint);
 
-        private readonly IPublisher<IMovementProcessorMsg> _selfMsgPublisher;
+        private readonly IJLog _log;
+        private readonly IPlayer _player;
+        private readonly IPublisher<IMovementProcessorMsg> _selfMsgPub;
+
         private readonly CompositeDisposable _disposables = new();
 
         public MovementProcessor(
             IJLog log,
             IPlayer player,
-            IPublisher<IMovementProcessorMsg> selfMsgPublisher,
-            ISubscriber<IMovementHandlerMsg> movementHandlerMsgSubscriber
+            IPublisher<IMovementProcessorMsg> selfMsgPub,
+            ISubscriber<IMovementHandlerMsg> movementHandlerMsgSub
         )
         {
             _log = log;
-            _selfMsgPublisher = selfMsgPublisher;
+            _selfMsgPub = selfMsgPub;
             _player = player;
 
-            movementHandlerMsgSubscriber
+            movementHandlerMsgSub
                 .Subscribe(OnMovementHandlerMessage)
                 .AddTo(_disposables);
         }
@@ -46,8 +46,7 @@ namespace _StoryGame.Game.Movement
         public void Start()
         {
             _log.Info("Start MovementProcessor");
-            _selfMsgPublisher.Publish(_noneStateMsg);
-            _navMeshAgent = _player.NavMeshAgent;
+            _selfMsgPub.Publish(_noneStateMsg);
         }
 
 
@@ -55,24 +54,26 @@ namespace _StoryGame.Game.Movement
         {
             _log.Info("MoveToInteractable");
 
-            _selfMsgPublisher.Publish(_moveToInteractableStateMsg);
+            _selfMsgPub.Publish(_toInteractStateMsg);
 
             var entryPoint = interactable.GetEntryPoint();
 
             SendDestinationPoint(entryPoint);
+
+            _selfMsgPub.Publish(_noneStateMsg);
         }
 
         private void MoveToPoint(Vector3 position)
         {
-            _log.Info("MoveToPoint");
+            _log.Debug("MoveToPoint: " + position);
 
-            _selfMsgPublisher.Publish(_moveToPointStateMsg);
+            _selfMsgPub.Publish(_toPointStateMsg);
 
             SendDestinationPoint(position);
         }
 
         private void SendDestinationPoint(Vector3 position) =>
-            _selfMsgPublisher.Publish(new DestinationPointMsg(position));
+            _selfMsgPub.Publish(new DestinationPointMsg(position));
 
 
         // public void Tick()
@@ -101,11 +102,14 @@ namespace _StoryGame.Game.Movement
         {
             switch (message)
             {
+                case MoveToInteractableHandlerMsg msg:
+                    MoveToInteractable(msg.Interactable);
+                    break;
                 case MoveToPointHandlerMsg msg:
                     MoveToPoint(msg.Position);
                     break;
-                case MoveToInteractableHandlerMsg msg:
-                    MoveToInteractable(msg.Interactable);
+                default:
+                    _log.Warn($"Unknown message: {message.GetType().Name}");
                     break;
             }
         }
@@ -113,20 +117,10 @@ namespace _StoryGame.Game.Movement
         public void Dispose() => _disposables?.Dispose();
     }
 
-    public record DestinationPointMsg(Vector3 Position) : IMovementProcessorMsg
-    {
-        public string Name => nameof(DestinationPointMsg);
-        public Vector3 Position { get; } = Position;
-    }
-
-    public interface IMovementProcessor
-    {
-    }
-
     public enum EMoveState
     {
         None,
-        MoveToInteractable,
-        MoveToPoint
+        ToInteract,
+        ToPoint
     }
 }

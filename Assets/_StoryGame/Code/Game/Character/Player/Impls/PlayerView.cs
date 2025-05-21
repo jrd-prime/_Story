@@ -14,11 +14,10 @@ namespace _StoryGame.Game.Character.Player.Impls
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationSpeed = 10f;
         [SerializeField] private float acceleration = 0f;
-
-        public NavMeshAgent NavMeshAgent { get; private set; }
         public ReactiveProperty<Vector3> Position { get; } = new();
         public object Animator { get; private set; }
         public CharacterState State { get; private set; } = CharacterState.Idle;
+        public NavMeshAgent NavMeshAgent { get; private set; }
 
         private IObjectResolver _resolver;
 
@@ -58,13 +57,9 @@ namespace _StoryGame.Game.Character.Player.Impls
             Position.Value = position;
         }
 
-        private void OnNewDestinationPoint(Vector3 position)
-        {
-            Debug.Log($"<color=green>Player move to {position}</color>");
-            NavMeshAgent.SetDestination(position);
-        }
-
         public void SetState(CharacterState state) =>
             State = state;
+
+        public void MoveTo(Vector3 destination) => NavMeshAgent.SetDestination(destination);
     }
 }

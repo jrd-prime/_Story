@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Interfaces;
+using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Game.Managers.Inerfaces;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
@@ -23,8 +23,6 @@ namespace _StoryGame.Game.Movement
 
         private readonly ReactiveProperty<Vector3> _destinationPoint = new(Vector3.zero);
         private readonly ReactiveProperty<Vector3> _moveDirection = new(Vector3.zero);
-        private readonly ReactiveProperty<bool> _isTouchVisible = new(false);
-        private readonly ReactiveProperty<Vector2> _ringPosition = new(Vector2.zero);
 
         [SerializeField] private Camera mainCamera;
         [SerializeField] private LayerMask interactableLayer;
@@ -32,36 +30,32 @@ namespace _StoryGame.Game.Movement
 
         private IJLog _log;
         private IPlayer _player;
-        private ICameraManager _cameraManager;
-        private Vector2 _startTouchPosition;
-        private Vector2 _moveInput;
 
         private EMoveState _currentMoveProcessorState;
 
         private readonly CompositeDisposable _disposables = new();
-        private IPublisher<IMovementHandlerMsg> _selfMsgPublisher;
+        private IPublisher<IMovementHandlerMsg> _selfMsgPub;
 
         [Inject]
-        private void Construct(IJLog log, ICameraManager cameraManager,
-            IPublisher<IMovementHandlerMsg> selfMsgPublisher,
-            ISubscriber<IMovementProcessorMsg> movementProcessorMsgSubscriber)
+        private void Construct(
+            IJLog log,
+            ICameraManager cameraManager,
+            IPublisher<IMovementHandlerMsg> selfMsgPub,
+            ISubscriber<IMovementProcessorMsg> movementProcessorMsgSub)
         {
             _log = log;
-            _cameraManager = cameraManager;
 
-            _selfMsgPublisher = selfMsgPublisher;
+            _selfMsgPub = selfMsgPub;
 
-            movementProcessorMsgSubscriber
-                .Subscribe(OnMovementProcessorMessage)
+            movementProcessorMsgSub
+                .Subscribe(msg =>
+                {
+                    _currentMoveProcessorState = msg is MovementProcessorStateMsg stateMsg
+                        ? stateMsg.State
+                        : _currentMoveProcessorState;
+                })
                 .AddTo(_disposables);
         }
-
-        private void OnMovementProcessorMessage(IMovementProcessorMsg value)
-        {
-            if (value is MovementProcessorStateMsg msg)
-                _currentMoveProcessorState = msg.State;
-        }
-
 
         private void Start()
         {
@@ -74,7 +68,7 @@ namespace _StoryGame.Game.Movement
             if (HasNoInput())
                 return;
 
-            if (_currentMoveProcessorState is EMoveState.MoveToInteractable)
+            if (_currentMoveProcessorState is EMoveState.ToInteract)
             {
                 _log.Debug("MoveState is MoveToInteractable, SKIP CLICK.");
                 return;
@@ -119,17 +113,14 @@ namespace _StoryGame.Game.Movement
                 return;
             }
 
-            // _log.Debug($"Input detected at screen position: {inputPosition}");
-
             if (IsClickOverUI())
             {
-                // _log.Debug("Click on UI, ignoring.");
+                _log.Debug("Click on UI, ignoring.");
                 ResetTouch();
                 return;
             }
 
             _isTouchActive = true;
-            _startTouchPosition = inputPosition;
 
             Ray ray = mainCamera.ScreenPointToRay(inputPosition);
 
@@ -137,15 +128,13 @@ namespace _StoryGame.Game.Movement
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, interactableLayer))
             {
-                _log.Debug($"Hit Interactable object: {hit.collider.gameObject.name}");
+                // _log.Debug($"Hit layer Interactable object: {hit.collider.gameObject.name}");
 
                 var interactable = hit.collider.GetComponent<IInteractable>();
                 if (interactable != null)
                 {
-                    _selfMsgPublisher.Publish(new MoveToInteractableHandlerMsg(interactable));
-
-                    _log.Debug($"Interacted with object: {interactable.Name}");
-                    // interactable.Interact();
+                    _selfMsgPub.Publish(new MoveToInteractableHandlerMsg(interactable));
+                    // _log.Debug($"Interacted with object: {interactable.Name}");
                 }
 
                 ResetTouch();
@@ -154,22 +143,19 @@ namespace _StoryGame.Game.Movement
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
             {
-                _log.Debug($"Hit Ground object: {hit.collider.gameObject.name}");
+                // _log.Debug($"Hit Ground object: {hit.collider.gameObject.name}");
 
                 if (NavMesh.SamplePosition(hit.point, out var navMeshHit, 0.5f, NavMesh.AllAreas))
-                    _selfMsgPublisher.Publish(new MoveToPointHandlerMsg(navMeshHit.position));
-                else _log.Debug("Clicked position is not valid on NavMesh!");
+                {
+                    // _log.Debug($"Clicked position is valid on NavMesh: {navMeshHit.position}");
+                    _selfMsgPub.Publish(new MoveToPointHandlerMsg(navMeshHit.position));
+                }
             }
-            else _log.Debug("No hit on Ground layer!");
 
             ResetTouch();
         }
 
-        private void ResetTouch()
-        {
-            _isTouchActive = false;
-            _moveInput = Vector2.zero;
-        }
+        private void ResetTouch() => _isTouchActive = false;
 
         #region Conditions
 
@@ -182,31 +168,5 @@ namespace _StoryGame.Game.Movement
             EventSystem.current && EventSystem.current.IsPointerOverGameObject();
 
         #endregion
-    }
-
-    public interface IMovementProcessorMsg : IJMessage
-    {
-    }
-
-    public record MovementProcessorStateMsg(EMoveState State) : IMovementProcessorMsg
-    {
-        public string Name => nameof(MovementProcessorStateMsg);
-        public EMoveState State { get; } = State;
-    }
-
-    public record MoveToPointHandlerMsg(Vector3 Position) : IMovementHandlerMsg
-    {
-        public string Name => nameof(MoveToPointHandlerMsg);
-        public Vector3 Position { get; } = Position;
-    }
-
-    public interface IMovementHandlerMsg : IJMessage
-    {
-    }
-
-    public record MoveToInteractableHandlerMsg(IInteractable Interactable) : IMovementHandlerMsg
-    {
-        public string Name => nameof(MoveToInteractableHandlerMsg);
-        public IInteractable Interactable { get; } = Interactable;
     }
 }

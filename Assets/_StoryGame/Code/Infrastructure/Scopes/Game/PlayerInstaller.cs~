@@ -10,10 +10,10 @@ namespace _StoryGame.Infrastructure.Scopes.Game
     public sealed class PlayerInstaller
     {
         private readonly IContainerBuilder _builder;
-        private readonly Player _instance;
+        private readonly PlayerView _instance;
         private readonly Transform _point;
 
-        public PlayerInstaller(IContainerBuilder builder, Player instance, Transform spawnPoint) =>
+        public PlayerInstaller(IContainerBuilder builder, PlayerView instance, Transform spawnPoint) =>
             (_builder, _instance, _point) = (builder, instance, spawnPoint);
 
         public bool Install()
@@ -29,7 +29,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             // _builder.RegisterComponent(_instance).AsImplementedInterfaces();
 
-            _builder.RegisterComponentInHierarchy<Player>().AsSelf().AsImplementedInterfaces();
+            _builder.RegisterComponentInHierarchy<PlayerView>().AsSelf().AsImplementedInterfaces();
 
             _builder.Register<PlayerInteractor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             _builder.Register<PlayerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

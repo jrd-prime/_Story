@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _StoryGame.Core.Character.Common.Interfaces;
-using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Infrastructure.Localization;
@@ -23,9 +21,9 @@ namespace _StoryGame.Game.Character.Player.Impls
         private ILocalizationProvider _localizationProvider;
         private IJLog _log;
         private IPublisher<IUIViewerMessage> _uiPublisher;
+        private IInteractable _currentInteractable;
 
         private bool _isInitialized;
-        private IInteractable _currentInteractable;
 
         private readonly HashSet<IInteractable> _interactablesInTrigger = new();
 
@@ -43,7 +41,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!CanInteractCondition(other, out _))
+            if (!CanInteract(other, out _))
                 return;
 
             UpdateCurrentInteractable();
@@ -77,7 +75,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         private void OnTriggerExit(Collider other)
         {
-            if (!IsInitialized() || ShouldSkipTriggerCondition(other) ||
+            if (!IsInitialized() || ShouldSkipTrigger(other) ||
                 !TryGetInteractable(other, out var interactable))
                 return;
 
@@ -131,22 +129,22 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         #region Conditions
 
-        private bool IsLayerInMaskCondition(int layer) =>
+        private bool IsLayerInMask(int layer) =>
             (triggeredByLayer.value & (1 << layer)) != 0;
 
-        private bool CanProcessTriggerCondition(Collider other) =>
-            IsInitialized() && other && IsLayerInMaskCondition(other.gameObject.layer);
+        private bool CanProcessTrigger(Collider other) =>
+            IsInitialized() && other && IsLayerInMask(other.gameObject.layer);
 
-        private bool CanInteractCondition(Collider other, out IInteractable interactable)
+        private bool CanInteract(Collider other, out IInteractable interactable)
         {
             interactable = null;
-            return CanProcessTriggerCondition(other) &&
+            return CanProcessTrigger(other) &&
                    TryGetInteractable(other, out interactable) &&
                    _interactablesInTrigger.Add(interactable);
         }
 
-        private bool ShouldSkipTriggerCondition(Collider other) =>
-            !_isInitialized || other == null || !IsLayerInMaskCondition(other.gameObject.layer);
+        private bool ShouldSkipTrigger(Collider other) =>
+            !_isInitialized || other == null || !IsLayerInMask(other.gameObject.layer);
 
         #endregion
     }
