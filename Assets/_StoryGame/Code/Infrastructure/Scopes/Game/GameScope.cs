@@ -22,7 +22,9 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 {
     public sealed class GameScope : LifetimeScope
     {
-        [FormerlySerializedAs("playerPrefab")] [SerializeField] private PlayerView playerViewPrefab;
+        [FormerlySerializedAs("playerPrefab")] [SerializeField]
+        private PlayerView playerViewPrefab;
+
         [SerializeField] private Transform spawnPoint;
         private GameObject _mainEmpty;
 
@@ -53,9 +55,15 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             if (!playerInstaller.Install())
                 throw new Exception("PlayerInstaller is not installed.");
 
-            // builder.Register<MovementHandler>(Lifetime.Singleton).As<IMovementHandler>().As<IInitializable>();
+
             builder.RegisterComponentInHierarchy<NewMovementHandler>().As<IMovementHandler>();
-            builder.Register<MovementProcessor>(Lifetime.Singleton).AsImplementedInterfaces();
+
+
+            builder.Register<MovementProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<MovementProcessor>());
+
+            builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
         }
 
         protected override void Awake()

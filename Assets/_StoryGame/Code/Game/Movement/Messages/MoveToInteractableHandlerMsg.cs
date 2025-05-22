@@ -1,6 +1,6 @@
 ﻿using _StoryGame.Core.Interactables.Interfaces;
 
-namespace _StoryGame.Game.Movement
+namespace _StoryGame.Game.Movement.Messages
 {
     public record MoveToInteractableHandlerMsg(IInteractable Interactable) : IMovementHandlerMsg
     {

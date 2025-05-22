@@ -1,4 +1,7 @@
-﻿namespace _StoryGame.Core.Character.Common.Interfaces
+﻿using R3;
+using UnityEngine;
+
+namespace _StoryGame.Core.Character.Common.Interfaces
 {
     public interface ICharacter : IMovable
     {
@@ -8,14 +11,16 @@
         object Animator { get; }
         int Health { get; }
         int MaxHealth { get; }
-        CharacterState State { get; }
-        void SetState(CharacterState state);
+        ReadOnlyReactiveProperty<ECharacterState> State { get; }
+        void SetState(ECharacterState state);
     }
 
-    public enum CharacterState
+    public enum ECharacterState
     {
         Idle,
-        Moving,
-        Interacting
+        MovingToPoint,
+        MovingToInteractable,
+        Interacting,
+        PopUp
     }
 }

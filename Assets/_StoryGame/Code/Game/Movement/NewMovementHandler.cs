@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
+using _StoryGame.Game.Character.Player.Messages;
 using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
 using R3;
@@ -15,45 +18,39 @@ namespace _StoryGame.Game.Movement
 {
     public sealed class NewMovementHandler : MonoBehaviour, IMovementHandler
     {
-        public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint;
-        public ReadOnlyReactiveProperty<Vector3> MoveDirection => _moveDirection;
-
-
-        private bool _isTouchActive;
-
-        private readonly ReactiveProperty<Vector3> _destinationPoint = new(Vector3.zero);
-        private readonly ReactiveProperty<Vector3> _moveDirection = new(Vector3.zero);
-
         [SerializeField] private Camera mainCamera;
         [SerializeField] private LayerMask interactableLayer;
         [SerializeField] private LayerMask groundLayer;
 
+        public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint;
+        public ReadOnlyReactiveProperty<Vector3> MoveDirection => _moveDirection;
+
+
         private IJLog _log;
         private IPlayer _player;
-
-        private EMoveState _currentMoveProcessorState;
-
-        private readonly CompositeDisposable _disposables = new();
         private IPublisher<IMovementHandlerMsg> _selfMsgPub;
+
+        private bool _isTouchActive;
+        private ECharacterState _currentPlayerState;
+
+        private readonly ReactiveProperty<Vector3> _destinationPoint = new(Vector3.zero);
+        private readonly ReactiveProperty<Vector3> _moveDirection = new(Vector3.zero);
+        private readonly CompositeDisposable _disposables = new();
 
         [Inject]
         private void Construct(
             IJLog log,
-            ICameraManager cameraManager,
             IPublisher<IMovementHandlerMsg> selfMsgPub,
+            ISubscriber<IPlayerMsg> playerMsgSub,
             ISubscriber<IMovementProcessorMsg> movementProcessorMsgSub)
         {
             _log = log;
 
             _selfMsgPub = selfMsgPub;
 
-            movementProcessorMsgSub
-                .Subscribe(msg =>
-                {
-                    _currentMoveProcessorState = msg is MovementProcessorStateMsg stateMsg
-                        ? stateMsg.State
-                        : _currentMoveProcessorState;
-                })
+            playerMsgSub.Subscribe(
+                    msg => { _currentPlayerState = ((PlayerStateMsg)msg).State; },
+                    msg => msg is PlayerStateMsg)
                 .AddTo(_disposables);
         }
 
@@ -65,14 +62,12 @@ namespace _StoryGame.Game.Movement
 
         private void Update()
         {
-            if (HasNoInput())
+            if (_currentPlayerState is ECharacterState.Interacting or ECharacterState.MovingToInteractable
+                or ECharacterState.PopUp)
                 return;
 
-            if (_currentMoveProcessorState is EMoveState.ToInteract)
-            {
-                _log.Debug("MoveState is MoveToInteractable, SKIP CLICK.");
+            if (HasNoInput())
                 return;
-            }
 
             if (TryGetInputPosition(out var inputPosition))
                 HandleInput(inputPosition);
@@ -134,7 +129,7 @@ namespace _StoryGame.Game.Movement
                 if (interactable != null)
                 {
                     _selfMsgPub.Publish(new MoveToInteractableHandlerMsg(interactable));
-                    // _log.Debug($"Interacted with object: {interactable.Name}");
+                    _log.Debug($"Interacted with object: {interactable.Name}");
                 }
 
                 ResetTouch();
@@ -147,15 +142,19 @@ namespace _StoryGame.Game.Movement
 
                 if (NavMesh.SamplePosition(hit.point, out var navMeshHit, 0.5f, NavMesh.AllAreas))
                 {
-                    // _log.Debug($"Clicked position is valid on NavMesh: {navMeshHit.position}");
                     _selfMsgPub.Publish(new MoveToPointHandlerMsg(navMeshHit.position));
+                    _log.Debug($"Clicked position is valid on NavMesh: {navMeshHit.position}");
                 }
             }
 
             ResetTouch();
         }
 
-        private void ResetTouch() => _isTouchActive = false;
+        private void ResetTouch()
+        { 
+            _log.Debug("ResetTouch");
+            _isTouchActive = false;
+        }
 
         #region Conditions
 
@@ -168,5 +167,11 @@ namespace _StoryGame.Game.Movement
             EventSystem.current && EventSystem.current.IsPointerOverGameObject();
 
         #endregion
+    }
+
+    public interface IMovementHandler
+    {
+        ReadOnlyReactiveProperty<Vector3> DestinationPoint { get; }
+        ReadOnlyReactiveProperty<Vector3> MoveDirection { get; }
     }
 }

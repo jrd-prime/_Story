@@ -1,0 +1,7 @@
+﻿namespace _StoryGame.Game.Interactables
+{
+    public class Unlockable
+    {
+        
+    }
+}

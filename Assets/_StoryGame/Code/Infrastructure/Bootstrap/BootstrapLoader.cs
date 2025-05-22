@@ -42,6 +42,8 @@ namespace _StoryGame.Infrastructure.Bootstrap
 
                     if (pseudoDelay > 0)
                         await UniTask.Delay(pseudoDelay);
+
+                    _log.Debug($"Service initialized successfully: {service.Description}...");
                 }
                 catch (Exception ex)
                 {

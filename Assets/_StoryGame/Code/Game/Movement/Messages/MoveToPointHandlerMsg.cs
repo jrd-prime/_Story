@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _StoryGame.Game.Movement
+namespace _StoryGame.Game.Movement.Messages
 {
     public record MoveToPointHandlerMsg(Vector3 Position) : IMovementHandlerMsg
     {

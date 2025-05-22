@@ -6,13 +6,23 @@ namespace _StoryGame.Core.Interactables.Interfaces
 {
     public interface IInteractable
     {
+        EInteractableType InteractableType { get; }
         bool CanInteract { get; }
         string InteractionTipNameId { get; }
         string LocalizationKey { get; }
-        string Name { get;  }
+        string Name { get; }
         UniTask InteractAsync(ICharacter character);
         void ShowInteractionTip((string, string) interactionTip);
         void HideInteractionTip();
         Vector3 GetEntryPoint();
+    }
+
+    public enum EInteractableType
+    {
+        Use,
+        Condition,
+        Inspect,
+        Unlock,
+        MultiStage
     }
 }

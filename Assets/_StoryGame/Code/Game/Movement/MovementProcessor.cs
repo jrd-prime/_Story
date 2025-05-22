@@ -1,26 +1,17 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
+using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
+using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
 using UnityEngine;
-using UnityEngine.AI;
-using VContainer.Unity;
 
 namespace _StoryGame.Game.Movement
 {
-    public sealed class MovementProcessor : IMovementProcessor, IStartable, IDisposable
+    public sealed class MovementProcessor : IDisposable
     {
-        private NavMeshAgent _navMeshAgent => _player.NavMeshAgent;
-
-        private readonly IMovementProcessorMsg _noneStateMsg = new MovementProcessorStateMsg(EMoveState.None);
-
-        private readonly IMovementProcessorMsg
-            _toInteractStateMsg = new MovementProcessorStateMsg(EMoveState.ToInteract);
-
-        private readonly IMovementProcessorMsg _toPointStateMsg = new MovementProcessorStateMsg(EMoveState.ToPoint);
-
         private readonly IJLog _log;
         private readonly IPlayer _player;
         private readonly IPublisher<IMovementProcessorMsg> _selfMsgPub;
@@ -39,74 +30,36 @@ namespace _StoryGame.Game.Movement
             _player = player;
 
             movementHandlerMsgSub
-                .Subscribe(OnMovementHandlerMessage)
+                .Subscribe(OnMovementHandlerMsg)
                 .AddTo(_disposables);
         }
 
-        public void Start()
+        private async UniTask MoveToInteractable(IInteractable interactable)
         {
-            _log.Info("Start MovementProcessor");
-            _selfMsgPub.Publish(_noneStateMsg);
-        }
-
-
-        private void MoveToInteractable(IInteractable interactable)
-        {
-            _log.Info("MoveToInteractable");
-
-            _selfMsgPub.Publish(_toInteractStateMsg);
-
             var entryPoint = interactable.GetEntryPoint();
 
-            SendDestinationPoint(entryPoint);
+            await _player.MoveToPointAsync(entryPoint, EDestinationPoint.Entrance);
+            _log.Debug($"MoveToInteractable: {entryPoint} done");
 
-            _selfMsgPub.Publish(_noneStateMsg);
+            _selfMsgPub.Publish(new InteractableEntranceReachedMsg(interactable));
         }
 
-        private void MoveToPoint(Vector3 position)
+        private async UniTask MoveToPoint(Vector3 position)
         {
-            _log.Debug("MoveToPoint: " + position);
-
-            _selfMsgPub.Publish(_toPointStateMsg);
-
-            SendDestinationPoint(position);
+            await _player.MoveToPointAsync(position, EDestinationPoint.Ground);
+            _log.Debug($"MoveToPoint: {position} done");
         }
 
-        private void SendDestinationPoint(Vector3 position) =>
-            _selfMsgPub.Publish(new DestinationPointMsg(position));
-
-
-        // public void Tick()
-        // {
-        //     // Проверяем, достиг ли агент цели
-        //     if (_moveState.Value != EMoveState.None && _navMeshAgent != null)
-        //     {
-        //         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-        //         {
-        //             if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
-        //             {
-        //                 // Цель достигнута
-        //                 if (_moveState.Value == EMoveState.MoveToInteractable && _currentInteractable != null)
-        //                 {
-        //                     _log.Info($"Reached interactable: {_currentInteractable.Name}");
-        //                     _currentInteractable.Interact();
-        //                     _currentInteractable = null; // Сбрасываем после взаимодействия
-        //                 }
-        //                 _moveState.Value = EMoveState.None; // Сбрасываем состояние
-        //             }
-        //         }
-        //     }
-        // }
-
-        private void OnMovementHandlerMessage(IMovementHandlerMsg message)
+        private void OnMovementHandlerMsg(IMovementHandlerMsg message)
         {
+            _log.Debug($"OnMovementHandlerMsg: {message.GetType().Name}");
             switch (message)
             {
                 case MoveToInteractableHandlerMsg msg:
-                    MoveToInteractable(msg.Interactable);
+                    MoveToInteractable(msg.Interactable).Forget();
                     break;
                 case MoveToPointHandlerMsg msg:
-                    MoveToPoint(msg.Position);
+                    MoveToPoint(msg.Position).Forget();
                     break;
                 default:
                     _log.Warn($"Unknown message: {message.GetType().Name}");
@@ -117,10 +70,15 @@ namespace _StoryGame.Game.Movement
         public void Dispose() => _disposables?.Dispose();
     }
 
-    public enum EMoveState
+    public record InteractableEntranceReachedMsg(IInteractable Interactable) : IMovementProcessorMsg
     {
-        None,
-        ToInteract,
-        ToPoint
+        public string Name => nameof(InteractableEntranceReachedMsg);
+        public IInteractable Interactable { get; } = Interactable;
+    }
+
+    public enum EDestinationPoint
+    {
+        Ground,
+        Entrance
     }
 }

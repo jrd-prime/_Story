@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,10 +15,12 @@ namespace _StoryGame.Game.Character.Player.Impls
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float rotationSpeed = 10f;
         [SerializeField] private float acceleration = 0f;
+
         public ReactiveProperty<Vector3> Position { get; } = new();
         public object Animator { get; private set; }
-        public CharacterState State { get; private set; } = CharacterState.Idle;
+        public ECharacterState State { get; private set; } = ECharacterState.Idle;
         public NavMeshAgent NavMeshAgent { get; private set; }
+        public string Description { get; set; }
 
         private IObjectResolver _resolver;
 
@@ -57,9 +60,35 @@ namespace _StoryGame.Game.Character.Player.Impls
             Position.Value = position;
         }
 
-        public void SetState(CharacterState state) =>
-            State = state;
+        public async UniTask<bool> MoveToAsync(Vector3 destination)
+        {
+            NavMeshAgent.SetDestination(destination);
 
-        public void MoveTo(Vector3 destination) => NavMeshAgent.SetDestination(destination);
+            if (NavMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid)
+            {
+                Debug.LogWarning("Цель недостижима!");
+                return false;
+            }
+
+            try
+            {
+                await UniTask
+                    .WaitUntil(HasReachedDestination)
+                    .Timeout(TimeSpan.FromSeconds(5));
+
+                Debug.Log($"MoveToAsync: {destination} done");
+
+                return true;
+            }
+            catch (TimeoutException)
+            {
+                Debug.LogError("Таймаут: агент не достиг цели!");
+                NavMeshAgent.ResetPath();
+                return false;
+            }
+        }
+
+        private bool HasReachedDestination() =>
+            !NavMeshAgent.pathPending && NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance;
     }
 }

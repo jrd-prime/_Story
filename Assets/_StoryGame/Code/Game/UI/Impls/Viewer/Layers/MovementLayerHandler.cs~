@@ -1,6 +1,5 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Movement;
-using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
@@ -15,7 +14,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
         private VisualElement _movementArea;
 
         // private VisualElement _ring;
-        private IMovementHandler _movementHandler;
+        private IJTouchHandler _ijTouchHandler;
 
         public MovementLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver, layerBack)
         {
@@ -23,7 +22,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 
         protected override void ResolveDependencies(IObjectResolver resolver)
         {
-            _movementHandler = resolver.Resolve<IMovementHandler>();
+            _ijTouchHandler = resolver.Resolve<IJTouchHandler>();
         }
 
         protected override void InitElements()

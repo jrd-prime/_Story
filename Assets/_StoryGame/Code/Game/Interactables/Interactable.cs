@@ -2,7 +2,10 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Game._debug;
 using _StoryGame.Game.UI.Messages;
+using _StoryGame.Infrastructure.AppStarter;
+using _StoryGame.Infrastructure.Localization;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
@@ -11,13 +14,17 @@ using VContainer;
 
 namespace _StoryGame.Game.Interactables
 {
-    public sealed class Interactable : MonoBehaviour, IInteractable
+    public abstract class Interactable : MonoBehaviour, IInteractable
     {
         [SerializeField] private string objName;
         [SerializeField] private string interactionTipNameId;
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform _entrance;
+
+        public abstract EInteractableType InteractableType { get; }
         public Vector3 GetEntryPoint() => _entrance.position;
+
+        public EInteractableState InteractableState { get; }
 
         public bool CanInteract { get; }
         public string InteractionTipNameId => interactionTipNameId;
@@ -29,18 +36,31 @@ namespace _StoryGame.Game.Interactables
 
         private readonly ReactiveCommand _command = new();
         private readonly CompositeDisposable _disposables = new();
+        private IInteractable _interactableImplementation;
+        private ILocalizationProvider _localizationProvider;
 
         [Inject]
-        private void Construct(IPublisher<IUIViewerMessage> uiViewerMessagePublisher)
+        private void Construct(AppStartHandler appStartHandler, ILocalizationProvider localizationProvider,
+            IPublisher<IUIViewerMessage> uiViewerMessagePublisher)
         {
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
+            _localizationProvider = localizationProvider;
+
+            appStartHandler.IsAppStarted.Subscribe(OnAppStarted).AddTo(_disposables);
         }
 
-
-        public UniTask InteractAsync(ICharacter character)
+        private void OnAppStarted(Unit _)
         {
-            throw new NotImplementedException();
+            InteractableDebugController deb = gameObject.GetComponentInChildren<InteractableDebugController>();
+
+            if (!deb)
+                throw new NullReferenceException("InteractableDebugController not found.");
+
+            deb.SetNameText(_localizationProvider.LocalizeWord(LocalizationKey, WordTransform.Capitalize));
+            deb.SetInteractableType(InteractableType);
         }
+
+        public abstract UniTask InteractAsync(ICharacter character);
 
         public void ShowInteractionTip((string, string) interactionTip)
         {
@@ -56,10 +76,16 @@ namespace _StoryGame.Game.Interactables
             _uiViewerMessagePublisher.Publish(new ResetFloatingWindowMessage(tipId));
         }
 
-
         private void OnCommand(Unit _)
         {
             HideInteractionTip();
         }
+    }
+
+    public enum EInteractableState
+    {
+        NotInspected, // не просмотрен
+        Inspected, // просмотрен
+        Unlocked // открыт за энергию
     }
 }
