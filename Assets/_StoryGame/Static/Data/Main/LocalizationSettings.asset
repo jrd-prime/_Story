@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3261a6b28cd4620a30b65f2ce8cb847, type: 3}
   m_Name: LocalizationSettings
   m_EditorClassIdentifier: 
-  <DefaultLanguage>k__BackingField: 0
+  <DefaultLanguage>k__BackingField: 1

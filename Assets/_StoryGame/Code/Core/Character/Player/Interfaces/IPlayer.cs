@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using _StoryGame.Core.Character.Common.Interfaces;
+﻿using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
 using UnityEngine;

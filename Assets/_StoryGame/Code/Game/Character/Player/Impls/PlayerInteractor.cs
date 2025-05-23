@@ -5,7 +5,6 @@ using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Currency;
 using _StoryGame.Game.Character.Player.Messages;
 using _StoryGame.Game.Movement;
-using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 using MessagePipe;

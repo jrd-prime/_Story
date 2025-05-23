@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _StoryGame.Game.Interactables
+namespace _StoryGame.Game.Interactables.Sub
 {
     /// <summary>
     /// Объект в темном месте, который становится активным если есть фонарик

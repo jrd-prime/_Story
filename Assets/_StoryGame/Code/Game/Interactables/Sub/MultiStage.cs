@@ -1,8 +1,9 @@
-﻿using _StoryGame.Core.Character.Common.Interfaces;
+﻿using System;
+using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interactables
+namespace _StoryGame.Game.Interactables.Sub
 {
     /// <summary>
     /// Объекты с несколькими стадиями взаимодействия
@@ -12,7 +13,7 @@ namespace _StoryGame.Game.Interactables
         public override EInteractableType InteractableType => EInteractableType.MultiStage;
         public override UniTask InteractAsync(ICharacter character)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

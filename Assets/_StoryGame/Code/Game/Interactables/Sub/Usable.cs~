@@ -7,11 +7,11 @@ using UnityEngine;
 namespace _StoryGame.Game.Interactables
 {
     /// <summary>
-    /// Например, стеллаж (что не требует открывания, как сейф)
+    /// Например, дверь
     /// </summary>
-    public class Inspectable : Interactable
+    public sealed class Usable : Interactable
     {
-        public override EInteractableType InteractableType => EInteractableType.Inspect;
+        public override EInteractableType InteractableType => EInteractableType.Use;
 
         public override async UniTask InteractAsync(ICharacter character)
         {

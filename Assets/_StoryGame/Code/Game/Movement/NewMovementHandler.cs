@@ -4,7 +4,6 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
-using _StoryGame.Game.Managers.Inerfaces;
 using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
