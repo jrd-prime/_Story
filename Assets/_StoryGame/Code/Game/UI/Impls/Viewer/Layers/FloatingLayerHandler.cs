@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data;
 using _StoryGame.Game.Extensions;
+using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.UI.Messages;
+using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -25,8 +28,10 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 
         // TODO сделать хранение элементов для типов окон
         private ReactiveCommand _msgCommand;
-        private Button _btn;
+        private Button close;
         private Label _label;
+        private Button search;
+        private FloatingWindowFactory _floatingWindowFactory;
 
         public FloatingLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver, layerBack)
         {
@@ -40,6 +45,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             foreach (var windowData in floatingWindowsData.FloatingWindowDataVo)
                 _floatingWindowsAssets.Add(windowData.floatingWindowType, windowData.visualTreeAsset);
 
+            _floatingWindowFactory = new FloatingWindowFactory(_windows);
             Log.Debug("FloatingLayerHandler initialized with " + _floatingWindowsAssets.Count + " windows.");
         }
 
@@ -69,61 +75,40 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
         {
         }
 
-        public void ShowFloatingWindow(
-            string text,
-            ReactiveCommand callback,
-            FloatingWindowType windowType = FloatingWindowType.PreInteract,
-            PositionType positionType = PositionType.Center
-        )
+        public void ShowFloatingWindow(ShowFloatingWindowMsg<DialogResult> msg)
         {
-            var window = windowType switch
-            {
-                FloatingWindowType.PreInteract => _windows.GetValueOrDefault(windowType),
-                _ => throw new ArgumentOutOfRangeException(nameof(windowType), windowType, null)
-            };
+            var window = _floatingWindowFactory.CreateAndFill(msg);
 
-            if (window == null)
-                throw new NullReferenceException("Floating window is null. " + nameof(ShowFloatingWindow));
 
-            switch (positionType)
-            {
-                case PositionType.Left:
-                    break;
-                case PositionType.Center:
-                    _center.Clear();
-                    PrepareWindow(window, text, callback);
-                    _center.Add(window);
-                    break;
-                case PositionType.Right:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(positionType), positionType, null);
-            }
-        }
-
-        // TODO переделать под разные окна и тд. сделать фабрику
-        private void PrepareWindow(VisualElement window, string text, ReactiveCommand callback)
-        {
-            _msgCommand = callback;
-            _label = window.GetVisualElement<Label>("label", window.name);
-            _label.text = text;
-            _btn = window.GetVisualElement<Button>("btn", window.name);
-
-            _btn.RegisterCallback<ClickEvent>(OnPopUpBtnClick);
-        }
-
-        public void ResetWindowById(string msgId)
-        {
-            Debug.LogError($"FloatingLayerHandler.ResetWindowById: {msgId}");
-            _btn.UnregisterCallback<ClickEvent>(OnPopUpBtnClick);
             _center.Clear();
-            _msgCommand = null;
+
+
+            _label = window.GetVisualElement<Label>("label", window.name);
+            _label.text = msg.Text;
+
+            close = window.GetVisualElement<Button>("close", window.name);
+            search = window.GetVisualElement<Button>("search", window.name);
+
+            close.RegisterCallback<ClickEvent>(_ => OnClo(msg.CompletionSource));
+            search.RegisterCallback<ClickEvent>(_ => OnSer(msg.CompletionSource));
+
+
+            _center.Add(window);
         }
 
-        private void OnPopUpBtnClick(ClickEvent _)
+        private void OnClo(UniTaskCompletionSource<DialogResult> source)
         {
-            _msgCommand.Execute(Unit.Default);
-            _btn.UnregisterCallback<ClickEvent>(OnPopUpBtnClick);
+            Debug.Log("OnClo");
+            source.TrySetResult(DialogResult.Close);
+            close.UnregisterCallback<ClickEvent>(_ => OnClo(source));
+            _center.Clear();
+        }
+
+        private void OnSer(UniTaskCompletionSource<DialogResult> source)
+        {
+            Debug.Log("OnSer");
+            source.TrySetResult(DialogResult.Search);
+            search.UnregisterCallback<ClickEvent>(_ => OnSer(source));
             _center.Clear();
         }
     }
@@ -137,6 +122,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 
     public enum FloatingWindowType
     {
-        PreInteract
+        HasLoot,
+        NoLoot
     }
 }

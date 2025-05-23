@@ -8,8 +8,9 @@
         <engine:VisualElement name="cContent" style="flex-grow: 1; width: 100%; font-size: 22px; -unity-text-align: middle-center; height: auto; align-items: center; justify-content: center; align-self: center; align-content: center; color: rgb(255, 255, 255); -unity-font-style: bold; padding-top: 12px; padding-bottom: 12px;">
             <engine:Label text="Label" name="label" picking-mode="Ignore" style="font-size: 20px; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
         </engine:VisualElement>
-        <engine:VisualElement name="cBtn" style="flex-grow: 1; width: 100%; font-size: 22px; -unity-text-align: middle-center; height: auto; align-items: center; justify-content: center; align-self: center; align-content: center; color: rgb(255, 255, 255); -unity-font-style: bold; padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-bottom: 12px;">
-            <engine:Button text="INVESTIGATE" name="btn" class="popupBase popupGreen" />
+        <engine:VisualElement name="cBtn" style="flex-grow: 1; width: 100%; font-size: 22px; -unity-text-align: middle-center; height: 50px; align-items: center; justify-content: center; align-self: center; align-content: center; color: rgb(255, 255, 255); -unity-font-style: bold; padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-bottom: 12px; flex-direction: row;">
+            <engine:Button text="CLOSE" name="close" class="popupBase popupGreen" style="font-size: 18px; padding-right: 12px; padding-left: 12px; align-items: flex-start; align-self: flex-start; -unity-text-align: middle-left; position: absolute; left: 12px; top: 0; background-color: rgba(146, 178, 121, 0.48);" />
+            <engine:Button text="SEARCH -1energy" name="search" class="popupBase popupGreen" style="font-size: 18px; padding-right: 12px; padding-left: 12px; position: absolute; right: 12px; top: 0; background-color: rgb(127, 178, 87);" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

@@ -5,7 +5,6 @@ using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Managers.Game.Impls;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interactables;
-using _StoryGame.Game.Interactables.Inspect;
 using _StoryGame.Game.Managers.Impls;
 using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Game.Managers.Inerfaces;
@@ -65,13 +64,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
             builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
-
-            RegisterInteractableSystems(builder);
-        }
-
-        private void RegisterInteractableSystems(IContainerBuilder builder)
-        {
-            builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()

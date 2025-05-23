@@ -58,6 +58,7 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IGameManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Gameplay\IGameplayUIViewModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\UI\IUIViewer.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Inspect\IInteractableSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\FloatingLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\Interfaces\IPlayerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Impls\CurrencyService.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Interactables\InteractableProcessor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\ICharacterInteractor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\Messages\DisableInputMessage.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\UI\Messages\ShowFloatingWindowMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuest.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\UIView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IBuffable.cs" />
@@ -144,7 +144,9 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IEquippable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\_debug\InteractableDebugController.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\UIViewerHandlerBase.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Inspect\EInspectState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\Messages\MoveToInteractableHandlerMsg.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Inspect\InspectSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\HSM.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Settings\ISettingsProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\PlayerService.cs" />
@@ -158,10 +160,12 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\CheckerExtension.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\UIViewBase.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Tools\FPSCounter.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\UI\Messages\ShowFloatingWindowMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestObjective.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interactables\CollectableObjData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Sub\Conditional.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Inspect\Inspectable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\UI\UIConst.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\AppStarter\AppStartHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IDebuffable.cs" />
@@ -261,6 +265,7 @@
     <None Include="Library\PackageCache\com.unity.addressables@16eddacf275e\package.json" />
     <None Include="Library\PackageCache\com.unity.ugui@5c9fd4989cdd\PackageConversionData.json" />
     <None Include="C:\Program Files\Unity\Hub\Editor\6000.1.4f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestassetbundle\package.json" />
+    <None Include="Assets\_StoryGame\Static\UI\FloatingWindow\FloatingWindow_has_loot.uxml" />
     <None Include="Library\PackageCache\com.unity.project-auditor@94c6e4e98816\Data\RoslynTextLookup.json" />
     <None Include="Library\PackageCache\com.unity.project-auditor@94c6e4e98816\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.ide.visualstudio@198cdf337d13\package.json" />
@@ -335,7 +340,7 @@
     <None Include="Library\PackageCache\com.github-glitchenzo.nugetforunity@9907fe2016af\package.json" />
     <None Include="C:\Program Files\Unity\Hub\Editor\6000.1.4f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrain\package.json" />
     <None Include="Assets\Packages\System.Threading.Channels.8.0.0\useSharedDesignerContext.txt" />
-    <None Include="Assets\_StoryGame\Static\UI\FloatingWindow\FloatingWindow_PreInteract.uxml" />
+    <None Include="Assets\_StoryGame\Static\UI\FloatingWindow\FloatingWindow_no_loot.uxml" />
     <None Include="Library\PackageCache\com.unity.collections@56bff8827a7e\package.json" />
     <None Include="C:\Program Files\Unity\Hub\Editor\6000.1.4f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.androidjni\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
@@ -1441,9 +1446,6 @@
       <Project>{8ab2b084-bcf5-3871-b422-e3b249e5bbfe}</Project>
       <Name>Unity.RenderPipelines.Universal.2D.Runtime</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\_StoryGame\Code\Game\Interactables\Inspect\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -2,6 +2,7 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Game.Interactables.Inspect;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
 using _StoryGame.Infrastructure.AppStarter;
@@ -36,11 +37,14 @@ namespace _StoryGame.Game.Interactables
         private readonly CompositeDisposable _disposables = new();
         private IInteractable _interactableImplementation;
         private ILocalizationProvider _localizationProvider;
+        protected IObjectResolver Resolver;
 
         [Inject]
-        private void Construct(AppStartHandler appStartHandler, ILocalizationProvider localizationProvider,
+        private void Construct(IObjectResolver resolver, AppStartHandler appStartHandler,
+            ILocalizationProvider localizationProvider,
             IPublisher<IUIViewerMessage> uiViewerMessagePublisher)
         {
+            Resolver = resolver;
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
             _localizationProvider = localizationProvider;
 
@@ -51,6 +55,7 @@ namespace _StoryGame.Game.Interactables
 
         private void OnAppStarted(Unit _)
         {
+            ResolveDependencies(Resolver);
             ShowDebug();
         }
 
@@ -68,6 +73,11 @@ namespace _StoryGame.Game.Interactables
             SetAdditionalDebugInfo(deb);
         }
 
+
+        protected virtual void ResolveDependencies(IObjectResolver resolver)
+        {
+        }
+
         protected virtual void SetAdditionalDebugInfo(InteractablesTipUI deb)
         {
         }
@@ -78,13 +88,6 @@ namespace _StoryGame.Game.Interactables
         {
             Debug.LogWarning("ShowInteractionTip");
             tipId = "testId";
-
-            _command
-                .Subscribe(OnCommand)
-                .AddTo(_disposables);
-
-            _uiViewerMessagePublisher
-                .Publish(new ShowFloatingWindowMessage(tipId, interactionTip.Item1, _command));
         }
 
         public void HideInteractionTip()

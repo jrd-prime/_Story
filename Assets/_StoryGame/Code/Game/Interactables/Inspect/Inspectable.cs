@@ -4,8 +4,9 @@ using _StoryGame.Core.Interactables.Interfaces;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using VContainer;
 
-namespace _StoryGame.Game.Interactables.Sub
+namespace _StoryGame.Game.Interactables.Inspect
 {
     /// <summary>
     /// Например, стеллаж (что не требует открывания, как сейф)
@@ -13,122 +14,26 @@ namespace _StoryGame.Game.Interactables.Sub
     public class Inspectable : Interactable
     {
         public override EInteractableType InteractableType => EInteractableType.Inspect;
-        private EInspectState _inspectState = EInspectState.NotInspected;
+        public EInspectState InspectState { get; private set; } = EInspectState.NotInspected;
+
+        private InspectSystem _inspectSystem;
+
+        protected override void ResolveDependencies(IObjectResolver resolver)
+        {
+            _inspectSystem = resolver.Resolve<InspectSystem>();
+            if (_inspectSystem == null)
+                throw new System.Exception("InspectSystem is null. " + gameObject.name);
+        }
 
         public override async UniTask InteractAsync(ICharacter character)
         {
-            var completionSource = new UniTaskCompletionSource();
-
             transform.DORotate(new Vector3(0, 360, 0), 2f, RotateMode.FastBeyond360)
                 .SetRelative(true)
-                .SetEase(Ease.Linear)
-                .OnComplete(() => completionSource.TrySetResult());
-
-            var result = _inspectState switch
-            {
-                EInspectState.NotInspected => await Inspect(),
-                EInspectState.Inspected => await Inspected(),
-                EInspectState.Searched => await Searched(),
-                _ => false
-            };
-
-            Debug.Log($"Interact result: {result}");
-
-            await OnInteractionComplete();
-
-            await completionSource.Task;
+                .SetEase(Ease.Linear);
+            await _inspectSystem.Process(this);
         }
 
-        private async Task OnInteractionComplete()
-        {
-            Debug.Log("OnInteractionComplete");
-            await UniTask.Yield();
-        }
-
-        /// <summary>
-        /// Осматриваем
-        /// </summary>
-        private async UniTask<bool> Inspect()
-        {
-            Debug.Log("Inspect");
-            await OnStartInspect();
-            await OnCompleteInspect();
-
-            return true;
-        }
-
-        private async UniTask OnStartInspect()
-        {
-            Debug.Log("OnStartInspect"); // anim hero // await progress bar
-            await UniTask.Yield();
-        }
-
-        private async UniTask OnCompleteInspect()
-        {
-            Debug.Log("OnCompleteInspect");
-            _inspectState = EInspectState.Inspected;
-            await ShowLootTipAfterInspect();
-        }
-
-        private async UniTask ShowLootTipAfterInspect()
-        {
-            Debug.Log("ShowLootTipAfterInspect - wait callback from tip");
-
-            System.Random random = new System.Random();
-            bool loot = random.Next(2) == 0;
-            bool search = random.Next(2) == 0;
-
-            Debug.LogWarning($"<color=green>Loot: {loot}, Search: {search}</color>");
-
-            if (loot)
-            {
-                Debug.Log("ShowLootTipAfterInspect - has loot");
-                Debug.Log("TIP CLOSE OR SEARCH");
-
-
-                if (search)
-                {
-                    Debug.Log("ShowLootTipAfterInspect - search");
-                }
-                else
-                {
-                    Debug.Log("ShowLootTipAfterInspect - close");
-                }
-            }
-            else
-            {
-                Debug.Log("ShowLootTipAfterInspect - no loot");
-                Debug.Log("TIP ONLY CLOSE");
-            }
-
-            await UniTask.Yield();
-        }
-
-        /// <summary>
-        /// После осмотра показываем инфу по луту
-        /// </summary>
-        private async UniTask<bool> Inspected()
-        {
-            Debug.Log("Inspected");
-            await OnCompleteInspect();
-            return true;
-        }
-
-        /// <summary>
-        /// После обыска показываем инфу итоговую
-        /// </summary>
-        private async UniTask<bool> Searched()
-        {
-            Debug.Log("Searched");
-            await UniTask.Yield();
-            return true;
-        }
-
-        private enum EInspectState
-        {
-            NotInspected, // не осмотрен
-            Inspected, // осмотрен
-            Searched // обыскан за энергию
-        }
+        public void SetInspectState(EInspectState state) =>
+            InspectState = state;
     }
 }

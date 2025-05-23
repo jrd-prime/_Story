@@ -62,6 +62,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                 case ShowFloatingWindowMsg<DialogResult> msg:
                     _floatingLayerHandler.ShowFloatingWindow(msg);
                     break;
+                case ResetFloatingWindowMessage msg:
+                    _floatingLayerHandler.ResetWindowById(msg.Id);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }

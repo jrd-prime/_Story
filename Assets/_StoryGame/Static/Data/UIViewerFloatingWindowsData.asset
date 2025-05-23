@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: UIViewerFloatingWindowsData
   m_EditorClassIdentifier: 
   FloatingWindowDataVo:
-  - floatingWindowType: 0
+  - floatingWindowType: 1
     visualTreeAsset: {fileID: 9197481963319205126, guid: 8de0cf495f9c9c5468c81bcf6916862b, type: 3}
+  - floatingWindowType: 0
+    visualTreeAsset: {fileID: 9197481963319205126, guid: 052b6cbb2bc247f418b0dbecad3f9be7, type: 3}
