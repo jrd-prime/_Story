@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/_StoryGame/Static/Scenes/GameScene.unity
     guid: c80eaec6e6a4bf24191f47519e390eb4
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 6d30da9c8bdec1442b9d5d1f9fad9544, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 32a8e620d33ea3d4e88f904108e0b9d6, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: df19be217369f2b48bb97c034df7d092, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: 1255378d89814c34e9ff7e6a94f094ef, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 167a9278f598e3e4aabb1c296816c1e9, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 00dca6ae5abae5040ad0cc3344eb70b4, type: 3}

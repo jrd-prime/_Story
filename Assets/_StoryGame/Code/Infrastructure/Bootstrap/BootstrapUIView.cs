@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Gameplay.Extensions;
+using _StoryGame.Game.Extensions;
 using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using R3;
 using UnityEngine;

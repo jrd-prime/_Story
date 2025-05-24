@@ -13,7 +13,7 @@ namespace _StoryGame.Infrastructure.Scopes.Bootstrap
 
             BindBootstrap(builder);
 
-            builder.RegisterEntryPoint<AppStarter>().As<IInitializable>();
+            builder.RegisterEntryPoint<AppStarter.AppStarter>().As<IInitializable>();
         }
 
         private void BindBootstrap(IContainerBuilder builder)

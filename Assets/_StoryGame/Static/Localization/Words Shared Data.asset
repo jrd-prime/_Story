@@ -31,6 +31,18 @@ MonoBehaviour:
     m_Key: barrel
     m_Metadata:
       m_Items: []
+  - m_Id: 1565441431371776
+    m_Key: door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1565441502674944
+    m_Key: drawer_table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1565441502674945
+    m_Key: wood_box
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

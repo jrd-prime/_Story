@@ -1,0 +1,8 @@
+﻿using _StoryGame.Core.Interfaces;
+
+namespace _StoryGame.Game.Character.Player.Impls
+{
+    public interface IPlayerMsg : IJMessage
+    {
+    }
+}

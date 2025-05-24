@@ -34,6 +34,18 @@ MonoBehaviour:
     m_Localized: barrel
     m_Metadata:
       m_Items: []
+  - m_Id: 1565441431371776
+    m_Localized: door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1565441502674944
+    m_Localized: drawer table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1565441502674945
+    m_Localized: wooden box
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

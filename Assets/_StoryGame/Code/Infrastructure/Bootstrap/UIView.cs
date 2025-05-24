@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Gameplay.UI.Impls;
+using _StoryGame.Game.UI.Impls;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;

@@ -1,0 +1,136 @@
+﻿using System;
+using _StoryGame.Core.Currency;
+using _StoryGame.Core.Currency.Impls;
+using _StoryGame.Core.HSM.Impls;
+using _StoryGame.Core.Managers.Game.Impls;
+using _StoryGame.Game.Character.Player.Impls;
+using _StoryGame.Game.Interactables;
+using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.Managers.Impls;
+using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
+using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Movement;
+using _StoryGame.Game.UI.Impls;
+using _StoryGame.Game.UI.Impls.Gameplay;
+using _StoryGame.Game.UI.Impls.Menu;
+using _StoryGame.Game.UI.Impls.Viewer;
+using UnityEngine;
+using UnityEngine.Serialization;
+using VContainer;
+using VContainer.Unity;
+
+namespace _StoryGame.Infrastructure.Scopes.Game
+{
+    public sealed class GameScope : LifetimeScope
+    {
+        [FormerlySerializedAs("playerPrefab")] [SerializeField]
+        private PlayerView playerViewPrefab;
+
+        [SerializeField] private Transform spawnPoint;
+        private GameObject _mainEmpty;
+
+        protected override void Configure(IContainerBuilder builder)
+        {
+            Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
+
+            RegisterStateMachine(builder);
+
+            // Поиск объекта --- MAIN
+            _mainEmpty = GameObject.Find("--- MAIN");
+            if (!_mainEmpty)
+                throw new NullReferenceException("Main empty game object is not found. (--- MAIN)");
+
+            // Регистрация сервисов
+            builder.Register<GameService>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<CurrencyService>(Lifetime.Singleton).As<ICurrencyService>();
+            builder.Register<GameplayUIViewModel>(Lifetime.Singleton).As<IGameplayUIViewModel>();
+            builder.Register<MenuUIViewModel>(Lifetime.Singleton).As<IMenuUIViewModel>();
+
+            InitializeManagers(builder);
+            InitializeUIModelsAndViewModels(builder);
+            InitializeViewStates(builder);
+
+            // var playerInstance = Instantiate(playerPrefab);
+            var playerInstaller = new PlayerInstaller(builder, null, spawnPoint);
+
+            if (!playerInstaller.Install())
+                throw new Exception("PlayerInstaller is not installed.");
+
+
+            builder.RegisterComponentInHierarchy<NewMovementHandler>().As<IMovementHandler>();
+
+
+            builder.Register<MovementProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<MovementProcessor>());
+
+            builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
+
+            RegisterInteractableSystems(builder);
+        }
+
+        private void RegisterInteractableSystems(IContainerBuilder builder)
+        {
+            builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            var interactables =
+                FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            Debug.Log($"Interactables on scene: {interactables.Length}");
+            foreach (var interactable in interactables)
+                Container.Inject(interactable);
+        }
+
+        private void RegisterStateMachine(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<HSM>().AsSelf().As<IDisposable>();
+        }
+
+
+        private void InitializeManagers(IContainerBuilder builder)
+        {
+            builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
+            builder.RegisterComponentInHierarchy<GameManager>().AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<UIManager>().AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<UIViewer>().AsImplementedInterfaces();
+        }
+
+        private void InitializeViewStates(IContainerBuilder builder)
+        {
+            // builder.Register<NewMenuState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            // builder.Register<NewGameplayState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            // builder.Register<PauseState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        }
+
+        private void InitializeUIModelsAndViewModels(IContainerBuilder builder)
+        {
+            // builder.Register<MenuModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            // builder.Register<MenuViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            // builder.Register<GameplayModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            // builder.Register<GameplayViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        }
+
+        private void RegisterComponent<T>(IContainerBuilder builder, T component, string componentName) where T : class
+        {
+            if (component == null)
+                throw new NullReferenceException($"{componentName} is null in {gameObject.name}");
+
+            builder.RegisterInstance(component).As<T>().AsImplementedInterfaces();
+        }
+
+        private void RegisterPrefabComponent<T>(IContainerBuilder builder, T prefabComponent, string componentName)
+            where T : MonoBehaviour
+        {
+            if (prefabComponent == null)
+                throw new NullReferenceException($"{componentName} is null in {gameObject.name}");
+
+            builder.RegisterComponentInNewPrefab(prefabComponent, Lifetime.Singleton)
+                .As<T>()
+                .AsImplementedInterfaces();
+        }
+    }
+}

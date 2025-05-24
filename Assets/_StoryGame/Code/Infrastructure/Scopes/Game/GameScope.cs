@@ -1,27 +1,32 @@
 ﻿using System;
 using _StoryGame.Core.Currency;
 using _StoryGame.Core.Currency.Impls;
+using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Managers.Game.Impls;
-using _StoryGame.Core.Managers.HSM.Impls;
-using _StoryGame.Gameplay.Character.Player.Impls;
-using _StoryGame.Gameplay.Interactables;
-using _StoryGame.Gameplay.Managers.Impls;
-using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
-using _StoryGame.Gameplay.Managers.Inerfaces;
-using _StoryGame.Gameplay.Movement;
-using _StoryGame.Gameplay.UI.Impls;
-using _StoryGame.Gameplay.UI.Impls.Gameplay;
-using _StoryGame.Gameplay.UI.Impls.Menu;
+using _StoryGame.Game.Character.Player.Impls;
+using _StoryGame.Game.Interactables;
+using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.Loot;
+using _StoryGame.Game.Managers.Impls;
+using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
+using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Movement;
+using _StoryGame.Game.UI.Impls;
+using _StoryGame.Game.UI.Impls.Gameplay;
+using _StoryGame.Game.UI.Impls.Menu;
+using _StoryGame.Game.UI.Impls.Viewer;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
-using Object = UnityEngine.Object;
 
 namespace _StoryGame.Infrastructure.Scopes.Game
 {
     public sealed class GameScope : LifetimeScope
     {
-        [SerializeField] private Player playerPrefab;
+        [FormerlySerializedAs("playerPrefab")] [SerializeField]
+        private PlayerView playerViewPrefab;
+
         [SerializeField] private Transform spawnPoint;
         private GameObject _mainEmpty;
 
@@ -46,13 +51,35 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             InitializeUIModelsAndViewModels(builder);
             InitializeViewStates(builder);
 
-            var playerInstance = Instantiate(playerPrefab);
-            var playerInstaller = new PlayerInstaller(builder, playerInstance, spawnPoint);
+            // var playerInstance = Instantiate(playerPrefab);
+            var playerInstaller = new PlayerInstaller(builder, null, spawnPoint);
 
             if (!playerInstaller.Install())
                 throw new Exception("PlayerInstaller is not installed.");
 
-            builder.Register<MovementHandler>(Lifetime.Singleton).As<IMovementHandler>().As<IInitializable>();
+
+            builder.RegisterComponentInHierarchy<NewMovementHandler>().As<IMovementHandler>();
+
+
+            builder.Register<MovementProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<MovementProcessor>());
+
+            builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
+
+            RegisterLoot(builder);
+
+            RegisterInteractableSystems(builder);
+        }
+
+        private void RegisterLoot(IContainerBuilder builder)
+        {
+            builder.Register<LootSystem>(Lifetime.Singleton).AsImplementedInterfaces();
+        }
+
+        private void RegisterInteractableSystems(IContainerBuilder builder)
+        {
+            builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()
@@ -60,7 +87,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             base.Awake();
 
             var interactables =
-                Object.FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             Debug.Log($"Interactables on scene: {interactables.Length}");
             foreach (var interactable in interactables)
                 Container.Inject(interactable);
