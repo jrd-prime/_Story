@@ -17,10 +17,12 @@ namespace _StoryGame.Game.Interactables
 {
     public abstract class Interactable : MonoBehaviour, IInteractable
     {
+        [SerializeField] private string id;
         [SerializeField] private string objName;
         [SerializeField] private string interactionTipNameId;
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform _entrance;
+
 
         public abstract EInteractableType InteractableType { get; }
         public Vector3 GetEntryPoint() => _entrance.position;
@@ -29,6 +31,7 @@ namespace _StoryGame.Game.Interactables
         public string InteractionTipNameId => interactionTipNameId;
         public string LocalizationKey => localizationKey;
         public string Name => objName;
+        public string Id => id;
 
         private IPublisher<IUIViewerMessage> _uiViewerMessagePublisher;
         private string tipId;

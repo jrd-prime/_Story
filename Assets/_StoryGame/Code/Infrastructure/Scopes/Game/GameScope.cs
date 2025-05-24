@@ -6,6 +6,7 @@ using _StoryGame.Core.Managers.Game.Impls;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interactables;
 using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.Loot;
 using _StoryGame.Game.Managers.Impls;
 using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Game.Managers.Inerfaces;
@@ -66,7 +67,14 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
             builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
 
+            RegisterLoot(builder);
+
             RegisterInteractableSystems(builder);
+        }
+
+        private void RegisterLoot(IContainerBuilder builder)
+        {
+            builder.Register<LootSystem>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private void RegisterInteractableSystems(IContainerBuilder builder)

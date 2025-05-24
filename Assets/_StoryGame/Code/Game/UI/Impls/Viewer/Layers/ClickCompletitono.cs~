@@ -1,0 +1,7 @@
+﻿namespace _StoryGame.Game.UI.Impls.Viewer.Layers
+{
+    public class ClickCompletitono
+    {
+        
+    }
+}

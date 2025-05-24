@@ -1,11 +1,12 @@
-﻿using _StoryGame.Core.Interfaces.UI;
-using _StoryGame.Game.UI.Impls.Viewer;
+﻿using System;
+using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Game.Loot;
 using _StoryGame.Game.UI.Impls.Viewer.Layers;
-using _StoryGame.Game.UI.Messages;
+using _StoryGame.Game.UI.Impls.WorldUI;
+using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using UnityEngine;
-using Random = System.Random;
 
 namespace _StoryGame.Game.Interactables.Inspect
 {
@@ -18,19 +19,28 @@ namespace _StoryGame.Game.Interactables.Inspect
 
     public sealed class InspectSystem : IInteractableSystem
     {
-        Random random = new Random();
-
+        private const float InspectDuration = 2f;
+        private const float SearchDuration = 2f;
         private Inspectable _inspectable;
+
+        private readonly ILootSystem _lootSystem;
+        private readonly IJLog _log;
         private readonly IPublisher<IUIViewerMessage> _uiViewerMsgPub;
 
-        public InspectSystem(IPublisher<IUIViewerMessage> uiViewerMsgPub)
+        public InspectSystem(ILootSystem lootSystem, IJLog log, IPublisher<IUIViewerMessage> uiViewerMsgPub,
+            IPublisher<ShowPlayerActionProgressMsg> showPlayerActionProgressMsgPub)
         {
+            _lootSystem = lootSystem;
+            _log = log;
             _uiViewerMsgPub = uiViewerMsgPub;
+            _showPlayerActionProgressMsgPub = showPlayerActionProgressMsgPub;
         }
 
         public async UniTask<bool> Process(Inspectable inspectable)
         {
             _inspectable = inspectable;
+
+            _lootSystem.GenerateLootFor(_inspectable); // generate loot if not generated 
 
             var inspectState = inspectable.InspectState;
 
@@ -42,102 +52,139 @@ namespace _StoryGame.Game.Interactables.Inspect
                 _ => false
             };
 
+            await OnInteractionComplete();
+
             Debug.Log($"Interact result: {result}");
 
-            await OnInteractionComplete();
             return result;
-        }
-
-        private async UniTask OnInteractionComplete()
-        {
-            Debug.Log("OnInteractionComplete");
-            await UniTask.Yield();
         }
 
         private async UniTask<bool> StartInspect()
         {
-            Debug.Log("Inspect");
+            _log.Debug("<color=green>Start Inspect</color>".ToUpper());
             await OnStartInspect();
-            await OnCompleteInspect();
+            await Inspected();
 
             return true;
         }
 
+        private async UniTask<bool> Inspected()
+        {
+            _log.Debug("<color=green>Inspected</color>".ToUpper());
+            await OnCompleteInspect();
+            return true;
+        }
+
+        private async UniTask<bool> Searched()
+        {
+            _log.Debug("<color=green>Searched</color>".ToUpper());
+            await OnCompleteSearch();
+            return true;
+        }
+
+        private async UniTask OnInteractionComplete()
+        {
+            _log.Debug("--- OnInteractionComplete");
+            await UniTask.Yield();
+        }
+
+
         private async UniTask OnStartInspect()
         {
-            Debug.Log("OnStart Inspect"); // anim hero // await progress bar
-            await UniTask.Yield();
+            // anim hero // await progress bar
+            _log.Debug("OnStart Inspect");
+
+            var source = new UniTaskCompletionSource<DialogResult>();
+            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Inspect", InspectDuration,
+                source));
+
+            await source.Task;
         }
 
         private async UniTask OnCompleteInspect()
         {
-            Debug.Log("OnComplete Inspect");
+            _log.Debug("OnComplete Inspect");
             _inspectable.SetInspectState(EInspectState.Inspected);
             await ShowLootTipAfterInspect();
         }
 
-        private async UniTask OnStartSearch()
-        {
-            Debug.Log("OnStart Search"); // anim hero // await progress bar
-            await UniTask.Yield();
-        }
-
-        private async UniTask OnCompleteSearch()
-        {
-            Debug.Log("OnComplete Search");
-            _inspectable.SetInspectState(EInspectState.Searched);
-            await ShowLootTipAfterSearch();
-        }
 
         bool takeAll = true;
-        bool loot = false;
         bool search = true;
+        private readonly IPublisher<ShowPlayerActionProgressMsg> _showPlayerActionProgressMsgPub;
 
         private async UniTask ShowLootTipAfterInspect()
         {
-            Debug.Log("After Inspect");
-
-
-            Debug.LogWarning($"<color=green>Loot: {loot}, Search: {search}</color>");
-
-            var source = new UniTaskCompletionSource<DialogResult>();
-
-            if (loot)
+            if (_lootSystem.HasLoot(_inspectable.Id))
             {
-                Debug.Log("Inspect - has loot");
+                _log.Debug("<color=green>Inspect - has loot</color>");
 
-                var data = new HasLootWindowData("HAS LOOT");
-                var window =
-                    new ShowFloatingWindowMsg<DialogResult>("", "HAS LOOT", FloatingWindowType.HasLoot, data, source);
+                var source = new UniTaskCompletionSource<DialogResult>();
+                var lootData = _lootSystem.GetGeneratedLoot(_inspectable.Id);
+                var message = new ShowHasLootWindowMsg(lootData, source);
 
-                _uiViewerMsgPub.Publish(window);
-
-                var result = await source.Task;
-
-                if (result == DialogResult.Search)
+                try
                 {
-                    await OnStartSearch();
+                    _uiViewerMsgPub.Publish(message);
+
+                    var result = await source.Task;
+                    source = null;
+
+                    if (result == DialogResult.Search)
+                    {
+                        await OnStartSearch();
+                    }
+                    else if (result == DialogResult.Close)
+                    {
+                        Debug.Log("ShowLootTipAfterInspect - CLOSE");
+                    }
                 }
-                else if (result == DialogResult.Close)
+                finally
                 {
-                    Debug.Log("ShowLootTipAfterInspect - CLOSE");
+                    source?.TrySetCanceled();
                 }
             }
             else
             {
-                Debug.Log("Inspect - no loot");
-                var data = new HasLootWindowData("NO LOOT");
-                var window =
-                    new ShowFloatingWindowMsg<DialogResult>("", "NO LOOT", FloatingWindowType.NoLoot, data, source);
-                _uiViewerMsgPub.Publish(window);
+                _log.Debug("<color=red>Inspect - no loot</color>");
 
-                var result = await source.Task;
-
-                if (result == DialogResult.Close)
+                var source = new UniTaskCompletionSource<DialogResult>();
+                var message = new ShowNoLootWindowMsg(source);
+                _uiViewerMsgPub.Publish(message);
+                try
                 {
-                    Debug.Log("ShowLootTipAfterInspect - CLOSE");
+                    _uiViewerMsgPub.Publish(message);
+
+                    var result = await source.Task;
+                    source = null;
+
+                    if (result == DialogResult.Close)
+                    {
+                        Debug.Log("ShowLootTipAfterInspect - CLOSE");
+                    }
+                }
+                finally
+                {
+                    source?.TrySetCanceled();
                 }
             }
+        }
+
+        private async UniTask OnStartSearch()
+        {
+            _log.Debug("OnStart Search");
+            // anim hero // await progress bar
+            var source = new UniTaskCompletionSource<DialogResult>();
+            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Search", InspectDuration,
+                source));
+            await source.Task;
+        }
+
+        private async UniTask OnCompleteSearch()
+        {
+            _log.Debug("OnComplete Search");
+            _inspectable.SetInspectState(EInspectState.Searched);
+            await ShowLootTipAfterSearch();
         }
 
         private async UniTask ShowLootTipAfterSearch()
@@ -153,28 +200,29 @@ namespace _StoryGame.Game.Interactables.Inspect
                 Debug.Log("ShowLootTipAfterSearch - CLOSE");
             }
 
+            // add percent to room loot
+
             await UniTask.Yield();
         }
+    }
 
+    public record ShowHasLootWindowMsg(
+        GeneratedLootData LootData,
+        UniTaskCompletionSource<DialogResult> CompletionSource
+    ) : IUIViewerMessage
+    {
+        public string Name { get; } = nameof(ShowHasLootWindowMsg);
+        public GeneratedLootData LootData { get; } = LootData;
+        public UniTaskCompletionSource<DialogResult> CompletionSource { get; } = CompletionSource;
+        public FloatingWindowType WindowType => FloatingWindowType.HasLoot;
+    }
 
-        /// <summary>
-        /// После осмотра показываем инфу по луту
-        /// </summary>
-        private async UniTask<bool> Inspected()
-        {
-            Debug.Log("Inspected");
-            await OnCompleteInspect();
-            return true;
-        }
-
-        /// <summary>
-        /// После обыска показываем инфу итоговую
-        /// </summary>
-        private async UniTask<bool> Searched()
-        {
-            Debug.Log("Searched");
-            await OnCompleteSearch();
-            return true;
-        }
+    public record ShowNoLootWindowMsg(
+        UniTaskCompletionSource<DialogResult> CompletionSource
+    ) : IUIViewerMessage
+    {
+        public string Name { get; } = nameof(ShowHasLootWindowMsg);
+        public UniTaskCompletionSource<DialogResult> CompletionSource { get; } = CompletionSource;
+        public FloatingWindowType WindowType => FloatingWindowType.NoLoot;
     }
 }

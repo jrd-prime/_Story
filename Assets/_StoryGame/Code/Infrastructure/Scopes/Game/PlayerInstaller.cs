@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Core.Character.Player;
 using _StoryGame.Game.Character.Player.Impls;
+using _StoryGame.Game.UI.Impls.WorldUI;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -29,6 +30,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             // _builder.RegisterComponent(_instance).AsImplementedInterfaces();
 
             _builder.RegisterComponentInHierarchy<PlayerView>().AsSelf().AsImplementedInterfaces();
+            _builder.RegisterComponentInHierarchy<PlayerOverHeadTipUI>();
 
             _builder.Register<PlayerInteractor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             _builder.Register<PlayerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

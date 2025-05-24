@@ -1,37 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Inspect;
-using _StoryGame.Game.UI.Messages;
-using Cysharp.Threading.Tasks;
-using R3;
-using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 {
+    // TODO переделать
     public sealed class FloatingLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
     {
         private const string LeftId = "left";
         private const string CenterId = "center";
         private const string RightId = "right";
 
-
         private readonly Dictionary<FloatingWindowType, VisualTreeAsset> _floatingWindowsAssets = new();
         private readonly Dictionary<FloatingWindowType, VisualElement> _windows = new();
         private VisualElement _left;
         private VisualElement _center;
         private VisualElement _right;
-
-        // TODO сделать хранение элементов для типов окон
-        private ReactiveCommand _msgCommand;
-        private Button close;
-        private Label _label;
-        private Button search;
-        private FloatingWindowFactory _floatingWindowFactory;
 
         public FloatingLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver, layerBack)
         {
@@ -45,7 +33,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             foreach (var windowData in floatingWindowsData.FloatingWindowDataVo)
                 _floatingWindowsAssets.Add(windowData.floatingWindowType, windowData.visualTreeAsset);
 
-            _floatingWindowFactory = new FloatingWindowFactory(_windows);
             Log.Debug("FloatingLayerHandler initialized with " + _floatingWindowsAssets.Count + " windows.");
         }
 
@@ -75,42 +62,57 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
         {
         }
 
-        public void ShowFloatingWindow(ShowFloatingWindowMsg<DialogResult> msg)
-        {
-            var window = _floatingWindowFactory.CreateAndFill(msg);
 
+        public void ShowHasLootWindow(ShowHasLootWindowMsg msg)
+        {
+            if (!HasWindow(msg.WindowType))
+                throw new KeyNotFoundException($"No window for type: {msg.WindowType}");
 
             _center.Clear();
 
+            var window = _windows[msg.WindowType];
 
-            _label = window.GetVisualElement<Label>("label", window.name);
-            _label.text = msg.Text;
+            var label = window.GetVisualElement<Label>("label", window.name);
+            var close = window.GetVisualElement<Button>("close", window.name);
+            var search = window.GetVisualElement<Button>("search", window.name);
 
-            close = window.GetVisualElement<Button>("close", window.name);
-            search = window.GetVisualElement<Button>("search", window.name);
+            label.text = "Loot";
 
-            close.RegisterCallback<ClickEvent>(_ => OnClo(msg.CompletionSource));
-            search.RegisterCallback<ClickEvent>(_ => OnSer(msg.CompletionSource));
 
+            var closeHandler =
+                new ClickCompletionHandler<DialogResult>(close, DialogResult.Close, msg.CompletionSource, _center);
+            var searchHandler =
+                new ClickCompletionHandler<DialogResult>(search, DialogResult.Search, msg.CompletionSource, _center);
+
+            closeHandler.Register();
+            searchHandler.Register();
 
             _center.Add(window);
         }
 
-        private void OnClo(UniTaskCompletionSource<DialogResult> source)
+        public void ShowNoLootWindow(ShowNoLootWindowMsg msg)
         {
-            Debug.Log("OnClo");
-            source.TrySetResult(DialogResult.Close);
-            close.UnregisterCallback<ClickEvent>(_ => OnClo(source));
+            if (!HasWindow(msg.WindowType))
+                throw new KeyNotFoundException($"No window for type: {msg.WindowType}");
+
             _center.Clear();
+
+            var window = _windows[msg.WindowType];
+
+            var label = window.GetVisualElement<Label>("label", window.name);
+            var close = window.GetVisualElement<Button>("close", window.name);
+
+            label.text = "No Loot";
+
+            var closeHandler =
+                new ClickCompletionHandler<DialogResult>(close, DialogResult.Close, msg.CompletionSource, _center);
+
+            closeHandler.Register();
+
+            _center.Add(window);
         }
 
-        private void OnSer(UniTaskCompletionSource<DialogResult> source)
-        {
-            Debug.Log("OnSer");
-            source.TrySetResult(DialogResult.Search);
-            search.UnregisterCallback<ClickEvent>(_ => OnSer(source));
-            _center.Clear();
-        }
+        private bool HasWindow(FloatingWindowType windowType) => _windows.ContainsKey(windowType);
     }
 
     public enum PositionType

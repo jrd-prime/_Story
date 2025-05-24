@@ -59,11 +59,13 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                 case SwitchBaseViewMessage msg:
                     SwitchBaseViewTo(msg.StateType);
                     break;
-                case ShowFloatingWindowMsg<DialogResult> msg:
-                    _floatingLayerHandler.ShowFloatingWindow(msg);
+                case ShowHasLootWindowMsg msg:
+                    _floatingLayerHandler.ShowHasLootWindow(msg);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(message), message, null);
+                case ShowNoLootWindowMsg msg:
+                    _floatingLayerHandler.ShowNoLootWindow(msg);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
         }
 

@@ -27,9 +27,6 @@ namespace _StoryGame.Game.Interactables.Inspect
 
         public override async UniTask InteractAsync(ICharacter character)
         {
-            transform.DORotate(new Vector3(0, 360, 0), 2f, RotateMode.FastBeyond360)
-                .SetRelative(true)
-                .SetEase(Ease.Linear);
             await _inspectSystem.Process(this);
         }
 

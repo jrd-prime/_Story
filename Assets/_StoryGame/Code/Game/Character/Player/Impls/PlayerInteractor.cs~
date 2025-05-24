@@ -71,7 +71,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         public async UniTask MoveToPointAsync(Vector3 position, EDestinationPoint destinationPointType)
         {
-            // Debug.Log($"SetDestination interactor {position}");
+            Debug.Log($"SetDestination interactor {position}");
             _destinationPoint.Value = position;
 
             switch (destinationPointType)
@@ -88,7 +88,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
             await _playerView.MoveToAsync(position);
 
-            // _log.Debug($"MoveToPointAsync: {position} done");
+            _log.Debug($"MoveToPointAsync: {position} done");
 
             SetState(ECharacterState.Idle);
         }
