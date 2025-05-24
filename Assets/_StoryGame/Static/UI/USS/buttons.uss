@@ -1,0 +1,27 @@
+.popupGreen {
+    border-left-color: rgb(62, 76, 52);
+    border-right-color: rgb(62, 76, 52);
+    border-top-color: rgb(62, 76, 52);
+    border-bottom-color: rgb(62, 76, 52);
+    background-color: rgb(146, 178, 121);
+    color: rgb(21, 26, 18);
+}
+
+.popupBase {
+    padding-top: 12px;
+    padding-right: 36px;
+    padding-bottom: 12px;
+    padding-left: 36px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-width: 4px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+}

@@ -5,6 +5,6 @@ namespace _StoryGame.Core.Character.Common.Interfaces
 {
     public interface IFollowable
     {
-        ReactiveProperty<Vector3> Position { get; }
+        ReadOnlyReactiveProperty<Vector3> Position { get; }
     }
 }

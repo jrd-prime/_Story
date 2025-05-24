@@ -1,4 +1,4 @@
-﻿using _StoryGame.Core.Managers.Game.Interfaces;
+﻿using _StoryGame.Core.Interfaces.Managers;
 using R3;
 
 namespace _StoryGame.Core.Managers.Game.Impls

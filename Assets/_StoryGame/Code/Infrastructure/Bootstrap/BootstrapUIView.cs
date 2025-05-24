@@ -1,4 +1,6 @@
 ﻿using System;
+using _StoryGame.Game.Extensions;
+using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,54 +10,43 @@ namespace _StoryGame.Infrastructure.Bootstrap
 {
     public sealed class BootstrapUIView : MonoBehaviour
     {
+        [Inject] private IBootstrapUIController _viewModel;
+
         private const string AppName = "App name";
-        private const string BootstrapContainerId = "bootstrap-container";
+        private const string BootstrapContainerId = "main-container";
         private const string LoadingLabelId = "desc-label";
         private const string AppNameLabelId = "title-label";
 
-        [Inject] private IBootstrapUIController _controller;
         private readonly CompositeDisposable _disposables = new();
 
         private VisualElement _container;
         private Label _appName;
         private Label _loadingLabel;
 
-        private async void Start()
+        private async void Awake()
         {
-            var uiDoc = GetComponent<UIDocument>();
-            await UIToolkitReadyAwaiter.WaitForReadyAsync(uiDoc);
+            var doc = GetComponent<UIDocument>();
+            await doc.WaitForReadyAsync();
+            var root = doc.rootVisualElement;
 
-            var root = uiDoc.rootVisualElement;
-
-            if (root == null)
-                throw new NullReferenceException("RootVisualElement is null on start in " + name);
-
-            _container = root.Q<VisualElement>("bootstrap-container") ??
-                         throw new NullReferenceException("Bootstrap container is null. " + nameof(BootstrapUIView));
-            _loadingLabel = root.Q<Label>("desc-label") ??
-                            throw new NullReferenceException("Loading label is null. " + nameof(BootstrapUIView));
-            _appName = root.Q<Label>("title-label") ??
-                       throw new NullReferenceException("App name label is null. " + nameof(BootstrapUIView));
+            _container = root.GetVisualElement<VisualElement>(BootstrapContainerId, name);
+            _loadingLabel = root.GetVisualElement<Label>(LoadingLabelId, name);
+            _appName = root.GetVisualElement<Label>(AppNameLabelId, name);
 
             _appName.text = AppName;
-
-            Subscribe();
         }
 
-        private void Subscribe()
+        private void Start()
         {
-            if (_controller == null)
-                throw new NullReferenceException("BootstrapUIController is null. " + nameof(BootstrapUIView));
-
-            _controller.LoadingText
+            _viewModel.LoadingText
                 .Subscribe(OnSetDesc)
                 .AddTo(_disposables);
 
-            _controller.Opacity
+            _viewModel.Opacity
                 .Subscribe(OnSetOpacity)
                 .AddTo(_disposables);
 
-            _controller.OnClear
+            _viewModel.OnClear
                 .Subscribe(OnClear)
                 .AddTo(_disposables);
         }

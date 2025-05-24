@@ -1,0 +1,6 @@
+namespace _StoryGame.Core.Managers.HSM.Impls
+{
+    public interface IHSMMessage
+    {
+    }
+}

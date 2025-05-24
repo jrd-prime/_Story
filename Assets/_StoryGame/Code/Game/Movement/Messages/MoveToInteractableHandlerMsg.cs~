@@ -1,0 +1,10 @@
+﻿using _StoryGame.Core.Interactables.Interfaces;
+
+namespace _StoryGame.Game.Movement
+{
+    public record MoveToInteractableHandlerMsg(IInteractable Interactable) : IMovementHandlerMsg
+    {
+        public string Name => nameof(MoveToInteractableHandlerMsg);
+        public IInteractable Interactable { get; } = Interactable;
+    }
+}

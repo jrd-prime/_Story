@@ -1,14 +1,22 @@
 ﻿using System;
 using _StoryGame.Core.Currency;
 using _StoryGame.Core.Currency.Impls;
+using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Managers.Game.Impls;
-using _StoryGame.Core.Managers.Game.Interfaces;
-using _StoryGame.Core.Managers.HSM.Impls;
-using _StoryGame.Gameplay.Character.Player.Impls;
-using _StoryGame.Gameplay.Managers.Impls;
-using _StoryGame.Gameplay.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
-using _StoryGame.Gameplay.Managers.Inerfaces;
+using _StoryGame.Game.Character.Player.Impls;
+using _StoryGame.Game.Interactables;
+using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.Loot;
+using _StoryGame.Game.Managers.Impls;
+using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
+using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Movement;
+using _StoryGame.Game.UI.Impls;
+using _StoryGame.Game.UI.Impls.Gameplay;
+using _StoryGame.Game.UI.Impls.Menu;
+using _StoryGame.Game.UI.Impls.Viewer;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -16,18 +24,17 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 {
     public sealed class GameScope : LifetimeScope
     {
-        [SerializeField] private Player playerPrefab;
+        [FormerlySerializedAs("playerPrefab")] [SerializeField]
+        private PlayerView playerViewPrefab;
 
         [SerializeField] private Transform spawnPoint;
-
-        // [SerializeField] private UIManager uiManagerPrefab; // Закомментировано, как в исходном коде
         private GameObject _mainEmpty;
 
         protected override void Configure(IContainerBuilder builder)
         {
             Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
-            // Регистрация HSM как Singleton с немедленной активацией
-            builder.RegisterEntryPoint<HSM>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+
+            RegisterStateMachine(builder);
 
             // Поиск объекта --- MAIN
             _mainEmpty = GameObject.Find("--- MAIN");
@@ -37,13 +44,58 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             // Регистрация сервисов
             builder.Register<GameService>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<CurrencyService>(Lifetime.Singleton).As<ICurrencyService>();
+            builder.Register<GameplayUIViewModel>(Lifetime.Singleton).As<IGameplayUIViewModel>();
+            builder.Register<MenuUIViewModel>(Lifetime.Singleton).As<IMenuUIViewModel>();
 
             InitializeManagers(builder);
             InitializeUIModelsAndViewModels(builder);
             InitializeViewStates(builder);
 
-            var playerInstance = Instantiate(playerPrefab);
-            new PlayerInstaller(builder, playerInstance, spawnPoint);
+            // var playerInstance = Instantiate(playerPrefab);
+            var playerInstaller = new PlayerInstaller(builder, null, spawnPoint);
+
+            if (!playerInstaller.Install())
+                throw new Exception("PlayerInstaller is not installed.");
+
+
+            builder.RegisterComponentInHierarchy<NewMovementHandler>().As<IMovementHandler>();
+
+
+            builder.Register<MovementProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<MovementProcessor>());
+
+            builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
+
+            RegisterLoot(builder);
+
+            RegisterInteractableSystems(builder);
+        }
+
+        private void RegisterLoot(IContainerBuilder builder)
+        {
+            builder.Register<LootSystem>(Lifetime.Singleton).AsImplementedInterfaces();
+        }
+
+        private void RegisterInteractableSystems(IContainerBuilder builder)
+        {
+            builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            var interactables =
+                FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            Debug.Log($"Interactables on scene: {interactables.Length}");
+            foreach (var interactable in interactables)
+                Container.Inject(interactable);
+        }
+
+        private void RegisterStateMachine(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<HSM>().AsSelf().As<IDisposable>();
         }
 
 
@@ -51,6 +103,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         {
             builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
             builder.RegisterComponentInHierarchy<GameManager>().AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<UIManager>().AsImplementedInterfaces();
+            builder.RegisterComponentInHierarchy<UIViewer>().AsImplementedInterfaces();
         }
 
         private void InitializeViewStates(IContainerBuilder builder)

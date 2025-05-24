@@ -1,0 +1,16 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_StoryGame/Static/UI/USS/buttons.uss?fileID=7433441132597879392&amp;guid=6f00e414ece0c6740b4c39f8a7085f9a&amp;type=3#buttons" />
+    <Style src="project://database/Assets/_StoryGame/Static/UI/USS/popup.uss?fileID=7433441132597879392&amp;guid=00bf0efda7773cd459c51d094b705257&amp;type=3#popup" />
+    <engine:VisualElement name="cMain" style="flex-grow: 0; width: 400px; border-top-left-radius: 24px; border-top-right-radius: 24px; border-bottom-right-radius: 24px; border-bottom-left-radius: 24px; background-color: rgba(0, 0, 0, 0.5); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; align-items: center; justify-content: flex-end; align-self: center; align-content: center;">
+        <engine:VisualElement name="cHead" style="flex-grow: 1; width: 100%; background-color: rgba(0, 0, 0, 0.5); font-size: 22px; -unity-text-align: middle-center; height: 62px; align-items: center; justify-content: center; align-self: center; align-content: center; color: rgb(255, 255, 255); -unity-font-style: bold; border-top-right-radius: 24px; border-top-left-radius: 24px; padding-top: 12px;">
+            <engine:Label text="Label" name="lHead" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="cContent" style="flex-grow: 1; width: 100%; font-size: 22px; -unity-text-align: middle-center; height: auto; align-items: center; justify-content: center; align-self: center; align-content: center; color: rgb(255, 255, 255); -unity-font-style: bold; padding-top: 12px; padding-bottom: 12px;">
+            <engine:Label text="Label" name="label" picking-mode="Ignore" style="font-size: 20px; -unity-font-style: bold; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
+        </engine:VisualElement>
+        <engine:VisualElement name="cBtn" style="flex-grow: 1; width: 100%; font-size: 22px; -unity-text-align: middle-center; height: 50px; align-items: center; justify-content: center; align-self: center; align-content: center; color: rgb(255, 255, 255); -unity-font-style: bold; padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-bottom: 12px; flex-direction: row;">
+            <engine:Button text="CLOSE" name="close" class="popupBase popupGreen" style="font-size: 18px; padding-right: 12px; padding-left: 12px; align-items: flex-start; align-self: flex-start; -unity-text-align: middle-left; position: absolute; left: 12px; top: 0; background-color: rgba(146, 178, 121, 0.48);" />
+            <engine:Button text="SEARCH -1energy" name="search" class="popupBase popupGreen" style="font-size: 18px; padding-right: 12px; padding-left: 12px; position: absolute; right: 12px; top: 0; background-color: rgb(127, 178, 87);" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
