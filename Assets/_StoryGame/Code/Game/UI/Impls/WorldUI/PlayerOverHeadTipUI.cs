@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Core.Interfaces;
 using _StoryGame.Game.Extensions;
+using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Inspect;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -100,7 +101,7 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
-                    msg.CompletionSource.TrySetResult(DialogResult.Close);
+                    msg.CompletionSource.TrySetResult(EInteractDialogResult.Close);
 
                     DOTween.To(
                             () => (float)_barC.style.opacity.value,
@@ -144,11 +145,11 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
     public record ShowPlayerActionProgressMsg(
         string ActionName,
         float Duration,
-        UniTaskCompletionSource<DialogResult> CompletionSource) : IJMessage
+        UniTaskCompletionSource<EInteractDialogResult> CompletionSource) : IJMessage
     {
         public string Name => nameof(ShowPlayerActionProgressMsg);
         public string ActionName { get; } = ActionName;
         public float Duration { get; } = Duration;
-        public UniTaskCompletionSource<DialogResult> CompletionSource { get; } = CompletionSource;
+        public UniTaskCompletionSource<EInteractDialogResult> CompletionSource { get; } = CompletionSource;
     }
 }

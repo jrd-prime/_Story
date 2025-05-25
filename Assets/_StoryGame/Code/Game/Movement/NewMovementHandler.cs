@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
+using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
@@ -122,9 +122,10 @@ namespace _StoryGame.Game.Movement
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, interactableLayer))
             {
-                // _log.Debug($"Hit layer Interactable object: {hit.collider.gameObject.name}");
+                _log.Debug($"Hit layer Interactable object: {hit.collider.gameObject.name}");
 
                 var interactable = hit.collider.GetComponent<IInteractable>();
+                // var interactable = hit.collider.GetComponentInParent<IInteractable>();
                 if (interactable != null)
                 {
                     _selfMsgPub.Publish(new MoveToInteractableHandlerMsg(interactable));
@@ -150,7 +151,7 @@ namespace _StoryGame.Game.Movement
         }
 
         private void ResetTouch()
-        { 
+        {
             _log.Debug("ResetTouch");
             _isTouchActive = false;
         }

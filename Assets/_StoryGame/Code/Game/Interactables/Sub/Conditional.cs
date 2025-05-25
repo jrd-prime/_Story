@@ -1,5 +1,5 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
-using _StoryGame.Core.Interactables.Interfaces;
+using _StoryGame.Game.Interactables.Data;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace _StoryGame.Game.Interactables.Sub
     /// <summary>
     /// Объект в темном месте, который становится активным если есть фонарик
     /// </summary>
-    public sealed class Conditional : Interactable
+    public sealed class Conditional : AInteractable
     {
         public override EInteractableType InteractableType => EInteractableType.Condition;
 

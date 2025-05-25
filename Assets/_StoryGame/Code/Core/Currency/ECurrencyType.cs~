@@ -1,0 +1,15 @@
+﻿namespace _StoryGame.Core.Currency
+{
+    /// <summary>
+    /// Перечисление типов валюты
+    /// </summary>
+    public enum ECurrencyType
+    {
+        CoreItem,
+        Energy,
+        Note,
+        CoreNote,
+        Tip,
+        Special
+    }
+}

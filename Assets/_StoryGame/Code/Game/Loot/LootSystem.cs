@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Game.Interactables;
+using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 
 namespace _StoryGame.Game.Loot
@@ -33,7 +35,7 @@ namespace _StoryGame.Game.Loot
             throw new KeyNotFoundException($"Loot for interactable {id} not found!");
         }
 
-        public void GenerateLootFor(Interactable interactable)
+        public void GenerateLootFor(IInspectable interactable)
         {
             if (_hasLootCache.ContainsKey(interactable.Id))
                 return;
@@ -74,7 +76,7 @@ namespace _StoryGame.Game.Loot
     public interface ILootSystem
     {
         GeneratedLootData GetGeneratedLoot(string id);
-        void GenerateLootFor(Interactable interactable);
+        void GenerateLootFor(IInspectable interactable);
         bool HasLoot(string id);
     }
 

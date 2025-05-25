@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace _StoryGame.Game.UI.Impls.WorldUI
@@ -44,5 +45,7 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
         public void SetNameText(string text) => _nameLabel.text = text;
 
         public void SetType(string type) => _tipLabel.text = type;
+
+        public GameObject GetGO() => gameObject;
     }
 }

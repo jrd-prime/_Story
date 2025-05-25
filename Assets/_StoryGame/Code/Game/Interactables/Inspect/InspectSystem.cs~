@@ -1,4 +1,6 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Loot;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
@@ -9,22 +11,17 @@ using UnityEngine;
 
 namespace _StoryGame.Game.Interactables.Inspect
 {
-    public enum DialogResult
-    {
-        Close,
-        TakeAll,
-        Search
-    }
-
+    //TODO NEED REFACTOR (state machine etc)
     public sealed class InspectSystem : IInteractableSystem
     {
         private const float InspectDuration = 2f;
         private const float SearchDuration = 2f;
-        private Inspectable _inspectable;
+        private IInspectable _inspectable;
 
         private readonly ILootSystem _lootSystem;
         private readonly IJLog _log;
         private readonly IPublisher<IUIViewerMessage> _uiViewerMsgPub;
+        private readonly IPublisher<ShowPlayerActionProgressMsg> _showPlayerActionProgressMsgPub;
 
         public InspectSystem(ILootSystem lootSystem, IJLog log, IPublisher<IUIViewerMessage> uiViewerMsgPub,
             IPublisher<ShowPlayerActionProgressMsg> showPlayerActionProgressMsgPub)
@@ -35,14 +32,12 @@ namespace _StoryGame.Game.Interactables.Inspect
             _showPlayerActionProgressMsgPub = showPlayerActionProgressMsgPub;
         }
 
-        public async UniTask<bool> Process(Inspectable inspectable)
+        public async UniTask<bool> Process(IInspectable inspectable)
         {
             _inspectable = inspectable;
-
             _lootSystem.GenerateLootFor(_inspectable); // generate loot if not generated 
 
             var inspectState = inspectable.InspectState;
-
             var result = inspectState switch
             {
                 EInspectState.NotInspected => await StartInspect(),
@@ -53,8 +48,7 @@ namespace _StoryGame.Game.Interactables.Inspect
 
             await OnInteractionComplete();
 
-            Debug.Log($"Interact result: {result}");
-
+            Debug.Log($"Interact <color=green>END</color>. Result: {result}");
             return result;
         }
 
@@ -63,7 +57,6 @@ namespace _StoryGame.Game.Interactables.Inspect
             _log.Debug("<color=green>Start Inspect</color>".ToUpper());
             await OnStartInspect();
             await Inspected();
-
             return true;
         }
 
@@ -79,7 +72,6 @@ namespace _StoryGame.Game.Interactables.Inspect
             _log.Debug("<color=green>Start Search</color>".ToUpper());
             await OnStartSearch();
             await Searched();
-
             return true;
         }
 
@@ -96,16 +88,14 @@ namespace _StoryGame.Game.Interactables.Inspect
             await UniTask.Yield();
         }
 
-
         private async UniTask OnStartInspect()
         {
             // anim hero // await progress bar
             _log.Debug("OnStart Inspect");
 
-            var source = new UniTaskCompletionSource<DialogResult>();
-            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Inspect", InspectDuration,
-                source));
-
+            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            var message = new ShowPlayerActionProgressMsg("Inspect", InspectDuration, source);
+            _showPlayerActionProgressMsgPub.Publish(message);
             await source.Task;
         }
 
@@ -116,40 +106,31 @@ namespace _StoryGame.Game.Interactables.Inspect
             await ShowLootTipAfterInspect();
         }
 
-
-        bool takeAll = true;
-        bool search = true;
-        private readonly IPublisher<ShowPlayerActionProgressMsg> _showPlayerActionProgressMsgPub;
-
         private async UniTask ShowLootTipAfterInspect()
         {
             if (_lootSystem.HasLoot(_inspectable.Id))
             {
                 _log.Debug("<color=green>Inspect - has loot</color>");
 
-                var source = new UniTaskCompletionSource<DialogResult>();
+                var source = new UniTaskCompletionSource<EInteractDialogResult>();
                 var lootData = _lootSystem.GetGeneratedLoot(_inspectable.Id);
                 var message = new ShowHasLootWindowMsg(lootData, source);
 
                 try
                 {
                     _uiViewerMsgPub.Publish(message);
-
                     var result = await source.Task;
                     source = null;
 
-                    if (result == DialogResult.Search)
+                    if (result == EInteractDialogResult.Search)
                     {
                         await StartSearch();
                     }
-                    else if (result == DialogResult.Close)
+                    else if (result == EInteractDialogResult.Close)
                     {
                         Debug.Log("ShowLootTipAfterInspect - CLOSE");
                     }
-                    else
-                    {
-                        _log.Warn("Unhandled result: " + result);
-                    }
+                    else _log.Warn("Unhandled result: " + result);
                 }
                 finally
                 {
@@ -160,9 +141,9 @@ namespace _StoryGame.Game.Interactables.Inspect
             {
                 _log.Debug("<color=red>Inspect - no loot</color>");
 
-                var source = new UniTaskCompletionSource<DialogResult>();
+                var source = new UniTaskCompletionSource<EInteractDialogResult>();
                 var message = new ShowNoLootWindowMsg(source);
-                _uiViewerMsgPub.Publish(message);
+
                 try
                 {
                     _uiViewerMsgPub.Publish(message);
@@ -170,14 +151,11 @@ namespace _StoryGame.Game.Interactables.Inspect
                     var result = await source.Task;
                     source = null;
 
-                    if (result == DialogResult.Close)
+                    if (result == EInteractDialogResult.Close)
                     {
                         Debug.Log("ShowLootTipAfterInspect - CLOSE");
                     }
-                    else
-                    {
-                        _log.Warn("Unhandled result: " + result);
-                    }
+                    else _log.Warn("Unhandled result: " + result);
                 }
                 finally
                 {
@@ -190,8 +168,8 @@ namespace _StoryGame.Game.Interactables.Inspect
         {
             _log.Debug("OnStart Search");
             // anim hero // await progress bar
-            var source = new UniTaskCompletionSource<DialogResult>();
-            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Search", InspectDuration,
+            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Search", SearchDuration,
                 source));
             await source.Task;
         }
@@ -205,43 +183,33 @@ namespace _StoryGame.Game.Interactables.Inspect
 
         private async UniTask ShowLootTipAfterSearch()
         {
-            Debug.Log("ShowLootTipAfterSearch - wait callback from tip . Take all: " + takeAll);
+            Debug.Log("ShowLootTipAfterSearch - wait callback from tip ");
 
-            if (takeAll)
+            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            var lootData = _lootSystem.GetGeneratedLoot(_inspectable.Id);
+            var message = new ShowLootWindowMsg(lootData, source);
+
+            try
             {
-                Debug.Log("ShowLootTipAfterSearch - TAKE ALL");
-                var source = new UniTaskCompletionSource<DialogResult>();
-                var lootData = _lootSystem.GetGeneratedLoot(_inspectable.Id);
-                var message = new ShowLootWindowMsg(lootData, source);
+                _uiViewerMsgPub.Publish(message);
 
-                try
+                var result = await source.Task;
+                source = null;
+
+                if (result == EInteractDialogResult.TakeAll)
                 {
-                    _uiViewerMsgPub.Publish(message);
-
-                    var result = await source.Task;
-                    source = null;
-
-                    if (result == DialogResult.TakeAll)
-                    {
-                        await OnTakeAllLoot();
-                    }
-                    else if (result == DialogResult.Close)
-                    {
-                        Debug.Log("ShowLootTipAfterSearch - CLOSE");
-                    }
-                    else
-                    {
-                        _log.Warn("Unhandled result: " + result);
-                    }
+                    Debug.Log("ShowLootTipAfterSearch - TAKE ALL");
+                    await OnTakeAllLoot();
                 }
-                finally
+                else if (result == EInteractDialogResult.Close)
                 {
-                    source?.TrySetCanceled();
+                    Debug.Log("ShowLootTipAfterSearch - CLOSE");
                 }
+                else _log.Warn("Unhandled result: " + result);
             }
-            else
+            finally
             {
-                Debug.Log("ShowLootTipAfterSearch - CLOSE");
+                source?.TrySetCanceled();
             }
 
             // add percent to room loot

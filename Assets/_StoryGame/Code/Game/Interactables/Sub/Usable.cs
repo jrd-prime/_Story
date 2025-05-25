@@ -1,5 +1,5 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
-using _StoryGame.Core.Interactables.Interfaces;
+using _StoryGame.Game.Interactables.Data;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace _StoryGame.Game.Interactables.Sub
     /// <summary>
     /// Например, дверь
     /// </summary>
-    public sealed class Usable : Interactable
+    public sealed class Usable : AInteractable
     {
         public override EInteractableType InteractableType => EInteractableType.Use;
 

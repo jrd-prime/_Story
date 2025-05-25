@@ -1,15 +1,16 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
-using _StoryGame.Core.Interactables.Interfaces;
+using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Game.Interactables.Interfaces;
 using Cysharp.Threading.Tasks;
 using VContainer;
 
 namespace _StoryGame.Game.Interactables.Inspect
 {
     /// <summary>
-    /// Например, стеллаж (что не требует открывания, как сейф)
+    /// Объект, который можно осмотреть, а если есть лут - обыскать
     /// </summary>
-    public class Inspectable : Interactable
+    public class Inspectable : AInteractable, IInspectable
     {
         public override EInteractableType InteractableType => EInteractableType.Inspect;
         public EInspectState InspectState { get; private set; } = EInspectState.NotInspected;
@@ -23,12 +24,10 @@ namespace _StoryGame.Game.Interactables.Inspect
                 throw new Exception("InspectSystem is null. " + gameObject.name);
         }
 
-        public override async UniTask InteractAsync(ICharacter character)
-        {
+        public override async UniTask InteractAsync(ICharacter character) =>
             await _inspectSystem.Process(this);
-        }
 
-        public void SetInspectState(EInspectState state) =>
-            InspectState = state;
+        public void SetInspectState(EInspectState inspectState) =>
+            InspectState = inspectState;
     }
 }

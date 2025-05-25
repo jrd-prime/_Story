@@ -1,6 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Interactables.Interfaces;
+using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
@@ -39,7 +39,7 @@ namespace _StoryGame.Game.Movement
             var entryPoint = interactable.GetEntryPoint();
 
             await _player.MoveToPointAsync(entryPoint, EDestinationPoint.Entrance);
-            _log.Debug($"MoveToInteractable: {entryPoint} done");
+            // _log.Debug($"MoveToInteractable: {entryPoint} done");
 
             _selfMsgPub.Publish(new InteractableEntranceReachedMsg(interactable));
         }
@@ -47,7 +47,7 @@ namespace _StoryGame.Game.Movement
         private async UniTask MoveToPoint(Vector3 position)
         {
             await _player.MoveToPointAsync(position, EDestinationPoint.Ground);
-            _log.Debug($"MoveToPoint: {position} done");
+            // _log.Debug($"MoveToPoint: {position} done");
         }
 
         private void OnMovementHandlerMsg(IMovementHandlerMsg message)
@@ -74,11 +74,5 @@ namespace _StoryGame.Game.Movement
     {
         public string Name => nameof(InteractableEntranceReachedMsg);
         public IInteractable Interactable { get; } = Interactable;
-    }
-
-    public enum EDestinationPoint
-    {
-        Ground,
-        Entrance
     }
 }

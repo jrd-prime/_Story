@@ -1,4 +1,4 @@
-﻿using _StoryGame.Core.Interactables.Interfaces;
+﻿using _StoryGame.Game.Interactables.Data;
 using TMPro;
 using UnityEngine;
 

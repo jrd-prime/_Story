@@ -16,5 +16,7 @@
         public const string CharacterPath = MainMenu + Config + Character;
         public const string UIPath = MainMenu + Config + UI;
         public const string UISettings = MainSettings + UI;
+        public const string Currency = Settings + "Currency/";
+        public const string Interactables = Settings + "Interactables/";
     }
 }

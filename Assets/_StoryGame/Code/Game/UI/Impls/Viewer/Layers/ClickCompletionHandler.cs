@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Inspect;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -9,12 +10,12 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
     public sealed class ClickCompletionHandler<T>
     {
         private readonly VisualElement _button;
-        private readonly DialogResult _result;
+        private readonly EInteractDialogResult _result;
         private readonly UniTaskCompletionSource<T> _completionSource;
         private EventCallback<ClickEvent> _callback;
         private readonly VisualElement _holderVisualElement;
 
-        public ClickCompletionHandler(VisualElement button, DialogResult result,
+        public ClickCompletionHandler(VisualElement button, EInteractDialogResult result,
             UniTaskCompletionSource<T> completionSource, VisualElement holderVisualElement)
         {
             _button = button;

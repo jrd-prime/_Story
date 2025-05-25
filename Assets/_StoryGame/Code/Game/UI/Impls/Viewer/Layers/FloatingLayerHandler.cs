@@ -2,6 +2,7 @@
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data;
 using _StoryGame.Game.Extensions;
+using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Inspect;
 using _StoryGame.Game.UI.Messages;
 using UnityEngine.UIElements;
@@ -81,9 +82,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 
 
             var closeHandler =
-                new ClickCompletionHandler<DialogResult>(close, DialogResult.Close, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close, msg.CompletionSource, _center);
             var searchHandler =
-                new ClickCompletionHandler<DialogResult>(search, DialogResult.Search, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(search, EInteractDialogResult.Search, msg.CompletionSource, _center);
 
             closeHandler.Register();
             searchHandler.Register();
@@ -106,7 +107,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             label.text = "No Loot";
 
             var closeHandler =
-                new ClickCompletionHandler<DialogResult>(close, DialogResult.Close, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close, msg.CompletionSource, _center);
 
             closeHandler.Register();
 
@@ -131,9 +132,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             label.text = "Real loot";
 
             var takeAllHandler =
-                new ClickCompletionHandler<DialogResult>(takeAll, DialogResult.TakeAll, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(takeAll, EInteractDialogResult.TakeAll, msg.CompletionSource, _center);
             var closeHandler =
-                new ClickCompletionHandler<DialogResult>(close, DialogResult.Close, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close, msg.CompletionSource, _center);
 
             takeAllHandler.Register();
             closeHandler.Register();

@@ -15,6 +15,7 @@ using _StoryGame.Game.UI.Impls;
 using _StoryGame.Game.UI.Impls.Gameplay;
 using _StoryGame.Game.UI.Impls.Menu;
 using _StoryGame.Game.UI.Impls.Viewer;
+using _StoryGame.Game.UI.Impls.WorldUI;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;
@@ -28,6 +29,10 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         private PlayerView playerViewPrefab;
 
         [SerializeField] private Transform spawnPoint;
+
+        [FormerlySerializedAs("prefab")] [SerializeField]
+        private InteractablesTipUI interactablesTipUIPrefab;
+
         private GameObject _mainEmpty;
 
         protected override void Configure(IContainerBuilder builder)
@@ -35,6 +40,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
 
             RegisterStateMachine(builder);
+
 
             // Поиск объекта --- MAIN
             _mainEmpty = GameObject.Find("--- MAIN");
@@ -53,7 +59,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             // var playerInstance = Instantiate(playerPrefab);
             var playerInstaller = new PlayerInstaller(builder, null, spawnPoint);
-
             if (!playerInstaller.Install())
                 throw new Exception("PlayerInstaller is not installed.");
 
@@ -70,6 +75,17 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             RegisterLoot(builder);
 
             RegisterInteractableSystems(builder);
+
+            RegisterDialogSystems(builder);
+
+            if (!interactablesTipUIPrefab)
+                throw new NullReferenceException("interactablesTipUIPrefab is null.");
+            builder.RegisterComponentInNewPrefab<InteractablesTipUI>(interactablesTipUIPrefab, Lifetime.Transient);
+        }
+
+        private void RegisterDialogSystems(IContainerBuilder builder)
+        {
+            // builder.Register<InteractableDialogSystem>(Lifetime.Singleton).AsSelf();
         }
 
         private void RegisterLoot(IContainerBuilder builder)
@@ -87,7 +103,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             base.Awake();
 
             var interactables =
-                FindObjectsByType<Interactable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                FindObjectsByType<AInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             Debug.Log($"Interactables on scene: {interactables.Length}");
             foreach (var interactable in interactables)
                 Container.Inject(interactable);

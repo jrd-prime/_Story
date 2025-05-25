@@ -1,0 +1,39 @@
+﻿using System;
+using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Game.Interactables.Data;
+using Cysharp.Threading.Tasks;
+using MessagePipe;
+
+namespace _StoryGame.Game.Interactables
+{
+    public class InteractableDialogueSystem
+    {
+        private readonly IPublisher<IUIViewerMessage> _uiViewerMsgPub;
+
+        public InteractableDialogueSystem(IPublisher<IUIViewerMessage> uiViewerMsgPub)
+        {
+            _uiViewerMsgPub = uiViewerMsgPub;
+        }
+
+        public async UniTask ShowDialogAsync<TMessage>(
+            Func<UniTaskCompletionSource<EInteractDialogResult>, TMessage> messageFactory,
+            Func<EInteractDialogResult, UniTask> handleResult) where TMessage : IUIViewerMessage
+        {
+            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            var message = messageFactory(source);
+
+            try
+            {
+                _uiViewerMsgPub.Publish(message);
+                var result = await source.Task;
+                source = null;
+
+                await handleResult(result);
+            }
+            finally
+            {
+                source?.TrySetCanceled();
+            }
+        }
+    }
+}
