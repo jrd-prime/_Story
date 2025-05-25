@@ -191,7 +191,7 @@ namespace _StoryGame.Game.Interactables.Inspect
             _log.Debug("OnStart Search");
             // anim hero // await progress bar
             var source = new UniTaskCompletionSource<DialogResult>();
-            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Search", SearchDuration,
+            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Search", InspectDuration,
                 source));
             await source.Task;
         }

@@ -1,5 +1,4 @@
-﻿using _StoryGame.Core.Interactables.Interfaces;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace _StoryGame.Game.UI.Impls.WorldUI

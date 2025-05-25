@@ -1117,7 +1117,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
@@ -1680,7 +1680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6286724496668688620, guid: 0634e88956f6cb94ca5ce7233f6c5bbd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6286724496668688620, guid: 0634e88956f6cb94ca5ce7233f6c5bbd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1688,7 +1688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6286724496668688620, guid: 0634e88956f6cb94ca5ce7233f6c5bbd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6286724496668688620, guid: 0634e88956f6cb94ca5ce7233f6c5bbd, type: 3}
       propertyPath: m_LocalRotation.w

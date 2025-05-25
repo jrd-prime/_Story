@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interactables.Interfaces;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using UnityEngine;
 using VContainer;
 
 namespace _StoryGame.Game.Interactables.Inspect
@@ -22,7 +20,7 @@ namespace _StoryGame.Game.Interactables.Inspect
         {
             _inspectSystem = resolver.Resolve<InspectSystem>();
             if (_inspectSystem == null)
-                throw new System.Exception("InspectSystem is null. " + gameObject.name);
+                throw new Exception("InspectSystem is null. " + gameObject.name);
         }
 
         public override async UniTask InteractAsync(ICharacter character)

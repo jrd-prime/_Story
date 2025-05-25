@@ -1,4 +1,5 @@
-﻿using _StoryGame.Game.Interactables.Inspect;
+﻿using System;
+using _StoryGame.Game.Interactables.Inspect;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -25,7 +26,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
         public void Register()
         {
             if (_completionSource.Task.Status.IsCompleted())
-                throw new System.Exception("CompletionSource уже завершён!");
+                throw new Exception("CompletionSource уже завершён!");
             
             _callback = _ =>
             {

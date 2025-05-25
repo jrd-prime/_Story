@@ -85,8 +85,8 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
         {
             _actionLabel.text = msg.ActionName.ToUpper();
             ShowRoot();
-            float startWidth = 0f;
-            float duration = 3f;
+            var startWidth = 0f;
+            var duration = msg.Duration;
 
             Debug.Log("PlayerOverHeadTipUI - " + msg.ActionName + " start");
             DOTween
@@ -104,12 +104,12 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
                 .OnComplete(() =>
                 {
                     msg.CompletionSource.TrySetResult(DialogResult.Close);
-                    // Анимация прозрачности barC через DOTween
+
                     DOTween.To(
-                            () => (float)_barC.style.opacity.value, // текущая прозрачность
-                            x => _barC.style.opacity = x, // установка новой
-                            0f, // к чему анимировать
-                            0.5f // за сколько (сек)
+                            () => (float)_barC.style.opacity.value,
+                            x => _barC.style.opacity = x,
+                            0f,
+                            0.5f
                         ).SetEase(Ease.Linear)
                         .OnComplete(HideRoot);
                 });

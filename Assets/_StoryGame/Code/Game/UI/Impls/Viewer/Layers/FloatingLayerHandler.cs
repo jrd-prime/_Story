@@ -3,6 +3,7 @@ using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.UI.Messages;
 using UnityEngine.UIElements;
 using VContainer;
 
@@ -113,6 +114,32 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
         }
 
         private bool HasWindow(FloatingWindowType windowType) => _windows.ContainsKey(windowType);
+
+        public void ShowLootWindow(ShowLootWindowMsg msg)
+        {
+            if (!HasWindow(msg.WindowType))
+                throw new KeyNotFoundException($"No window for type: {msg.WindowType}");
+
+            _center.Clear();
+
+            var window = _windows[msg.WindowType];
+
+            var label = window.GetVisualElement<Label>("label", window.name);
+            var close = window.GetVisualElement<Button>("close", window.name);
+            var takeAll = window.GetVisualElement<Button>("take-all", window.name);
+
+            label.text = "Real loot";
+
+            var takeAllHandler =
+                new ClickCompletionHandler<DialogResult>(takeAll, DialogResult.TakeAll, msg.CompletionSource, _center);
+            var closeHandler =
+                new ClickCompletionHandler<DialogResult>(close, DialogResult.Close, msg.CompletionSource, _center);
+
+            takeAllHandler.Register();
+            closeHandler.Register();
+
+            _center.Add(window);
+        }
     }
 
     public enum PositionType
@@ -125,6 +152,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
     public enum FloatingWindowType
     {
         HasLoot,
-        NoLoot
+        NoLoot,
+        Loot
     }
 }

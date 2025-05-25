@@ -25,11 +25,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
         public void Register()
         {
             if (_completionSource.Task.Status.IsCompleted())
-            {
-                Debug.LogError("CompletionSource уже завершён!");
-                return;
-            }
-
+                throw new System.Exception("CompletionSource уже завершён!");
+            
             _callback = _ =>
             {
                 _completionSource.TrySetResult((T)(object)_result);
