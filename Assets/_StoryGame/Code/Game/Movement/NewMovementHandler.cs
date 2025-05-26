@@ -122,10 +122,9 @@ namespace _StoryGame.Game.Movement
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, interactableLayer))
             {
-                _log.Debug($"Hit layer Interactable object: {hit.collider.gameObject.name}");
+                // _log.Debug($"Hit layer Interactable object: {hit.collider.gameObject.name}");
 
                 var interactable = hit.collider.GetComponent<IInteractable>();
-                // var interactable = hit.collider.GetComponentInParent<IInteractable>();
                 if (interactable != null)
                 {
                     _selfMsgPub.Publish(new MoveToInteractableHandlerMsg(interactable));
@@ -143,7 +142,7 @@ namespace _StoryGame.Game.Movement
                 if (NavMesh.SamplePosition(hit.point, out var navMeshHit, 0.5f, NavMesh.AllAreas))
                 {
                     _selfMsgPub.Publish(new MoveToPointHandlerMsg(navMeshHit.position));
-                    _log.Debug($"Clicked position is valid on NavMesh: {navMeshHit.position}");
+                    // _log.Debug($"Clicked position is valid on NavMesh: {navMeshHit.position}");
                 }
             }
 

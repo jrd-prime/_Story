@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _StoryGame.Game.Room.Data;
 using UnityEngine;
 
 namespace _StoryGame.Game.Room.Impls
@@ -7,20 +8,28 @@ namespace _StoryGame.Game.Room.Impls
     {
         [SerializeField] private string roomName;
         [SerializeField] private float progress;
+        [SerializeField] private RoomContentData roomContentData;
         [SerializeField] private List<Loot> lootPool;
         [SerializeField] private List<Transition> transitions;
 
         public string Name => roomName;
         public float Progress => progress;
         public List<Loot> LootPool => lootPool;
-        public List<Transition> Transitions => transitions;
 
-        public void Inspect() => Debug.Log($"Inspecting {name}");
+        private void Awake()
+        {
+            SayMyNameToObjects();
+        }
 
-        public void DeepSearch() => Debug.Log($"Deep searching {name}");
+        private void SayMyNameToObjects()
+        {
+            roomContentData.lootObjects.core.SetRoom(this);
 
-        public void UnlockObject() => Debug.Log($"Unlocking {name}");
+            foreach (var conditional in roomContentData.lootObjects.hidden)
+                conditional.SetRoom(this);
 
-        public bool CanTransition(Transition transition) => true;
+            foreach (var inspectable in roomContentData.lootObjects.inspectables)
+                inspectable.SetRoom(this);
+        }
     }
 }

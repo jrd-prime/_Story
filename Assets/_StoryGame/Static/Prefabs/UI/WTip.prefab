@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelWidth: 200
-  panelHeight: 100
+  panelHeight: 200
   panelScale: 1
   pixelsPerUnit: 100
   visualTreeAsset: {fileID: 9197481963319205126, guid: 213ed223d3e282d4b8a9ff05af29a07b, type: 3}

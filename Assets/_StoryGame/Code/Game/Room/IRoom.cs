@@ -8,11 +8,6 @@ namespace _StoryGame.Game.Room
         string Name { get; }
         float Progress { get; }
         List<Loot> LootPool { get; }
-        List<Transition> Transitions { get; }
-        void Inspect();
-        void DeepSearch();
-        void UnlockObject();
-        bool CanTransition(Transition transition);
     }
 
     [Serializable]

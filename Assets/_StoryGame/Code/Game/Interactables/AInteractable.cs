@@ -3,6 +3,7 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
+using _StoryGame.Game.Room;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
 using _StoryGame.Infrastructure.AppStarter;
@@ -12,10 +13,10 @@ using MessagePipe;
 using R3;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace _StoryGame.Game.Interactables
 {
+    [RequireComponent(typeof(Collider))]
     public abstract class AInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField] private string id;
@@ -27,6 +28,7 @@ namespace _StoryGame.Game.Interactables
 
         public abstract EInteractableType InteractableType { get; }
         public Vector3 GetEntryPoint() => _entrance.position;
+        public IRoom Room { get; private set; }
 
         public bool CanInteract { get; }
         public string InteractionTipNameId => interactionTipNameId;
@@ -109,6 +111,9 @@ namespace _StoryGame.Game.Interactables
             Debug.LogWarning("ShowInteractionTip");
             tipId = "testId";
         }
+
+        public void SetRoom(IRoom roomPrototype) =>
+            Room = roomPrototype;
 
         public void HideInteractionTip()
         {

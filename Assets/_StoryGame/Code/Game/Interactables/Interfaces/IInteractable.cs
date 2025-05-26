@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Game.Room;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -16,5 +17,8 @@ namespace _StoryGame.Game.Interactables.Interfaces
         void ShowInteractionTip((string, string) interactionTip);
         void HideInteractionTip();
         Vector3 GetEntryPoint();
+
+        void SetRoom(IRoom roomPrototype);
+        IRoom Room { get; }
     }
 }

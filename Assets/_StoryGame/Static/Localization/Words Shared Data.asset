@@ -43,6 +43,34 @@ MonoBehaviour:
     m_Key: wood_box
     m_Metadata:
       m_Items: []
+  - m_Id: 3001573243289600
+    m_Key: toolbox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952896
+    m_Key: electrobox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952897
+    m_Key: conditioneer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952898
+    m_Key: crowbar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952899
+    m_Key: r0_simple_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952900
+    m_Key: r0_core_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952901
+    m_Key: street_news
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
