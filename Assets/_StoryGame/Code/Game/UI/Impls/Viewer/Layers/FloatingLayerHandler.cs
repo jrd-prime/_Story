@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Core.Interfaces.UI;
-using _StoryGame.Data.Main;
+using _StoryGame.Data.SO.Main;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.UI.Messages;

@@ -1,0 +1,14 @@
+﻿using _StoryGame.Core.Currency;
+using UnityEngine;
+
+namespace _StoryGame.Data.Currency
+{
+    [CreateAssetMenu(
+        fileName = nameof(SpecialCurrency),
+        menuName = SOPathConst.Currency + nameof(SpecialCurrency)
+    )]
+    public class SpecialCurrency : CurrencyASettings
+    {
+        public override ECurrencyType Type { get; } = ECurrencyType.Special;
+    }
+}

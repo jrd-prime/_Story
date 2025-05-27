@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using _StoryGame.Data;
-using _StoryGame.Data.Main;
-using _StoryGame.Data.Room;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Data.SO.Main;
+using _StoryGame.Data.SO.Room;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -14,8 +15,10 @@ namespace _StoryGame.Infrastructure.Settings
         public bool IsInitialized { get; private set; }
         public string Description => "Settings Provider";
 
-        private MainSettings _mainSettings;
-        private readonly Dictionary<Type, object> _cache = new();
+        private readonly MainSettings _mainSettings;
+        private readonly Dictionary<Type, ASettingsBase> _cache = new();
+
+        private readonly Dictionary<string, RoomSettings> _roomsCache = new(); // <roomId, settings>
 
         public SettingsProvider(MainSettings mainSettings) => _mainSettings = mainSettings;
 
@@ -24,13 +27,6 @@ namespace _StoryGame.Infrastructure.Settings
             if (!_mainSettings)
                 throw new Exception("MainSettings is null " + nameof(SettingsProvider));
 
-            await AddSettingsToCacheAsync();
-
-            IsInitialized = true;
-        }
-
-        private async UniTask AddSettingsToCacheAsync()
-        {
             var fields =
                 typeof(MainSettings).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -51,22 +47,32 @@ namespace _StoryGame.Infrastructure.Settings
                     throw new Exception($"Duplicate settings type {settings.GetType()} found in cache.");
             }
 
-            // Log.Info($"Settings added to cache: {_cache.Count}");
+            AddRoomsToCache(GetSettings<MainRoomSettings>());
+
+            IsInitialized = true;
             await UniTask.CompletedTask;
+        }
+
+        private void AddRoomsToCache(MainRoomSettings roomsSettings)
+        {
+            foreach (var room in roomsSettings.Rooms)
+                _roomsCache.TryAdd(room.Id, room);
         }
 
         public T GetSettings<T>() where T : ASettingsBase
         {
-            if (!_cache.TryGetValue(typeof(T), out var settings))
-                throw new Exception($"Settings {typeof(T).Name} not found in cache.");
+            if (_cache.TryGetValue(typeof(T), out var settings))
+                return (T)settings;
 
-            return (T)settings;
+            throw new Exception($"Settings {typeof(T).Name} not found in cache.");
         }
 
         public RoomSettings GetRoomSettings(string roomId)
         {
-            var settings = GetSettings<MainRoomSettings>();
-            return settings.GetRoomSettings(roomId);
+            if (_roomsCache.TryGetValue(roomId, out var settings))
+                return settings;
+
+            throw new Exception($"Room {roomId} not found in room cache.");
         }
     }
 }

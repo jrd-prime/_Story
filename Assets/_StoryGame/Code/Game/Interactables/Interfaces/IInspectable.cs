@@ -1,4 +1,4 @@
-﻿using _StoryGame.Game.Interactables.Inspect;
+﻿using _StoryGame.Game.Interactables.Impls.Inspect;
 
 namespace _StoryGame.Game.Interactables.Interfaces
 {

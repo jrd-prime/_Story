@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using _StoryGame.Data.Const;
+using _StoryGame.Data.SO.Abstract;
+using UnityEngine;
 
 namespace _StoryGame.Data.UI
 {

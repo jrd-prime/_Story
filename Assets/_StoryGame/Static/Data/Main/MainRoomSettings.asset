@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54004f5e679405b87eb1f474cdcb8c8, type: 3}
   m_Name: MainRoomSettings
   m_EditorClassIdentifier: 
+  Rooms:
+  - {fileID: 11400000, guid: 1138db8271627284291300182e5eab75, type: 2}

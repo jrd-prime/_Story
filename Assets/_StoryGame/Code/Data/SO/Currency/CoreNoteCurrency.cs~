@@ -1,0 +1,14 @@
+﻿using _StoryGame.Core.Currency;
+using UnityEngine;
+
+namespace _StoryGame.Data.Currency
+{
+    [CreateAssetMenu(
+        fileName = nameof(CoreNoteSettings),
+        menuName = SOPathConst.Currency + nameof(CoreNoteSettings)
+    )]
+    public class CoreNoteSettings : ACurrencySettings
+    {
+        public override ECurrencyType Type { get; } = ECurrencyType.CoreNote;
+    }
+}

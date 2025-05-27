@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Data.Const;
 using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.UI.Impls.Viewer.Layers;

@@ -5,12 +5,14 @@ using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Managers.Game.Impls;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interactables;
-using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.Interactables.Abstract;
+using _StoryGame.Game.Interactables.Impls.Inspect;
 using _StoryGame.Game.Loot;
 using _StoryGame.Game.Managers.Impls;
 using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Game.Managers.Inerfaces;
 using _StoryGame.Game.Movement;
+using _StoryGame.Game.Room.Impls;
 using _StoryGame.Game.UI.Impls;
 using _StoryGame.Game.UI.Impls.Gameplay;
 using _StoryGame.Game.UI.Impls.Menu;
@@ -78,9 +80,16 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             RegisterDialogSystems(builder);
 
+            RegisterRooms(builder);
+
             if (!interactablesTipUIPrefab)
                 throw new NullReferenceException("interactablesTipUIPrefab is null.");
             builder.RegisterComponentInNewPrefab<InteractablesTipUI>(interactablesTipUIPrefab, Lifetime.Transient);
+        }
+
+        private void RegisterRooms(IContainerBuilder builder)
+        {
+            builder.RegisterComponentInHierarchy<RoomsRegistry>().AsImplementedInterfaces();
         }
 
         private void RegisterDialogSystems(IContainerBuilder builder)
