@@ -1,0 +1,15 @@
+﻿
+
+using UnityEngine;
+
+namespace _StoryGame.Data.Room
+{
+    [CreateAssetMenu(
+        fileName = nameof(RoomSettings),
+        menuName = SOPathConst.Settings + nameof(RoomSettings)
+    )]
+    public class RoomSettings :SettingsBase
+    {
+        public string Id { get; set; }
+    }
+}

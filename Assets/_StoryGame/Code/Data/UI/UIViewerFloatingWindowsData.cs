@@ -6,9 +6,8 @@ namespace _StoryGame.Data.UI
         fileName = nameof(UIViewerFloatingWindowsData),
         menuName = SOPathConst.UISettings + nameof(UIViewerFloatingWindowsData),
         order = 0)]
-    public sealed class UIViewerFloatingWindowsData : SettingsBase
+    public sealed class UIViewerFloatingWindowsData : ASettingsBase
     {
-        public override string ConfigName => "UIViewerFloatingWindowsData";
         public FloatingWindowDataVo[] FloatingWindowDataVo;
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Data;
+using _StoryGame.Data.Main;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;
@@ -20,7 +20,6 @@ namespace _StoryGame.Infrastructure.Scopes
 {
     public class RootScope : LifetimeScope
     {
-        [SerializeField] private BootstrapSettings bootstrapSettings;
         [SerializeField] private MainSettings mainSettings;
         [SerializeField] private EventSystem eventSystem;
         [SerializeField] private JLog log;
@@ -30,10 +29,9 @@ namespace _StoryGame.Infrastructure.Scopes
             Debug.Log($"<color=cyan>{nameof(RootScope)}</color>");
             RegisterMessagePipe(builder);
 
-            if (!bootstrapSettings)
-                throw new NullReferenceException("BootstrapSettings is null.");
-            builder.RegisterInstance(bootstrapSettings);
-
+            var bootstrapSettings = mainSettings.BootstrapSettings;
+            builder.RegisterComponent(bootstrapSettings).AsSelf();
+            
             if (!mainSettings)
                 throw new NullReferenceException("MainSettings is null.");
             builder.RegisterInstance(mainSettings);

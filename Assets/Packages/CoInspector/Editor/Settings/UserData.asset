@@ -1,0 +1,354 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d4c446e80a32c438a7ffd1c57696e2, type: 3}
+  m_Name: UserData
+  m_EditorClassIdentifier: 
+  rootPath: Assets/CoInspector
+  showHistory: 1
+  showTabName: 1
+  showTabTree: 1
+  showFilterBar: 1
+  showInstallMessage: 0
+  softSelection: 1
+  showCollapseTool: 1
+  showLastClicked: 1
+  showMostClicked: 1
+  showIcons: 1
+  richNames: 1
+  showScrollBar: 1
+  showAdditionalOptions: 1
+  rememberSessions: 1
+  useThumbKeys: 1
+  ignoreFolders: 1
+  collapsePrefabComponents: 1
+  openPrefabsInNewTab: 1
+  showTextAssetPreviews: 1
+  showAssetLabels: 0
+  autoFocus: 0
+  assetInspection: 1
+  componentCulling: 1
+  sessionsMode: 1
+  tabCompactMode: 1
+  doubleClickMode: 1
+  scrollSpeedX: 2
+  scrollSpeedY: 2
+  scrollDirectionX: 1
+  scrollDirectionY: 1
+  sessions:
+  - tracker:
+      mostClicked:
+      - paths:
+        - RoomPrototype
+        count: 40
+      - paths:
+        - '--- MAIN/Main Camera[0]'
+        count: 28
+      - paths:
+        - core_openNews
+        count: 15
+      - paths:
+        - exit
+        count: 8
+      - paths:
+        - hidden_woodbox
+        count: 8
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]'
+        count: 6
+      - paths:
+        - '--- MAIN/NAV_MESH_SURFACE[0]'
+        count: 5
+      - paths:
+        - Player
+        count: 4
+      - paths:
+        - 'exit/entrance[0]'
+        count: 1
+      - paths:
+        - 'hidden_woodbox/entrance[0]'
+        count: 1
+      recentlyClicked:
+      - paths:
+        - '--- MAIN/Main Camera[0]'
+        count: 1
+      - paths:
+        - RoomPrototype
+        count: 1
+      - paths:
+        - 'RoomPrototype/INSP_electrobox[0]'
+        count: 1
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]'
+        - 'RoomPrototype/INSP_electrobox[0]'
+        - 'RoomPrototype/INSP_vent[0]'
+        - 'RoomPrototype/SPEC_woodbox[0]'
+        - 'RoomPrototype/CORE_openNews[0]'
+        count: 1
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]'
+        count: 1
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]/SM_Props_Interior_Shop_AutoRepair_ToolBox[0]'
+        count: 1
+      - paths:
+        - 'RoomPrototype/CORE_openNews[0]'
+        count: 1
+      - paths:
+        - '--- MAIN/Move[0]'
+        count: 1
+      - paths:
+        - Player
+        count: 1
+      - paths:
+        - INSP_toolbox
+        - INSP_vent
+        - INSP_electrobox
+        - SPEC_woodbox
+        - CORE_openNews
+        count: 1
+      mostClickedContents: []
+      recentlyClickedContents: []
+    sceneGUID: c80eaec6e6a4bf24191f47519e390eb4
+    sceneName: GameScene
+    lastSaveTimePrint: 03:21 PM (May 27, 2025)
+    gracePeriod: 3
+    activeIndex: 0
+    checkingToLoad: 0
+    assetsCollapsed: 0
+    lockedAsset: 0
+    maximizedAssetView: 0
+    showImportSettings: 0
+    suggestedHeight: 97
+    userHeight: 0
+    previewHeight: 0
+    scrollPosition: {x: 0, y: 0}
+    toolbarScrollPosition: {x: 0, y: 0}
+    rawUserHeight: 0
+    lastValidTabWidth: 99
+    alreadyCalculatedHeight: 0
+    lastKnownHeight: 0
+    tabs:
+    - path: '--- MAIN/Main Camera[0]'
+      paths: []
+      tabWidth: 96
+      name: Main Camera
+      icon: {fileID: 7226769568068977144, guid: 0000000000000000d000000000000000, type: 0}
+      shortName: Main Camera
+      filterString: 
+      newTab: 0
+      scrollPosition: 0
+      isSelected: 0
+      allCollapsed: 0
+      runtimeFoldouts: 
+      runtimeMultiComponents: []
+      tabTextContent:
+        m_Text: Main Camera
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+        m_TextWithWhitespace: "Main Camera\u200B"
+      multiEditMode: 0
+      locked: 0
+      debug: 0
+      prefab: 0
+      multiFoldout: 1
+      target: {fileID: 0}
+      targets: []
+      index: 0
+      historyPosition: 0
+      componentMaps:
+      - index: 0
+        component: {fileID: 0}
+        foldout: 0
+        focusAfter: 0
+        awaitingScroll: 0
+        hidden: 0
+      - index: 0
+        component: {fileID: 0}
+        foldout: 0
+        focusAfter: 0
+        awaitingScroll: 0
+        hidden: 0
+      - index: 0
+        component: {fileID: 0}
+        foldout: 1
+        focusAfter: 0
+        awaitingScroll: 0
+        hidden: 0
+      - index: 0
+        component: {fileID: 0}
+        foldout: 1
+        focusAfter: 0
+        awaitingScroll: 0
+        hidden: 0
+      historyPaths:
+      - paths:
+        - '--- MAIN/Main Camera[0]'
+        prefab: 0
+      - paths:
+        - RoomPrototype
+        prefab: 0
+      - paths:
+        - 'RoomPrototype/INSP_electrobox[0]'
+        prefab: 0
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]'
+        - 'RoomPrototype/INSP_electrobox[0]'
+        - 'RoomPrototype/INSP_vent[0]'
+        - 'RoomPrototype/SPEC_woodbox[0]'
+        - 'RoomPrototype/CORE_openNews[0]'
+        prefab: 0
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]'
+        prefab: 0
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]/SM_Props_Interior_Shop_AutoRepair_ToolBox[0]'
+        prefab: 0
+      - paths:
+        - 'RoomPrototype/CORE_openNews[0]'
+        prefab: 0
+      - paths:
+        - '--- MAIN/Move[0]'
+        prefab: 0
+      - paths:
+        - Player
+        prefab: 0
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]'
+        - 'RoomPrototype/INSP_vent[0]'
+        - 'RoomPrototype/INSP_electrobox[0]'
+        - 'RoomPrototype/SPEC_woodbox[0]'
+        - 'RoomPrototype/CORE_openNews[0]'
+        prefab: 0
+      - paths:
+        - 'RoomPrototype/INSP_toolbox[0]'
+        - 'RoomPrototype/INSP_vent[0]'
+        - 'RoomPrototype/INSP_electrobox[0]'
+        - 'RoomPrototype/SPEC_woodbox[0]'
+        prefab: 0
+      owner: {fileID: 0}
+    closedTabs: []
+    historyAssets:
+    - assetGUIDs:
+      - 141c0c14811158c40a193e56ebcae18e
+    - assetGUIDs:
+      - df5c1fd2bf526fc449a9174ce351fdb2
+    - assetGUIDs:
+      - 99f4c134c16b89940a9cbf72023724f4
+    - assetGUIDs:
+      - 6f7f7f7567ecea34f989b99b1091101e
+    - assetGUIDs:
+      - 30a2691ab062a5e4baba504da75ddd4b
+    - assetGUIDs:
+      - 8f0c74436ec2e034d8cb9d716374d460
+    - assetGUIDs:
+      - 8c48915e167c48d08ae56cbd37be3721
+    - assetGUIDs:
+      - 753043e0da5720f44a4dfd4b09bfd2a2
+    - assetGUIDs:
+      - f1d0268151fe75b4cb619d7d600acc26
+    - assetGUIDs:
+      - 18ba3ec96300a934496b8efdd902c6e3
+    - assetGUIDs:
+      - 6136b7f0cbbbd5842ad00f14e28348c5
+    targetObject: {fileID: 11400000, guid: 141c0c14811158c40a193e56ebcae18e, type: 2}
+    targetObjects: []
+    lastSelectedAsset: Assets/_StoryGame/Static/Data/Main/_MainSettings.asset
+    lastClickedTab: -1
+    previousTab: 0
+  - tracker:
+      mostClicked: []
+      recentlyClicked: []
+      mostClickedContents: []
+      recentlyClickedContents: []
+    sceneGUID: 537ac41811fb25d418de865cee46fb70
+    sceneName: Bootstrap
+    lastSaveTimePrint: 03:21 PM (May 27, 2025)
+    gracePeriod: 3
+    activeIndex: 0
+    checkingToLoad: 0
+    assetsCollapsed: 0
+    lockedAsset: 0
+    maximizedAssetView: 0
+    showImportSettings: 0
+    suggestedHeight: 97
+    userHeight: 0
+    previewHeight: 0
+    scrollPosition: {x: 0, y: 0}
+    toolbarScrollPosition: {x: 0, y: 0}
+    rawUserHeight: 0
+    lastValidTabWidth: 64
+    alreadyCalculatedHeight: 0
+    lastKnownHeight: 0
+    tabs:
+    - path: 
+      paths: []
+      tabWidth: 61
+      name: 
+      icon: {fileID: 0}
+      shortName: New Tab
+      filterString: 
+      newTab: 1
+      scrollPosition: 0
+      isSelected: 0
+      allCollapsed: 0
+      runtimeFoldouts: 
+      runtimeMultiComponents: []
+      tabTextContent:
+        m_Text: New Tab
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+        m_TextWithWhitespace: "New Tab\u200B"
+      multiEditMode: 0
+      locked: 0
+      debug: 0
+      prefab: 0
+      multiFoldout: 1
+      target: {fileID: 0}
+      targets: []
+      index: 0
+      historyPosition: 0
+      componentMaps: []
+      historyPaths: []
+      owner: {fileID: 0}
+    closedTabs: []
+    historyAssets:
+    - assetGUIDs:
+      - 141c0c14811158c40a193e56ebcae18e
+    - assetGUIDs:
+      - df5c1fd2bf526fc449a9174ce351fdb2
+    - assetGUIDs:
+      - 99f4c134c16b89940a9cbf72023724f4
+    - assetGUIDs:
+      - 6f7f7f7567ecea34f989b99b1091101e
+    - assetGUIDs:
+      - 30a2691ab062a5e4baba504da75ddd4b
+    - assetGUIDs:
+      - 8f0c74436ec2e034d8cb9d716374d460
+    - assetGUIDs:
+      - 8c48915e167c48d08ae56cbd37be3721
+    - assetGUIDs:
+      - 753043e0da5720f44a4dfd4b09bfd2a2
+    - assetGUIDs:
+      - f1d0268151fe75b4cb619d7d600acc26
+    - assetGUIDs:
+      - 18ba3ec96300a934496b8efdd902c6e3
+    - assetGUIDs:
+      - 6136b7f0cbbbd5842ad00f14e28348c5
+    targetObject: {fileID: 11400000, guid: 141c0c14811158c40a193e56ebcae18e, type: 2}
+    targetObjects: []
+    lastSelectedAsset: Assets/_StoryGame/Static/Data/Main/_MainSettings.asset
+    lastClickedTab: -1
+    previousTab: 0
+  tipsShown: 010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000
+  playModeStartScene:
+    m_Handle: 0
+  enteringPlayMode: 0

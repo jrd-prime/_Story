@@ -1,7 +1,0 @@
-﻿namespace _StoryGame.Data.Interactables
-{
-    public class InteractableLootData
-    {
-        
-    }
-}

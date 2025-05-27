@@ -1,0 +1,14 @@
+﻿using _StoryGame.Data.UI;
+using UnityEngine;
+
+namespace _StoryGame.Data.Main
+{
+    [CreateAssetMenu(
+        fileName = nameof(UIASettings),
+        menuName = SOPathConst.MainSettings + nameof(UIASettings),
+        order = 100)]
+    public sealed class UIASettings : ASettingsBase
+    {
+        public UIViewerFloatingWindowsData FloatingWindowDataVo;
+    }
+}

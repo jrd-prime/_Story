@@ -138,4 +138,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             _viewsCache.Clear();
         }
     }
+
+    public interface IUIViewer
+    {
+    }
 }

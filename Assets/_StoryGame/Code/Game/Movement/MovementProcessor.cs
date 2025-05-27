@@ -52,7 +52,7 @@ namespace _StoryGame.Game.Movement
 
         private void OnMovementHandlerMsg(IMovementHandlerMsg message)
         {
-            _log.Debug($"OnMovementHandlerMsg: {message.GetType().Name}");
+            // _log.Debug($"OnMovementHandlerMsg: {message.GetType().Name}");
             switch (message)
             {
                 case MoveToInteractableHandlerMsg msg:

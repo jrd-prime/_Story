@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using _StoryGame.Game.Interactables;
-using _StoryGame.Game.Interactables.Inspect;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 

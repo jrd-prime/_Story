@@ -16,16 +16,16 @@ namespace _StoryGame.Game.Room.Data
     [Serializable]
     public struct RoomLootData
     {
-        public CoreNoteCurrencyData coreNote;
-        public SpecialCurrencyData hidden;
+        public CoreNoteCurrencyAData coreNote;
+        public SpecialCurrencyAData hidden;
         public InspectableLootData inspectableLoot;
     }
 
     [Serializable]
     public struct InspectableLootData
     {
-        public List<CoreItemCurrencyData> coreItems;
-        public List<NoteCurrencyData> notes;
+        public List<CoreItemCurrencyAData> coreItems;
+        public List<NoteCurrencyAData> notes;
         public int energy;
     }
 }

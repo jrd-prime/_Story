@@ -1,6 +1,5 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Interactables.Data;
-using _StoryGame.Game.Interactables.Inspect;
 using _StoryGame.Game.UI.Impls.Viewer.Layers;
 using Cysharp.Threading.Tasks;
 

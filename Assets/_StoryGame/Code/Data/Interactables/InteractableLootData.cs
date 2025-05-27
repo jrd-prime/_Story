@@ -6,8 +6,7 @@ namespace _StoryGame.Data.Interactables
         fileName = nameof(InteractableLootData),
         menuName = SOPathConst.Interactables + nameof(InteractableLootData)
     )]
-    public sealed class InteractableLootData : SettingsBase
+    public sealed class InteractableLootData : ASettingsBase
     {
-        public override string ConfigName { get; }
     }
 }

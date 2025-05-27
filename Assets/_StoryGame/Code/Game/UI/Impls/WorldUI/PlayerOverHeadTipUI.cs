@@ -1,7 +1,6 @@
 ﻿using _StoryGame.Core.Interfaces;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Data;
-using _StoryGame.Game.Interactables.Inspect;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MessagePipe;
@@ -76,7 +75,7 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
                 return;
 
             transform.LookAt(mainCamera.transform.position);
-            transform.Rotate(0, 180f, 0); // Повернуть задом наперёд
+            transform.Rotate(0, 180f, 0);
         }
 
         private void OnMessage(ShowPlayerActionProgressMsg msg)
@@ -86,7 +85,6 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
             var startWidth = 0f;
             var duration = msg.Duration;
 
-            Debug.Log("PlayerOverHeadTipUI - " + msg.ActionName + " start");
             DOTween
                 .To(
                     () => startWidth,
@@ -122,10 +120,8 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
             isVisible = true;
         }
 
-
         private void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            Debug.Log(contWidth);
             contWidth = pcont.resolvedStyle.width - 2;
             pcont.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
 

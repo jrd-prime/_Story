@@ -1,7 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Game.Interactables.Data;
-using _StoryGame.Game.Room.Impls;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interactables.Types

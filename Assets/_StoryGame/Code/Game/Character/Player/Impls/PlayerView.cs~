@@ -76,7 +76,7 @@ namespace _StoryGame.Game.Character.Player.Impls
                     .WaitUntil(HasReachedDestination)
                     .Timeout(TimeSpan.FromSeconds(5));
 
-                // Debug.Log($"MoveToAsync: {destination} done");
+                Debug.Log($"MoveToAsync: {destination} done");
 
                 return true;
             }
