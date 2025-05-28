@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Data.Room;
 using _StoryGame.Game.Interactables.Abstract;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Impls.Inspect;
@@ -39,6 +40,8 @@ namespace _StoryGame.Game.Interactables.Impls
 
         public void SetInspectState(EInspectState inspectState) =>
             InspectState = inspectState;
+
+        public bool HasLoot() => Room.HasLoot(Id);
 
         protected override void SetAdditionalDebugInfo(InteractablesTipUI tipUI)
         {

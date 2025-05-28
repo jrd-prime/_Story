@@ -94,9 +94,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         private void OnRoomLootGenerated(RoomLootGeneratedMsg msg)
         {
             if (InteractableType == EInteractableType.Inspect)
-            {
                 InteractablesTipUI.ShowObjLoot(Room.GetLootFor(Id));
-            }
         }
 
         private void OnAppStarted(Unit _)
@@ -134,10 +132,8 @@ namespace _StoryGame.Game.Interactables.Abstract
             tipId = "testId";
         }
 
-        public void SetRoom(IRoom room)
-        {
+        public void SetRoom(IRoom room) =>
             Room = room;
-        }
 
         public void HideInteractionTip()
         {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using _StoryGame.Game.Interactables.Impls;
+using _StoryGame.Data.Room;
 using _StoryGame.Game.Loot;
 using UnityEngine;
 using UnityEngine.UIElements;

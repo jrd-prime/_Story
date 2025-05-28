@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using _StoryGame.Data.Room;
+using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interactables.Impls.Use;
 using _StoryGame.Game.Loot;
+using _StoryGame.Game.Loot.Interfaces;
 using _StoryGame.Infrastructure.Settings;
 using MessagePipe;
 using UnityEngine;
@@ -25,11 +26,6 @@ namespace _StoryGame.Game.Room.Impls
         public RoomLootVo Loot => _roomData.Loot;
         public RoomInteractablesVo Interactables => interactables;
 
-        public List<LootType> GetLootFor(string id)
-        {
-            return _lootSystem.GetLootFor(roomId, id);
-        }
-
         private RoomData _roomData;
         private ILootSystem _lootSystem;
         private IPublisher<RoomLootGeneratedMsg> _roomLootGeneratedMsgPub;
@@ -46,10 +42,7 @@ namespace _StoryGame.Game.Room.Impls
             LoadConfig();
         }
 
-        private void Awake()
-        {
-            SayMyNameToObjects();
-        }
+        private void Awake() => SayMyNameToObjects();
 
         private void OnEnable()
         {
@@ -64,6 +57,37 @@ namespace _StoryGame.Game.Room.Impls
 
             if (_roomData.Id != Id)
                 throw new Exception($"Room {Id} settings is not correct.");
+        }
+
+        public List<LootType> GetLootFor(string id) =>
+            _lootSystem.GetLootFor(roomId, id);
+
+        public bool HasLoot(string inspectableId) =>
+            _lootSystem.HasLoot(roomId, inspectableId);
+
+        public GeneratedLootVo GetLoot(List<LootType> lootTypes)
+        {
+            var result = new List<ACurrencyData>();
+
+            foreach (var lootType in lootTypes)
+            {
+                switch (lootType)
+                {
+                    case LootType.Core:
+                        result.Add(_roomData.Loot.inspectableLoot.coreItem.coreItemData);
+                        break;
+                    case LootType.Note:
+                        result.Add(_roomData.Loot.inspectableLoot.notes.notes[0]);
+                        break;
+                    case LootType.Energy:
+                        result.Add(_roomData.Loot.inspectableLoot.energy.energy);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return new GeneratedLootVo(result);
         }
 
         private void SayMyNameToObjects()

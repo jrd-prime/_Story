@@ -1,5 +1,4 @@
 ﻿using _StoryGame.Data.Const;
-using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Infrastructure.Bootstrap;
 using R3;

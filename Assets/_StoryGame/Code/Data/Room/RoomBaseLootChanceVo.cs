@@ -1,7 +1,7 @@
 ﻿using System;
 using _StoryGame.Game.Loot;
 
-namespace _StoryGame.Game.Interactables.Impls
+namespace _StoryGame.Data.Room
 {
     [Serializable]
     public struct RoomBaseLootChanceVo

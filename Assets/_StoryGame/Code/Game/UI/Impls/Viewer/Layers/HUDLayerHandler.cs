@@ -1,6 +1,5 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data.Const;
-using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Infrastructure.Tools;
 using Cysharp.Threading.Tasks;

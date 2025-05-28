@@ -1,7 +1,7 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.Loot;
+using _StoryGame.Game.Loot.Interfaces;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
 using _StoryGame.Infrastructure.Logging;
@@ -111,12 +111,12 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
         private async UniTask ShowLootTipAfterInspect()
         {
-            if (_lootSystem.HasLoot(_inspectable.Id))
+            if (_inspectable.HasLoot())
             {
                 _log.Debug("<color=green>Inspect - has loot</color>");
 
                 var source = new UniTaskCompletionSource<EInteractDialogResult>();
-                var lootData = _lootSystem.GetGeneratedLoot(_inspectable.Id);
+                var lootData = _lootSystem.GetGeneratedLoot(_inspectable);
                 var message = new ShowHasLootWindowMsg(lootData, source);
 
                 try
@@ -189,7 +189,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             Debug.Log("ShowLootTipAfterSearch - wait callback from tip ");
 
             var source = new UniTaskCompletionSource<EInteractDialogResult>();
-            var lootData = _lootSystem.GetGeneratedLoot(_inspectable.Id);
+            var lootData = _lootSystem.GetGeneratedLoot(_inspectable);
             var message = new ShowLootWindowMsg(lootData, source);
 
             try

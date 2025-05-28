@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Game.Interactables.Interfaces;
+using _StoryGame.Game.Loot.Interfaces;
 using _StoryGame.Game.Room;
 using _StoryGame.Infrastructure.Logging;
 using UnityEngine;
@@ -21,9 +23,21 @@ namespace _StoryGame.Game.Loot
             // subscribe to change room evt - reset loot
         }
 
-        public GeneratedLootVo GetGeneratedLoot(string id)
+        public GeneratedLootVo GetGeneratedLoot(IInspectable inspectable)
         {
-            throw new KeyNotFoundException($"Loot for interactable {id} not found!");
+            var roomId = inspectable.Room.Id;
+            var inspectableId = inspectable.Id;
+
+            if (_roomsLootCache.ContainsKey(roomId))
+            {
+                var roomLoot = _roomsLootCache[roomId];
+                if (roomLoot.Loot.ContainsKey(inspectableId))
+                {
+                    return inspectable.Room.GetLoot(roomLoot.Loot[inspectableId]);
+                }
+            }
+
+            throw new KeyNotFoundException($"Loot for interactable {inspectable} in room {roomId} not found!");
         }
 
         public bool GenerateLoot(IRoom room)
@@ -44,9 +58,30 @@ namespace _StoryGame.Game.Loot
             return _roomsLootCache[roomId].Loot[id];
         }
 
-        public bool HasLoot(string id)
+        public bool HasLoot(string roomId, string inspectableId)
         {
-            _log.Error($"Loot for interactable {id} not GENERATED");
+            if (_roomsLootCache.ContainsKey(roomId))
+            {
+                var roomLoot = _roomsLootCache[roomId];
+                if (roomLoot.Loot.ContainsKey(inspectableId))
+                {
+                    if (roomLoot.Loot[inspectableId] == null || roomLoot.Loot[inspectableId].Count == 0)
+                    {
+                        _log.Info(
+                            $"Loot for interactable {inspectableId} GENERATED. But it is <color=red>EMPTY</color>!");
+                        return false;
+                    }
+
+                    _log.Info(
+                        $"Loot for interactable {inspectableId} GENERATED. And it is <color=green>NOT EMPTY</color>!");
+                    return true;
+                }
+
+                _log.Error($"Loot for interactable {inspectableId} for room {roomId} not GENERATED");
+                return false;
+            }
+
+            _log.Error($"Loot for interactable {roomId} not GENERATED");
             return false;
         }
 
@@ -72,10 +107,8 @@ namespace _StoryGame.Game.Loot
         }
     }
 
-    public record GeneratedLootVo(string OwnerId, bool HasLoot, List<ACurrencyData> Loot)
+    public record GeneratedLootVo(List<ACurrencyData> Loot)
     {
-        public string OwnerId { get; } = OwnerId;
-        public bool HasLoot { get; } = HasLoot;
         public List<ACurrencyData> Loot { get; } = Loot;
     }
 }
