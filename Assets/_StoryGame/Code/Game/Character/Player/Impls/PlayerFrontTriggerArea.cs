@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;

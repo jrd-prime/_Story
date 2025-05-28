@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Interactables.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
+using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
@@ -128,7 +128,7 @@ namespace _StoryGame.Game.Movement
                 if (interactable != null)
                 {
                     _selfMsgPub.Publish(new MoveToInteractableHandlerMsg(interactable));
-                    _log.Debug($"Interacted with object: {interactable.Name}");
+                    _log.Debug($"Interacted with object: {interactable.LocalizationKey}");
                 }
 
                 ResetTouch();
@@ -142,7 +142,7 @@ namespace _StoryGame.Game.Movement
                 if (NavMesh.SamplePosition(hit.point, out var navMeshHit, 0.5f, NavMesh.AllAreas))
                 {
                     _selfMsgPub.Publish(new MoveToPointHandlerMsg(navMeshHit.position));
-                    _log.Debug($"Clicked position is valid on NavMesh: {navMeshHit.position}");
+                    // _log.Debug($"Clicked position is valid on NavMesh: {navMeshHit.position}");
                 }
             }
 
@@ -150,7 +150,7 @@ namespace _StoryGame.Game.Movement
         }
 
         private void ResetTouch()
-        { 
+        {
             _log.Debug("ResetTouch");
             _isTouchActive = false;
         }

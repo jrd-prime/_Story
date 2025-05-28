@@ -12,9 +12,9 @@ namespace _StoryGame.Game.Character.Player.Impls
     public sealed class PlayerView : MonoBehaviour
     {
         [SerializeField] private PlayerFrontTriggerArea frontTriggerArea;
-        [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private float rotationSpeed = 10f;
-        [SerializeField] private float acceleration = 0f;
+        // [SerializeField] private float moveSpeed = 5f;
+        // [SerializeField] private float rotationSpeed = 10f;
+        // [SerializeField] private float acceleration = 0f;
 
         public ReactiveProperty<Vector3> Position { get; } = new();
         public object Animator { get; private set; }
@@ -76,7 +76,7 @@ namespace _StoryGame.Game.Character.Player.Impls
                     .WaitUntil(HasReachedDestination)
                     .Timeout(TimeSpan.FromSeconds(5));
 
-                Debug.Log($"MoveToAsync: {destination} done");
+                // Debug.Log($"MoveToAsync: {destination} done");
 
                 return true;
             }

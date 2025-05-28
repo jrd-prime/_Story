@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using _StoryGame.Data;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Data.SO.Main;
+using _StoryGame.Data.SO.Room;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -12,8 +15,10 @@ namespace _StoryGame.Infrastructure.Settings
         public bool IsInitialized { get; private set; }
         public string Description => "Settings Provider";
 
-        private MainSettings _mainSettings;
-        private readonly Dictionary<Type, object> _cache = new();
+        private readonly MainSettings _mainSettings;
+        private readonly Dictionary<Type, ASettingsBase> _cache = new();
+
+        private readonly Dictionary<string, RoomData> _roomsCache = new(); // <roomId, settings>
 
         public SettingsProvider(MainSettings mainSettings) => _mainSettings = mainSettings;
 
@@ -22,22 +27,15 @@ namespace _StoryGame.Infrastructure.Settings
             if (!_mainSettings)
                 throw new Exception("MainSettings is null " + nameof(SettingsProvider));
 
-            await AddSettingsToCacheAsync();
-
-            IsInitialized = true;
-        }
-
-        private async UniTask AddSettingsToCacheAsync()
-        {
             var fields =
                 typeof(MainSettings).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (var field in fields)
             {
-                if (!typeof(SettingsBase).IsAssignableFrom(field.FieldType))
+                if (!typeof(ASettingsBase).IsAssignableFrom(field.FieldType))
                     continue;
 
-                var settings = field.GetValue(_mainSettings) as SettingsBase;
+                var settings = field.GetValue(_mainSettings) as ASettingsBase;
 
                 if (settings == null)
                 {
@@ -49,16 +47,32 @@ namespace _StoryGame.Infrastructure.Settings
                     throw new Exception($"Duplicate settings type {settings.GetType()} found in cache.");
             }
 
-            // Log.Info($"Settings added to cache: {_cache.Count}");
+            AddRoomsToCache(GetSettings<MainRoomSettings>());
+
+            IsInitialized = true;
             await UniTask.CompletedTask;
         }
 
-        public T GetSettings<T>() where T : SettingsBase
+        private void AddRoomsToCache(MainRoomSettings roomsSettings)
         {
-            if (!_cache.TryGetValue(typeof(T), out var settings))
-                throw new Exception($"Settings {typeof(T).Name} not found in cache.");
+            foreach (var room in roomsSettings.Rooms)
+                _roomsCache.TryAdd(room.Id, room);
+        }
 
-            return (T)settings;
+        public T GetSettings<T>() where T : ASettingsBase
+        {
+            if (_cache.TryGetValue(typeof(T), out var settings))
+                return (T)settings;
+
+            throw new Exception($"Settings {typeof(T).Name} not found in cache.");
+        }
+
+        public RoomData GetRoomSettings(string roomId)
+        {
+            if (_roomsCache.TryGetValue(roomId, out var settings))
+                return settings;
+
+            throw new Exception($"Room {roomId} not found in room cache.");
         }
     }
 }

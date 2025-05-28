@@ -1,0 +1,8 @@
+﻿namespace _StoryGame.Data
+{
+    public static class ProjectConstant
+    {
+        public const string AppName = "--- J_Story ---";
+        public const float UIToolkitOpacityMaxValue = 1f;
+    }
+}

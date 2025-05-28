@@ -50,7 +50,6 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  bootstrapSettings: {fileID: 11400000, guid: df5c1fd2bf526fc449a9174ce351fdb2, type: 2}
   mainSettings: {fileID: 11400000, guid: 141c0c14811158c40a193e56ebcae18e, type: 2}
   eventSystem: {fileID: 7758932368855510211}
   log: {fileID: 8192235388214901289}

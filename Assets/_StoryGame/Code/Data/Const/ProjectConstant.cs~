@@ -1,0 +1,7 @@
+﻿namespace _StoryGame.Data
+{
+    public static class ProjectConstant
+    {
+        public const string AppName = "--- J_Story ---";
+    }
+}

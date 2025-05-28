@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Data;
+using _StoryGame.Data.SO.Main;
 using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;

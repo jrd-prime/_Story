@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Data.Const;
 using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Interactables.Inspect;
 using _StoryGame.Game.UI.Impls.Viewer.Layers;
 using _StoryGame.Game.UI.Messages;
 using _StoryGame.Infrastructure.Logging;
@@ -64,6 +64,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                     break;
                 case ShowNoLootWindowMsg msg:
                     _floatingLayerHandler.ShowNoLootWindow(msg);
+                    break;
+                case ShowLootWindowMsg msg:
+                    _floatingLayerHandler.ShowLootWindow(msg);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
@@ -135,5 +138,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             _isInitialized = false;
             _viewsCache.Clear();
         }
+    }
+
+    public interface IUIViewer
+    {
     }
 }
