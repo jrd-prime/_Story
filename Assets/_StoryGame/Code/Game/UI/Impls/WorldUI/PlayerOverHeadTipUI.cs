@@ -44,7 +44,7 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
 
         private void Start()
         {
-            Debug.Log("Start PlayerOverHeadTipUI");
+            // Debug.Log("Start PlayerOverHeadTipUI");
 
             _uiDocument = GetComponent<UIDocument>();
             var meshFilter = GetComponent<MeshFilter>();

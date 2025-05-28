@@ -16,5 +16,8 @@
             <engine:Label text="E:" name="energy-chance" picking-mode="Ignore" class="chance-label" />
             <engine:Label text="E" name="empty-chance" picking-mode="Ignore" class="chance-label" />
         </engine:VisualElement>
+        <engine:VisualElement name="loot" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row; width: 100%; left: 0; right: 0; height: auto;">
+            <engine:Label text="CI: 55" name="my" picking-mode="Ignore" class="chance-label" style="width: 100%;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

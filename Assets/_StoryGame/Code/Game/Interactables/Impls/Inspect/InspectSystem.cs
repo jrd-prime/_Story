@@ -39,7 +39,6 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
         public async UniTask<bool> Process(IInspectable inspectable)
         {
             _inspectable = inspectable;
-            _lootSystem.GenerateLootFor(_inspectable); // generate loot if not generated 
 
             var inspectState = inspectable.InspectState;
             var result = inspectState switch

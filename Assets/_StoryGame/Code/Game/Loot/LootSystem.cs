@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Game.Interactables.Interfaces;
+using _StoryGame.Game.Room;
 using _StoryGame.Infrastructure.Logging;
+using UnityEngine;
 
 namespace _StoryGame.Game.Loot
 {
@@ -9,11 +10,8 @@ namespace _StoryGame.Game.Loot
     public sealed class LootSystem : ILootSystem
     {
         private readonly IJLog _log;
-        private readonly Dictionary<string, bool> _hasLootCache = new(); // <interactable id, hasLoot>
 
-        private readonly Dictionary<string, GeneratedLootVo>
-            _generatedLootCache = new(); // <interactable id, loot data>
-
+        private readonly Dictionary<string, RoomGeneratedLootVo> _roomsLootCache = new();
         private readonly LootGenerator _lootGenerator;
 
         public LootSystem(IJLog log)
@@ -25,56 +23,52 @@ namespace _StoryGame.Game.Loot
 
         public GeneratedLootVo GetGeneratedLoot(string id)
         {
-            if (!_hasLootCache.TryGetValue(id, out var value))
-                throw new KeyNotFoundException($"Loot for interactable {id} not GENERATED! Generate it first!");
-
-            if (!value)
-                _log.Warn($"Loot for interactable {id} is EMPTY");
-
-            if (_generatedLootCache.TryGetValue(id, out var lootData))
-                return lootData;
-
             throw new KeyNotFoundException($"Loot for interactable {id} not found!");
         }
 
-        public void GenerateLootFor(IInspectable inspectable)
+        public bool GenerateLoot(IRoom room)
         {
-            if (_hasLootCache.ContainsKey(inspectable.Id))
-                return;
+            Debug.Log("Generate Loot for Room: " + room.Id);
 
-            // GeneratedLootVo lootVo = 
-            _lootGenerator.GenerateLoot(inspectable.Room, inspectable.Chances);
+            var loot = _lootGenerator.GenerateLoot(room.Id, room.Interactables);
 
-            // generate
-            // add loot and state
-            // if (lootVo.HasLoot)
-            // {
-            //     _log.Warn(
-            //         $"Loot for interactable {inspectable.Id} GENERATED. And it is <color=green>NOT EMPTY</color>!");
-            //     _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
-            //     _generatedLootCache.Add(lootVo.OwnerId, lootVo);
-            // }
-            // else
-            // {
-            //     _log.Warn($"Loot for interactable {inspectable.Id} GENERATED. But it is <color=red>EMPTY</color>!");
-            //     _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
-            // }
+            _roomsLootCache.Add(room.Id, loot);
+
+            // loot.ShowLootDetails();
+
+            return true;
+        }
+
+        public List<LootType> GetLootFor(string roomId, string id)
+        {
+            return _roomsLootCache[roomId].Loot[id];
         }
 
         public bool HasLoot(string id)
         {
-            if (_hasLootCache.TryGetValue(id, out var hasLoot))
-                return hasLoot;
-
             _log.Error($"Loot for interactable {id} not GENERATED");
             return false;
         }
 
+
         private void ResetLoot()
         {
             _log.Debug("Reset Loot On Room Change");
-            _hasLootCache.Clear();
-            _generatedLootCache.Clear();
+            _roomsLootCache.Clear();
+        }
+    }
+
+    public record RoomGeneratedLootVo(Dictionary<string, List<LootType>> Loot)
+    {
+        public Dictionary<string, List<LootType>> Loot { get; } = Loot;
+
+        public void ShowLootDetails()
+        {
+            foreach (var kvp in Loot)
+            {
+                var lootList = kvp.Value.Count > 0 ? string.Join(", ", kvp.Value) : "Пусто";
+                Debug.LogWarning($"[LootGen] {kvp.Key} → {lootList}");
+            }
         }
     }
 

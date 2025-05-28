@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using _StoryGame.Data.Room;
+using _StoryGame.Game.Loot;
 
 namespace _StoryGame.Game.Room
 {
@@ -12,5 +13,6 @@ namespace _StoryGame.Game.Room
         float Progress { get; }
         RoomLootVo Loot { get; }
         RoomInteractablesVo Interactables { get; }
+        List<LootType> GetLootFor(string id);
     }
 }

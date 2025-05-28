@@ -1,4 +1,6 @@
-﻿using _StoryGame.Game.Interactables.Impls;
+﻿using System.Collections.Generic;
+using _StoryGame.Game.Interactables.Impls;
+using _StoryGame.Game.Loot;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,6 +29,8 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
         private Label _energy;
         private Label _empty;
         private VisualElement _chancesC;
+        private VisualElement _lootC;
+        private Label _my;
 
         private void Awake()
         {
@@ -51,6 +55,10 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
             _chancesC = _uiDocument.rootVisualElement.Q<VisualElement>("chances");
             _chancesC.style.display = DisplayStyle.None;
 
+            _lootC = _uiDocument.rootVisualElement.Q<VisualElement>("loot");
+            _lootC.style.display = DisplayStyle.None;
+            _my = _uiDocument.rootVisualElement.Q<Label>("my");
+
             _coreItem = _uiDocument.rootVisualElement.Q<Label>("core-chance");
             _note = _uiDocument.rootVisualElement.Q<Label>("note-chance");
             _energy = _uiDocument.rootVisualElement.Q<Label>("energy-chance");
@@ -69,6 +77,16 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
             _note.text = $"{lootChance.noteBaseChance} %";
             _energy.text = $"{lootChance.energyBaseChance} %";
             _empty.text = $"{lootChance.emptyBaseChance} %";
+        }
+
+        public void ShowObjLoot(List<LootType> lootFor)
+        {
+            _lootC.style.display = DisplayStyle.Flex;
+            var s = "";
+
+            foreach (var loot in lootFor)
+                s += loot + " ";
+            _my.text = s.ToUpper();
         }
     }
 }

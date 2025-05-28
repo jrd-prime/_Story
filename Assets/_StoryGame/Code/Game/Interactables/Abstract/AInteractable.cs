@@ -4,6 +4,7 @@ using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Room;
+using _StoryGame.Game.Room.Impls;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
 using _StoryGame.Infrastructure.AppStarter;
@@ -45,6 +46,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         private ILocalizationProvider _localizationProvider;
         protected IObjectResolver Resolver;
         protected InteractablesTipUI InteractablesTipUI;
+        private ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
 
         [Inject]
         private void Construct(
@@ -52,12 +54,13 @@ namespace _StoryGame.Game.Interactables.Abstract
             AppStartHandler appStartHandler,
             InteractablesTipUI interactablesTipUI,
             ILocalizationProvider localizationProvider,
-            IPublisher<IUIViewerMessage> uiViewerMessagePublisher
-        )
+            IPublisher<IUIViewerMessage> uiViewerMessagePublisher,
+            ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub)
         {
             Resolver = resolver;
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
             _localizationProvider = localizationProvider;
+            _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
 
             InteractablesTipUI = interactablesTipUI;
 
@@ -70,14 +73,30 @@ namespace _StoryGame.Game.Interactables.Abstract
         {
             if (!_entrance)
                 throw new NullReferenceException($"{nameof(_entrance)} not found. {name}");
-            
+
             if (string.IsNullOrEmpty(localizationKey))
                 throw new NullReferenceException($"{nameof(localizationKey)} not found. {name}");
+
+            if (string.IsNullOrEmpty(id))
+                id = "id_" + localizationKey;
         }
 
         private void OnEnable()
         {
             InteractablesTipUI.transform.SetParent(transform, false); // TODO to object pool
+            _roomLootGeneratedMsgSub
+                .Subscribe(
+                    OnRoomLootGenerated
+                    // , msg => msg.RoomId == Room.Id
+                );
+        }
+
+        private void OnRoomLootGenerated(RoomLootGeneratedMsg msg)
+        {
+            if (InteractableType == EInteractableType.Inspect)
+            {
+                InteractablesTipUI.ShowObjLoot(Room.GetLootFor(Id));
+            }
         }
 
         private void OnAppStarted(Unit _)
@@ -115,8 +134,10 @@ namespace _StoryGame.Game.Interactables.Abstract
             tipId = "testId";
         }
 
-        public void SetRoom(IRoom roomPrototype) =>
-            Room = roomPrototype;
+        public void SetRoom(IRoom room)
+        {
+            Room = room;
+        }
 
         public void HideInteractionTip()
         {

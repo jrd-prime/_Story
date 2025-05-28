@@ -18,7 +18,7 @@ namespace _StoryGame.Game.Interactables.Interfaces
         void HideInteractionTip();
         Vector3 GetEntryPoint();
 
-        void SetRoom(IRoom roomPrototype);
+        void SetRoom(IRoom room);
         IRoom Room { get; }
     }
 }
