@@ -1,0 +1,14 @@
+﻿using _StoryGame.Core.Currency;
+using UnityEngine;
+
+namespace _StoryGame.Data.Currency
+{
+    [CreateAssetMenu(
+        fileName = nameof(EnergyACurrencyData),
+        menuName = SOPathConst.Currency + nameof(EnergyACurrencyData)
+    )]
+    public class EnergyACurrencyData : ACurrencySettings
+    {
+        public override ECurrencyType Type { get; } = ECurrencyType.Energy;
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using _StoryGame.Game.Interactables;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Infrastructure.Logging;
 
 namespace _StoryGame.Game.Loot
@@ -10,16 +11,19 @@ namespace _StoryGame.Game.Loot
         private readonly IJLog _log;
         private readonly Dictionary<string, bool> _hasLootCache = new(); // <interactable id, hasLoot>
 
-        private readonly Dictionary<string, GeneratedLootData>
+        private readonly Dictionary<string, GeneratedLootVo>
             _generatedLootCache = new(); // <interactable id, loot data>
+
+        private readonly LootGenerator _lootGenerator;
 
         public LootSystem(IJLog log)
         {
             _log = log;
+            _lootGenerator = new LootGenerator();
             // subscribe to change room evt - reset loot
         }
 
-        public GeneratedLootData GetGeneratedLoot(string id)
+        public GeneratedLootVo GetGeneratedLoot(string id)
         {
             if (!_hasLootCache.TryGetValue(id, out var value))
                 throw new KeyNotFoundException($"Loot for interactable {id} not GENERATED! Generate it first!");
@@ -33,25 +37,28 @@ namespace _StoryGame.Game.Loot
             throw new KeyNotFoundException($"Loot for interactable {id} not found!");
         }
 
-        public void GenerateLootFor(Interactable interactable)
+        public void GenerateLootFor(IInspectable inspectable)
         {
-            if (_hasLootCache.ContainsKey(interactable.Id))
+            if (_hasLootCache.ContainsKey(inspectable.Id))
                 return;
+
+            // GeneratedLootVo lootVo = 
+            _lootGenerator.GenerateLoot(inspectable.Room, inspectable.Chances);
 
             // generate
             // add loot and state
-            if (true)
-            {
-                _log.Warn(
-                    $"Loot for interactable {interactable.Id} GENERATED. And it is <color=green>NOT EMPTY</color>!");
-                _hasLootCache.Add(interactable.Id, true);
-                _generatedLootCache.Add(interactable.Id, new GeneratedLootData());
-            }
-            else
-            {
-                _log.Warn($"Loot for interactable {interactable.Id} GENERATED. But it is <color=red>EMPTY</color>!");
-                _hasLootCache.Add(interactable.Id, false);
-            }
+            // if (lootVo.HasLoot)
+            // {
+            //     _log.Warn(
+            //         $"Loot for interactable {inspectable.Id} GENERATED. And it is <color=green>NOT EMPTY</color>!");
+            //     _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
+            //     _generatedLootCache.Add(lootVo.OwnerId, lootVo);
+            // }
+            // else
+            // {
+            //     _log.Warn($"Loot for interactable {inspectable.Id} GENERATED. But it is <color=red>EMPTY</color>!");
+            //     _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
+            // }
         }
 
         public bool HasLoot(string id)
@@ -71,14 +78,10 @@ namespace _StoryGame.Game.Loot
         }
     }
 
-    public interface ILootSystem
+    public record GeneratedLootVo(string OwnerId, bool HasLoot, List<ACurrencyData> Loot)
     {
-        GeneratedLootData GetGeneratedLoot(string id);
-        void GenerateLootFor(Interactable interactable);
-        bool HasLoot(string id);
-    }
-
-    public struct GeneratedLootData
-    {
+        public string OwnerId { get; } = OwnerId;
+        public bool HasLoot { get; } = HasLoot;
+        public List<ACurrencyData> Loot { get; } = Loot;
     }
 }

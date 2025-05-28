@@ -1,16 +1,13 @@
-﻿using System;
-using _StoryGame.Core.Interfaces;
+﻿using _StoryGame.Core.Interfaces;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Interactables.Inspect;
+using _StoryGame.Game.Interactables.Data;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MessagePipe;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.UIElements.Experimental;
 using VContainer;
-using DisposableBag = MessagePipe.DisposableBag;
 
 namespace _StoryGame.Game.UI.Impls.WorldUI
 {
@@ -78,7 +75,7 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
                 return;
 
             transform.LookAt(mainCamera.transform.position);
-            transform.Rotate(0, 180f, 0); // Повернуть задом наперёд
+            transform.Rotate(0, 180f, 0);
         }
 
         private void OnMessage(ShowPlayerActionProgressMsg msg)
@@ -88,7 +85,6 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
             var startWidth = 0f;
             var duration = msg.Duration;
 
-            Debug.Log("PlayerOverHeadTipUI - " + msg.ActionName + " start");
             DOTween
                 .To(
                     () => startWidth,
@@ -103,7 +99,7 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
-                    msg.CompletionSource.TrySetResult(DialogResult.Close);
+                    msg.CompletionSource.TrySetResult(EInteractDialogResult.Close);
 
                     DOTween.To(
                             () => (float)_barC.style.opacity.value,
@@ -124,10 +120,8 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
             isVisible = true;
         }
 
-
         private void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            Debug.Log(contWidth);
             contWidth = pcont.resolvedStyle.width - 2;
             pcont.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
 
@@ -147,11 +141,11 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
     public record ShowPlayerActionProgressMsg(
         string ActionName,
         float Duration,
-        UniTaskCompletionSource<DialogResult> CompletionSource) : IJMessage
+        UniTaskCompletionSource<EInteractDialogResult> CompletionSource) : IJMessage
     {
         public string Name => nameof(ShowPlayerActionProgressMsg);
         public string ActionName { get; } = ActionName;
         public float Duration { get; } = Duration;
-        public UniTaskCompletionSource<DialogResult> CompletionSource { get; } = CompletionSource;
+        public UniTaskCompletionSource<EInteractDialogResult> CompletionSource { get; } = CompletionSource;
     }
 }

@@ -46,6 +46,34 @@ MonoBehaviour:
     m_Localized: wooden box
     m_Metadata:
       m_Items: []
+  - m_Id: 3001573243289600
+    m_Localized: toolbox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952896
+    m_Localized: electrobox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952897
+    m_Localized: conditioneer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952898
+    m_Localized: crowbar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952899
+    m_Localized: simple note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952900
+    m_Localized: r0 core note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3001573343952901
+    m_Localized: street news box
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

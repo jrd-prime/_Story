@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2945704026035730227}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0.5, y: 2, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelWidth: 200
-  panelHeight: 300
+  panelHeight: 200
   panelScale: 1
   pixelsPerUnit: 100
   visualTreeAsset: {fileID: 9197481963319205126, guid: 213ed223d3e282d4b8a9ff05af29a07b, type: 3}

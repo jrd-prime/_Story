@@ -1,0 +1,8 @@
+﻿using _StoryGame.Game.Interactables.Types;
+
+namespace _StoryGame.Game.Room.Impls
+{
+    public class RoomDoor : Usable
+    {
+    }
+}
