@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: r0_special_artefact
   m_EditorClassIdentifier: 
   id: 
-  localizationKey: 
-  description: 
+  localizationKey: special_art
+  descriptionKey: 
   iconId: 
   rarity: 0
   maxStackSize: 0

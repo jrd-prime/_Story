@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _StoryGame.Game.Interactables.Impls;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace _StoryGame.Game.UI.Impls.WorldUI
@@ -20,10 +21,17 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
         private UIDocument _uiDocument;
         private Label _nameLabel;
         private Label _tipLabel;
+        private VisualElement _root;
+        private Label _coreItem;
+        private Label _note;
+        private Label _energy;
+        private Label _empty;
+        private VisualElement _chancesC;
 
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
+            _root = _uiDocument.rootVisualElement;
             var meshFilter = GetComponent<MeshFilter>();
             var meshRenderer = GetComponent<MeshRenderer>();
             var panelSettings = Instantiate(panelSettingsAsset);
@@ -39,12 +47,28 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
         {
             _nameLabel = _uiDocument.rootVisualElement.Q<Label>(NameLabelId);
             _tipLabel = _uiDocument.rootVisualElement.Q<Label>(TipLabelId);
+
+            _chancesC = _uiDocument.rootVisualElement.Q<VisualElement>("chances");
+            _chancesC.style.display = DisplayStyle.None;
+
+            _coreItem = _uiDocument.rootVisualElement.Q<Label>("core-chance");
+            _note = _uiDocument.rootVisualElement.Q<Label>("note-chance");
+            _energy = _uiDocument.rootVisualElement.Q<Label>("energy-chance");
+            _empty = _uiDocument.rootVisualElement.Q<Label>("empty-chance");
         }
 
         public void SetNameText(string text) => _nameLabel.text = text;
 
         public void SetType(string type) => _tipLabel.text = type;
 
-        public GameObject GetGO() => gameObject;
+        public void ShowLootChance(RoomBaseLootChanceVo lootChance)
+        {
+            _chancesC.style.display = DisplayStyle.Flex;
+
+            _coreItem.text = $"{lootChance.coreItemBaseChance} %";
+            _note.text = $"{lootChance.noteBaseChance} %";
+            _energy.text = $"{lootChance.energyBaseChance} %";
+            _empty.text = $"{lootChance.emptyBaseChance} %";
+        }
     }
 }

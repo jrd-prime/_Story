@@ -103,7 +103,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         {
         }
 
-        protected virtual void SetAdditionalDebugInfo(InteractablesTipUI tipUI)
+        protected virtual void SetAdditionalDebugInfo(InteractablesTipUI deb)
         {
         }
 

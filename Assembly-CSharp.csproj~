@@ -41,51 +41,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\NoEditor\Sirenix.Utilities.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\Sirenix.Serialization.Config.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\NoEmitAndNoEditor\Sirenix.Utilities.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\NoEditor\Sirenix.Serialization.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\NoEmitAndNoEditor\Sirenix.Serialization.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\Sirenix.Serialization.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\Sirenix.Reflection.Editor.dll" />
-    <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Assets\Packages\Sirenix\Assemblies\Sirenix.Utilities.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.4f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.4f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.4f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
     <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Library\PackageCache\com.unity.project-auditor@94c6e4e98816\RoslynAnalyzers\Domain_Reload_Analyzer.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_StoryGame\Code\Data\Const\ProjectConstant.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\Const\SOPathConst.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ACurrencyData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ASettingsBase.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\CoreItemData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\CoreNoteData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\EnergyData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\NoteData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\SpecialItemData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\TipData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Interactables\InteractableLootData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\BootstrapSettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\HeroSettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\JLocalizationSettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\MainRoomSettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\MainSettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\UISettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\SO\Room\RoomSettings.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Abstract\AInteractable.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Abstract\AUsable.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Conditional.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Inspectable.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Inspect\EInspectState.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Inspect\InspectSystem.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\MultiStage.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Unlockable.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Use\RoomDoor.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Interfaces\IInteractableSystem.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Loot\LootGenerator.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Impls\UIViewData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\IUIViewModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\Messages\EnableInputMessage.cs" />
@@ -93,14 +55,20 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\IWalletOwner.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\ICurrencyService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\States\BaseState.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\SpecialItemData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Messages\ShowNoLootWindowMsg.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Abstract\AInteractable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\FloatingWindowFactory.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IGameManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Gameplay\IGameplayUIViewModel.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\MultiStage.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Abstract\AUsable.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\NoteData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\UI\IUIViewer.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\FloatingLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\Interfaces\IPlayerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Impls\CurrencyService.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\MainRoomSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\Messages\IMovementProcessorMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Character\Player\Messages\PlayerStateMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Interfaces\IState.cs" />
@@ -111,6 +79,7 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IDecoration.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\NewMovementHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestManager.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\EnergyData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\ICleanable.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\WorldUI\TipInitializer.cs" />
@@ -122,15 +91,19 @@
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\UIView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IBuffable.cs" />
     <Compile Include="Assets\Packages\Hierarchy Designer\Runtime\Scripts\HierarchyDesignerFolder.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Unlockable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Localization\ILocalizationProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\ITavernUpgrade.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Messages\ResetFloatingWindowMessage.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Use\RoomDoor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Settings\SettingsProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\ReactivePropertyExtensions.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Currency\EnergyVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\AppStarter\AppStarter.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\IUIView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\FirstSceneProvider.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Room\RoomBaseLootChanceVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\Messages\MoveToPointHandlerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\IMovementProcessor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Assets\AssetProvider.cs" />
@@ -146,9 +119,11 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Anima\Impls\PlayerAnimationService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\ICurrency.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Inerfaces\ICameraManager.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\HeroSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\WorldUI\WorldTipData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\FullScreenMovementProcessor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\WorldUI\PlayerOverHeadTipUI.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\UISettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Managers\Game\Impls\GameService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\States\Gameplay\GameplayState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Enemy\Interfaces\IEnemy.cs" />
@@ -156,12 +131,15 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\UI\IUIViewerLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\IWallet.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\MainSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IFurniture.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IJMessage.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Const\UIConst.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\IInteractProcessor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Impls\CameraManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Extensions\ScreenHelper.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\MovementHandler.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Inspectable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Bootstrap\BootstrapScope.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\Managers\IGameManager.cs" />
@@ -169,8 +147,10 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Extensions\UIToolkitExtensions.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\MovementProcessor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Room\IRoom.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\TipData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\PlayerModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Messages\SwitchBaseViewMessage.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ASettingsBase.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\UI\IUIViewerMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Assets\IAssetProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Interfaces\IInspectable.cs" />
@@ -181,6 +161,7 @@
     <Compile Include="Assets\_StoryGame\Code\Game\_debug\InteractableDebugController.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\ECurrencyRarity.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\UIViewerHandlerBase.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Currency\CoreItemVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\Messages\MoveToInteractableHandlerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\HSM.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Settings\ISettingsProvider.cs" />
@@ -189,20 +170,29 @@
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Logging\JLog.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\Interfaces\IBootstrapUIController.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Interfaces\IHSMMessage.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Interactables\InteractableLootData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Data\EInteractableType.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Buffs\BuffSystem.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Room\RoomInteractablesVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\WorldUI\TipUIController.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Const\ProjectConstant.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\BootstrapSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\CheckerExtension.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\CoreItemData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\UIViewBase.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Tools\FPSCounter.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestObjective.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Inspect\EInspectState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\AppStarter\AppStartHandler.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Const\SOPathConst.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IDebuffable.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Currency\NotesVo.cs" />
     <Compile Include="Assets\EditSceneHelper.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Room\Impls\RoomsRegistry.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Impls\Wallet.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Animations\Interfaces\IPlayerAnimationService.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Interactable\InspectableLootVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\CustomPool.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Impls\GameManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\UIManager.cs" />
@@ -211,10 +201,13 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\Messages\IMovementHandlerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\States\Menu\MenuState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\RootScope.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Conditional.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\Interfaces\IBootable.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Room\RoomLootVo.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\IMovable.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Inspect\InspectSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Buffs\IBuff.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\IFollowable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Uids\Uid.cs" />
@@ -222,9 +215,11 @@
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\HUDLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Tavern\Interfaces\IRoom.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Interfaces\IInteractable.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Interfaces\IInteractableSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\MovementLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Character\Player\Impls\PlayerFrontTriggerArea.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Game\PlayerInstaller.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\JLocalizationSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Messages\ShowLootWindowMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleAudio.cs" />
@@ -236,10 +231,13 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Data\EInteractDialogResult.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\ContainerExtensions.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IGatherable.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\CoreNoteData.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Room\RoomData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Uids\UidGenerator.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\EDestinationPoint.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\BootstrapLoader.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Menu\MenuUIView.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ACurrencyData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interfaces\IUpgradable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Character\Player\Impls\PlayerView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Gameplay\GameplayUIViewModel.cs" />
@@ -369,6 +367,7 @@
     <None Include="Library\PackageCache\com.unity.profiling.core@aac7b93912bc\package.json" />
     <None Include="Library\PackageCache\com.unity.ugui@5c9fd4989cdd\Editor Resources\Shaders\TMP_Properties.cginc" />
     <None Include="Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0\Runtime\AOT\Newtonsoft.Json.xml" />
+    <None Include="Assets\_StoryGame\Static\UI\USS\debug.uss" />
     <None Include="Assets\Packages\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
     <None Include="Library\PackageCache\com.unity.timeline@fa3a0bab2b90\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.ugui@5c9fd4989cdd\Editor Resources\Shaders\TMP_SDF Internal Editor.shader" />
@@ -1336,17 +1335,21 @@
       <Project>{5ce81d32-a8dc-c71a-bfab-81391224ad58}</Project>
       <Name>PPv2URPConverters</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Addressables.csproj">
-      <Project>{5bd01f4c-3e49-1d8e-49c6-cf17f8a93ca9}</Project>
-      <Name>Unity.Addressables</Name>
+    <ProjectReference Include="Sirenix.OdinInspector.Modules.Unity.Addressables.csproj">
+      <Project>{06b8a57d-7d6b-2b8d-1062-f1da1739a7c4}</Project>
+      <Name>Sirenix.OdinInspector.Modules.Unity.Addressables</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Rendering.LightTransport.Editor.csproj">
       <Project>{b66d35c2-e1ff-e5b8-774a-e75c2137495e}</Project>
       <Name>Unity.Rendering.LightTransport.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.Modules.Unity.Addressables.csproj">
-      <Project>{06b8a57d-7d6b-2b8d-1062-f1da1739a7c4}</Project>
-      <Name>Sirenix.OdinInspector.Modules.Unity.Addressables</Name>
+    <ProjectReference Include="Unity.Addressables.csproj">
+      <Project>{5bd01f4c-3e49-1d8e-49c6-cf17f8a93ca9}</Project>
+      <Name>Unity.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="Sirenix.OdinInspector.Modules.UnityLocalization.Editor.csproj">
+      <Project>{c973dfa0-1f8d-f686-28de-c201dfe64b5a}</Project>
+      <Name>Sirenix.OdinInspector.Modules.UnityLocalization.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="UniTask.DOTween.csproj">
       <Project>{8e532b4b-affd-8733-8d3e-79705098a898}</Project>
@@ -1355,10 +1358,6 @@
     <ProjectReference Include="Unity.VisualScripting.Core.csproj">
       <Project>{beca47c2-715f-8696-2dbd-3053bcc3d5cf}</Project>
       <Name>Unity.VisualScripting.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.Modules.UnityLocalization.Editor.csproj">
-      <Project>{c973dfa0-1f8d-f686-28de-c201dfe64b5a}</Project>
-      <Name>Sirenix.OdinInspector.Modules.UnityLocalization.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Universal.Config.Runtime.csproj">
       <Project>{e606edcc-63f5-2279-d4c8-1ac8b3e5cb0d}</Project>
@@ -1526,7 +1525,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\_StoryGame\Code\Data\SO\" />
+    <Folder Include="Assets\_StoryGame\Code\Game\Loot\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

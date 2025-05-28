@@ -18,7 +18,7 @@ namespace _StoryGame.Infrastructure.Settings
         private readonly MainSettings _mainSettings;
         private readonly Dictionary<Type, ASettingsBase> _cache = new();
 
-        private readonly Dictionary<string, RoomSettings> _roomsCache = new(); // <roomId, settings>
+        private readonly Dictionary<string, RoomData> _roomsCache = new(); // <roomId, settings>
 
         public SettingsProvider(MainSettings mainSettings) => _mainSettings = mainSettings;
 
@@ -67,7 +67,7 @@ namespace _StoryGame.Infrastructure.Settings
             throw new Exception($"Settings {typeof(T).Name} not found in cache.");
         }
 
-        public RoomSettings GetRoomSettings(string roomId)
+        public RoomData GetRoomSettings(string roomId)
         {
             if (_roomsCache.TryGetValue(roomId, out var settings))
                 return settings;

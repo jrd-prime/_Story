@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace _StoryGame.Data.SO.Abstract
 {
+    /// <summary>
+    ///  Базовый класс валюты
+    /// </summary>
     public abstract class ACurrencyData : ASettingsBase, ICurrency
     {
         [SerializeField] private string id;

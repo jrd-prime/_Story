@@ -12,9 +12,9 @@ namespace _StoryGame.Data.SO.Main
     )]
     public class MainRoomSettings : ASettingsBase
     {
-        public List<RoomSettings> Rooms;
+        public List<RoomData> Rooms;
 
-        private readonly Dictionary<string, RoomSettings> _roomSettings = new(); // <room id , room settings>
+        private readonly Dictionary<string, RoomData> _roomSettings = new(); // <room id , room settings>
 
         private void Awake()
         {

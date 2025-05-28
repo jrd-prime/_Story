@@ -1,4 +1,5 @@
-﻿using _StoryGame.Game.Interactables.Impls.Inspect;
+﻿using _StoryGame.Game.Interactables.Impls;
+using _StoryGame.Game.Interactables.Impls.Inspect;
 
 namespace _StoryGame.Game.Interactables.Interfaces
 {
@@ -6,6 +7,7 @@ namespace _StoryGame.Game.Interactables.Interfaces
     {
         EInspectState InspectState { get; }
         string Id { get; }
+        RoomBaseLootChanceVo Chances { get; }
         void SetInspectState(EInspectState inspectState);
     }
 }

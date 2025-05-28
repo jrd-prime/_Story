@@ -42,23 +42,22 @@ namespace _StoryGame.Game.Loot
             if (_hasLootCache.ContainsKey(inspectable.Id))
                 return;
 
-            // GeneratedLootVo lootVo = 
-            _lootGenerator.GenerateLoot(inspectable.Room, inspectable.Chances);
+            GeneratedLootVo lootVo = _lootGenerator.GenerateLoot(inspectable.Room, inspectable.Chances);
 
             // generate
             // add loot and state
-            // if (lootVo.HasLoot)
-            // {
-            //     _log.Warn(
-            //         $"Loot for interactable {inspectable.Id} GENERATED. And it is <color=green>NOT EMPTY</color>!");
-            //     _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
-            //     _generatedLootCache.Add(lootVo.OwnerId, lootVo);
-            // }
-            // else
-            // {
-            //     _log.Warn($"Loot for interactable {inspectable.Id} GENERATED. But it is <color=red>EMPTY</color>!");
-            //     _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
-            // }
+            if (lootVo.HasLoot)
+            {
+                _log.Warn(
+                    $"Loot for interactable {inspectable.Id} GENERATED. And it is <color=green>NOT EMPTY</color>!");
+                _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
+                _generatedLootCache.Add(lootVo.OwnerId, lootVo);
+            }
+            else
+            {
+                _log.Warn($"Loot for interactable {inspectable.Id} GENERATED. But it is <color=red>EMPTY</color>!");
+                _hasLootCache.Add(lootVo.OwnerId, lootVo.HasLoot);
+            }
         }
 
         public bool HasLoot(string id)

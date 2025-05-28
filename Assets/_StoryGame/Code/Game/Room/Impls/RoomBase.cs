@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interactables.Impls.Use;
 using _StoryGame.Infrastructure.Settings;
@@ -18,36 +20,43 @@ namespace _StoryGame.Game.Room.Impls
         public string Id => roomId;
         public string Name => roomName;
         public float Progress { get; }
+        public RoomLootVo Loot => _roomData.Loot;
+        public RoomInteractablesVo Interactables => interactables;
 
-        private RoomSettings _roomSettings;
+        private RoomData _roomData;
 
         [Inject]
         private void Construct(ISettingsProvider settingsProvider)
         {
             Debug.Log("Room Construct " + Id);
-            _roomSettings = settingsProvider.GetRoomSettings(Id);
+            _roomData = settingsProvider.GetRoomSettings(Id);
 
-            if (!_roomSettings)
-                throw new NullReferenceException($"Room {Id} not found in settings.");
-
-            if (_roomSettings.Id != Id)
-                throw new Exception($"Room {Id} settings is not correct.");
+            LoadConfig();
         }
 
         private void Awake()
         {
-            LoadConfig();
             SayMyNameToObjects();
         }
 
         private void LoadConfig()
         {
-            // load config by roomId
+            if (!_roomData)
+                throw new NullReferenceException($"Room {Id} not found in settings.");
+
+            if (_roomData.Id != Id)
+                throw new Exception($"Room {Id} settings is not correct.");
         }
 
         private void SayMyNameToObjects()
         {
-            // say my name to objects
+            interactables.core.SetRoom(this);
+
+            foreach (var interactable in interactables.hidden)
+                interactable.SetRoom(this);
+
+            foreach (var inspectable in interactables.inspectables)
+                inspectable.SetRoom(this);
         }
     }
 }
