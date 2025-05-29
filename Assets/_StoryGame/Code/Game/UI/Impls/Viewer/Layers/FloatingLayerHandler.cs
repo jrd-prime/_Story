@@ -73,17 +73,23 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 
             var window = _windows[msg.WindowType];
 
-            var label = window.GetVisualElement<Label>("label", window.name);
+            var title = window.GetVisualElement<Label>("title-label", window.name);
+            var desc = window.GetVisualElement<Label>("desc-label", window.name);
+
+
             var close = window.GetVisualElement<Button>("close", window.name);
             var search = window.GetVisualElement<Button>("search", window.name);
 
-            label.text = "Loot";
+            title.text = "here obj name needed";
+            desc.text = msg.Tip;
 
 
             var closeHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close,
+                    msg.CompletionSource, _center);
             var searchHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(search, EInteractDialogResult.Search, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(search, EInteractDialogResult.Search,
+                    msg.CompletionSource, _center);
 
             closeHandler.Register();
             searchHandler.Register();
@@ -100,13 +106,16 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
 
             var window = _windows[msg.WindowType];
 
-            var label = window.GetVisualElement<Label>("label", window.name);
+            var title = window.GetVisualElement<Label>("title-label", window.name);
+            var desc = window.GetVisualElement<Label>("desc-label", window.name);
             var close = window.GetVisualElement<Button>("close", window.name);
 
-            label.text = "No Loot";
+            title.text = "No Loot";
+            desc.text = msg.Tip;
 
             var closeHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close,
+                    msg.CompletionSource, _center);
 
             closeHandler.Register();
 
@@ -131,9 +140,11 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             label.text = "Real loot";
 
             var takeAllHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(takeAll, EInteractDialogResult.TakeAll, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(takeAll, EInteractDialogResult.TakeAll,
+                    msg.CompletionSource, _center);
             var closeHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close, msg.CompletionSource, _center);
+                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close,
+                    msg.CompletionSource, _center);
 
             takeAllHandler.Register();
             closeHandler.Register();

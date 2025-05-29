@@ -24,7 +24,6 @@ namespace _StoryGame.Game.Interactables.Impls
         public EInspectState InspectState { get; private set; } = EInspectState.NotInspected;
         public RoomBaseLootChanceVo Chances => lootChance;
 
-
         private InspectSystem _inspectSystem;
 
         protected override void ResolveDependencies(IObjectResolver resolver)
@@ -40,8 +39,6 @@ namespace _StoryGame.Game.Interactables.Impls
 
         public void SetInspectState(EInspectState inspectState) =>
             InspectState = inspectState;
-
-        public bool HasLoot() => Room.HasLoot(Id);
 
         protected override void SetAdditionalDebugInfo(InteractablesTipUI tipUI)
         {

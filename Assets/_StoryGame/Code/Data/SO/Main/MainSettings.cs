@@ -1,6 +1,7 @@
 ﻿using System;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Game.Interactables.Impls.Inspect;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -18,6 +19,8 @@ namespace _StoryGame.Data.SO.Main
         [field: SerializeField] public HeroSettings HeroSettings { get; private set; }
         [field: SerializeField] public UISettings UISettings { get; private set; }
         [field: SerializeField] public MainRoomSettings MainRoomSettings { get; private set; }
+
+        [field: SerializeField] public InspectSystemTipData InspectSystemTipData { get; private set; }
 
 
         private void OnValidate()
@@ -39,6 +42,9 @@ namespace _StoryGame.Data.SO.Main
 
             if (!MainRoomSettings)
                 throw new Exception($"{nameof(MainRoomSettings)} is null or invalid. " + name);
+
+            if (!InspectSystemTipData)
+                throw new Exception($"{nameof(InspectSystemTipData)} is null or invalid. " + name);
         }
     }
 }

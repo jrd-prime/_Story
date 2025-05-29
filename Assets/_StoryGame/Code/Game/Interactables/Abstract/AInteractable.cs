@@ -94,7 +94,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         private void OnRoomLootGenerated(RoomLootGeneratedMsg msg)
         {
             if (InteractableType == EInteractableType.Inspect)
-                InteractablesTipUI.ShowObjLoot(Room.GetLootFor(Id));
+                InteractablesTipUI.ShowObjLoot(Room.GetLoot(Id));
         }
 
         private void OnAppStarted(Unit _)

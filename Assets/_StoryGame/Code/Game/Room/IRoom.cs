@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _StoryGame.Data.Interactable;
 using _StoryGame.Data.Room;
 using _StoryGame.Game.Loot;
 
@@ -11,8 +12,8 @@ namespace _StoryGame.Game.Room
         float Progress { get; }
         RoomLootVo Loot { get; }
         RoomInteractablesVo Interactables { get; }
-        List<LootType> GetLootFor(string id);
         bool HasLoot(string inspectableId);
-        GeneratedLootVo GetLoot(List<LootType> lootTypes);
+        InspectableLootVo GetInspectableLootData();
+        GeneratedLootForInspectableVo GetLoot(string inspectableId);
     }
 }

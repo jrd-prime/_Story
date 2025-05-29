@@ -23,3 +23,4 @@ MonoBehaviour:
   <HeroSettings>k__BackingField: {fileID: 11400000, guid: 99f4c134c16b89940a9cbf72023724f4, type: 2}
   <UISettings>k__BackingField: {fileID: 11400000, guid: 30a2691ab062a5e4baba504da75ddd4b, type: 2}
   <MainRoomSettings>k__BackingField: {fileID: 11400000, guid: 8f0c74436ec2e034d8cb9d716374d460, type: 2}
+  <InspectSystemTipData>k__BackingField: {fileID: 11400000, guid: 3fada257ccca1cb4aa9f3a5a0fbb3b50, type: 2}

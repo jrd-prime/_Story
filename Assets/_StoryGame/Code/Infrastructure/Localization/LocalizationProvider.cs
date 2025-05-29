@@ -14,8 +14,10 @@ namespace _StoryGame.Infrastructure.Localization
         public string Description => "Unity Localization Provider";
 
         private const string WordsTable = "Words";
+        private const string SmallPhraseTable = "SmallPhrase";
 
         private StringTable _wordsTable;
+        private StringTable _smallPhraseTable;
 
         private readonly ISettingsProvider _settingsProvider;
         private readonly IJLog _log;
@@ -55,10 +57,15 @@ namespace _StoryGame.Infrastructure.Localization
             if (_wordsTable == null)
                 throw new Exception($"Localization table {WordsTable} not found.");
 
+            _smallPhraseTable = await LocalizationSettings.StringDatabase.GetTableAsync(SmallPhraseTable);
+
+            if (_smallPhraseTable == null)
+                throw new Exception($"Localization table {SmallPhraseTable} not found.");
+
             IsInitialized = true;
         }
 
-        public string LocalizeWord(string key, WordTransform transform = WordTransform.None)
+        public string LocalizeWord(string key, WordTransform wordTransform = WordTransform.None)
         {
             if (!IsInitialized)
                 throw new Exception("LocalizationProvider is not initialized.");
@@ -72,14 +79,39 @@ namespace _StoryGame.Infrastructure.Localization
                 value = "Not localized";
             }
             else value = entry.GetLocalizedString();
-            
-            return transform switch
+
+            return wordTransform switch
             {
                 WordTransform.None => value,
                 WordTransform.Capitalize => CapitalizeFirst(value),
                 WordTransform.Low => value.ToLower(),
                 WordTransform.Upper => value.ToUpper(),
-                _ => throw new ArgumentOutOfRangeException(nameof(transform), transform, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(wordTransform), wordTransform, null)
+            };
+        }
+
+        public string LocalizePhrase(string key, WordTransform wordTransform = WordTransform.None)
+        {
+            if (!IsInitialized)
+                throw new Exception("LocalizationProvider is not initialized.");
+
+            var entry = _smallPhraseTable.GetEntry(key);
+
+            string value;
+            if (entry == null)
+            {
+                _log.Error($"Localization key '{key}' not found.");
+                value = "Not localized";
+            }
+            else value = entry.GetLocalizedString();
+
+            return wordTransform switch
+            {
+                WordTransform.None => value,
+                WordTransform.Capitalize => CapitalizeFirst(value),
+                WordTransform.Low => value.ToLower(),
+                WordTransform.Upper => value.ToUpper(),
+                _ => throw new ArgumentOutOfRangeException(nameof(wordTransform), wordTransform, null)
             };
         }
 

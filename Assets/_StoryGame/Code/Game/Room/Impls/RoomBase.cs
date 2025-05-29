@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Data.Interactable;
 using _StoryGame.Data.Room;
-using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interactables.Impls.Use;
 using _StoryGame.Game.Loot;
@@ -59,36 +59,13 @@ namespace _StoryGame.Game.Room.Impls
                 throw new Exception($"Room {Id} settings is not correct.");
         }
 
-        public List<LootType> GetLootFor(string id) =>
-            _lootSystem.GetLootFor(roomId, id);
-
         public bool HasLoot(string inspectableId) =>
             _lootSystem.HasLoot(roomId, inspectableId);
 
-        public GeneratedLootVo GetLoot(List<LootType> lootTypes)
-        {
-            var result = new List<ACurrencyData>();
+        public InspectableLootVo GetInspectableLootData() => _roomData.Loot.inspectableLoot;
 
-            foreach (var lootType in lootTypes)
-            {
-                switch (lootType)
-                {
-                    case LootType.Core:
-                        result.Add(_roomData.Loot.inspectableLoot.coreItem.coreItemData);
-                        break;
-                    case LootType.Note:
-                        result.Add(_roomData.Loot.inspectableLoot.notes.notes[0]);
-                        break;
-                    case LootType.Energy:
-                        result.Add(_roomData.Loot.inspectableLoot.energy.energy);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            return new GeneratedLootVo(result);
-        }
+        public GeneratedLootForInspectableVo GetLoot(string inspectableId) =>
+            _lootSystem.GetGeneratedLoot(Id, inspectableId);
 
         private void SayMyNameToObjects()
         {

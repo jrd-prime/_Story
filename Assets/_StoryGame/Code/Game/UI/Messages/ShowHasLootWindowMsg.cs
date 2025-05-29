@@ -7,12 +7,13 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.UI.Messages
 {
     public record ShowHasLootWindowMsg(
-        GeneratedLootVo LootVo,
-        UniTaskCompletionSource<EInteractDialogResult> CompletionSource
-    ) : IUIViewerMessage
+        string Tip,
+        GeneratedLootForInspectableVo LootForInspectableVo,
+        UniTaskCompletionSource<EInteractDialogResult> CompletionSource) : IUIViewerMessage
     {
         public string Name { get; } = nameof(ShowHasLootWindowMsg);
-        public GeneratedLootVo LootVo { get; } = LootVo;
+        public string Tip { get; } = Tip;
+        public GeneratedLootForInspectableVo LootForInspectableVo { get; } = LootForInspectableVo;
         public UniTaskCompletionSource<EInteractDialogResult> CompletionSource { get; } = CompletionSource;
         public FloatingWindowType WindowType => FloatingWindowType.HasLoot;
     }

@@ -6,10 +6,12 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.UI.Messages
 {
     public record ShowNoLootWindowMsg(
+        string Tip,
         UniTaskCompletionSource<EInteractDialogResult> CompletionSource
     ) : IUIViewerMessage
     {
         public string Name { get; } = nameof(ShowHasLootWindowMsg);
+        public string Tip { get; } = Tip;
         public UniTaskCompletionSource<EInteractDialogResult> CompletionSource { get; } = CompletionSource;
         public FloatingWindowType WindowType => FloatingWindowType.NoLoot;
     }

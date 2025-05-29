@@ -1,10 +1,12 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.Loot.Interfaces;
+using _StoryGame.Game.Room;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
+using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using UnityEngine;
@@ -18,20 +20,25 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
         private const float SearchDuration = 2f;
         private IInspectable _inspectable;
 
-        private readonly ILootSystem _lootSystem;
         private readonly IJLog _log;
         private readonly IPublisher<IUIViewerMessage> _uiViewerMsgPub;
         private readonly IPublisher<ShowPlayerActionProgressMsg> _showPlayerActionProgressMsgPub;
+        private IRoom _room;
+        private string _inspectableId;
+        private readonly InspectSystemTipData _settings;
+        private readonly ILocalizationProvider _localizationProvider;
 
         public InspectSystem(
-            ILootSystem lootSystem,
             IJLog log,
+            ILocalizationProvider localizationProvider,
+            ISettingsProvider settingsProvider,
             IPublisher<IUIViewerMessage> uiViewerMsgPub,
             IPublisher<ShowPlayerActionProgressMsg> showPlayerActionProgressMsgPub
         )
         {
-            _lootSystem = lootSystem;
             _log = log;
+            _localizationProvider = localizationProvider;
+            _settings = settingsProvider.GetSettings<InspectSystemTipData>();
             _uiViewerMsgPub = uiViewerMsgPub;
             _showPlayerActionProgressMsgPub = showPlayerActionProgressMsgPub;
         }
@@ -39,6 +46,8 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
         public async UniTask<bool> Process(IInspectable inspectable)
         {
             _inspectable = inspectable;
+            _inspectableId = inspectable.Id;
+            _room = inspectable.Room;
 
             var inspectState = inspectable.InspectState;
             var result = inspectState switch
@@ -111,13 +120,15 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
         private async UniTask ShowLootTipAfterInspect()
         {
-            if (_inspectable.HasLoot())
+            if (_room.HasLoot(_inspectableId))
             {
                 _log.Debug("<color=green>Inspect - has loot</color>");
 
                 var source = new UniTaskCompletionSource<EInteractDialogResult>();
-                var lootData = _lootSystem.GetGeneratedLoot(_inspectable);
-                var message = new ShowHasLootWindowMsg(lootData, source);
+                var lootData = _room.GetLoot(_inspectableId);
+                var tipLocalizationId = _settings.GetRandomTip(InspectSystemTipType.HasLoot);
+                var tip = _localizationProvider.LocalizePhrase(tipLocalizationId);
+                var message = new ShowHasLootWindowMsg(tip, lootData, source);
 
                 try
                 {
@@ -145,7 +156,9 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
                 _log.Debug("<color=red>Inspect - no loot</color>");
 
                 var source = new UniTaskCompletionSource<EInteractDialogResult>();
-                var message = new ShowNoLootWindowMsg(source);
+                var tipLocalizationId = _settings.GetRandomTip(InspectSystemTipType.NoLoot);
+                var tip = _localizationProvider.LocalizePhrase(tipLocalizationId);
+                var message = new ShowNoLootWindowMsg(tip, source);
 
                 try
                 {
@@ -189,7 +202,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             Debug.Log("ShowLootTipAfterSearch - wait callback from tip ");
 
             var source = new UniTaskCompletionSource<EInteractDialogResult>();
-            var lootData = _lootSystem.GetGeneratedLoot(_inspectable);
+            var lootData = _room.GetLoot(_inspectableId);
             var message = new ShowLootWindowMsg(lootData, source);
 
             try
@@ -214,8 +227,6 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             {
                 source?.TrySetCanceled();
             }
-
-            // add percent to room loot
         }
 
         private async UniTask OnTakeAllLoot()
