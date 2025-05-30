@@ -25,3 +25,7 @@
     border-right-width: 0;
     border-left-width: 0;
 }
+
+.loot-item-container {
+    flex-grow: 1;
+}

@@ -1,16 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using _StoryGame.Data.Interactable;
+﻿using System.Collections.Generic;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Loot.Interfaces;
 using _StoryGame.Game.Room;
+using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Logging;
 using UnityEngine;
 
 namespace _StoryGame.Game.Loot
 {
     // в каждой комнате лут будет гененрироваться, при смене комнаты - сбрасываться
+    public record InspectableData(string LocalizedName, List<InspectableLootDataNew> InspectablesLoot);
+
+    public record RoomLootData(Dictionary<string, InspectableData> InspectableData)
+    {
+        /// <summary>
+        /// InspectableId -> InspectableData  
+        /// </summary>
+        public Dictionary<string, InspectableData> InspectableData { get; } = InspectableData;
+    }
+
+    public record InspectableLootDataNew(string RoomId, string InspectableId, Sprite Icon, ACurrencyData Currency)
+    {
+        public string RoomId { get; } = RoomId;
+        public string InspectableId { get; } = InspectableId;
+        public Sprite Icon { get; } = Icon;
+        public ACurrencyData Currency { get; } = Currency;
+    }
 
     /// <summary>
     /// Гененрирует лут для комнат и держит кэш сгенерированного лута (в виде типов)
@@ -20,110 +35,80 @@ namespace _StoryGame.Game.Loot
     {
         private readonly IJLog _log;
 
-        // <roomId, room loot types>
-        private readonly Dictionary<string, GeneratedRoomLootTypes> _roomsLootCache = new();
+        private readonly Dictionary<string, RoomLootData> _roomLootDataCache = new(); // <roomId, roomLootData>
 
-        // <(roomId, inspectableId), concrete loot>
-        private readonly Dictionary<(string, string), GeneratedLootForInspectableVo> _inspectableLootCache = new();
+        private readonly ILootGenerator _lootGenerator;
 
-        private readonly LootGenerator _lootGenerator;
-
-        public LootSystem(IJLog log)
+        public LootSystem(IJLog log, IAssetProvider assetProvider, ILootGenerator lootGenerator)
         {
             _log = log;
-            _lootGenerator = new LootGenerator();
+            _lootGenerator = lootGenerator;
             // subscribe to change room evt - reset loot
         }
 
         /// <summary>
         /// Генерирует лут для комнаты
         /// </summary>
-        public bool GenerateLoot(IRoom room)
+        public bool GenerateLoot(IRoom room) => _lootGenerator.Generate(room, in _roomLootDataCache);
+
+        public RoomLootData GetRoomLootData(string roomId)
         {
-            Debug.Log("Generate Loot for Room: " + room.Id);
-
-            var lootTypes = _lootGenerator.GenerateLoot(room.Id, room.Interactables.GetWrappedInspectables());
-
-            _roomsLootCache.TryAdd(room.Id, lootTypes);
-
-            var inspectableLootData = room.GetInspectableLootData();
-
-            foreach (var interactableLoot in lootTypes.Loot)
+            if (_roomLootDataCache.TryGetValue(roomId, out var roomLoot))
             {
-                var concreteLoot = GetLootByType(inspectableLootData, interactableLoot.Value);
-
-                _inspectableLootCache.TryAdd((room.Id, interactableLoot.Key), concreteLoot);
+                return roomLoot;
             }
 
-            return true;
+            _log.Error($"RoomLootData for room {roomId} not found.");
+            return new RoomLootData(new Dictionary<string, InspectableData>());
         }
 
-        private GeneratedLootForInspectableVo GetLootByType(InspectableLootVo inspectableLootData,
-            List<LootType> lootTypes)
+        public InspectableData GetLootForInspectable(string roomId, string inspectableId)
         {
-            var result = new List<ACurrencyData>();
-
-            foreach (var lootType in lootTypes)
+            if (_roomLootDataCache.TryGetValue(roomId, out var roomLoot))
             {
-                switch (lootType)
+                if (roomLoot.InspectableData.TryGetValue(inspectableId, out var inspectableData))
                 {
-                    case LootType.Core:
-                        result.Add(inspectableLootData.coreItem.coreItemData);
-                        break;
-                    case LootType.Note:
-                        result.Add(inspectableLootData.notes.notes[0]); // TODO думать
-                        break;
-                    case LootType.Energy:
-                        result.Add(inspectableLootData.energy.energy);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    return inspectableData;
                 }
+
+                _log.Error($"InspectableData for inspectable {inspectableId} in room {roomId} not found.");
+                return new InspectableData("UNKNOWN", new List<InspectableLootDataNew>());
             }
 
-            return new GeneratedLootForInspectableVo(result);
+            _log.Error($"Room {roomId} not found in loot cache.");
+            return new InspectableData("UNKNOWN", new List<InspectableLootDataNew>());
         }
 
-        public GeneratedLootForInspectableVo GetGeneratedLoot(string roomId, string inspectableId)
-        {
-            if (_inspectableLootCache.ContainsKey((roomId, inspectableId)))
-                return _inspectableLootCache[(roomId, inspectableId)];
-
-            throw new KeyNotFoundException($"Loot for interactable {inspectableId} in room {roomId} not found!");
-        }
 
         public bool HasLoot(string roomId, string inspectableId)
         {
-            if (_roomsLootCache.ContainsKey(roomId))
+            if (!_roomLootDataCache.TryGetValue(roomId, out var roomLoot))
             {
-                var roomLoot = _roomsLootCache[roomId];
-                if (roomLoot.Loot.ContainsKey(inspectableId))
-                {
-                    if (roomLoot.Loot[inspectableId] == null || roomLoot.Loot[inspectableId].Count == 0)
-                    {
-                        _log.Info(
-                            $"Loot for interactable {inspectableId} GENERATED. But it is <color=red>EMPTY</color>!");
-                        return false;
-                    }
-
-                    _log.Info(
-                        $"Loot for interactable {inspectableId} GENERATED. And it is <color=green>NOT EMPTY</color>!");
-                    return true;
-                }
-
-                _log.Error($"Loot for interactable {inspectableId} for room {roomId} not GENERATED");
+                _log.Error($"Loot for room {roomId} not GENERATED");
                 return false;
             }
 
-            _log.Error($"Loot for interactable {roomId} not GENERATED");
-            return false;
+            if (!roomLoot.InspectableData.TryGetValue(inspectableId, out var inspectableData))
+            {
+                _log.Error($"Loot for inspectable {inspectableId} in room {roomId} not GENERATED");
+                return false;
+            }
+
+            if (inspectableData.InspectablesLoot == null || inspectableData.InspectablesLoot.Count == 0)
+            {
+                _log.Info($"Loot for inspectable {inspectableId} GENERATED but is <color=red>EMPTY</color>!");
+                return false;
+            }
+
+            _log.Info($"Loot for inspectable {inspectableId} GENERATED and is <color=green>NOT EMPTY</color>!");
+            return true;
         }
 
 
         private void ResetLoot()
         {
             _log.Debug("Reset Loot On Room Change");
-            _roomsLootCache.Clear();
+            _roomLootDataCache.Clear();
         }
     }
 
@@ -138,8 +123,14 @@ namespace _StoryGame.Game.Loot
     /// <summary>
     /// Содержит список конкретного лута
     /// </summary>
-    public record GeneratedLootForInspectableVo(List<ACurrencyData> Loot)
+    public record GeneratedLootForInspectableVo(List<InspectableLootData> Loot)
     {
-        public List<ACurrencyData> Loot { get; } = Loot;
+        public List<InspectableLootData> Loot { get; } = Loot;
+    }
+
+    public record InspectableLootData(Sprite Icon, ACurrencyData Currency)
+    {
+        public Sprite Icon { get; } = Icon;
+        public ACurrencyData Currency { get; } = Currency;
     }
 }

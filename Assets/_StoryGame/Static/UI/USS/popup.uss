@@ -1,0 +1,19 @@
+.loot-item-container {
+    flex-grow: 1;
+    width: 64px;
+    height: 64px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(161, 161, 161);
+    border-right-color: rgb(161, 161, 161);
+    border-top-color: rgb(161, 161, 161);
+    border-bottom-color: rgb(161, 161, 161);
+    background-image: url("project://database/Assets/_StoryGame/Static/Art/Icons/sticky-note.png?fileID=21300000&guid=14b0d9ca7235f8d45aa7443355af30b4&type=3#sticky-note");
+}

@@ -74,6 +74,10 @@ MonoBehaviour:
     m_Localized: street news box
     m_Metadata:
       m_Items: []
+  - m_Id: 4366504857370624
+    m_Localized: ERROR
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

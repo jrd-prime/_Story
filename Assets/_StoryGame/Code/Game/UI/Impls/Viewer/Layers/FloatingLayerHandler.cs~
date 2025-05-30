@@ -133,7 +133,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             var window = _windows[msg.WindowType];
 
             var title = window.GetVisualElement<Label>("title-label", window.name);
-            var icon = window.GetVisualElement<Image>("icon", window.name);
             var close = window.GetVisualElement<Button>("close", window.name);
             var takeAll = window.GetVisualElement<Button>("take-all", window.name);
 

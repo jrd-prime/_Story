@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 
   localizationKey: crowbar
   descriptionKey: 
-  iconId: 
+  iconId: crowbar
   rarity: 0
   maxStackSize: 0

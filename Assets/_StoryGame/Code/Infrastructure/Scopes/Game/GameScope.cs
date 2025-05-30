@@ -85,6 +85,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             if (!interactablesTipUIPrefab)
                 throw new NullReferenceException("interactablesTipUIPrefab is null.");
             builder.RegisterComponentInNewPrefab<InteractablesTipUI>(interactablesTipUIPrefab, Lifetime.Transient);
+
+            builder.Register<ILootGenerator, LootGenerator>(Lifetime.Singleton);
         }
 
         private void RegisterRooms(IContainerBuilder builder)

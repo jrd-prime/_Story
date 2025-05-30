@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _StoryGame.Data.Const;
+using _StoryGame.Data.Interactable;
+using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interactables.Interfaces;
+using _StoryGame.Game.Room;
+using _StoryGame.Infrastructure.Assets;
+using _StoryGame.Infrastructure.Localization;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,9 +20,74 @@ namespace _StoryGame.Game.Loot
         Energy
     }
 
-    public sealed class LootGenerator
+    public sealed class LootGenerator : ILootGenerator
     {
         private string _roomId;
+        private readonly IAssetProvider _assetProvider;
+        private readonly ILocalizationProvider _localization;
+
+        public LootGenerator(IAssetProvider assetProvider, ILocalizationProvider localization)
+        {
+            _localization = localization;
+            _assetProvider = assetProvider;
+        }
+
+        public bool Generate(IRoom room, in Dictionary<string, RoomLootData> roomLootDataCache)
+        {
+            _roomId = room.Id;
+            Debug.Log($"Generate Loot for Room: {_roomId}");
+
+            var lootTypes = GenerateLoot(_roomId, room.Interactables.GetWrappedInspectables());
+
+            var localizationKeyMap = new Dictionary<string, string>();
+            foreach (var inspectable in room.Interactables.inspectables)
+                localizationKeyMap.TryAdd(inspectable.Id, inspectable.LocalizationKey);
+
+            var inspectableLootData = room.GetLootData();
+            var roomData = new Dictionary<string, InspectableData>();
+
+            foreach (var (inspectableId, typesList) in lootTypes.Loot)
+            {
+                var lootList = new List<InspectableLootDataNew>();
+
+                foreach (var lootType in typesList)
+                {
+                    var loot = CreateLootData(lootType, _roomId, inspectableId, inspectableLootData);
+                    if (loot != null)
+                        lootList.Add(loot);
+                }
+
+                var localizationKey = localizationKeyMap.GetValueOrDefault(inspectableId, LocalizationConst.ErrorKey);
+                var localizedName = _localization.LocalizeWord(localizationKey);
+
+                roomData[inspectableId] = new InspectableData(localizedName, lootList);
+            }
+
+            roomLootDataCache[_roomId] = new RoomLootData(roomData);
+            return true;
+        }
+
+
+        private InspectableLootDataNew CreateLootData(
+            LootType type,
+            string roomId,
+            string inspectableId,
+            InspectableLootVo inspectableLootData)
+        {
+            return type switch
+            {
+                LootType.Core => Create(roomId, inspectableId, inspectableLootData.coreItem.coreItemData),
+                LootType.Energy => Create(roomId, inspectableId, inspectableLootData.energy.energy),
+                LootType.Note => Create(roomId, inspectableId, inspectableLootData.notes.notes[0]),
+                _ => null
+            };
+        }
+
+        private InspectableLootDataNew Create(string roomId, string inspectableId, ACurrencyData data)
+        {
+            var icon = _assetProvider.LoadAsset<Sprite>(data.IconId + "_icon");
+            return new InspectableLootDataNew(roomId, inspectableId, icon, data);
+        }
 
         /// <summary>
         /// Генерирует не конкретный лут, а типы лута

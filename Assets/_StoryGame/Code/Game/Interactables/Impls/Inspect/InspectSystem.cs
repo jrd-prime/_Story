@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Interfaces.UI;
+﻿using System;
+using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Room;
@@ -27,6 +28,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
         private string _inspectableId;
         private readonly InspectSystemTipData _settings;
         private readonly ILocalizationProvider _localizationProvider;
+        private string objName;
 
         public InspectSystem(
             IJLog log,
@@ -48,6 +50,8 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             _inspectable = inspectable;
             _inspectableId = inspectable.Id;
             _room = inspectable.Room;
+
+            objName = _localizationProvider.LocalizeWord(_inspectable.LocalizationKey);
 
             var inspectState = inspectable.InspectState;
             var result = inspectState switch
@@ -120,63 +124,50 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
         private async UniTask ShowLootTipAfterInspect()
         {
-            if (_room.HasLoot(_inspectableId))
+            var lootData = _room.GetLoot(_inspectableId);
+
+            if (lootData == null)
+                throw new Exception("ShowLootTipAfterInspect - no loot data");
+
+            var hasLoot = _room.HasLoot(_inspectableId);
+
+            var tipLocalizationId = hasLoot
+                ? _settings.GetRandomTip(InspectSystemTipType.HasLoot)
+                : _settings.GetRandomTip(InspectSystemTipType.NoLoot);
+
+            var tip = _localizationProvider.LocalizePhrase(tipLocalizationId);
+
+            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+
+            IUIViewerMessage message = hasLoot
+                ? new ShowHasLootWindowMsg(objName, tip, lootData, source)
+                : new ShowNoLootWindowMsg(objName, tip, source);
+
+            try
             {
-                _log.Debug("<color=green>Inspect - has loot</color>");
+                _log.Debug(hasLoot
+                    ? "<color=green>Inspect - has loot</color>"
+                    : "<color=red>Inspect - no loot</color>");
 
-                var source = new UniTaskCompletionSource<EInteractDialogResult>();
-                var lootData = _room.GetLoot(_inspectableId);
-                var tipLocalizationId = _settings.GetRandomTip(InspectSystemTipType.HasLoot);
-                var tip = _localizationProvider.LocalizePhrase(tipLocalizationId);
-                var message = new ShowHasLootWindowMsg(tip, lootData, source);
+                _uiViewerMsgPub.Publish(message);
+                var result = await source.Task;
 
-                try
+                if (result == EInteractDialogResult.Search)
                 {
-                    _uiViewerMsgPub.Publish(message);
-                    var result = await source.Task;
-                    source = null;
-
-                    if (result == EInteractDialogResult.Search)
-                    {
-                        await StartSearch();
-                    }
-                    else if (result == EInteractDialogResult.Close)
-                    {
-                        Debug.Log("ShowLootTipAfterInspect - CLOSE");
-                    }
-                    else _log.Warn("Unhandled result: " + result);
+                    await StartSearch();
                 }
-                finally
+                else if (result == EInteractDialogResult.Close)
                 {
-                    source?.TrySetCanceled();
+                    Debug.Log("ShowLootTipAfterInspect - CLOSE");
+                }
+                else
+                {
+                    _log.Warn("Unhandled result: " + result);
                 }
             }
-            else
+            finally
             {
-                _log.Debug("<color=red>Inspect - no loot</color>");
-
-                var source = new UniTaskCompletionSource<EInteractDialogResult>();
-                var tipLocalizationId = _settings.GetRandomTip(InspectSystemTipType.NoLoot);
-                var tip = _localizationProvider.LocalizePhrase(tipLocalizationId);
-                var message = new ShowNoLootWindowMsg(tip, source);
-
-                try
-                {
-                    _uiViewerMsgPub.Publish(message);
-
-                    var result = await source.Task;
-                    source = null;
-
-                    if (result == EInteractDialogResult.Close)
-                    {
-                        Debug.Log("ShowLootTipAfterInspect - CLOSE");
-                    }
-                    else _log.Warn("Unhandled result: " + result);
-                }
-                finally
-                {
-                    source?.TrySetCanceled();
-                }
+                source?.TrySetCanceled();
             }
         }
 
@@ -203,7 +194,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
             var source = new UniTaskCompletionSource<EInteractDialogResult>();
             var lootData = _room.GetLoot(_inspectableId);
-            var message = new ShowLootWindowMsg(lootData, source);
+            var message = new ShowLootWindowMsg(objName,lootData, source);
 
             try
             {

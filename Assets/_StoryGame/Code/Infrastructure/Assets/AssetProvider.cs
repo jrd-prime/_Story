@@ -30,5 +30,11 @@ namespace _StoryGame.Infrastructure.Assets
 
         public GameObject Instantiate(AssetReferenceGameObject assetId, Transform parent = null) =>
             Addressables.InstantiateAsync(assetId, parent).Result;
+
+        public T LoadAsset<T>(string id)
+        {
+            var handle = Addressables.LoadAssetAsync<T>(id);
+            return handle.Result;
+        }
     }
 }

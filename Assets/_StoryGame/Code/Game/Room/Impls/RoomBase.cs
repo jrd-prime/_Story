@@ -62,10 +62,10 @@ namespace _StoryGame.Game.Room.Impls
         public bool HasLoot(string inspectableId) =>
             _lootSystem.HasLoot(roomId, inspectableId);
 
-        public InspectableLootVo GetInspectableLootData() => _roomData.Loot.inspectableLoot;
+        public InspectableLootVo GetLootData() => _roomData.Loot.inspectableLoot;
 
-        public GeneratedLootForInspectableVo GetLoot(string inspectableId) =>
-            _lootSystem.GetGeneratedLoot(Id, inspectableId);
+        public InspectableData GetLoot(string inspectableId) =>
+            _lootSystem.GetLootForInspectable(Id, inspectableId);
 
         private void SayMyNameToObjects()
         {

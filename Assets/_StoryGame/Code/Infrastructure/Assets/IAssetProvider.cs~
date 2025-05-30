@@ -12,6 +12,6 @@ namespace _StoryGame.Infrastructure.Assets
         UniTask<SceneInstance> LoadSceneAsync(string assetId, LoadSceneMode loadSceneMode);
         UniTask<GameObject> InstantiateAsync(AssetReference assetId, Transform parent = null);
         GameObject Instantiate(AssetReferenceGameObject assetId, Transform parent = null);
-        T LoadAsset<T>(string id);
+        T LoadAsset<T>(string iconId);
     }
 }

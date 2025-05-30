@@ -79,14 +79,14 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
             _empty.text = $"{lootChance.emptyBaseChance} %";
         }
 
-        public void ShowObjLoot(GeneratedLootForInspectableVo lootFor)
+        public void ShowObjLoot(InspectableData lootFor)
         {
             _lootC.style.display = DisplayStyle.Flex;
-            var s = "";
-
-            foreach (var loot in lootFor.Loot)
-                s += loot.LocalizationKey + " ";
-            _my.text = s.ToUpper();
+            // var s = "";
+            //
+            // foreach (var loot in lootFor.Loot)
+            //     s += loot.LocalizationKey + " ";
+            // _my.text = s.ToUpper();
         }
     }
 }

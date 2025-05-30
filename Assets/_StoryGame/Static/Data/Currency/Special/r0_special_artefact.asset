@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 
   localizationKey: special_art
   descriptionKey: 
-  iconId: 
+  iconId: art
   rarity: 0
   maxStackSize: 0

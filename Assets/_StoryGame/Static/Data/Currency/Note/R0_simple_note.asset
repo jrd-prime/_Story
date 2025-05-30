@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 
   localizationKey: r0_simple_note
   descriptionKey: 
-  iconId: 
+  iconId: note
   rarity: 0
   maxStackSize: 0
