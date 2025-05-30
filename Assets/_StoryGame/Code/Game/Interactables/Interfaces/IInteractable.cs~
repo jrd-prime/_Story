@@ -1,6 +1,7 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Game.Room;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

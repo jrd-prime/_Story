@@ -8,12 +8,12 @@ namespace _StoryGame.Game.UI.Messages
     public record ShowNoLootWindowMsg(
         string ObjName,
         string Tip,
-        UniTaskCompletionSource<EInteractDialogResult> CompletionSource) : IUIViewerMessage
+        UniTaskCompletionSource<EDialogResult> CompletionSource) : IUIViewerMessage
     {
         public string Name { get; } = nameof(ShowHasLootWindowMsg);
         public string ObjName { get; } = ObjName;
         public string Tip { get; } = Tip;
-        public UniTaskCompletionSource<EInteractDialogResult> CompletionSource { get; } = CompletionSource;
+        public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
         public FloatingWindowType WindowType => FloatingWindowType.NoLoot;
     }
 }

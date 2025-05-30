@@ -1,6 +1,7 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Room;
@@ -94,7 +95,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         private void OnRoomLootGenerated(RoomLootGeneratedMsg msg)
         {
             if (InteractableType == EInteractableType.Inspect)
-                InteractablesTipUI.ShowObjLoot(Room.GetLootTypesFor(Id));
+                InteractablesTipUI.ShowObjLoot(Room.GetLoot(Id));
         }
 
         private void OnAppStarted(Unit _)

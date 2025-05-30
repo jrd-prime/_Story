@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using _StoryGame.Data.Room;
-using _StoryGame.Game.Loot;
+﻿using _StoryGame.Data.Room;
+using _StoryGame.Game.Loot.Impls;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -82,11 +81,13 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
         public void ShowObjLoot(InspectableData lootFor)
         {
             _lootC.style.display = DisplayStyle.Flex;
-            // var s = "";
-            //
-            // foreach (var loot in lootFor.Loot)
-            //     s += loot.LocalizationKey + " ";
-            // _my.text = s.ToUpper();
+
+            var s = "";
+
+            foreach (var loot in lootFor.InspectablesLoot)
+                s += loot.Currency.LocalizationKey + " ";
+
+            _my.text = s.ToUpper();
         }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Room.Impls;
 using _StoryGame.Infrastructure.Logging;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace _StoryGame.Game.Room.Impls
+namespace _StoryGame.Game.Managers.Impls
 {
-    public interface IRoomsRegistry
-    {
-    }
-
     public class RoomsRegistry : MonoBehaviour, IRoomsRegistry, IInitializable
     {
         [SerializeField] private List<RoomBase> rooms;

@@ -1,6 +1,6 @@
-﻿using _StoryGame.Data.Room;
+﻿using _StoryGame.Core.Loot;
+using _StoryGame.Data.Room;
 using _StoryGame.Game.Interactables.Impls.Inspect;
-using _StoryGame.Game.Loot;
 
 namespace _StoryGame.Game.Interactables.Interfaces
 {

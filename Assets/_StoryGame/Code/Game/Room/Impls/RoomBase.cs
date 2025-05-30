@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Core.Loot.Interfaces;
+using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Interactable;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interactables.Impls.Use;
-using _StoryGame.Game.Loot;
-using _StoryGame.Game.Loot.Interfaces;
+using _StoryGame.Game.Loot.Impls;
+using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Settings;
 using MessagePipe;
+using R3;
 using UnityEngine;
 using VContainer;
 
@@ -29,26 +32,30 @@ namespace _StoryGame.Game.Room.Impls
         private RoomData _roomData;
         private ILootSystem _lootSystem;
         private IPublisher<RoomLootGeneratedMsg> _roomLootGeneratedMsgPub;
+        private readonly CompositeDisposable _disposables = new();
 
         [Inject]
         private void Construct(ISettingsProvider settingsProvider, ILootSystem lootSystem,
-            IPublisher<RoomLootGeneratedMsg> roomLootGeneratedMsgPub)
+            IPublisher<RoomLootGeneratedMsg> roomLootGeneratedMsgPub, AppStartHandler appStartHandler)
         {
-            Debug.Log("Room Construct " + Id);
             _roomData = settingsProvider.GetRoomSettings(Id);
             _lootSystem = lootSystem;
             _roomLootGeneratedMsgPub = roomLootGeneratedMsgPub;
+
+            appStartHandler.IsAppStarted
+                .Subscribe(OnAppStarted).AddTo(_disposables);
 
             LoadConfig();
         }
 
         private void Awake() => SayMyNameToObjects();
 
-        private void OnEnable()
+        private void OnAppStarted(Unit _)
         {
-            if (_lootSystem.GenerateLoot(this))
-                _roomLootGeneratedMsgPub.Publish(new RoomLootGeneratedMsg(roomId));
+            _lootSystem.GenerateLoot(this);
+            _roomLootGeneratedMsgPub.Publish(new RoomLootGeneratedMsg(roomId));
         }
+
 
         private void LoadConfig()
         {

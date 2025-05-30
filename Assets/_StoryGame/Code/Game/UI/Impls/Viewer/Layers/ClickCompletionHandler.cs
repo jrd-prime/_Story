@@ -9,12 +9,12 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
     public sealed class ClickCompletionHandler<T>
     {
         private readonly VisualElement _button;
-        private readonly EInteractDialogResult _result;
+        private readonly EDialogResult _result;
         private readonly UniTaskCompletionSource<T> _completionSource;
         private EventCallback<ClickEvent> _callback;
         private readonly VisualElement _holderVisualElement;
 
-        public ClickCompletionHandler(VisualElement button, EInteractDialogResult result,
+        public ClickCompletionHandler(VisualElement button, EDialogResult result,
             UniTaskCompletionSource<T> completionSource, VisualElement holderVisualElement)
         {
             _button = button;

@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _StoryGame.Core.Loot;
+using _StoryGame.Core.Loot.Interfaces;
+using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.Interactable;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.Room;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Localization;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _StoryGame.Game.Loot
+namespace _StoryGame.Game.Loot.Impls
 {
-    public enum LootType
-    {
-        Core,
-        Note,
-        Energy
-    }
-
     public sealed class LootGenerator : ILootGenerator
     {
         private string _roomId;
@@ -32,12 +28,13 @@ namespace _StoryGame.Game.Loot
             _assetProvider = assetProvider;
         }
 
-        public bool Generate(IRoom room, in Dictionary<string, RoomLootData> roomLootDataCache)
+        public RoomLootData Generate(IRoom room)
         {
             _roomId = room.Id;
+            var roomLootDataCache = new Dictionary<string, RoomLootData>();
             Debug.Log($"Generate Loot for Room: {_roomId}");
 
-            var lootTypes = GenerateLoot(_roomId, room.Interactables.GetWrappedInspectables());
+            var lootTypes = GenerateLoot(room.Interactables.GetWrappedInspectables());
 
             var localizationKeyMap = new Dictionary<string, string>();
             foreach (var inspectable in room.Interactables.inspectables)
@@ -63,8 +60,7 @@ namespace _StoryGame.Game.Loot
                 roomData[inspectableId] = new InspectableData(localizedName, lootList);
             }
 
-            roomLootDataCache[_roomId] = new RoomLootData(roomData);
-            return true;
+            return new RoomLootData(roomData);
         }
 
 
@@ -85,17 +81,29 @@ namespace _StoryGame.Game.Loot
 
         private InspectableLootDataNew Create(string roomId, string inspectableId, ACurrencyData data)
         {
-            var icon = _assetProvider.LoadAsset<Sprite>(data.IconId + "_icon");
-            return new InspectableLootDataNew(roomId, inspectableId, icon, data);
+            try
+            {
+                var icon = _assetProvider.LoadAsset<Sprite>("Icons/" + data.IconId + "_icon.png");
+                if (icon == null)
+                {
+                    Debug.LogError($"Failed to load icon for ID: {data.IconId}");
+                    return null;
+                }
+
+                return new InspectableLootDataNew(roomId, inspectableId, icon, data);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error loading asset: {ex.Message}");
+                return null;
+            }
         }
 
         /// <summary>
         /// Генерирует не конкретный лут, а типы лута
         /// </summary>
-        public GeneratedRoomLootTypes GenerateLoot(string roomId, List<IInspectable> inspectables)
+        public GeneratedRoomLootTypes GenerateLoot(List<IInspectable> inspectables)
         {
-            _roomId = roomId;
-
             var result = new Dictionary<string, List<LootType>>();
 
             if (inspectables == null || inspectables.Count == 0)

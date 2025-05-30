@@ -1,6 +1,6 @@
 ﻿namespace _StoryGame.Game.Interactables.Data
 {
-    public enum EInteractDialogResult
+    public enum EDialogResult
     {
         Close,
         TakeAll,

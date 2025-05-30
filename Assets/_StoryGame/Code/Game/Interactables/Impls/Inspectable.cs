@@ -1,11 +1,11 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Loot;
 using _StoryGame.Data.Room;
 using _StoryGame.Game.Interactables.Abstract;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Impls.Inspect;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.Loot;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;

@@ -1,9 +1,9 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.Room;
 using _StoryGame.Game.Room.Impls;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;

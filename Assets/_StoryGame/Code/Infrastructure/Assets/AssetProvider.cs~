@@ -37,9 +37,10 @@ namespace _StoryGame.Infrastructure.Assets
         {
             var handle = Addressables.LoadAssetAsync<T>(id);
             var result = handle.WaitForCompletion(); //TODO Блокирует поток до завершения загрузки
-
             if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
                 return result;
+            }
 
             throw new Exception($"Failed to load asset with ID: {id}, Status: {handle.Status}");
         }

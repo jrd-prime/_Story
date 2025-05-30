@@ -1,8 +1,8 @@
 ﻿using System;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.Room;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
 using _StoryGame.Infrastructure.Localization;
@@ -109,7 +109,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             // anim hero // await progress bar
             _log.Debug("OnStart Inspect");
 
-            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            var source = new UniTaskCompletionSource<EDialogResult>();
             var message = new ShowPlayerActionProgressMsg("Inspect", InspectDuration, source);
             _showPlayerActionProgressMsgPub.Publish(message);
             await source.Task;
@@ -137,7 +137,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
             var tip = _localizationProvider.LocalizePhrase(tipLocalizationId);
 
-            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            var source = new UniTaskCompletionSource<EDialogResult>();
 
             IUIViewerMessage message = hasLoot
                 ? new ShowHasLootWindowMsg(objName, tip, lootData, source)
@@ -152,11 +152,11 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
                 _uiViewerMsgPub.Publish(message);
                 var result = await source.Task;
 
-                if (result == EInteractDialogResult.Search)
+                if (result == EDialogResult.Search)
                 {
                     await StartSearch();
                 }
-                else if (result == EInteractDialogResult.Close)
+                else if (result == EDialogResult.Close)
                 {
                     Debug.Log("ShowLootTipAfterInspect - CLOSE");
                 }
@@ -175,7 +175,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
         {
             _log.Debug("OnStart Search");
             // anim hero // await progress bar
-            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            var source = new UniTaskCompletionSource<EDialogResult>();
             _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Search", SearchDuration,
                 source));
             await source.Task;
@@ -192,7 +192,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
         {
             Debug.Log("ShowLootTipAfterSearch - wait callback from tip ");
 
-            var source = new UniTaskCompletionSource<EInteractDialogResult>();
+            var source = new UniTaskCompletionSource<EDialogResult>();
             var lootData = _room.GetLoot(_inspectableId);
             var message = new ShowLootWindowMsg(objName,lootData, source);
 
@@ -203,12 +203,12 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
                 var result = await source.Task;
                 source = null;
 
-                if (result == EInteractDialogResult.TakeAll)
+                if (result == EDialogResult.TakeAll)
                 {
                     Debug.Log("ShowLootTipAfterSearch - TAKE ALL");
                     await OnTakeAllLoot();
                 }
-                else if (result == EInteractDialogResult.Close)
+                else if (result == EDialogResult.Close)
                 {
                     Debug.Log("ShowLootTipAfterSearch - CLOSE");
                 }

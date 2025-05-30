@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using _StoryGame.Core.Loot;
+using _StoryGame.Core.Loot.Interfaces;
+using _StoryGame.Core.Room.Interfaces;
+using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Game.Loot.Interfaces;
-using _StoryGame.Game.Room;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Logging;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _StoryGame.Game.Loot
+namespace _StoryGame.Game.Loot.Impls
 {
     // в каждой комнате лут будет гененрироваться, при смене комнаты - сбрасываться
     public record InspectableData(string LocalizedName, List<InspectableLootDataNew> InspectablesLoot);
@@ -49,14 +52,17 @@ namespace _StoryGame.Game.Loot
         /// <summary>
         /// Генерирует лут для комнаты
         /// </summary>
-        public bool GenerateLoot(IRoom room) => _lootGenerator.Generate(room, in _roomLootDataCache);
+        public bool GenerateLoot(IRoom room)
+        {
+            _roomLootDataCache.TryAdd(room.Id, _lootGenerator.Generate(room));
+            return true;
+        }
+
 
         public RoomLootData GetRoomLootData(string roomId)
         {
             if (_roomLootDataCache.TryGetValue(roomId, out var roomLoot))
-            {
                 return roomLoot;
-            }
 
             _log.Error($"RoomLootData for room {roomId} not found.");
             return new RoomLootData(new Dictionary<string, InspectableData>());
@@ -67,16 +73,14 @@ namespace _StoryGame.Game.Loot
             if (_roomLootDataCache.TryGetValue(roomId, out var roomLoot))
             {
                 if (roomLoot.InspectableData.TryGetValue(inspectableId, out var inspectableData))
-                {
                     return inspectableData;
-                }
 
                 _log.Error($"InspectableData for inspectable {inspectableId} in room {roomId} not found.");
-                return new InspectableData("UNKNOWN", new List<InspectableLootDataNew>());
+                return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootDataNew>());
             }
 
             _log.Error($"Room {roomId} not found in loot cache.");
-            return new InspectableData("UNKNOWN", new List<InspectableLootDataNew>());
+            return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootDataNew>());
         }
 
 
@@ -118,19 +122,5 @@ namespace _StoryGame.Game.Loot
     public record GeneratedRoomLootTypes(Dictionary<string, List<LootType>> Loot)
     {
         public Dictionary<string, List<LootType>> Loot { get; } = Loot; // <inspectable id, loot types>
-    }
-
-    /// <summary>
-    /// Содержит список конкретного лута
-    /// </summary>
-    public record GeneratedLootForInspectableVo(List<InspectableLootData> Loot)
-    {
-        public List<InspectableLootData> Loot { get; } = Loot;
-    }
-
-    public record InspectableLootData(Sprite Icon, ACurrencyData Currency)
-    {
-        public Sprite Icon { get; } = Icon;
-        public ACurrencyData Currency { get; } = Currency;
     }
 }

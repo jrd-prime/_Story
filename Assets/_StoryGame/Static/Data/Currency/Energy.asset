@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: cur_energy
   localizationKey: cur_energy
-  description: 
-  iconId: cur_energy
+  descriptionKey: 
+  iconId: energy
   rarity: 4
-  type: 1
   maxStackSize: 0

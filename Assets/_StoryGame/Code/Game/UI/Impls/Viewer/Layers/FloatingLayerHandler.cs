@@ -80,15 +80,15 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             var close = window.GetVisualElement<Button>("close", window.name);
             var search = window.GetVisualElement<Button>("search", window.name);
 
-            title.text = msg.ObjName;
+            title.text = msg.InspectableData.LocalizedName;
             desc.text = msg.Tip;
 
 
             var closeHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close,
+                new ClickCompletionHandler<EDialogResult>(close, EDialogResult.Close,
                     msg.CompletionSource, _center);
             var searchHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(search, EInteractDialogResult.Search,
+                new ClickCompletionHandler<EDialogResult>(search, EDialogResult.Search,
                     msg.CompletionSource, _center);
 
             closeHandler.Register();
@@ -113,7 +113,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             desc.text = msg.Tip;
 
             var closeHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close,
+                new ClickCompletionHandler<EDialogResult>(close, EDialogResult.Close,
                     msg.CompletionSource, _center);
 
             closeHandler.Register();
@@ -133,17 +133,19 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers
             var window = _windows[msg.WindowType];
 
             var title = window.GetVisualElement<Label>("title-label", window.name);
-            var icon = window.GetVisualElement<Image>("icon", window.name);
+            var icon = window.GetVisualElement<VisualElement>("icon", window.name);
             var close = window.GetVisualElement<Button>("close", window.name);
             var takeAll = window.GetVisualElement<Button>("take-all", window.name);
 
-            title.text = msg.ObjName;
+            title.text = msg.InspectableData.LocalizedName;
+
+            icon.style.backgroundImage = new StyleBackground(msg.InspectableData.InspectablesLoot[0].Icon);
 
             var takeAllHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(takeAll, EInteractDialogResult.TakeAll,
+                new ClickCompletionHandler<EDialogResult>(takeAll, EDialogResult.TakeAll,
                     msg.CompletionSource, _center);
             var closeHandler =
-                new ClickCompletionHandler<EInteractDialogResult>(close, EInteractDialogResult.Close,
+                new ClickCompletionHandler<EDialogResult>(close, EDialogResult.Close,
                     msg.CompletionSource, _center);
 
             takeAllHandler.Register();

@@ -1,6 +1,6 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Interactables.Data;
-using _StoryGame.Game.Loot;
+using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.UI.Impls.Viewer.Layers;
 using Cysharp.Threading.Tasks;
 
@@ -9,13 +9,13 @@ namespace _StoryGame.Game.UI.Messages
     public record ShowLootWindowMsg(
         string ObjName,
         InspectableData InspectableData,
-        UniTaskCompletionSource<EInteractDialogResult> CompletionSource
+        UniTaskCompletionSource<EDialogResult> CompletionSource
     ) : IUIViewerMessage
     {
         public string Name { get; } = nameof(ShowHasLootWindowMsg);
         public string ObjName { get; } = ObjName;
         public InspectableData InspectableData { get; } = InspectableData;
-        public UniTaskCompletionSource<EInteractDialogResult> CompletionSource { get; } = CompletionSource;
+        public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
         public FloatingWindowType WindowType => FloatingWindowType.Loot;
     }
 }

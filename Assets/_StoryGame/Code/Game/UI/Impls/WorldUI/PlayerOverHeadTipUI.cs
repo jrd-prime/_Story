@@ -99,7 +99,7 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
-                    msg.CompletionSource.TrySetResult(EInteractDialogResult.Close);
+                    msg.CompletionSource.TrySetResult(EDialogResult.Close);
 
                     DOTween.To(
                             () => (float)_barC.style.opacity.value,
@@ -141,11 +141,11 @@ namespace _StoryGame.Game.UI.Impls.WorldUI
     public record ShowPlayerActionProgressMsg(
         string ActionName,
         float Duration,
-        UniTaskCompletionSource<EInteractDialogResult> CompletionSource) : IJMessage
+        UniTaskCompletionSource<EDialogResult> CompletionSource) : IJMessage
     {
         public string Name => nameof(ShowPlayerActionProgressMsg);
         public string ActionName { get; } = ActionName;
         public float Duration { get; } = Duration;
-        public UniTaskCompletionSource<EInteractDialogResult> CompletionSource { get; } = CompletionSource;
+        public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
     }
 }

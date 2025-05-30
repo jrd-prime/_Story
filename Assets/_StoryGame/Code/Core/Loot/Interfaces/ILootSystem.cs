@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using _StoryGame.Game.Room;
+using _StoryGame.Core.Room.Interfaces;
+using _StoryGame.Game.Loot.Impls;
 
-namespace _StoryGame.Game.Loot.Interfaces
+namespace _StoryGame.Core.Loot.Interfaces
 {
     public interface ILootSystem
     {
