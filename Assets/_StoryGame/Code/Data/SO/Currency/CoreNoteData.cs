@@ -1,4 +1,4 @@
-﻿using _StoryGame.Core.Currency;
+﻿using _StoryGame.Core.Currency.Enums;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Abstract;
 using UnityEngine;

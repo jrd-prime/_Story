@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Currency.Interfaces;
 using _StoryGame.Infrastructure.Bootstrap;
 using _StoryGame.Infrastructure.Bootstrap.Interfaces;
 using _StoryGame.Infrastructure.Localization;
@@ -47,9 +48,11 @@ namespace _StoryGame.Infrastructure.AppStarter
             // Bootable services
             var settingsProvider = _container.Resolve<ISettingsProvider>();
             var localizationProvider = _container.Resolve<ILocalizationProvider>();
+            var currencyRegistry = _container.Resolve<ICurrencyRegistry>();
 
             bootstrapLoader.EnqueueBootable(settingsProvider);
             bootstrapLoader.EnqueueBootable(localizationProvider);
+            bootstrapLoader.EnqueueBootable(currencyRegistry);
 
             _log.Info("<color=green><b>Starting Services initialization...</b></color>");
 

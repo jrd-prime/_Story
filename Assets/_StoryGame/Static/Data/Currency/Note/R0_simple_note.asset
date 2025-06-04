@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd96a6cbc0f43f898caba64ff0f1cf7, type: 3}
   m_Name: R0_simple_note
   m_EditorClassIdentifier: 
-  id: 
+  id: r0_simple_note
   localizationKey: r0_simple_note
   descriptionKey: 
   iconId: note
   rarity: 0
   maxStackSize: 0
+  amount: 1

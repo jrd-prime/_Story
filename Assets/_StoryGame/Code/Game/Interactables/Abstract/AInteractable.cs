@@ -31,7 +31,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         public Vector3 GetEntryPoint() => _entrance.position;
         public IRoom Room { get; private set; }
 
-        public bool CanInteract { get; }
+        public bool CanInteract { get; set; } = true;
         public string InteractionTipNameId => interactionTipNameId;
         public string LocalizationKey => localizationKey;
         public string Name => objName;

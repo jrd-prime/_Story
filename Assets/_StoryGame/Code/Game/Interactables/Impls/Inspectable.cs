@@ -36,7 +36,6 @@ namespace _StoryGame.Game.Interactables.Impls
         public override async UniTask InteractAsync(ICharacter character) =>
             await _inspectSystem.Process(this);
 
-
         public void SetInspectState(EInspectState inspectState) =>
             InspectState = inspectState;
 

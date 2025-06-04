@@ -2,6 +2,7 @@
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.UI.Impls.Viewer.Layers;
+using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.UI.Messages

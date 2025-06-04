@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Game.UI.Impls.Viewer.Layers;
+using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
 using UnityEngine.UIElements;
 
 namespace _StoryGame.Data.UI

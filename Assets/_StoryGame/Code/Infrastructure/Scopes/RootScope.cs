@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Currency.Impls;
 using _StoryGame.Data.SO.Main;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
@@ -31,7 +32,7 @@ namespace _StoryGame.Infrastructure.Scopes
 
             var bootstrapSettings = mainSettings.BootstrapSettings;
             builder.RegisterComponent(bootstrapSettings).AsSelf();
-            
+
             if (!mainSettings)
                 throw new NullReferenceException("MainSettings is null.");
             builder.RegisterInstance(mainSettings);
@@ -39,6 +40,7 @@ namespace _StoryGame.Infrastructure.Scopes
             builder.Register<SettingsProvider>(Lifetime.Singleton).As<ISettingsProvider>();
             builder.Register<AssetProvider>(Lifetime.Singleton).As<IAssetProvider>();
             builder.Register<LocalizationProvider>(Lifetime.Singleton).As<ILocalizationProvider>();
+            builder.Register<CurrencyRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<FirstSceneProvider>(Lifetime.Singleton);
 
             if (!eventSystem)

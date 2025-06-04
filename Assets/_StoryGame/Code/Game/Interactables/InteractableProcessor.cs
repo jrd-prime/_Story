@@ -5,6 +5,7 @@ using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
 using R3;
+using UnityEngine;
 
 namespace _StoryGame.Game.Interactables
 {
@@ -34,6 +35,12 @@ namespace _StoryGame.Game.Interactables
             var interactable = message.Interactable;
 
             _log.Debug($"Interactable Entrance Reached Start Interact: {interactable}");
+
+            if (!interactable.CanInteract)
+            {
+                Debug.LogWarning("Can't interact with " + interactable.Name);
+                return;
+            }
 
             _player.OnStartInteract();
 

@@ -6,6 +6,7 @@ namespace _StoryGame.Core.Character.Player
     public sealed class PlayerService
     {
         public string Id => _model.Id;
+        public int MaxEnergy { get; } = 10;
 
         private readonly PlayerModel _model;
 

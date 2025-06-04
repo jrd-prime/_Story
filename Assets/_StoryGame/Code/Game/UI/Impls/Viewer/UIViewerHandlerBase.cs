@@ -1,5 +1,7 @@
 ﻿using System;
+using _StoryGame.Core.Interfaces.Managers;
 using _StoryGame.Data.Const;
+using _StoryGame.Data.SO.Main;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
@@ -15,15 +17,20 @@ namespace _StoryGame.Game.UI.Impls.Viewer
         protected IJLog Log { get; private set; }
         protected VisualElement MainContainer { get; private set; }
 
+        protected IGameManager GameManager { get; private set; }
+
         protected readonly CompositeDisposable Disposables = new();
 
         private readonly VisualElement _layerRoot;
         private readonly IObjectResolver _resolver;
+        protected UISettings UISettings;
 
         protected UIViewerHandlerBase(IObjectResolver resolver, VisualElement layerRoot)
         {
             _resolver = resolver;
             _layerRoot = layerRoot;
+
+            GameManager = _resolver.Resolve<IGameManager>();
 
             Initialize();
         }
@@ -34,6 +41,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             MainContainer = _layerRoot.GetVisualElement<VisualElement>(UIConst.MainContainer, GetType().Name);
 
             ResolveDependencies();
+
+            UISettings = SettingsProvider.GetSettings<UISettings>();
+
             PreInitialize();
             InitElements();
             Subscribe();

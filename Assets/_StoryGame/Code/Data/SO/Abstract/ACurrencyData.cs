@@ -1,5 +1,8 @@
-﻿using _StoryGame.Core.Currency;
+﻿using System;
+using _StoryGame.Core.Currency.Interfaces;
 using UnityEngine;
+using ECurrencyRarity = _StoryGame.Core.Currency.Enums.ECurrencyRarity;
+using ECurrencyType = _StoryGame.Core.Currency.Enums.ECurrencyType;
 
 namespace _StoryGame.Data.SO.Abstract
 {
@@ -14,13 +17,27 @@ namespace _StoryGame.Data.SO.Abstract
         [SerializeField] private string iconId;
         [SerializeField] private ECurrencyRarity rarity;
         [SerializeField] private int maxStackSize;
+        [SerializeField] private int amount = 1;
 
         public string Id => id;
+        public string Name { get; }
+        public string Description { get; }
+        public string Icon { get; }
+
         public string LocalizationKey => localizationKey;
         public string DescriptionKey => descriptionKey;
         public string IconId => iconId;
         public ECurrencyRarity Rarity => rarity;
         public abstract ECurrencyType Type { get; }
         public int MaxStackSize => maxStackSize;
+        public int Amount => amount;
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception("id is null or empty. " + name);
+        }
+#endif
     }
 }

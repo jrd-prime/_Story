@@ -6,7 +6,6 @@ using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Logging;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _StoryGame.Game.Loot.Impls

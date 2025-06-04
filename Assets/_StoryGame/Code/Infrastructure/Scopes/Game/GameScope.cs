@@ -1,9 +1,9 @@
 ﻿using System;
-using _StoryGame.Core.Currency;
-using _StoryGame.Core.Currency.Impls;
 using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.Managers.Game.Impls;
+using _StoryGame.Core.WalletNew.Impls;
+using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interactables;
 using _StoryGame.Game.Interactables.Abstract;
@@ -51,7 +51,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             // Регистрация сервисов
             builder.Register<GameService>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<CurrencyService>(Lifetime.Singleton).As<ICurrencyService>();
+            builder.Register<WalletService>(Lifetime.Singleton).As<IWalletService>();
             builder.Register<GameplayUIViewModel>(Lifetime.Singleton).As<IGameplayUIViewModel>();
             builder.Register<MenuUIViewModel>(Lifetime.Singleton).As<IMenuUIViewModel>();
 

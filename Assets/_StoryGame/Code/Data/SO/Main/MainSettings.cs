@@ -19,10 +19,11 @@ namespace _StoryGame.Data.SO.Main
         [field: SerializeField] public HeroSettings HeroSettings { get; private set; }
         [field: SerializeField] public UISettings UISettings { get; private set; }
         [field: SerializeField] public MainRoomSettings MainRoomSettings { get; private set; }
-
         [field: SerializeField] public InspectSystemTipData InspectSystemTipData { get; private set; }
+        [field: SerializeField] public CurrenciesData CurrenciesData { get; private set; }
 
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             if (FirstScene == null)
@@ -45,6 +46,10 @@ namespace _StoryGame.Data.SO.Main
 
             if (!InspectSystemTipData)
                 throw new Exception($"{nameof(InspectSystemTipData)} is null or invalid. " + name);
+
+            if (!CurrenciesData)
+                throw new Exception($"{nameof(CurrenciesData)} is null or invalid. " + name);
         }
+#endif
     }
 }

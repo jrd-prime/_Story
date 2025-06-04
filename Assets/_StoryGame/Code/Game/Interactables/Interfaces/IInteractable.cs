@@ -9,7 +9,7 @@ namespace _StoryGame.Game.Interactables.Interfaces
     public interface IInteractable
     {
         EInteractableType InteractableType { get; }
-        bool CanInteract { get; }
+        bool CanInteract { get; set; }
         string InteractionTipNameId { get; }
         string LocalizationKey { get; }
         string Name { get; }

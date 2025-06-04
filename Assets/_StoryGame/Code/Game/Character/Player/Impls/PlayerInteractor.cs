@@ -2,7 +2,7 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Currency;
+using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
 using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.Logging;
@@ -21,12 +21,15 @@ namespace _StoryGame.Game.Character.Player.Impls
         public ReadOnlyReactiveProperty<ECharacterState> State => _state;
         public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint;
         public string Id => _service.Id;
+        public IWallet Wallet => _wallet;
         public string Name => _playerView.name;
         public string Description => _playerView.Description;
         public object Animator => _playerView.Animator;
         public int Health { get; set; }
         public int MaxHealth { get; set; }
 
+        public int Energy { get; private set; }
+        public int MaxEnergy => _service.MaxEnergy;
         public NavMeshAgent NavMeshAgent => _playerView.NavMeshAgent;
 
         private readonly ReactiveProperty<ECharacterState> _state = new(ECharacterState.Idle);
@@ -43,16 +46,15 @@ namespace _StoryGame.Game.Character.Player.Impls
             PlayerService service,
             PlayerView playerView,
             IJLog log,
-            ICurrencyService currencyService,
+            IWalletService walletService,
             IPublisher<IPlayerMsg> selfMsgPub)
         {
             _playerView = playerView;
             _service = service;
             _log = log;
             _selfMsgPub = selfMsgPub;
-            _wallet = currencyService.CreateWallet("player_test_id");
+            _wallet = walletService.GetOrCreate(Id);
         }
-
 
         public void Initialize()
         {
@@ -103,7 +105,33 @@ namespace _StoryGame.Game.Character.Player.Impls
         public void OnEndInteract()
         {
             _log.Debug("OnEndInteract: Animate & set state to Idle");
-            SetState(ECharacterState.Idle);   
+            SetState(ECharacterState.Idle);
+        }
+
+        public bool HasEnoughEnergy(int energy)
+        {
+            _selfMsgPub.Publish(new NotEnoughEnergyMsg());
+            return Energy >= energy;
+        }
+
+        public void SetEnergy(int energy) => Energy = energy;
+
+        public void AddEnergy(int energy)
+        {
+            Energy += energy;
+        }
+
+        public void SpendEnergy(int energy)
+        {
+            if (HasEnoughEnergy(energy))
+                Energy -= energy;
+
+            if (Energy == 0)
+                _selfMsgPub.Publish(new OutOfEnergyMsg());
         }
     }
+
+    public record NotEnoughEnergyMsg : IPlayerMsg;
+
+    public record OutOfEnergyMsg : IPlayerMsg;
 }

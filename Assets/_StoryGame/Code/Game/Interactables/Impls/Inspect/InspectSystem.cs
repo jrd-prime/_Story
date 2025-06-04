@@ -3,6 +3,8 @@ using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
+using _StoryGame.Game.Loot.Impls;
+using _StoryGame.Game.Managers.Impls;
 using _StoryGame.Game.UI.Impls.WorldUI;
 using _StoryGame.Game.UI.Messages;
 using _StoryGame.Infrastructure.Localization;
@@ -29,20 +31,22 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
         private readonly InspectSystemTipData _settings;
         private readonly ILocalizationProvider _localizationProvider;
         private string objName;
+        private readonly IPublisher<IGameManagerMsg> _gameManagerMsgPub;
 
         public InspectSystem(
             IJLog log,
             ILocalizationProvider localizationProvider,
             ISettingsProvider settingsProvider,
             IPublisher<IUIViewerMessage> uiViewerMsgPub,
-            IPublisher<ShowPlayerActionProgressMsg> showPlayerActionProgressMsgPub
-        )
+            IPublisher<ShowPlayerActionProgressMsg> showPlayerActionProgressMsgPub,
+            IPublisher<IGameManagerMsg> gameManagerMsgPub)
         {
             _log = log;
             _localizationProvider = localizationProvider;
             _settings = settingsProvider.GetSettings<InspectSystemTipData>();
             _uiViewerMsgPub = uiViewerMsgPub;
             _showPlayerActionProgressMsgPub = showPlayerActionProgressMsgPub;
+            _gameManagerMsgPub = gameManagerMsgPub;
         }
 
         public async UniTask<bool> Process(IInspectable inspectable)
@@ -194,7 +198,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
             var source = new UniTaskCompletionSource<EDialogResult>();
             var lootData = _room.GetLoot(_inspectableId);
-            var message = new ShowLootWindowMsg(objName,lootData, source);
+            var message = new ShowLootWindowMsg(objName, lootData, source);
 
             try
             {
@@ -206,7 +210,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
                 if (result == EDialogResult.TakeAll)
                 {
                     Debug.Log("ShowLootTipAfterSearch - TAKE ALL");
-                    await OnTakeAllLoot();
+                    await OnTakeAllLoot(lootData);
                 }
                 else if (result == EDialogResult.Close)
                 {
@@ -220,9 +224,13 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             }
         }
 
-        private async UniTask OnTakeAllLoot()
+        private async UniTask OnTakeAllLoot(InspectableData lootData)
         {
             _log.Debug("OnTakeAllLoot");
+
+            _inspectable.CanInteract = false;
+            _gameManagerMsgPub.Publish(new TakeRoomLootMsg(lootData));
+
             await UniTask.Yield();
         }
     }

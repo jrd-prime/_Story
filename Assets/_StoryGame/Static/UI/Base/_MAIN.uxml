@@ -1,4 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_StoryGame/Static/UI/USS/main.uss?fileID=7433441132597879392&amp;guid=ee438deb7368e10499accdce92cdd2bf&amp;type=3#main" />
     <engine:VisualElement name="main-container" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; align-items: center; justify-content: center; align-self: center; align-content: center;">
         <engine:VisualElement name="layer-back" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; position: absolute; top: 0; left: 0; right: 0; bottom: 0; align-items: center; justify-content: center; align-self: center; align-content: center;">
             <engine:VisualElement name="main-container" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" />

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: UIViewsSettings
   m_EditorClassIdentifier: 
   FloatingWindowDataVo: {fileID: 11400000, guid: b97bca76d5b3ba24c8d734c33544374d, type: 2}
+  inventoryHUDCellTemplate: {fileID: 9197481963319205126, guid: b51d6ef7dc2f6594f9e69b1743476da3, type: 3}
