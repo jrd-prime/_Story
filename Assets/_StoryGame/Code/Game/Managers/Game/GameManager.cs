@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Character.Player.Interfaces;
+﻿using System;
+using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Interfaces;
 using _StoryGame.Core.Interfaces.Managers;
@@ -71,13 +72,21 @@ namespace _StoryGame.Game.Managers.Impls
                 .Subscribe(OnAppStarted)
                 .AddTo(_disposables);
 
+            _gameManagerMsgSub.Subscribe(OnSpendEnergyMsg, msg => msg is SpendEnergyMsg);
             _gameManagerMsgSub.Subscribe(OnTakeRoomLootMsg, msg => msg is TakeRoomLootMsg);
+        }
+
+        private void OnSpendEnergyMsg(IGameManagerMsg message)
+        {
+            Debug.Log($"OnMessage: {message.GetType().Name}");
+            var msg = message as SpendEnergyMsg ?? throw new ArgumentNullException(nameof(message));
+            _player.SpendEnergy(msg.Amount);
         }
 
         private void OnTakeRoomLootMsg(IGameManagerMsg message)
         {
             Debug.Log($"OnMessage: {message.GetType().Name}");
-            var msg = message as TakeRoomLootMsg;
+            var msg = message as TakeRoomLootMsg ?? throw new ArgumentNullException(nameof(message));
 
             foreach (var VARIABLE in msg.Loot.InspectablesLoot)
             {
@@ -135,9 +144,13 @@ namespace _StoryGame.Game.Managers.Impls
         }
     }
 
+    public record SpendEnergyMsg(int Amount) : IGameManagerMsg
+    {
+        public int Amount { get; } = Amount;
+    }
+
     public record TakeRoomLootMsg(InspectableData Loot) : IGameManagerMsg
     {
-        public string Name => nameof(TakeRoomLootMsg);
         public InspectableData Loot { get; } = Loot;
     }
 

@@ -17,9 +17,11 @@ namespace _StoryGame.Game.Character.Player.Impls
 {
     public sealed class PlayerInteractor : IPlayer, IInitializable
     {
-        public ReadOnlyReactiveProperty<Vector3> Position => _playerView.Position;
-        public ReadOnlyReactiveProperty<ECharacterState> State => _state;
-        public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint;
+        public ReadOnlyReactiveProperty<Vector3> Position => _playerView.Position.ToReadOnlyReactiveProperty();
+        public ReadOnlyReactiveProperty<ECharacterState> State => _state.ToReadOnlyReactiveProperty();
+        public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint.ToReadOnlyReactiveProperty();
+        public ReadOnlyReactiveProperty<int> Energy => _energy.ToReadOnlyReactiveProperty();
+
         public string Id => _service.Id;
         public IWallet Wallet => _wallet;
         public string Name => _playerView.name;
@@ -28,12 +30,13 @@ namespace _StoryGame.Game.Character.Player.Impls
         public int Health { get; set; }
         public int MaxHealth { get; set; }
 
-        public int Energy { get; private set; }
-        public int MaxEnergy => _service.MaxEnergy;
+        public ReadOnlyReactiveProperty<int> MaxEnergy => _maxEnergy.ToReadOnlyReactiveProperty();
         public NavMeshAgent NavMeshAgent => _playerView.NavMeshAgent;
 
+        private readonly ReactiveProperty<int> _energy = new(0);
         private readonly ReactiveProperty<ECharacterState> _state = new(ECharacterState.Idle);
         private readonly ReactiveProperty<Vector3> _destinationPoint = new();
+        private readonly ReactiveProperty<int> _maxEnergy = new(0);
 
         private readonly PlayerService _service;
         private readonly IWallet _wallet;
@@ -59,6 +62,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         public void Initialize()
         {
             SetState(ECharacterState.Idle);
+            _maxEnergy.Value = _service.MaxEnergy;
         }
 
         public void SetState(ECharacterState state)
@@ -111,23 +115,58 @@ namespace _StoryGame.Game.Character.Player.Impls
         public bool HasEnoughEnergy(int energy)
         {
             _selfMsgPub.Publish(new NotEnoughEnergyMsg());
-            return Energy >= energy;
+            return _energy.Value >= energy;
         }
 
-        public void SetEnergy(int energy) => Energy = energy;
+        /// <summary>
+        /// Set directly energy 0+
+        /// </summary>
+        public void SetEnergy(int energy)
+        {
+            if (IsEnergyArgNegative(energy, "set"))
+                return;
 
+            _energy.Value = energy;
+        }
+
+        /// <summary>
+        /// Add energy 0+
+        /// </summary>
+        /// <param name="energy"></param>
         public void AddEnergy(int energy)
         {
-            Energy += energy;
+            if (IsEnergyArgNegative(energy, "add"))
+                return;
+
+            _energy.Value += energy;
         }
 
+        /// <summary>
+        /// Spend energy 0+
+        /// </summary>
+        /// <param name="energy"></param>
         public void SpendEnergy(int energy)
         {
-            if (HasEnoughEnergy(energy))
-                Energy -= energy;
+            if (IsEnergyArgNegative(energy, "spend"))
+                return;
 
-            if (Energy == 0)
+            if (HasEnoughEnergy(energy))
+                _energy.Value -= energy;
+
+            if (_energy.CurrentValue == 0)
                 _selfMsgPub.Publish(new OutOfEnergyMsg());
+        }
+
+        /// <summary>
+        /// Check if energy is negative
+        /// </summary>
+        private bool IsEnergyArgNegative(int energy, string operation)
+        {
+            if (energy >= 0)
+                return false;
+
+            _log.Warn($"Try to {operation} negative energy!");
+            return true;
         }
     }
 

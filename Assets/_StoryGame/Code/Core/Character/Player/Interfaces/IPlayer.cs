@@ -2,6 +2,7 @@
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
+using R3;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,8 +10,8 @@ namespace _StoryGame.Core.Character.Player.Interfaces
 {
     public interface IPlayer : ICharacter, IFollowable, IWalletOwner
     {
-        int Energy { get; }
-        int MaxEnergy { get; }
+        ReadOnlyReactiveProperty<int> Energy { get; }
+        ReadOnlyReactiveProperty<int> MaxEnergy { get; }
         NavMeshAgent NavMeshAgent { get; }
         UniTask MoveToPointAsync(Vector3 position, EDestinationPoint destinationPointType);
         void OnStartInteract();

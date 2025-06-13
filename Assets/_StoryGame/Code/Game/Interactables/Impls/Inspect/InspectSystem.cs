@@ -158,6 +158,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
                 if (result == EDialogResult.Search)
                 {
+                    _gameManagerMsgPub.Publish(new SpendEnergyMsg(1));
                     await StartSearch();
                 }
                 else if (result == EDialogResult.Close)
