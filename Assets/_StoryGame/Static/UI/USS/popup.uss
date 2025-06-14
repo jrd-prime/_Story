@@ -27,9 +27,9 @@
     border-bottom-left-radius: 12px;
     background-color: rgba(0, 0, 0, 0.9);
     padding-top: 0;
-    padding-right: 0;
+    padding-right: 12px;
     padding-bottom: 0;
-    padding-left: 0;
+    padding-left: 12px;
     align-items: center;
     justify-content: flex-end;
     align-self: center;
@@ -46,6 +46,7 @@
     color: rgb(184, 195, 198);
     min-width: 300px;
     max-width: 500px;
+    min-height: 200px;
 }
 
 .pp-head-cont {
@@ -70,4 +71,57 @@
     padding-top: 12px;
     padding-bottom: 12px;
     font-size: 22px;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.pp-btn-base {
+    font-size: 18px;
+    padding-right: 12px;
+    padding-left: 12px;
+    position: relative;
+    right: auto;
+    top: auto;
+    background-color: rgb(180, 176, 153);
+    margin-right: 12px;
+    margin-left: 12px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    min-width: 200px;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    border-left-color: rgb(255, 247, 159);
+    border-right-color: rgb(255, 247, 159);
+    border-top-color: rgb(255, 247, 159);
+    border-bottom-color: rgb(255, 247, 159);
+    border-top-width: 1px;
+    border-right-width: 2px;
+    border-bottom-width: 4px;
+    border-left-width: 2px;
+    color: rgb(18, 15, 28);
+}
+
+.pp-btn-accent {
+    background-color: rgb(65, 81, 27);
+    color: rgb(255, 247, 159);
+    border-left-color: rgba(255, 247, 159, 0.24);
+    border-right-color: rgba(255, 247, 159, 0.24);
+    border-top-color: rgba(255, 247, 159, 0.24);
+    border-bottom-color: rgba(255, 247, 159, 0.24);
+}
+
+.pp-btn-secondary {
+    background-color: rgba(89, 89, 89, 0);
+    color: rgb(81, 79, 51);
+    border-left-color: rgba(255, 247, 159, 0.11);
+    border-right-color: rgba(255, 247, 159, 0.11);
+    border-top-color: rgba(255, 247, 159, 0.11);
+    border-bottom-color: rgba(255, 247, 159, 0.11);
 }

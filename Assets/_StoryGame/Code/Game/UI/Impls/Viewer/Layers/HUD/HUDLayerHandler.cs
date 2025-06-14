@@ -4,6 +4,7 @@ using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
+using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components;
 using _StoryGame.Infrastructure.Tools;
 using Cysharp.Threading.Tasks;
@@ -14,7 +15,7 @@ using VContainer;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
 {
-    public sealed class HUDLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    public sealed class HUDLayerHandler : AUIViewerHandlerBase, IUIViewerLayerHandler
     {
         private const string FpsLabelId = "fps";
 
@@ -34,17 +35,16 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
         protected override void PreInitialize()
         {
             _tempWallet = GameManager.TempWallet;
-
             _invCellTemplate = UISettings.inventoryHUDCellTemplate;
         }
 
         protected override void ResolveDependencies(IObjectResolver resolver)
         {
             var currencyRegistry = resolver.Resolve<ICurrencyRegistry>();
-            _inventoryHUDController = new InventoryHUDController(currencyRegistry);
+            _inventoryHUDController = new InventoryHUDController(currencyRegistry).AddTo(Disposables);
 
             var player = resolver.Resolve<IPlayer>();
-            _energyBarHUDController = new EnergyBarHUDController(player);
+            _energyBarHUDController = new EnergyBarHUDController(player).AddTo(Disposables);
 
             _fpsCounter = resolver.Resolve<FPSCounter>();
         }

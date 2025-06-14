@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
+using _StoryGame.Core.Interfaces.Publisher.Messages;
 using _StoryGame.Game.Character.Player.Messages;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Movement.Messages;

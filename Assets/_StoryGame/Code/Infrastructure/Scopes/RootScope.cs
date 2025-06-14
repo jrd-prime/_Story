@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Currency.Impls;
+using _StoryGame.Core.Managers;
 using _StoryGame.Data.SO.Main;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
@@ -54,6 +55,8 @@ namespace _StoryGame.Infrastructure.Scopes
             builder.Register<FPSCounter>(Lifetime.Singleton).AsSelf().As<ITickable>();
 
             builder.Register<AppStartHandler>(Lifetime.Singleton).AsSelf();
+
+            builder.Register<JPublisher>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private void RegisterMessagePipe(IContainerBuilder builder)

@@ -1,12 +1,13 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Movement;
+using _StoryGame.Game.UI.Abstract;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Movement
 {
-    public sealed class MovementLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    public sealed class MovementLayerHandler : AUIViewerHandlerBase, IUIViewerLayerHandler
     {
         private const string MovementAreaId = "movement-area";
         private const string RingId = "ring";

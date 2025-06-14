@@ -4,9 +4,9 @@ using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.Room.Impls;
-using _StoryGame.Game.UI.Impls.WorldUI;
-using _StoryGame.Game.UI.Messages;
+using _StoryGame.Game.Room.Abstract;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
+using _StoryGame.Game.UI.Impls.Views.WorldViews;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Localization;
 using Cysharp.Threading.Tasks;
@@ -37,7 +37,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         public string Name => objName;
         public string Id => id;
 
-        private IPublisher<IUIViewerMessage> _uiViewerMessagePublisher;
+        private IPublisher<IUIViewerMsg> _uiViewerMessagePublisher;
         private string tipId;
 
         private readonly ReactiveCommand _command = new();
@@ -54,7 +54,7 @@ namespace _StoryGame.Game.Interactables.Abstract
             AppStartHandler appStartHandler,
             InteractablesTipUI interactablesTipUI,
             ILocalizationProvider localizationProvider,
-            IPublisher<IUIViewerMessage> uiViewerMessagePublisher,
+            IPublisher<IUIViewerMsg> uiViewerMessagePublisher,
             ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub)
         {
             Resolver = resolver;
@@ -140,7 +140,7 @@ namespace _StoryGame.Game.Interactables.Abstract
             _disposables.Clear();
 
             _uiViewerMessagePublisher
-                .Publish(new ResetFloatingWindowMessage(tipId));
+                .Publish(new ResetFloatingWindowMsg(tipId));
         }
 
         private void OnCommand(Unit _)

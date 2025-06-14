@@ -20,7 +20,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         private ILocalizationProvider _localizationProvider;
         private IJLog _log;
-        private IPublisher<IUIViewerMessage> _uiPublisher;
+        private IPublisher<IUIViewerMsg> _uiPublisher;
         private IInteractable _currentInteractable;
 
         private bool _isInitialized;
@@ -33,7 +33,7 @@ namespace _StoryGame.Game.Character.Player.Impls
                 throw new NullReferenceException($"Resolver is null. {nameof(PlayerFrontTriggerArea)}");
 
             _log = _container.Resolve<IJLog>();
-            _uiPublisher = _container.Resolve<IPublisher<IUIViewerMessage>>();
+            _uiPublisher = _container.Resolve<IPublisher<IUIViewerMsg>>();
             _localizationProvider = _container.Resolve<ILocalizationProvider>();
 
             _isInitialized = true;

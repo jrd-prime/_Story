@@ -4,12 +4,12 @@ using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.UI.Impls.Viewer.Layers;
+using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Back;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.HUD;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Movement;
-using _StoryGame.Game.UI.Messages;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
 using R3;
@@ -42,7 +42,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
-        private void Construct(IObjectResolver resolver, ISubscriber<IUIViewerMessage> subscriber)
+        private void Construct(IObjectResolver resolver, ISubscriber<IUIViewerMsg> subscriber)
         {
             _resolver = resolver;
             _log = resolver.Resolve<IJLog>();
@@ -52,14 +52,14 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                 .AddTo(_disposables);
         }
 
-        private void OnMessage(IUIViewerMessage message)
+        private void OnMessage(IUIViewerMsg message)
         {
             switch (message)
             {
-                case InitializeViewerMessage msg:
+                case InitializeViewerMsg msg:
                     Initialize(msg.Views);
                     break;
-                case SwitchBaseViewMessage msg:
+                case SwitchBaseViewMsg msg:
                     SwitchBaseViewTo(msg.StateType);
                     break;
                 case ShowHasLootWindowMsg msg:
@@ -115,7 +115,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             _floatingLayerHandler = new FloatingLayerHandler(_resolver, floatingLayerRoot);
         }
 
-        private void Initialize(IDictionary<GameStateType, UIViewBase> viewsCache)
+        private void Initialize(IDictionary<GameStateType, AUIViewBase> viewsCache)
         {
             foreach (var view in viewsCache)
                 _viewsCache.TryAdd(view.Key, view.Value.Template);

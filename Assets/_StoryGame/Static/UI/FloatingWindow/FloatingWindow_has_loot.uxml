@@ -10,9 +10,9 @@
         <engine:VisualElement name="cContent" class="pp-desc-cont">
             <engine:Label text="Label" name="desc-label" picking-mode="Ignore" style="flex-wrap: wrap; max-width: 500px; flex-grow: 1; flex-shrink: 1; flex-direction: row; align-self: center; justify-content: center; align-items: flex-start; align-content: center; margin-top: 0; margin-right: 12px; margin-bottom: 0; margin-left: 12px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
         </engine:VisualElement>
-        <engine:VisualElement name="cBtn" style="flex-grow: 1; width: 100%; height: auto; align-items: center; justify-content: center; align-self: center; align-content: center; padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-bottom: 12px; flex-direction: row;">
-            <engine:Button text="CLOSE" name="close" class="popupBase popupGreen" style="font-size: 18px; padding-right: 12px; padding-left: 12px; align-items: flex-start; align-self: flex-start; -unity-text-align: middle-left; position: relative; left: auto; top: auto; background-color: rgba(146, 178, 121, 0.48); margin-left: 12px; margin-right: 12px;" />
-            <engine:Button text="SEARCH -1energy" name="search" class="popupBase popupGreen" style="font-size: 18px; padding-right: 12px; padding-left: 12px; position: relative; right: auto; top: auto; background-color: rgb(127, 178, 87); margin-right: 12px; margin-left: 12px;" />
+        <engine:VisualElement name="cBtn" style="flex-grow: 1; width: 100%; height: auto; align-items: flex-end; justify-content: center; align-self: flex-end; align-content: center; padding-bottom: 0; padding-top: 0; padding-right: 0; padding-left: 0; margin-bottom: 12px; flex-direction: row;">
+            <engine:Button text="CLOSE" name="close" class="pp-btn-base pp-btn-secondary" />
+            <engine:Button text="SEARCH -1" name="search" class="pp-btn-base pp-btn-accent" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

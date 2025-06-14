@@ -6,7 +6,7 @@ using _StoryGame.Game.Interactables.Abstract;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Impls.Inspect;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Game.UI.Impls.WorldUI;
+using _StoryGame.Game.UI.Impls.Views.WorldViews;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;

@@ -1,14 +1,14 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.HSM.Impls;
-using _StoryGame.Core.Interfaces;
 using _StoryGame.Core.Interfaces.Managers;
+using _StoryGame.Core.Interfaces.Publisher;
+using _StoryGame.Core.Interfaces.Publisher.Messages;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Const;
-using _StoryGame.Game.Loot.Impls;
-using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Managers.Game.Messages;
+using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Infrastructure.AppStarter;
-using _StoryGame.Infrastructure.Input.Interfaces;
 using _StoryGame.Infrastructure.Input.Messages;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
@@ -17,18 +17,47 @@ using R3;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using IGameManager = _StoryGame.Core.Interfaces.Managers.IGameManager;
 
-namespace _StoryGame.Game.Managers.Impls
+namespace _StoryGame.Game.Managers.Game
 {
     public sealed class GameManager : MonoBehaviour, IGameManager, IInitializable
     {
         public IWallet TempWallet { get; private set; }
+        public ReactiveProperty<GameState> CurrentGameState { get; }
+        public ReactiveProperty<float> GameTime { get; }
+        public void StartGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PauseGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ResumeGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoadGame()
+        {
+            throw new NotImplementedException();
+        }
 
         private ISettingsProvider _settingsManager;
         private HSM _hsm;
         private IGameService _gameService;
-        private IPublisher<IInputMsg> _inputPublisher;
         private IJLog _log;
         private IPlayer _player;
         private ICameraManager _cameraManager;
@@ -40,11 +69,12 @@ namespace _StoryGame.Game.Managers.Impls
 
         private readonly CompositeDisposable _disposables = new();
         private ISubscriber<IGameManagerMsg> _gameManagerMsgSub;
+        private IJPublisher _publisher;
 
         [Inject]
         private void Construct(IObjectResolver resolver)
         {
-            _inputPublisher = resolver.Resolve<IPublisher<IInputMsg>>();
+            _publisher = resolver.Resolve<IJPublisher>();
             _hsm = resolver.Resolve<HSM>();
             _settingsManager = resolver.Resolve<ISettingsProvider>();
             _gameService = resolver.Resolve<IGameService>();
@@ -118,14 +148,14 @@ namespace _StoryGame.Game.Managers.Impls
         {
             _log.Info("<color=green>GAME STARTED</color>");
             _gameService.StartNewGame();
-            _inputPublisher.Publish(_enableInputCachedMsg);
+            _publisher.ForInput(_enableInputCachedMsg);
         }
 
         public void Pause()
         {
             _log.Info("GAME PAUSED");
             _gameService.Pause();
-            _inputPublisher.Publish(_disableInputCachedMsg);
+            _publisher.ForInput(_disableInputCachedMsg);
             Time.timeScale = 0;
         }
 
@@ -133,7 +163,7 @@ namespace _StoryGame.Game.Managers.Impls
         {
             _log.Info("GAME UNPAUSED");
             _gameService.UnPause();
-            _inputPublisher.Publish(_enableInputCachedMsg);
+            _publisher.ForInput(_enableInputCachedMsg);
             Time.timeScale = 1;
         }
 
@@ -142,19 +172,5 @@ namespace _StoryGame.Game.Managers.Impls
             _log.Info("GAME CONTINUED");
             _gameService.ContinueGame();
         }
-    }
-
-    public record SpendEnergyMsg(int Amount) : IGameManagerMsg
-    {
-        public int Amount { get; } = Amount;
-    }
-
-    public record TakeRoomLootMsg(InspectableData Loot) : IGameManagerMsg
-    {
-        public InspectableData Loot { get; } = Loot;
-    }
-
-    public interface IGameManagerMsg : IJMessage
-    {
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _StoryGame.Core.Interfaces.Publisher.Messages;
+using UnityEngine;
 
 namespace _StoryGame.Game.Movement.Messages
 {

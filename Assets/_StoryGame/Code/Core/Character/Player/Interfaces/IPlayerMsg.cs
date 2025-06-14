@@ -1,4 +1,4 @@
-﻿using _StoryGame.Core.Interfaces;
+﻿using _StoryGame.Core.Interfaces.Publisher.Messages;
 
 namespace _StoryGame.Core.Character.Player.Interfaces
 {

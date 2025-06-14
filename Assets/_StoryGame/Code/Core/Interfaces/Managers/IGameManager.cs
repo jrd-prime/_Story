@@ -1,15 +1,68 @@
-﻿using _StoryGame.Core.WalletNew.Interfaces;
+using _StoryGame.Core.WalletNew.Interfaces;
+using R3;
 
 namespace _StoryGame.Core.Interfaces.Managers
 {
+    /// <summary>
+    /// Основной интерфейс для управления игровым процессом
+    /// </summary>
     public interface IGameManager
     {
         IWallet TempWallet { get; }
-        void GameOver();
-        void StopTheGame();
-        void StartNewGame();
-        void Pause();
-        void UnPause();
-        void ContinueGame();
+
+        /// <summary>
+        /// Текущее состояние игры
+        /// </summary>
+        ReactiveProperty<GameState> CurrentGameState { get; }
+
+        /// <summary>
+        /// Время игры
+        /// </summary>
+        ReactiveProperty<float> GameTime { get; }
+
+        /// <summary>
+        /// Запуск игры
+        /// </summary>
+        void StartGame();
+
+        /// <summary>
+        /// Пауза игры
+        /// </summary>
+        void PauseGame();
+
+        /// <summary>
+        /// Продолжение игры
+        /// </summary>
+        void ResumeGame();
+
+        /// <summary>
+        /// Завершение игры
+        /// </summary>
+        void EndGame();
+
+        /// <summary>
+        /// Сохранение игры
+        /// </summary>
+        void SaveGame();
+
+        /// <summary>
+        /// Загрузка игры
+        /// </summary>
+        void LoadGame();
+    }
+
+    /// <summary>
+    /// Перечисление состояний игры
+    /// </summary>
+    public enum GameState
+    {
+        MainMenu,
+        Loading,
+        Playing,
+        Paused,
+        Inventory,
+        Dialog,
+        Quest,
+        GameOver
     }
 }

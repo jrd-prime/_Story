@@ -1,10 +1,11 @@
 ﻿using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Game.UI.Abstract;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Back
 {
-    public sealed class BackLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    public sealed class BackLayerHandler : AUIViewerHandlerBase, IUIViewerLayerHandler
     {
         public BackLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver,layerBack)
         {

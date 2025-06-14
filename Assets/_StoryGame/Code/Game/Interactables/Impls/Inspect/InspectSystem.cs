@@ -1,17 +1,17 @@
 ﻿using System;
+using _StoryGame.Core.Interfaces.Publisher;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Core.Room.Interfaces;
+using _StoryGame.Core.UI.Msg;
 using _StoryGame.Game.Interactables.Data;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Loot.Impls;
-using _StoryGame.Game.Managers.Impls;
-using _StoryGame.Game.UI.Impls.WorldUI;
-using _StoryGame.Game.UI.Messages;
+using _StoryGame.Game.Managers.Game.Messages;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
-using MessagePipe;
 using UnityEngine;
 
 namespace _StoryGame.Game.Interactables.Impls.Inspect
@@ -21,32 +21,27 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
     {
         private const float InspectDuration = 2f;
         private const float SearchDuration = 2f;
-        private IInspectable _inspectable;
 
-        private readonly IJLog _log;
-        private readonly IPublisher<IUIViewerMessage> _uiViewerMsgPub;
-        private readonly IPublisher<ShowPlayerActionProgressMsg> _showPlayerActionProgressMsgPub;
+        private IInspectable _inspectable;
+        private string _objName;
         private IRoom _room;
         private string _inspectableId;
+
         private readonly InspectSystemTipData _settings;
         private readonly ILocalizationProvider _localizationProvider;
-        private string objName;
-        private readonly IPublisher<IGameManagerMsg> _gameManagerMsgPub;
+        private readonly IJLog _log;
+        private readonly IJPublisher _publisher;
 
         public InspectSystem(
+            IJPublisher publisher,
             IJLog log,
             ILocalizationProvider localizationProvider,
-            ISettingsProvider settingsProvider,
-            IPublisher<IUIViewerMessage> uiViewerMsgPub,
-            IPublisher<ShowPlayerActionProgressMsg> showPlayerActionProgressMsgPub,
-            IPublisher<IGameManagerMsg> gameManagerMsgPub)
+            ISettingsProvider settingsProvider)
         {
+            _publisher = publisher;
             _log = log;
             _localizationProvider = localizationProvider;
             _settings = settingsProvider.GetSettings<InspectSystemTipData>();
-            _uiViewerMsgPub = uiViewerMsgPub;
-            _showPlayerActionProgressMsgPub = showPlayerActionProgressMsgPub;
-            _gameManagerMsgPub = gameManagerMsgPub;
         }
 
         public async UniTask<bool> Process(IInspectable inspectable)
@@ -55,7 +50,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             _inspectableId = inspectable.Id;
             _room = inspectable.Room;
 
-            objName = _localizationProvider.LocalizeWord(_inspectable.LocalizationKey);
+            _objName = _localizationProvider.LocalizeWord(_inspectable.LocalizationKey);
 
             var inspectState = inspectable.InspectState;
             var result = inspectState switch
@@ -114,8 +109,8 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             _log.Debug("OnStart Inspect");
 
             var source = new UniTaskCompletionSource<EDialogResult>();
-            var message = new ShowPlayerActionProgressMsg("Inspect", InspectDuration, source);
-            _showPlayerActionProgressMsgPub.Publish(message);
+            var message = new ShowUIProgressOnPlayerActionMsg("Inspect", InspectDuration, source);
+            _publisher.ForPlayerAction(message);
             await source.Task;
         }
 
@@ -143,9 +138,9 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
             var source = new UniTaskCompletionSource<EDialogResult>();
 
-            IUIViewerMessage message = hasLoot
-                ? new ShowHasLootWindowMsg(objName, tip, lootData, source)
-                : new ShowNoLootWindowMsg(objName, tip, source);
+            IUIViewerMsg msg = hasLoot
+                ? new ShowHasLootWindowMsg(_objName, tip, lootData, source)
+                : new ShowNoLootWindowMsg(_objName, tip, source);
 
             try
             {
@@ -153,12 +148,12 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
                     ? "<color=green>Inspect - has loot</color>"
                     : "<color=red>Inspect - no loot</color>");
 
-                _uiViewerMsgPub.Publish(message);
+                _publisher.ForUIViewer(msg);
                 var result = await source.Task;
 
                 if (result == EDialogResult.Search)
                 {
-                    _gameManagerMsgPub.Publish(new SpendEnergyMsg(1));
+                    _publisher.ForGameManager(new SpendEnergyMsg(1));
                     await StartSearch();
                 }
                 else if (result == EDialogResult.Close)
@@ -181,8 +176,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             _log.Debug("OnStart Search");
             // anim hero // await progress bar
             var source = new UniTaskCompletionSource<EDialogResult>();
-            _showPlayerActionProgressMsgPub.Publish(new ShowPlayerActionProgressMsg("Search", SearchDuration,
-                source));
+            _publisher.ForPlayerAction(new ShowUIProgressOnPlayerActionMsg("Search", SearchDuration, source));
             await source.Task;
         }
 
@@ -199,11 +193,11 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
             var source = new UniTaskCompletionSource<EDialogResult>();
             var lootData = _room.GetLoot(_inspectableId);
-            var message = new ShowLootWindowMsg(objName, lootData, source);
+            var message = new ShowLootWindowMsg(_objName, lootData, source);
 
             try
             {
-                _uiViewerMsgPub.Publish(message);
+                _publisher.ForUIViewer(message);
 
                 var result = await source.Task;
                 source = null;
@@ -230,7 +224,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             _log.Debug("OnTakeAllLoot");
 
             _inspectable.CanInteract = false;
-            _gameManagerMsgPub.Publish(new TakeRoomLootMsg(lootData));
+            _publisher.ForGameManager(new TakeRoomLootMsg(lootData));
 
             await UniTask.Yield();
         }

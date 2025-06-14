@@ -1,6 +1,8 @@
-﻿namespace _StoryGame.Gameplay.UI.Interfaces
+﻿using System;
+
+namespace _StoryGame.Core.Interfaces.UI
 {
-    public interface IUIViewerLayerHandler
+    public interface IUIViewerLayerHandler 
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _StoryGame.Core.Currency.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Extensions;
@@ -14,7 +15,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components
         public CurrencyChangedData Item;
     }
 
-    public sealed class InventoryHUDController
+    public sealed class InventoryHUDController : IDisposable
     {
         private const int CellCount = 5;
 
@@ -29,7 +30,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components
         {
             _invContainer = mainContainer.Q<VisualElement>("inv-cont");
 
-            for (int i = 0; i < CellCount; i++)
+            for (var i = 0; i < CellCount; i++)
             {
                 var cell = invCellTemplate.Instantiate();
                 _invContainer.Add(cell);
@@ -115,6 +116,10 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components
             _cellData[index] = cellData;
             _freeCells.Enqueue(cellData);
             SetupCellVisuals(cellData.Cell, cellData);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

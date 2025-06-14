@@ -2,14 +2,15 @@
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Data;
-using _StoryGame.Game.UI.Messages;
+using _StoryGame.Game.UI.Abstract;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 {
     // TODO переделать
-    public sealed class FloatingLayerHandler : UIViewerHandlerBase, IUIViewerLayerHandler
+    public sealed class FloatingLayerHandler : AUIViewerHandlerBase, IUIViewerLayerHandler
     {
         private const string LeftId = "left";
         private const string CenterId = "center";

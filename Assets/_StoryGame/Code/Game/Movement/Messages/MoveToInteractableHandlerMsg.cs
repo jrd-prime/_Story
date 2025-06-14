@@ -1,4 +1,5 @@
-﻿using _StoryGame.Game.Interactables.Interfaces;
+﻿using _StoryGame.Core.Interfaces.Publisher.Messages;
+using _StoryGame.Game.Interactables.Interfaces;
 
 namespace _StoryGame.Game.Movement.Messages
 {

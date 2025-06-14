@@ -1,7 +1,7 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
+using _StoryGame.Core.Interfaces.Publisher.Messages;
 using _StoryGame.Game.Movement;
-using _StoryGame.Game.Movement.Messages;
 using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
 using R3;

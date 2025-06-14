@@ -1,6 +1,6 @@
 ﻿using _StoryGame.Core.Character.Player;
 using _StoryGame.Game.Character.Player.Impls;
-using _StoryGame.Game.UI.Impls.WorldUI;
+using _StoryGame.Game.UI.Impls.Views.WorldViews;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
