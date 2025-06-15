@@ -10,7 +10,6 @@ using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Localization;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

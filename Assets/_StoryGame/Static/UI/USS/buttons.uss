@@ -26,10 +26,6 @@
     border-left-width: 0;
 }
 
-.loot-item-container {
-    flex-grow: 1;
-}
-
 .pp-window-cont {
     flex-grow: 0;
     width: 500px;
@@ -56,4 +52,28 @@
     border-top-color: rgb(255, 247, 159);
     border-bottom-color: rgb(255, 247, 159);
     color: rgb(184, 195, 198);
+}
+
+.align-left {
+    justify-content: flex-start;
+    align-self: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+
+.left-cont {
+    flex-grow: 1;
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.mid-cont {
+    flex-grow: 1;
+}
+
+.right-cont {
+    flex-grow: 1;
+    align-self: flex-end;
+    justify-content: flex-end;
+    align-items: flex-end;
 }

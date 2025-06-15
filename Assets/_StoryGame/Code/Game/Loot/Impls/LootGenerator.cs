@@ -54,7 +54,7 @@ namespace _StoryGame.Game.Loot.Impls
                 }
 
                 var localizationKey = localizationKeyMap.GetValueOrDefault(inspectableId, LocalizationConst.ErrorKey);
-                var localizedName = _localization.LocalizeWord(localizationKey);
+                var localizedName = _localization.LocalizeWord(localizationKey, WordTransform.Upper);
 
                 roomData[inspectableId] = new InspectableData(localizedName, lootList);
             }

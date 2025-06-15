@@ -1,4 +1,6 @@
-﻿using _StoryGame.Core.UI.Msg;
+﻿using System;
+using _StoryGame.Core.Interfaces.Publisher.Messages;
+using _StoryGame.Core.UI.Msg;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Data;
 using DG.Tweening;
@@ -32,13 +34,16 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         private float contWidth;
         private readonly CompositeDisposable _disposables = new();
         private bool isVisible = false;
-        private VisualElement _barC;
-        private Label _actionLabel;
+        private VisualElement _barCont;
+        private Label _actionLab;
 
         [Inject]
-        private void Construct(ISubscriber<ShowUIProgressOnPlayerActionMsg> subscriber)
+        private void Construct(ISubscriber<IPlayerActionMsg> subscriber)
         {
-            subscriber.Subscribe(OnMessage).AddTo(_disposables);
+            subscriber.Subscribe(
+                OnMessage,
+                msg => msg is ShowUIProgressOnPlayerActionMsg
+            ).AddTo(_disposables);
         }
 
         private void Start()
@@ -58,10 +63,10 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
             _root = _uiDocument.rootVisualElement;
 
 
-            _barC = _root.GetVisualElement<VisualElement>("barC", name);
+            _barCont = _root.GetVisualElement<VisualElement>("barC", name);
             _progress = _root.GetVisualElement<VisualElement>("progress", name);
             pcont = _root.GetVisualElement<VisualElement>("p-cont", name);
-            _actionLabel = _root.GetVisualElement<Label>("action-label", name);
+            _actionLab = _root.GetVisualElement<Label>("action-label", name);
 
             pcont.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
@@ -75,12 +80,14 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
             transform.Rotate(0, 180f, 0);
         }
 
-        private void OnMessage(ShowUIProgressOnPlayerActionMsg msg)
+        private void OnMessage(IPlayerActionMsg msg)
         {
-            _actionLabel.text = msg.ActionName.ToUpper();
+            var message = msg as ShowUIProgressOnPlayerActionMsg ??
+                          throw new ArgumentException("Unexpected msg type", nameof(msg));
+            _actionLab.text = message.ActionName.ToUpper();
             ShowRoot();
             var startWidth = 0f;
-            var duration = msg.Duration;
+            var duration = message.Duration;
 
             DOTween
                 .To(
@@ -96,24 +103,24 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
-                    msg.CompletionSource.TrySetResult(EDialogResult.Close);
+                    message.CompletionSource.TrySetResult(EDialogResult.Close);
 
                     DOTween.To(
-                            () => (float)_barC.style.opacity.value,
-                            x => _barC.style.opacity = x,
+                            () => (float)_barCont.style.opacity.value,
+                            x => _barCont.style.opacity = x,
                             0f,
                             0.5f
                         ).SetEase(Ease.Linear)
                         .OnComplete(HideRoot);
                 });
 
-            Debug.Log("PlayerOverHeadTipUI - " + msg.ActionName + " complete");
+            Debug.Log("PlayerOverHeadTipUI - " + message.ActionName + " complete");
         }
 
         private void ShowRoot()
         {
-            _barC.style.display = DisplayStyle.Flex;
-            _barC.style.opacity = 1f;
+            _barCont.style.display = DisplayStyle.Flex;
+            _barCont.style.opacity = 1f;
             isVisible = true;
         }
 
@@ -128,7 +135,7 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
 
         private void HideRoot()
         {
-            _barC.style.display = DisplayStyle.None;
+            _barCont.style.display = DisplayStyle.None;
             isVisible = false;
         }
 

@@ -140,7 +140,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
             IUIViewerMsg msg = hasLoot
                 ? new ShowHasLootWindowMsg(_objName, tip, lootData, source)
-                : new ShowNoLootWindowMsg(_objName.ToUpper(), tip, source);
+                : new ShowNoLootWindowMsg(_objName, tip, source);
 
             try
             {
