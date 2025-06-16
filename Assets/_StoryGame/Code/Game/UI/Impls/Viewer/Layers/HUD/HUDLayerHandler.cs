@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Character.Player.Interfaces;
+﻿using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Currency.Interfaces;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Core.WalletNew.Interfaces;
@@ -18,15 +19,18 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
     public sealed class HUDLayerHandler : AUIViewerHandlerBase, IUIViewerLayerHandler
     {
         private const string FpsLabelId = "fps";
+        private const string StateLabelId = "state";
 
         private FPSCounter _fpsCounter;
-        private Label _fpsLabel;
+        private Label _fpsLab;
+        private Label _stateLab;
         private VisualElement _currentViewMainContainer = null;
 
         private InventoryHUDController _inventoryHUDController;
         private EnergyBarHUDController _energyBarHUDController;
         private IWallet _tempWallet;
         private VisualTreeAsset _invCellTemplate;
+        private IPlayer _player;
 
         public HUDLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver, layerBack)
         {
@@ -43,15 +47,16 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
             var currencyRegistry = resolver.Resolve<ICurrencyRegistry>();
             _inventoryHUDController = new InventoryHUDController(currencyRegistry).AddTo(Disposables);
 
-            var player = resolver.Resolve<IPlayer>();
-            _energyBarHUDController = new EnergyBarHUDController(player).AddTo(Disposables);
+            _player = resolver.Resolve<IPlayer>();
+            _energyBarHUDController = new EnergyBarHUDController(_player).AddTo(Disposables);
 
             _fpsCounter = resolver.Resolve<FPSCounter>();
         }
 
         protected override void InitElements()
         {
-            _fpsLabel = GetElement<Label>(FpsLabelId);
+            _fpsLab = GetElement<Label>(FpsLabelId);
+            _stateLab = GetElement<Label>(StateLabelId);
         }
 
         protected override void Subscribe()
@@ -65,6 +70,10 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
             _fpsCounter.Fps
                 .Subscribe(ShowFps)
                 .AddTo(Disposables);
+
+            _player.State
+                .Subscribe(ShowState)
+                .AddTo(Disposables);
         }
 
 
@@ -75,7 +84,14 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
         private void ShowFps(float value)
         {
             UniTask.Post(
-                () => _fpsLabel.text = value.ToString("F1")
+                () => _fpsLab.text = value.ToString("F1")
+            );
+        }
+
+        private void ShowState(ECharacterState state)
+        {
+            UniTask.Post(
+                () => _stateLab.text = state.ToString()
             );
         }
 

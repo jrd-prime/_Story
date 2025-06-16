@@ -16,6 +16,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Messages
         public string Tip { get; } = Tip;
         public InspectableData InspectableData { get; } = InspectableData;
         public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
-        public FloatingWindowType WindowType => FloatingWindowType.HasLoot;
+        public EFloatingWindowType WindowType => EFloatingWindowType.HasLoot;
     }
 }

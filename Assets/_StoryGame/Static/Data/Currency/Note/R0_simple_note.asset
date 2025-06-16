@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: R0_simple_note
   m_EditorClassIdentifier: 
   id: r0_simple_note
-  localizationKey: r0_simple_note
+  localizationKey: r0_sn_test_01
   descriptionKey: 
   iconId: note
   rarity: 0

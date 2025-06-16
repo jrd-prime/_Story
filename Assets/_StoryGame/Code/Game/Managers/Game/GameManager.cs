@@ -1,15 +1,20 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
+using _StoryGame.Core.Currency.Enums;
 using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Interfaces.Managers;
 using _StoryGame.Core.Interfaces.Publisher;
 using _StoryGame.Core.Interfaces.Publisher.Messages;
+using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Const;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Input.Messages;
+using _StoryGame.Infrastructure.Localization;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
 using MessagePipe;
@@ -25,6 +30,7 @@ namespace _StoryGame.Game.Managers.Game
         public IWallet TempWallet { get; private set; }
         public ReactiveProperty<GameState> CurrentGameState { get; }
         public ReactiveProperty<float> GameTime { get; }
+
         public void StartGame()
         {
             throw new NotImplementedException();
@@ -70,6 +76,7 @@ namespace _StoryGame.Game.Managers.Game
         private readonly CompositeDisposable _disposables = new();
         private ISubscriber<IGameManagerMsg> _gameManagerMsgSub;
         private IJPublisher _publisher;
+        private ILocalizationProvider _localizationProvider;
 
         [Inject]
         private void Construct(IObjectResolver resolver)
@@ -84,6 +91,7 @@ namespace _StoryGame.Game.Managers.Game
             _appStarter = resolver.Resolve<AppStartHandler>();
             _walletService = resolver.Resolve<IWalletService>();
             _gameManagerMsgSub = resolver.Resolve<ISubscriber<IGameManagerMsg>>();
+            _localizationProvider = resolver.Resolve<ILocalizationProvider>(); //TODO not here
         }
 
         public void Initialize()
@@ -102,8 +110,15 @@ namespace _StoryGame.Game.Managers.Game
                 .Subscribe(OnAppStarted)
                 .AddTo(_disposables);
 
-            _gameManagerMsgSub.Subscribe(OnSpendEnergyMsg, msg => msg is SpendEnergyMsg);
-            _gameManagerMsgSub.Subscribe(OnTakeRoomLootMsg, msg => msg is TakeRoomLootMsg);
+            _gameManagerMsgSub.Subscribe(
+                OnSpendEnergyMsg,
+                msg => msg is SpendEnergyMsg
+            );
+
+            _gameManagerMsgSub.Subscribe(
+                OnTakeRoomLootMsg,
+                msg => msg is TakeRoomLootMsg
+            );
         }
 
         private void OnSpendEnergyMsg(IGameManagerMsg message)
@@ -118,10 +133,47 @@ namespace _StoryGame.Game.Managers.Game
             Debug.Log($"OnMessage: {message.GetType().Name}");
             var msg = message as TakeRoomLootMsg ?? throw new ArgumentNullException(nameof(message));
 
-            foreach (var VARIABLE in msg.Loot.InspectablesLoot)
+            foreach (var lootDataNew in msg.Loot.InspectablesLoot)
+                ProcessLoot(lootDataNew);
+        }
+
+        //TODO ужас
+        private void ProcessLoot(InspectableLootDataNew lootDataNew)
+        {
+            switch (lootDataNew.Currency.Type)
             {
-                Debug.Log(VARIABLE.Currency.LocalizationKey);
-                TempWallet.Add(VARIABLE.Currency.Id, VARIABLE.Currency.Amount);
+                case ECurrencyType.Energy:
+                    _player.AddEnergy(lootDataNew.Currency.Amount);
+                    break;
+                case ECurrencyType.CoreItem:
+                    TempWallet.Add(lootDataNew.Currency.Id, lootDataNew.Currency.Amount);
+                    break;
+                case ECurrencyType.Note:
+                    _player.AddNote(lootDataNew);
+                    var noteTitle = _localizationProvider.Localize(lootDataNew.Currency.LocalizationKey,
+                        ETable.SimpleNote,
+                        ETextTransform.Upper);
+                    var noteText = _localizationProvider.Localize(
+                        (lootDataNew.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.SimpleNote);
+                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootDataNew, noteTitle, noteText));
+                    break;
+                case ECurrencyType.CoreNote:
+                    _player.AddNote(lootDataNew);
+                    var title = _localizationProvider.Localize(lootDataNew.Currency.LocalizationKey, ETable.CoreNote,
+                        ETextTransform.Upper);
+                    var text = _localizationProvider.Localize(
+                        (lootDataNew.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.CoreNote);
+                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootDataNew, title, text));
+                    break;
+                case ECurrencyType.Tip:
+                    _log.Warn("Show tip");
+                    break;
+                case ECurrencyType.Special:
+                    _log.Warn("Process special loot");
+                    break;
+                default:
+                    _log.Error($"Unknown currency type: {lootDataNew.Currency.Type}");
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -172,5 +224,9 @@ namespace _StoryGame.Game.Managers.Game
             _log.Info("GAME CONTINUED");
             _gameService.ContinueGame();
         }
+    }
+
+    public record ShowNewNoteMsg(InspectableLootDataNew Loot, string Title, string Text) : IUIViewerMsg
+    {
     }
 }

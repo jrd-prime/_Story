@@ -4,6 +4,7 @@ using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
+using _StoryGame.Game.Managers.Game;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Back;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
@@ -70,6 +71,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                     break;
                 case ShowLootWindowMsg msg:
                     _floatingLayerHandler.ShowLootWindow(msg);
+                    break;
+                case ShowNewNoteMsg msg:
+                    _floatingLayerHandler.ShowNewNote(msg);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }

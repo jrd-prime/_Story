@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _StoryGame.Core.Currency.Enums;
 using _StoryGame.Core.Loot;
 using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.Room.Interfaces;
@@ -54,7 +55,8 @@ namespace _StoryGame.Game.Loot.Impls
                 }
 
                 var localizationKey = localizationKeyMap.GetValueOrDefault(inspectableId, LocalizationConst.ErrorKey);
-                var localizedName = _localization.LocalizeWord(localizationKey, WordTransform.Upper);
+                var localizedName =
+                    _localization.Localize(localizationKey, ETable.Words, ETextTransform.Upper);
 
                 roomData[inspectableId] = new InspectableData(localizedName, lootList);
             }
@@ -87,6 +89,10 @@ namespace _StoryGame.Game.Loot.Impls
                 {
                     Debug.LogError($"Failed to load icon for ID: {data.IconId}");
                     return null;
+                }
+
+                if (data.Type is ECurrencyType.Note)
+                {
                 }
 
                 return new InspectableLootDataNew(roomId, inspectableId, icon, data);

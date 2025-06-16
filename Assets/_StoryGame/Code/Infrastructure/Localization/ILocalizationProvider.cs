@@ -4,7 +4,6 @@ namespace _StoryGame.Infrastructure.Localization
 {
     public interface ILocalizationProvider : IBootable
     {
-        string LocalizeWord(string key, WordTransform wordTransform = WordTransform.None);
-        string LocalizePhrase(string key, WordTransform wordTransform = WordTransform.None);
+        string Localize(string key, ETable tableType, ETextTransform transform = ETextTransform.None);
     }
 }

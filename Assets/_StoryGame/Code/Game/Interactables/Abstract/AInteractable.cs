@@ -108,7 +108,7 @@ namespace _StoryGame.Game.Interactables.Abstract
             if (!InteractablesTipUI)
                 throw new NullReferenceException("InteractableDebugController not found.");
 
-            var text = _localizationProvider.LocalizeWord(LocalizationKey);
+            var text = _localizationProvider.Localize(LocalizationKey, ETable.Words);
             InteractablesTipUI.SetNameText(text.ToUpper());
             InteractablesTipUI.SetType(InteractableType.ToString().ToUpper());
 

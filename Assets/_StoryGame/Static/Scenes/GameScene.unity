@@ -1203,6 +1203,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomPrototype
       objectReference: {fileID: 0}
+    - target: {fileID: 3358950235005280633, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358950235005280633, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358950235005280633, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358950235005280633, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4575433421602085481, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 3474502406253739158}
     - target: {fileID: 7234283132685753513, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -1268,6 +1288,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
+--- !u!1 &3474502406253739158 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4267724946763530369, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
+  m_PrefabInstance: {fileID: 3474502406253739157}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3520618352379174922
 PrefabInstance:
   m_ObjectHideFlags: 0

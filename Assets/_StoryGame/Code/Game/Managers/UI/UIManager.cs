@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.HSM.Impls.States;
+using _StoryGame.Core.Interfaces.Publisher;
 using _StoryGame.Core.Interfaces.UI;
 using _StoryGame.Data.UI;
 using _StoryGame.Game.UI.Abstract;
@@ -20,19 +21,18 @@ namespace _StoryGame.Game.Managers.UI
     {
         [SerializeField] private UIViewData[] baseViews;
 
-        private IPublisher<IUIViewerMsg> _uiViewerMessagePublisher;
+        private GameStateType _currentBaseView;
+        private IJPublisher _publisher;
         private IJLog _log;
         private HSM _hsm;
-
-        private GameStateType _currentBaseView;
 
         private readonly Dictionary<GameStateType, AUIViewBase> _viewsCache = new();
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
-        private void Construct(IPublisher<IUIViewerMsg> uiViewerMessagePublisher, IJLog log, HSM hsm)
+        private void Construct(IJPublisher publisher, IJLog log, HSM hsm)
         {
-            _uiViewerMessagePublisher = uiViewerMessagePublisher;
+            _publisher = publisher;
             _log = log;
             _hsm = hsm;
         }
@@ -50,8 +50,7 @@ namespace _StoryGame.Game.Managers.UI
                 .AddTo(_disposables);
         }
 
-        private void Start() =>
-            _uiViewerMessagePublisher.Publish(new InitializeViewerMsg(_viewsCache));
+        private void Start() => _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
 
         private async void OnStateChange(GameStateType state)
         {
@@ -62,7 +61,7 @@ namespace _StoryGame.Game.Managers.UI
 
             _currentBaseView = state;
 
-            _uiViewerMessagePublisher.Publish(new SwitchBaseViewMsg(state));
+            _publisher.ForUIViewer(new SwitchBaseViewMsg(state));
         }
     }
 }

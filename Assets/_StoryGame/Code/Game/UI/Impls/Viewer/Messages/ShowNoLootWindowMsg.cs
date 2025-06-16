@@ -13,6 +13,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Messages
         public string ObjName { get; } = ObjName;
         public string Tip { get; } = Tip;
         public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
-        public FloatingWindowType WindowType => FloatingWindowType.NoLoot;
+        public EFloatingWindowType WindowType => EFloatingWindowType.NoLoot;
     }
 }

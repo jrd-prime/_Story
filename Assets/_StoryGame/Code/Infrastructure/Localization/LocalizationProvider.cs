@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Extensions;
 using _StoryGame.Data.SO.Main;
 using _StoryGame.Infrastructure.Logging;
 using _StoryGame.Infrastructure.Settings;
@@ -15,9 +16,13 @@ namespace _StoryGame.Infrastructure.Localization
 
         private const string WordsTable = "Words";
         private const string SmallPhraseTable = "SmallPhrase";
+        private const string SimpleNoteTable = "SimpleNote";
+        private const string CoreNoteTable = "CoreNote";
 
         private StringTable _wordsTable;
         private StringTable _smallPhraseTable;
+        private StringTable _simpleNoteTable;
+        private StringTable _coreNoteTable;
 
         private readonly ISettingsProvider _settingsProvider;
         private readonly IJLog _log;
@@ -52,25 +57,31 @@ namespace _StoryGame.Infrastructure.Localization
 
             LocalizationSettings.SelectedLocale = locale;
 
-            _wordsTable = await LocalizationSettings.StringDatabase.GetTableAsync(WordsTable);
-
-            if (_wordsTable == null)
-                throw new Exception($"Localization table {WordsTable} not found.");
-
-            _smallPhraseTable = await LocalizationSettings.StringDatabase.GetTableAsync(SmallPhraseTable);
-
-            if (_smallPhraseTable == null)
-                throw new Exception($"Localization table {SmallPhraseTable} not found.");
+            _wordsTable = await InitTableAsync(WordsTable);
+            _smallPhraseTable = await InitTableAsync(SmallPhraseTable);
+            _coreNoteTable = await InitTableAsync(CoreNoteTable);
+            _simpleNoteTable = await InitTableAsync(SimpleNoteTable);
 
             IsInitialized = true;
         }
 
-        public string LocalizeWord(string key, WordTransform wordTransform = WordTransform.None)
+        private static async UniTask<StringTable> InitTableAsync(string tableId)
+        {
+            var table = await LocalizationSettings.StringDatabase.GetTableAsync(tableId);
+
+            if (!table)
+                throw new Exception($"Localization table \"{tableId}\" not found.");
+
+            return table;
+        }
+
+        public string Localize(string key, ETable tableType, ETextTransform transform = ETextTransform.None)
         {
             if (!IsInitialized)
                 throw new Exception("LocalizationProvider is not initialized.");
 
-            var entry = _wordsTable.GetEntry(key);
+            var table = GetTableByType(tableType);
+            var entry = table.GetEntry(key);
 
             string value;
             if (entry == null)
@@ -80,55 +91,27 @@ namespace _StoryGame.Infrastructure.Localization
             }
             else value = entry.GetLocalizedString();
 
-            return wordTransform switch
+            return TransformWord(value, transform);
+        }
+
+        private StringTable GetTableByType(ETable tableType) =>
+            tableType switch
             {
-                WordTransform.None => value,
-                WordTransform.Capitalize => CapitalizeFirst(value),
-                WordTransform.Low => value.ToLower(),
-                WordTransform.Upper => value.ToUpper(),
-                _ => throw new ArgumentOutOfRangeException(nameof(wordTransform), wordTransform, null)
+                ETable.SimpleNote => _simpleNoteTable,
+                ETable.CoreNote => _coreNoteTable,
+                ETable.SmallPhrase => _smallPhraseTable,
+                ETable.Words => _wordsTable,
+                _ => throw new ArgumentOutOfRangeException(nameof(tableType), tableType, null)
             };
-        }
 
-        public string LocalizePhrase(string key, WordTransform wordTransform = WordTransform.None)
-        {
-            if (!IsInitialized)
-                throw new Exception("LocalizationProvider is not initialized.");
-
-            var entry = _smallPhraseTable.GetEntry(key);
-
-            string value;
-            if (entry == null)
+        private static string TransformWord(string value, ETextTransform transform) =>
+            transform switch
             {
-                _log.Error($"Localization key '{key}' not found.");
-                value = "Not localized";
-            }
-            else value = entry.GetLocalizedString();
-
-            return wordTransform switch
-            {
-                WordTransform.None => value,
-                WordTransform.Capitalize => CapitalizeFirst(value),
-                WordTransform.Low => value.ToLower(),
-                WordTransform.Upper => value.ToUpper(),
-                _ => throw new ArgumentOutOfRangeException(nameof(wordTransform), wordTransform, null)
+                ETextTransform.None => value,
+                ETextTransform.Capitalize => value.Capitalize(),
+                ETextTransform.Low => value.ToLower(),
+                ETextTransform.Upper => value.ToUpper(),
+                _ => throw new ArgumentOutOfRangeException(nameof(transform), transform, null)
             };
-        }
-
-        private static string CapitalizeFirst(string text)
-        {
-            if (string.IsNullOrEmpty(text))
-                return text;
-
-            return char.ToUpper(text[0]) + text[1..].ToLower();
-        }
-    }
-
-    public enum WordTransform
-    {
-        None = -1,
-        Capitalize,
-        Low,
-        Upper
     }
 }

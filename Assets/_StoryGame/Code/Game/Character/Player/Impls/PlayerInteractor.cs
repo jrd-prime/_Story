@@ -4,6 +4,7 @@ using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
+using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
@@ -69,7 +70,6 @@ namespace _StoryGame.Game.Character.Player.Impls
         {
             _state.Value = state;
             PublishState(state);
-            Debug.LogWarning("<color=red>Player State</color> " + state);
         }
 
         private void PublishState(ECharacterState state) =>
@@ -155,6 +155,11 @@ namespace _StoryGame.Game.Character.Player.Impls
 
             if (_energy.CurrentValue == 0)
                 _selfMsgPub.Publish(new OutOfEnergyMsg());
+        }
+
+        public void AddNote(InspectableLootDataNew lootDataNew)
+        {
+            _wallet.Add(lootDataNew.Currency.Id, lootDataNew.Currency.Amount);
         }
 
         /// <summary>

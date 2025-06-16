@@ -50,7 +50,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
             _inspectableId = inspectable.Id;
             _room = inspectable.Room;
 
-            _objName = _localizationProvider.LocalizeWord(_inspectable.LocalizationKey);
+            _objName = _localizationProvider.Localize(_inspectable.LocalizationKey, ETable.Words);
 
             var inspectState = inspectable.InspectState;
             var result = inspectState switch
@@ -134,7 +134,7 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
                 ? _settings.GetRandomTip(InspectSystemTipType.HasLoot)
                 : _settings.GetRandomTip(InspectSystemTipType.NoLoot);
 
-            var tip = _localizationProvider.LocalizePhrase(tipLocalizationId);
+            var tip = _localizationProvider.Localize(tipLocalizationId, ETable.SmallPhrase);
 
             var source = new UniTaskCompletionSource<EDialogResult>();
 

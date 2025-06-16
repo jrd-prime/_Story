@@ -59,14 +59,6 @@ MonoBehaviour:
     m_Key: crowbar
     m_Metadata:
       m_Items: []
-  - m_Id: 3001573343952899
-    m_Key: r0_simple_note
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3001573343952900
-    m_Key: r0_core_note
-    m_Metadata:
-      m_Items: []
   - m_Id: 3001573343952901
     m_Key: street_news
     m_Metadata:

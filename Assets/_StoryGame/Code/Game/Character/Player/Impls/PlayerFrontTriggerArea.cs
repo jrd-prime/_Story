@@ -112,11 +112,12 @@ namespace _StoryGame.Game.Character.Player.Impls
 
                 note = string.IsNullOrEmpty(key)
                     ? "Not set"
-                    : _localizationProvider.LocalizeWord(interactable.LocalizationKey, WordTransform.Upper);
+                    : _localizationProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
 
                 action = string.IsNullOrEmpty(tip)
                     ? "Not set"
-                    : _localizationProvider.LocalizeWord(interactable.InteractionTipNameId, WordTransform.Upper);
+                    : _localizationProvider.Localize(interactable.InteractionTipNameId, ETable.Words,
+                        ETextTransform.Upper);
 
                 return (note, action);
             }

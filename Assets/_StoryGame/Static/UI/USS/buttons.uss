@@ -69,6 +69,11 @@
 
 .mid-cont {
     flex-grow: 1;
+    -unity-text-align: middle-center;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
 }
 
 .right-cont {

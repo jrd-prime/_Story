@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Game.Managers.Game;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
+using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
@@ -16,8 +19,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         private const string CenterId = "center";
         private const string RightId = "right";
 
-        private readonly Dictionary<FloatingWindowType, VisualTreeAsset> _floatingWindowsAssets = new();
-        private readonly Dictionary<FloatingWindowType, VisualElement> _windows = new();
+        private readonly Dictionary<EFloatingWindowType, VisualTreeAsset> _floatingWindowsAssets = new();
+        private readonly Dictionary<EFloatingWindowType, VisualElement> _windows = new();
         private VisualElement _left;
         private VisualElement _center;
         private VisualElement _right;
@@ -31,7 +34,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             var floatingWindowsData = UISettings.FloatingWindowDataVo;
 
             foreach (var windowData in floatingWindowsData.FloatingWindowDataVo)
-                _floatingWindowsAssets.Add(windowData.floatingWindowType, windowData.visualTreeAsset);
+                _floatingWindowsAssets.Add(windowData.eFloatingWindowType, windowData.visualTreeAsset);
 
             Log.Debug("FloatingLayerHandler initialized with " + _floatingWindowsAssets.Count + " windows.");
         }
@@ -120,7 +123,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             _center.Add(window);
         }
 
-        private bool HasWindow(FloatingWindowType windowType) => _windows.ContainsKey(windowType);
+        private bool HasWindow(EFloatingWindowType windowType) => _windows.ContainsKey(windowType);
 
         public void ShowLootWindow(ShowLootWindowMsg msg)
         {
@@ -134,7 +137,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             var title = window.GetVisualElement<Label>("title-label", window.name);
             var close = window.GetVisualElement<Button>("close", window.name);
             var takeAll = window.GetVisualElement<Button>("take-all", window.name);
-            
+
             title.text = msg.InspectableData.LocalizedName;
 
             //TODO переделать эту жесть, вообще весь класс
@@ -159,6 +162,27 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             _center.Add(window);
         }
+
+        public void ShowNewNote(ShowNewNoteMsg msg)
+        {
+            Debug.Log("ShowNewNote");
+
+            var note = msg.Loot.Currency as ANoteData;
+
+            Debug.Log("ShowNewNote: " + note?.GetTextLocalizationKey());
+            _left.Clear();
+
+            var window = _windows[EFloatingWindowType.Note];
+
+            var title = window.GetVisualElement<Label>("title-label", window.name);
+            var desc = window.GetVisualElement<Label>("desc-label", window.name);
+            var close = window.GetVisualElement<Button>("close", window.name);
+
+            title.text = msg.Title;
+            desc.text = msg.Text;
+
+            _left.Add(window);
+        }
     }
 
     public enum PositionType
@@ -168,10 +192,11 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         Right
     }
 
-    public enum FloatingWindowType
+    public enum EFloatingWindowType
     {
         HasLoot,
         NoLoot,
-        Loot
+        Loot,
+        Note
     }
 }

@@ -15,6 +15,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Messages
         public string ObjName { get; } = ObjName;
         public InspectableData InspectableData { get; } = InspectableData;
         public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
-        public FloatingWindowType WindowType => FloatingWindowType.Loot;
+        public EFloatingWindowType WindowType => EFloatingWindowType.Loot;
     }
 }

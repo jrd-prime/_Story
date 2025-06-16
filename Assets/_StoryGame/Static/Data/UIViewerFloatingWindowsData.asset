@@ -19,3 +19,5 @@ MonoBehaviour:
     visualTreeAsset: {fileID: 9197481963319205126, guid: 052b6cbb2bc247f418b0dbecad3f9be7, type: 3}
   - floatingWindowType: 2
     visualTreeAsset: {fileID: 9197481963319205126, guid: c71c8411048c83745ad7248c644cf98b, type: 3}
+  - floatingWindowType: 3
+    visualTreeAsset: {fileID: 9197481963319205126, guid: 80beb9c31eeea224e993d694d9f1fb5a, type: 3}

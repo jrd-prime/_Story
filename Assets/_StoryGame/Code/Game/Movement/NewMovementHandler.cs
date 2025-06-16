@@ -152,7 +152,7 @@ namespace _StoryGame.Game.Movement
 
         private void ResetTouch()
         {
-            _log.Debug("ResetTouch");
+            // _log.Debug("ResetTouch");
             _isTouchActive = false;
         }
 

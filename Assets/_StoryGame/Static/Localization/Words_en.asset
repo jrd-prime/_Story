@@ -62,14 +62,6 @@ MonoBehaviour:
     m_Localized: crowbar
     m_Metadata:
       m_Items: []
-  - m_Id: 3001573343952899
-    m_Localized: simple note
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3001573343952900
-    m_Localized: r0 core note
-    m_Metadata:
-      m_Items: []
   - m_Id: 3001573343952901
     m_Localized: street news box
     m_Metadata:
