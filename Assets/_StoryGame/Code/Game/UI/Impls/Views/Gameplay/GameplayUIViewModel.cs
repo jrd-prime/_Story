@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Infrastructure.Settings;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Infrastructure.Tools;
 using R3;
 using UnityEngine;

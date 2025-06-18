@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using _StoryGame.Game.Managers.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Room.Abstract;
-using _StoryGame.Infrastructure.Logging;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

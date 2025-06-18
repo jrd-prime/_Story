@@ -2,11 +2,11 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Character.Player.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
+using _StoryGame.Data.Loot;
 using _StoryGame.Game.Character.Player.Messages;
-using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.Movement;
-using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
@@ -157,9 +157,9 @@ namespace _StoryGame.Game.Character.Player.Impls
                 _selfMsgPub.Publish(new OutOfEnergyMsg());
         }
 
-        public void AddNote(InspectableLootDataNew lootDataNew)
+        public void AddNote(InspectableLootData lootData)
         {
-            _wallet.Add(lootDataNew.Currency.Id, lootDataNew.Currency.Amount);
+            _wallet.Add(lootData.Currency.Id, lootData.Currency.Amount);
         }
 
         /// <summary>

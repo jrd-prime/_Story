@@ -1,6 +1,6 @@
-﻿using _StoryGame.Data.Const;
+﻿using _StoryGame.Core.UI.Interfaces;
+using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Infrastructure.Bootstrap;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;

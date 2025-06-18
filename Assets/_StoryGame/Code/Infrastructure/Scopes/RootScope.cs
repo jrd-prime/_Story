@@ -1,7 +1,11 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Currency.Impls;
-using _StoryGame.Core.Managers;
+using _StoryGame.Core.Providers.Assets;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Main;
+using _StoryGame.Game.Publisher;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;

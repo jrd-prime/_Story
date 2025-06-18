@@ -1,8 +1,7 @@
 ﻿using System;
+using _StoryGame.Core.Currency;
 using _StoryGame.Core.Currency.Interfaces;
 using UnityEngine;
-using ECurrencyRarity = _StoryGame.Core.Currency.Enums.ECurrencyRarity;
-using ECurrencyType = _StoryGame.Core.Currency.Enums.ECurrencyType;
 
 namespace _StoryGame.Data.SO.Abstract
 {

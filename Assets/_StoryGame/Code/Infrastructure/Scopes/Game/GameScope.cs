@@ -1,19 +1,17 @@
 ﻿using System;
 using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Loot.Interfaces;
-using _StoryGame.Core.Managers.Game.Impls;
 using _StoryGame.Core.WalletNew.Impls;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interactables;
 using _StoryGame.Game.Interactables.Abstract;
-using _StoryGame.Game.Interactables.Impls.Inspect;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Game.Managers.Game;
 using _StoryGame.Game.Managers.Interfaces;
-using _StoryGame.Game.Managers.UI;
 using _StoryGame.Game.Movement;
 using _StoryGame.Game.UI.Impls.Viewer;
 using _StoryGame.Game.UI.Impls.Views.Gameplay;
@@ -100,14 +98,15 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             // builder.Register<InteractableDialogSystem>(Lifetime.Singleton).AsSelf();
         }
 
-        private void RegisterLoot(IContainerBuilder builder)
+        private static void RegisterLoot(IContainerBuilder builder)
         {
             builder.Register<LootSystem>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
-        private void RegisterInteractableSystems(IContainerBuilder builder)
+        private static void RegisterInteractableSystems(IContainerBuilder builder)
         {
             builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<UseSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()

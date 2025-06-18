@@ -1,5 +1,5 @@
 ﻿using _StoryGame.Core.Room.Interfaces;
-using _StoryGame.Game.Loot.Impls;
+using _StoryGame.Data.Loot;
 
 namespace _StoryGame.Core.Loot.Interfaces
 {

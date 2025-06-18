@@ -1,0 +1,32 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_StoryGame/Static/UI/USS/buttons.uss?fileID=7433441132597879392&amp;guid=6f00e414ece0c6740b4c39f8a7085f9a&amp;type=3#buttons" />
+    <Style src="project://database/Assets/_StoryGame/Static/UI/USS/popup.uss?fileID=7433441132597879392&amp;guid=00bf0efda7773cd459c51d094b705257&amp;type=3#popup" />
+    <engine:VisualElement name="cMain" class="pp-window-cont" style="width: auto;">
+        <engine:VisualElement name="cHead" class="pp-head-cont">
+            <engine:Label text="SOME TITLE (ЗАГОЛОВОК)" name="title-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 2px; padding-right: 0; padding-bottom: 2px; padding-left: 0;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="cContent" class="pp-desc-cont">
+            <engine:Label text="Label" name="desc-label" picking-mode="Ignore" style="flex-wrap: wrap; max-width: 500px; flex-grow: 1; flex-shrink: 1; flex-direction: row; align-self: center; justify-content: center; align-items: flex-start; align-content: center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; white-space: normal;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="cBtn" class="pp-btn-cont">
+            <engine:VisualElement name="left" class="left-cont">
+                <engine:VisualElement name="close-btn-cont" class="pp-btn-cont-base" style="flex-grow: 1; position: relative;">
+                    <engine:Button text="NO" name="close" class="pp-btn-base pp-btn-secondary" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="mid" class="mid-cont" />
+            <engine:VisualElement name="right" class="right-cont">
+                <engine:VisualElement name="leave-room-btn-cont" class="pp-btn-cont-base">
+                    <engine:Button name="leave-room" class="pp-btn-base pp-btn-accent pp-btn-accent-with-icon" style="background-color: rgb(29, 106, 92); color: rgb(255, 255, 255); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                        <engine:Label text="YES" style="min-width: 128px; min-height: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                        <engine:VisualElement name="cut" picking-mode="Ignore" style="flex-grow: 0; width: 2px; height: 100%; background-color: rgb(0, 0, 0);" />
+                        <engine:VisualElement name="icon-cont" picking-mode="Ignore" style="flex-grow: 1; width: 70px; height: 100%; flex-direction: row; justify-content: center; align-items: center; align-self: center; align-content: center;">
+                            <engine:Label text="-2" style="-unity-text-align: middle-right; font-size: 18px; min-width: 20px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-font-definition: url(&quot;project://database/Assets/_StoryGame/Static/Font/Nunito/Nunito-Regular.ttf?fileID=12800000&amp;guid=3a9957c37bcbacd4aa7d1e01faa1316c&amp;type=3#Nunito-Regular&quot;); -unity-font-style: normal;" />
+                            <engine:VisualElement name="icon" style="flex-grow: 0; min-width: auto; width: 32px; height: 32px; background-image: url(&quot;project://database/Assets/_StoryGame/Static/Art/Icons/energy_icon.png?fileID=21300000&amp;guid=0140655f599aa9440abcc4c92c4dd64e&amp;type=3#energy_icon&quot;); position: relative; left: auto;" />
+                        </engine:VisualElement>
+                    </engine:Button>
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

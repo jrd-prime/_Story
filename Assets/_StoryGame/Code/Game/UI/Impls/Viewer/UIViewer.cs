@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.HSM.Impls.States;
-using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Managers.Game;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Back;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.HUD;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Movement;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
-using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
+using IUIViewer = _StoryGame.Game.UI.Interfaces.IUIViewer;
 
 namespace _StoryGame.Game.UI.Impls.Viewer
 {
@@ -74,6 +75,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                     break;
                 case ShowNewNoteMsg msg:
                     _floatingLayerHandler.ShowNewNote(msg);
+                    break;
+                case ShowExitRoomWindowMsg msg:
+                    _floatingLayerHandler.ShowRoomChooseWindow(msg);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
@@ -145,9 +149,5 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             _isInitialized = false;
             _viewsCache.Clear();
         }
-    }
-
-    public interface IUIViewer
-    {
     }
 }

@@ -1,5 +1,5 @@
-﻿using _StoryGame.Core.Interfaces.Publisher.Messages;
-using _StoryGame.Game.Loot.Impls;
+﻿using _StoryGame.Core.Messaging.Interfaces;
+using _StoryGame.Data.Loot;
 
 namespace _StoryGame.Game.Managers.Game.Messages
 {

@@ -66,6 +66,10 @@ MonoBehaviour:
     m_Localized: No sign of life.
     m_Metadata:
       m_Items: []
+  - m_Id: 6905727615434752
+    m_Localized: Leave the room?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,8 +1,9 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Extensions;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Main;
-using _StoryGame.Infrastructure.Logging;
-using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;

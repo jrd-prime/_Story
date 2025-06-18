@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _StoryGame.Core.Currency.Enums;
+using _StoryGame.Core.Currency;
 using _StoryGame.Core.Loot;
 using _StoryGame.Core.Loot.Interfaces;
+using _StoryGame.Core.Providers.Assets;
+using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.Interactable;
+using _StoryGame.Data.Loot;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Infrastructure.Assets;
-using _StoryGame.Infrastructure.Localization;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -45,7 +46,7 @@ namespace _StoryGame.Game.Loot.Impls
 
             foreach (var (inspectableId, typesList) in lootTypes.Loot)
             {
-                var lootList = new List<InspectableLootDataNew>();
+                var lootList = new List<InspectableLootData>();
 
                 foreach (var lootType in typesList)
                 {
@@ -65,7 +66,7 @@ namespace _StoryGame.Game.Loot.Impls
         }
 
 
-        private InspectableLootDataNew CreateLootData(
+        private InspectableLootData CreateLootData(
             LootType type,
             string roomId,
             string inspectableId,
@@ -80,7 +81,7 @@ namespace _StoryGame.Game.Loot.Impls
             };
         }
 
-        private InspectableLootDataNew Create(string roomId, string inspectableId, ACurrencyData data)
+        private InspectableLootData Create(string roomId, string inspectableId, ACurrencyData data)
         {
             try
             {
@@ -95,7 +96,7 @@ namespace _StoryGame.Game.Loot.Impls
                 {
                 }
 
-                return new InspectableLootDataNew(roomId, inspectableId, icon, data);
+                return new InspectableLootData(roomId, inspectableId, icon, data);
             }
             catch (Exception ex)
             {
@@ -107,7 +108,7 @@ namespace _StoryGame.Game.Loot.Impls
         /// <summary>
         /// Генерирует не конкретный лут, а типы лута
         /// </summary>
-        public GeneratedRoomLootTypes GenerateLoot(List<IInspectable> inspectables)
+        public GeneratedRoomLootTypesData GenerateLoot(List<IInspectable> inspectables)
         {
             var result = new Dictionary<string, List<LootType>>();
 
@@ -125,7 +126,7 @@ namespace _StoryGame.Game.Loot.Impls
             TryAssignLootWithRoomChance(LootType.Energy, inspectables, result, .8f);
 
             _roomId = null;
-            return new GeneratedRoomLootTypes(result);
+            return new GeneratedRoomLootTypesData(result);
         }
 
         private bool AssignLootGuaranteed(LootType lootType, List<IInspectable> inspectables,

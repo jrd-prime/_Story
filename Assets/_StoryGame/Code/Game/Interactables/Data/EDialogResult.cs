@@ -4,6 +4,7 @@
     {
         Close,
         TakeAll,
-        Search
+        Search,
+        Apply
     }
 }

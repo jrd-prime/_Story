@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _StoryGame.Core.Common.Interfaces;
+using UnityEngine;
 
 namespace _StoryGame.Infrastructure.Logging
 {
@@ -28,13 +29,5 @@ namespace _StoryGame.Infrastructure.Logging
         {
             UnityEngine.Debug.LogWarning(message);
         }
-    }
-
-    public interface IJLog
-    {
-        void Info(string message);
-        void Error(string message);
-        void Warn(string message);
-        void Debug(string message);
     }
 }

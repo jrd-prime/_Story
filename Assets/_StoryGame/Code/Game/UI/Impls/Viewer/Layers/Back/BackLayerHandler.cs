@@ -1,4 +1,4 @@
-﻿using _StoryGame.Core.Interfaces.UI;
+﻿using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.UI.Abstract;
 using UnityEngine.UIElements;
 using VContainer;

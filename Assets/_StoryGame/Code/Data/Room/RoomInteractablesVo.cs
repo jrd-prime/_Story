@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Game.Interactables.Impls;
+using _StoryGame.Game.Interactables.Impls.Inspect;
 using _StoryGame.Game.Interactables.Interfaces;
 
 namespace _StoryGame.Data.Room

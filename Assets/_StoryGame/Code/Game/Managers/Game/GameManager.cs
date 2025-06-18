@@ -1,22 +1,22 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Currency.Enums;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Currency;
 using _StoryGame.Core.HSM.Impls;
-using _StoryGame.Core.Interfaces.Managers;
-using _StoryGame.Core.Interfaces.Publisher;
-using _StoryGame.Core.Interfaces.Publisher.Messages;
-using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.Input.Messages;
+using _StoryGame.Core.Managers;
+using _StoryGame.Core.Messaging.Interfaces;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Const;
+using _StoryGame.Data.Loot;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Game.Loot.Impls;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Managers.Interfaces;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
-using _StoryGame.Infrastructure.Input.Messages;
-using _StoryGame.Infrastructure.Localization;
-using _StoryGame.Infrastructure.Logging;
-using _StoryGame.Infrastructure.Settings;
 using MessagePipe;
 using R3;
 using UnityEngine;
@@ -119,6 +119,16 @@ namespace _StoryGame.Game.Managers.Game
                 OnTakeRoomLootMsg,
                 msg => msg is TakeRoomLootMsg
             );
+            _gameManagerMsgSub.Subscribe(
+                OnRoomChooseRequestMsg,
+                msg => msg is RoomChooseRequestMsg
+            );
+        }
+
+        private void OnRoomChooseRequestMsg(IGameManagerMsg obj)
+        {
+            Debug.Log($"OnMessage: {obj.GetType().Name}");
+            var msg = obj as RoomChooseRequestMsg ?? throw new ArgumentNullException(nameof(obj));
         }
 
         private void OnSpendEnergyMsg(IGameManagerMsg message)
@@ -138,32 +148,32 @@ namespace _StoryGame.Game.Managers.Game
         }
 
         //TODO ужас
-        private void ProcessLoot(InspectableLootDataNew lootDataNew)
+        private void ProcessLoot(InspectableLootData lootData)
         {
-            switch (lootDataNew.Currency.Type)
+            switch (lootData.Currency.Type)
             {
                 case ECurrencyType.Energy:
-                    _player.AddEnergy(lootDataNew.Currency.Amount);
+                    _player.AddEnergy(lootData.Currency.Amount);
                     break;
                 case ECurrencyType.CoreItem:
-                    TempWallet.Add(lootDataNew.Currency.Id, lootDataNew.Currency.Amount);
+                    TempWallet.Add(lootData.Currency.Id, lootData.Currency.Amount);
                     break;
                 case ECurrencyType.Note:
-                    _player.AddNote(lootDataNew);
-                    var noteTitle = _localizationProvider.Localize(lootDataNew.Currency.LocalizationKey,
+                    _player.AddNote(lootData);
+                    var noteTitle = _localizationProvider.Localize(lootData.Currency.LocalizationKey,
                         ETable.SimpleNote,
                         ETextTransform.Upper);
                     var noteText = _localizationProvider.Localize(
-                        (lootDataNew.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.SimpleNote);
-                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootDataNew, noteTitle, noteText));
+                        (lootData.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.SimpleNote);
+                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootData, noteTitle, noteText));
                     break;
                 case ECurrencyType.CoreNote:
-                    _player.AddNote(lootDataNew);
-                    var title = _localizationProvider.Localize(lootDataNew.Currency.LocalizationKey, ETable.CoreNote,
+                    _player.AddNote(lootData);
+                    var title = _localizationProvider.Localize(lootData.Currency.LocalizationKey, ETable.CoreNote,
                         ETextTransform.Upper);
                     var text = _localizationProvider.Localize(
-                        (lootDataNew.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.CoreNote);
-                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootDataNew, title, text));
+                        (lootData.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.CoreNote);
+                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootData, title, text));
                     break;
                 case ECurrencyType.Tip:
                     _log.Warn("Show tip");
@@ -172,7 +182,7 @@ namespace _StoryGame.Game.Managers.Game
                     _log.Warn("Process special loot");
                     break;
                 default:
-                    _log.Error($"Unknown currency type: {lootDataNew.Currency.Type}");
+                    _log.Error($"Unknown currency type: {lootData.Currency.Type}");
                     throw new ArgumentOutOfRangeException();
             }
         }
@@ -224,9 +234,5 @@ namespace _StoryGame.Game.Managers.Game
             _log.Info("GAME CONTINUED");
             _gameService.ContinueGame();
         }
-    }
-
-    public record ShowNewNoteMsg(InspectableLootDataNew Loot, string Title, string Text) : IUIViewerMsg
-    {
     }
 }

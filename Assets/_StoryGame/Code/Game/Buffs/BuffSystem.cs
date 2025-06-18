@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using _StoryGame.Core.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
 using UnityEngine;
 using VContainer.Unity;
 

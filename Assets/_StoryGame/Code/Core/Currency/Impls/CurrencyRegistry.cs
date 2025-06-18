@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _StoryGame.Core.Currency.Enums;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Currency.Interfaces;
+using _StoryGame.Core.Providers.Assets;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Main;
-using _StoryGame.Infrastructure.Assets;
-using _StoryGame.Infrastructure.Logging;
-using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

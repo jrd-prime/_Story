@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Data;
-using _StoryGame.Game.Managers.Game;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using UnityEngine;
@@ -65,7 +65,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         {
         }
 
-
+        // TODO CHECK IF ENOUGH ENERGY
         public void ShowHasLootWindow(ShowHasLootWindowMsg msg)
         {
             if (!HasWindow(msg.WindowType))
@@ -183,6 +183,33 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             _left.Add(window);
         }
+
+        public void ShowRoomChooseWindow(ShowExitRoomWindowMsg msg)
+        {
+            _center.Clear();
+
+            var window = _windows[EFloatingWindowType.LeaveRoom];
+
+            var titleLab = window.GetVisualElement<Label>("title-label", window.name);
+            var descLab = window.GetVisualElement<Label>("desc-label", window.name);
+            var closeBtn = window.GetVisualElement<Button>("close", window.name);
+            var leaveRoomBtn = window.GetVisualElement<Button>("leave-room", window.name);
+
+            titleLab.text = msg.LocalizedName;
+            descLab.text = msg.Question;
+            
+            var leaveRoomBtnHandler =
+                new ClickCompletionHandler<EDialogResult>(leaveRoomBtn, EDialogResult.Apply,
+                    msg.CompletionSource, _center);
+            var closeBtnHandler =
+                new ClickCompletionHandler<EDialogResult>(closeBtn, EDialogResult.Close,
+                    msg.CompletionSource, _center);
+
+            leaveRoomBtnHandler.Register();
+            closeBtnHandler.Register();
+
+            _center.Add(window);
+        }
     }
 
     public enum PositionType
@@ -197,6 +224,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         HasLoot,
         NoLoot,
         Loot,
-        Note
+        Note,
+        LeaveRoom
     }
 }

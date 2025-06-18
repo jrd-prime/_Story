@@ -1,0 +1,13 @@
+﻿using _StoryGame.Data.SO.Abstract;
+using UnityEngine;
+
+namespace _StoryGame.Data.Loot
+{
+    public record InspectableLootData(string RoomId, string InspectableId, Sprite Icon, ACurrencyData Currency)
+    {
+        public string RoomId { get; } = RoomId;
+        public string InspectableId { get; } = InspectableId;
+        public Sprite Icon { get; } = Icon;
+        public ACurrencyData Currency { get; } = Currency;
+    }
+}

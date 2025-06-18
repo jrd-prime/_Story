@@ -1,9 +1,9 @@
-﻿using _StoryGame.Infrastructure.Bootstrap;
+﻿using _StoryGame.Game.UI.Abstract;
 using UnityEngine.UIElements;
 
 namespace _StoryGame.Game.UI.Impls.Views.Gameplay
 {
-    public class GameplayAuiView : AuiView<IGameplayUIViewModel>
+    public class GameplayAuiView : AUIView<IGameplayUIViewModel>
     {
         private Button _menuButton;
 

@@ -1,10 +1,10 @@
 ﻿using System;
-using _StoryGame.Core.Interfaces.Managers;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Managers;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Main;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Infrastructure.Logging;
-using _StoryGame.Infrastructure.Settings;
 using R3;
 using UnityEngine.UIElements;
 using VContainer;

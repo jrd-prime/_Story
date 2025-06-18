@@ -63,6 +63,10 @@ MonoBehaviour:
     m_Key: inspect_sys_no_loot_06
     m_Metadata:
       m_Items: []
+  - m_Id: 6905727615434752
+    m_Key: key_leave_room_question
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

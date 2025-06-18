@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _StoryGame.Data.UI;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 

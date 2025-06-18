@@ -1,7 +1,7 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Game.Managers.Interfaces;
-using _StoryGame.Infrastructure.Logging;
 using R3;
 using UnityEngine;
 using VContainer;

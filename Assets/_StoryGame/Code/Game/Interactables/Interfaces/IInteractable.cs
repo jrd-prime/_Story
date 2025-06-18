@@ -8,6 +8,7 @@ namespace _StoryGame.Game.Interactables.Interfaces
 {
     public interface IInteractable
     {
+        string Id { get; }
         EInteractableType InteractableType { get; }
         bool CanInteract { get; set; }
         string InteractionTipNameId { get; }

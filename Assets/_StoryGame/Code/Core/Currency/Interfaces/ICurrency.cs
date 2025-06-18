@@ -1,5 +1,3 @@
-using _StoryGame.Core.Currency.Enums;
-
 namespace _StoryGame.Core.Currency.Interfaces
 {
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _StoryGame.Infrastructure.Bootstrap.Interfaces;
-using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.UI.Interfaces;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Infrastructure.Bootstrap

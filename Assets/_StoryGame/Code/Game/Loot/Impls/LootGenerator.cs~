@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _StoryGame.Core.Currency.Enums;
+using _StoryGame.Core.Currency;
 using _StoryGame.Core.Loot;
 using _StoryGame.Core.Loot.Interfaces;
+using _StoryGame.Core.Providers.Assets;
+using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.Interactable;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Infrastructure.Assets;
-using _StoryGame.Infrastructure.Localization;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -55,7 +55,8 @@ namespace _StoryGame.Game.Loot.Impls
                 }
 
                 var localizationKey = localizationKeyMap.GetValueOrDefault(inspectableId, LocalizationConst.ErrorKey);
-                var localizedName = _localization.LocalizeWord(localizationKey, ETextTransform.Upper);
+                var localizedName =
+                    _localization.Localize(localizationKey, ETable.Words, ETextTransform.Upper);
 
                 roomData[inspectableId] = new InspectableData(localizedName, lootList);
             }
@@ -92,7 +93,6 @@ namespace _StoryGame.Game.Loot.Impls
 
                 if (data.Type is ECurrencyType.Note)
                 {
-                    
                 }
 
                 return new InspectableLootDataNew(roomId, inspectableId, icon, data);

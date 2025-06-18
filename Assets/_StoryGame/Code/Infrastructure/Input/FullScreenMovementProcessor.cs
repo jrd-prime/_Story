@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Core.Common.Interfaces;
 using R3;
 using UnityEngine;
 using VContainer.Unity;

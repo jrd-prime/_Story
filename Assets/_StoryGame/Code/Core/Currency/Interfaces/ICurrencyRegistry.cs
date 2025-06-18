@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using _StoryGame.Core.Currency.Enums;
-using _StoryGame.Infrastructure.Bootstrap.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
 using UnityEngine;
 
 namespace _StoryGame.Core.Currency.Interfaces

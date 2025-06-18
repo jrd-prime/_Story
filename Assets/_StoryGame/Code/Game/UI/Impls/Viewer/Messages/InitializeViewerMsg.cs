@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Core.HSM.Impls.States;
-using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.UI.Abstract;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Messages

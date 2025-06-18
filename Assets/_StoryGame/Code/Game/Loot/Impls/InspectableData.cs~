@@ -1,0 +1,6 @@
+﻿using System.Collections.Generic;
+
+namespace _StoryGame.Game.Loot.Impls
+{
+    public record InspectableData(string LocalizedName, List<InspectableLootDataNew> InspectablesLoot);
+}

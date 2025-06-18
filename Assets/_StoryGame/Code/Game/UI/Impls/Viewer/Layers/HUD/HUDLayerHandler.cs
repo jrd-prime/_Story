@@ -1,10 +1,11 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Currency.Interfaces;
-using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
+using _StoryGame.Game.Interactables;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components;
 using _StoryGame.Infrastructure.Tools;
@@ -20,10 +21,12 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
     {
         private const string FpsLabelId = "fps";
         private const string StateLabelId = "state";
+        private const string CurrentInteractableLabelId = "interactable";
 
         private FPSCounter _fpsCounter;
         private Label _fpsLab;
         private Label _stateLab;
+        private Label _currentInteractableLab;
         private VisualElement _currentViewMainContainer = null;
 
         private InventoryHUDController _inventoryHUDController;
@@ -31,6 +34,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
         private IWallet _tempWallet;
         private VisualTreeAsset _invCellTemplate;
         private IPlayer _player;
+        private InteractableProcessor _interactableProcessor;
 
         public HUDLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver, layerBack)
         {
@@ -51,12 +55,15 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
             _energyBarHUDController = new EnergyBarHUDController(_player).AddTo(Disposables);
 
             _fpsCounter = resolver.Resolve<FPSCounter>();
+
+            _interactableProcessor = resolver.Resolve<InteractableProcessor>();
         }
 
         protected override void InitElements()
         {
             _fpsLab = GetElement<Label>(FpsLabelId);
             _stateLab = GetElement<Label>(StateLabelId);
+            _currentInteractableLab = GetElement<Label>(CurrentInteractableLabelId);
         }
 
         protected override void Subscribe()
@@ -74,8 +81,18 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
             _player.State
                 .Subscribe(ShowState)
                 .AddTo(Disposables);
+
+            _interactableProcessor.CurrentInteractable
+                .Subscribe(ShowCurrentInteractable)
+                .AddTo(Disposables);
         }
 
+        private void ShowCurrentInteractable(string name)
+        {
+            UniTask.Post(
+                () => _currentInteractableLab.text = name
+            );
+        }
 
         protected override void Unsubscribe()
         {

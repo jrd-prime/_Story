@@ -1,6 +1,7 @@
 ﻿using System;
-using _StoryGame.Core.Interfaces.Publisher.Messages;
+using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.UI.Msg;
+using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interactables.Data;
 using DG.Tweening;

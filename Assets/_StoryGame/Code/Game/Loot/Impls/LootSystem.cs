@@ -1,33 +1,14 @@
 ﻿using System.Collections.Generic;
-using _StoryGame.Core.Loot;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Loot.Interfaces;
+using _StoryGame.Core.Providers.Assets;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Const;
-using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Infrastructure.Assets;
-using _StoryGame.Infrastructure.Logging;
-using UnityEngine;
+using _StoryGame.Data.Loot;
 
 namespace _StoryGame.Game.Loot.Impls
 {
     // в каждой комнате лут будет гененрироваться, при смене комнаты - сбрасываться
-    public record InspectableData(string LocalizedName, List<InspectableLootDataNew> InspectablesLoot);
-
-    public record RoomLootData(Dictionary<string, InspectableData> InspectableData)
-    {
-        /// <summary>
-        /// InspectableId -> InspectableData  
-        /// </summary>
-        public Dictionary<string, InspectableData> InspectableData { get; } = InspectableData;
-    }
-
-    public record InspectableLootDataNew(string RoomId, string InspectableId, Sprite Icon, ACurrencyData Currency)
-    {
-        public string RoomId { get; } = RoomId;
-        public string InspectableId { get; } = InspectableId;
-        public Sprite Icon { get; } = Icon;
-        public ACurrencyData Currency { get; } = Currency;
-    }
 
     /// <summary>
     /// Гененрирует лут для комнат и держит кэш сгенерированного лута (в виде типов)
@@ -75,11 +56,11 @@ namespace _StoryGame.Game.Loot.Impls
                     return inspectableData;
 
                 _log.Error($"InspectableData for inspectable {inspectableId} in room {roomId} not found.");
-                return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootDataNew>());
+                return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootData>());
             }
 
             _log.Error($"Room {roomId} not found in loot cache.");
-            return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootDataNew>());
+            return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootData>());
         }
 
 
@@ -113,13 +94,5 @@ namespace _StoryGame.Game.Loot.Impls
             _log.Debug("Reset Loot On Room Change");
             _roomLootDataCache.Clear();
         }
-    }
-
-    /// <summary>
-    /// Содержит список типов лута для какждого исследуемого объекта по Id
-    /// </summary>
-    public record GeneratedRoomLootTypes(Dictionary<string, List<LootType>> Loot)
-    {
-        public Dictionary<string, List<LootType>> Loot { get; } = Loot; // <inspectable id, loot types>
     }
 }

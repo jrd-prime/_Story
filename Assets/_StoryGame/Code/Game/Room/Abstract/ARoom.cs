@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Loot.Interfaces;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Interactable;
+using _StoryGame.Data.Loot;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interactables.Impls.Use;
-using _StoryGame.Game.Loot.Impls;
+using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
-using _StoryGame.Infrastructure.Settings;
 using MessagePipe;
 using R3;
 using UnityEngine;
@@ -84,10 +85,5 @@ namespace _StoryGame.Game.Room.Abstract
             foreach (var inspectable in interactables.inspectables)
                 inspectable.SetRoom(this);
         }
-    }
-
-    public record RoomLootGeneratedMsg(string RoomId)
-    {
-        public string RoomId { get; } = RoomId;
     }
 }
