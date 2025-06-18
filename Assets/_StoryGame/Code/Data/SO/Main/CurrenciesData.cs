@@ -17,7 +17,7 @@ namespace _StoryGame.Data.SO.Main
         public List<CoreNoteData> coreNotes;
         public List<NoteData> notes;
         public List<SpecialItemData> specialItems;
-        public List<TipData> tips;
+        public List<ThoughtData> tips;
         public EnergyData energy;
 
         public IEnumerable<ICurrency> GetAll()

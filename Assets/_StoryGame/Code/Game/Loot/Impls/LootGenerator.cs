@@ -67,16 +67,16 @@ namespace _StoryGame.Game.Loot.Impls
 
 
         private InspectableLootData CreateLootData(
-            LootType type,
+            ELootType type,
             string roomId,
             string inspectableId,
             InspectableLootVo inspectableLootData)
         {
             return type switch
             {
-                LootType.Core => Create(roomId, inspectableId, inspectableLootData.coreItem.coreItemData),
-                LootType.Energy => Create(roomId, inspectableId, inspectableLootData.energy.energy),
-                LootType.Note => Create(roomId, inspectableId, inspectableLootData.notes.notes[0]),
+                ELootType.Core => Create(roomId, inspectableId, inspectableLootData.coreItem.coreItemData),
+                ELootType.Energy => Create(roomId, inspectableId, inspectableLootData.energy.energy),
+                ELootType.Note => Create(roomId, inspectableId, inspectableLootData.notes.notes[0]),
                 _ => null
             };
         }
@@ -110,40 +110,40 @@ namespace _StoryGame.Game.Loot.Impls
         /// </summary>
         public GeneratedRoomLootTypesData GenerateLoot(List<IInspectable> inspectables)
         {
-            var result = new Dictionary<string, List<LootType>>();
+            var result = new Dictionary<string, List<ELootType>>();
 
             if (inspectables == null || inspectables.Count == 0)
                 throw new Exception($"{nameof(LootGenerator)} Нет доступных объектов для лута! {_roomId}");
 
             foreach (var obj in inspectables)
-                result[obj.Id] = new List<LootType>();
+                result[obj.Id] = new List<ELootType>();
 
-            var coreAssigned = AssignLootGuaranteed(LootType.Core, inspectables, result);
+            var coreAssigned = AssignLootGuaranteed(ELootType.Core, inspectables, result);
             if (!coreAssigned)
                 throw new Exception($"{nameof(LootGenerator)} Не удалось разместить Core в комнате. {_roomId}");
 
-            TryAssignLootWithRoomChance(LootType.Note, inspectables, result, .8f);
-            TryAssignLootWithRoomChance(LootType.Energy, inspectables, result, .8f);
+            TryAssignLootWithRoomChance(ELootType.Note, inspectables, result, .8f);
+            TryAssignLootWithRoomChance(ELootType.Energy, inspectables, result, .8f);
 
             _roomId = null;
             return new GeneratedRoomLootTypesData(result);
         }
 
-        private bool AssignLootGuaranteed(LootType lootType, List<IInspectable> inspectables,
-            Dictionary<string, List<LootType>> result)
+        private bool AssignLootGuaranteed(ELootType eLootType, List<IInspectable> inspectables,
+            Dictionary<string, List<ELootType>> result)
         {
             var weightedList = inspectables
                 .Select(inspectable => new
                 {
                     obj = inspectable,
-                    weight = inspectable.GetLootChance(lootType)
+                    weight = inspectable.GetLootChance(eLootType)
                 })
                 .Where(x => x.weight > 0)
                 .ToList();
 
             if (weightedList.Count == 0)
                 throw new Exception(
-                    $"{nameof(LootGenerator)} Нет объектов с положительным шансом для {lootType}! {_roomId}");
+                    $"{nameof(LootGenerator)} Нет объектов с положительным шансом для {eLootType}! {_roomId}");
 
 
             float totalWeight = weightedList.Sum(x => x.weight);
@@ -157,19 +157,19 @@ namespace _StoryGame.Game.Loot.Impls
                 if (roll > cumulative)
                     continue;
 
-                result[item.obj.Id].Add(lootType);
+                result[item.obj.Id].Add(eLootType);
                 return true;
             }
 
             Debug.LogError(
-                $"{nameof(LootGenerator)} Не удалось назначить {lootType} в комнате, хотя объекты были! {_roomId}");
+                $"{nameof(LootGenerator)} Не удалось назначить {eLootType} в комнате, хотя объекты были! {_roomId}");
             return false;
         }
 
         private void TryAssignLootWithRoomChance(
-            LootType type,
+            ELootType type,
             List<IInspectable> inspectables,
-            Dictionary<string, List<LootType>> result,
+            Dictionary<string, List<ELootType>> result,
             float roomChance)
         {
             var globalRoll = Random.value;
@@ -184,7 +184,7 @@ namespace _StoryGame.Game.Loot.Impls
             var availableInspectables = inspectables
                 .Where(obj =>
                     !result[obj.Id]
-                        .Contains(LootType.Core))
+                        .Contains(ELootType.Core))
                 .Select(inspectable => new
                 {
                     obj = inspectable,

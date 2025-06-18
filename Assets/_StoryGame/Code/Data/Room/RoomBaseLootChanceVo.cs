@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Loot;
+using _StoryGame.Data.Loot;
 
 namespace _StoryGame.Data.Room
 {
@@ -11,13 +12,13 @@ namespace _StoryGame.Data.Room
         public int energyBaseChance;
         public int emptyBaseChance;
 
-        public int GetLootChance(LootType lootType)
+        public int GetLootChance(ELootType eLootType)
         {
-            return lootType switch
+            return eLootType switch
             {
-                LootType.Core => coreItemBaseChance,
-                LootType.Note => noteBaseChance,
-                LootType.Energy => energyBaseChance,
+                ELootType.Core => coreItemBaseChance,
+                ELootType.Note => noteBaseChance,
+                ELootType.Energy => energyBaseChance,
                 _ => emptyBaseChance
             };
         }

@@ -1191,10 +1191,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomPrototype
       objectReference: {fileID: 0}
-    - target: {fileID: 4197047189796454589, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.821
-      objectReference: {fileID: 0}
     - target: {fileID: 8192114921744825705, guid: 0d4cbc3d6c642e04e9fe6499b48073ea, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2

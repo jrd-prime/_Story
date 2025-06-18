@@ -1,4 +1,6 @@
 using _StoryGame.Core.WalletNew.Interfaces;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Data.SO.Currency;
 using R3;
 
 namespace _StoryGame.Core.Managers
@@ -19,6 +21,8 @@ namespace _StoryGame.Core.Managers
         /// Время игры
         /// </summary>
         ReactiveProperty<float> GameTime { get; }
+
+        IWallet PlayerWallet { get; }
 
         /// <summary>
         /// Запуск игры
@@ -49,6 +53,9 @@ namespace _StoryGame.Core.Managers
         /// Загрузка игры
         /// </summary>
         void LoadGame();
+
+        bool IsPlayerHasItem(SpecialItemData itemData);
+        bool IsPlayerHasConditionalItems(ACurrencyData[] conditionalItems);
     }
 
     /// <summary>

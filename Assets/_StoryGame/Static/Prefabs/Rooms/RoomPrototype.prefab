@@ -1280,6 +1280,18 @@ PrefabInstance:
       propertyPath: objName
       value: notset
       objectReference: {fileID: 0}
+    - target: {fileID: 8647532996951183302, guid: 4569967a1f40e3b44be807e1b4176938, type: 3}
+      propertyPath: <Loot>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c5bc78edb80293e44b91941250091cc2, type: 2}
+    - target: {fileID: 8647532996951183302, guid: 4569967a1f40e3b44be807e1b4176938, type: 3}
+      propertyPath: <ConditionalItems>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8647532996951183302, guid: 4569967a1f40e3b44be807e1b4176938, type: 3}
+      propertyPath: '<ConditionalItems>k__BackingField.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a9020e71f09c2624ebc76375b685f57f, type: 2}
     - target: {fileID: 8884127302871908603, guid: 4569967a1f40e3b44be807e1b4176938, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7

@@ -3,7 +3,7 @@ using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
 using MessagePipe;
 
-namespace _StoryGame.Game.Publisher
+namespace _StoryGame.Game.Messaging
 {
     public sealed class JPublisher : IJPublisher
     {

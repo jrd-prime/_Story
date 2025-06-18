@@ -14,6 +14,6 @@ namespace _StoryGame.Core.Room.Interfaces
         bool HasLoot(string inspectableId);
         InspectableLootVo GetLootData();
         InspectableData GetLoot(string inspectableId);
-        bool UpdateStateForConditionalObjects();
+        bool InitStateForConditionalObjects();
     }
 }

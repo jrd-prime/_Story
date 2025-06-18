@@ -1,8 +1,11 @@
-﻿using _StoryGame.Core.Character.Common.Interfaces;
+﻿using System;
+using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Data.SO.Currency;
 using _StoryGame.Game.Interactables.Abstract;
 using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 
 namespace _StoryGame.Game.Interactables.Impls
@@ -11,20 +14,46 @@ namespace _StoryGame.Game.Interactables.Impls
     /// Объект, для которого необходимо выполнение каких-либо условий чтобы он стал активен.
     /// После выполнения условий он "меняет" поведение
     /// </summary>
-    public sealed class Conditional : AInteractable
+    public sealed class Conditional : AInteractable<ConditionalSystem>
     {
+        [field: SerializeField] public SpecialItemData Loot { get; private set; }
+        [field: SerializeField] public ACurrencyData[] ConditionalItems { get; private set; }
+        [field: SerializeField] public ThoughtData LockedStateThought { get; private set; }
+
         public override EInteractableType InteractableType => EInteractableType.Condition;
+        public EConditionalState ConditionalState { get; private set; } = EConditionalState.Unknown;
+
+        public void SetConditionalState(EConditionalState conditionalState) =>
+            ConditionalState = conditionalState;
 
         public override async UniTask InteractAsync(ICharacter character)
         {
-            var completionSource = new UniTaskCompletionSource();
-
-            transform.DORotate(new Vector3(0, 360, 0), 2f, RotateMode.FastBeyond360)
-                .SetRelative(true)
-                .SetEase(Ease.Linear)
-                .OnComplete(() => completionSource.TrySetResult());
-
-            await completionSource.Task;
+            await System.Process(this);
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (!Loot)
+                throw new Exception("Loot is null. " + name);
+
+            if (ConditionalItems == null || ConditionalItems.Length == 0)
+                throw new Exception("Conditional items is null or empty. " + name);
+
+            foreach (var currencyData in ConditionalItems)
+            {
+                if (currencyData is not CoreItemData or CoreNoteData)
+                    Debug.LogWarning("Currency data is not CoreItem or CoreNote. " + name, this);
+            }
+        }
+#endif
+    }
+
+    public enum EConditionalState
+    {
+        Unknown = -1, // Неизвестное состояние - должно быть установлено при создании комнаты
+        Looted, // Предмет был собран
+        Locked, // Нет предмета удовлетворяющего условиям "открытия"
+        Unlocked // Предмет может быть "открыт"
     }
 }

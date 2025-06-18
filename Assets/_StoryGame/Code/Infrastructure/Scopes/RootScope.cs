@@ -5,7 +5,7 @@ using _StoryGame.Core.Providers.Assets;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Main;
-using _StoryGame.Game.Publisher;
+using _StoryGame.Game.Messaging;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;

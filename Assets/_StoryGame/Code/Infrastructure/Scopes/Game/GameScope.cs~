@@ -107,7 +107,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         {
             builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<UseSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()

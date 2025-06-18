@@ -29,7 +29,7 @@ namespace _StoryGame.Core.WalletNew.Impls
 
             _currencies[currencyId] = newAmount;
 
-            Debug.LogWarning("<color=green>"+Id + " / Add " + currencyId + " ... " + previousAmount + " -> " + newAmount + "</color>");
+            Debug.LogWarning(Id + " / Add " + currencyId + " ... " + previousAmount + " -> " + newAmount);
             _onCurrencyChangedSubject.OnNext(new CurrencyChangedData(currencyId, previousAmount, newAmount));
             return true;
         }

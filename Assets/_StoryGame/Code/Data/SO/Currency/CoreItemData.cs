@@ -9,7 +9,7 @@ namespace _StoryGame.Data.SO.Currency
         fileName = nameof(CoreItemData),
         menuName = SOPathConst.Currency + nameof(CoreItemData)
     )]
-    public class CoreItemData : ACurrencyData
+    public class CoreItemData : ACurrencyData, IConditionalCurrency
     {
         public override ECurrencyType Type { get; } = ECurrencyType.CoreItem;
     }

@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Game.Interactables.Impls.Inspect
+﻿namespace _StoryGame.Data.Interactable
 {
     public enum EInspectState
     {

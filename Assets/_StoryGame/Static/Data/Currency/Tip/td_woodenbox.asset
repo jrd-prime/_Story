@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72991505730b478b8749f01ba9c5ed5d, type: 3}
-  m_Name: SpecialCurrencyData
+  m_Script: {fileID: 11500000, guid: 3cb2836206f145ddbb696ae5d1c0fb5a, type: 3}
+  m_Name: td_woodenbox
   m_EditorClassIdentifier: 
-  id: sdfg
-  localizationKey: 
-  descriptionKey: 
+  id: td_woodenbox
+  localizationKey: td_woodenbox_locked
+  descriptionKey: td_woodenbox_locked_text
   iconId: 
   rarity: 0
   maxStackSize: 0
   amount: 1
+  <LocalizationTitleKey>k__BackingField: 
+  <LocalizationTextKey>k__BackingField: 

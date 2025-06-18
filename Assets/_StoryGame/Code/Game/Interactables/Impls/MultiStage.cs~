@@ -8,14 +8,15 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.Interactables.Impls
 {
     /// <summary>
-    /// Например, сейф, который можно открыть
+    /// Объекты с несколькими стадиями взаимодействия
     /// </summary>
-    public sealed class Unlockable : AInteractable<InspectSystem> // TODO fake system
+    public sealed class MultiStage : AInteractableBase<InspectSystem>// TODO fake system
     {
-        public override EInteractableType InteractableType => EInteractableType.Unlock;
+        public override EInteractableType InteractableType => EInteractableType.MultiStage;
         public override UniTask InteractAsync(ICharacter character)
         {
             throw new NotImplementedException();
         }
+
     }
 }

@@ -70,6 +70,14 @@ MonoBehaviour:
     m_Localized: Leave the room?
     m_Metadata:
       m_Items: []
+  - m_Id: 7255776488783872
+    m_Localized: I don't think I can pry it open with my bare hands..
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7255776488783873
+    m_Localized: Found a wooden crate. I need to figure out how to open it.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

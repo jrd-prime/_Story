@@ -2,6 +2,7 @@
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Core.UI.Msg;
+using _StoryGame.Data.Interactable;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.Interactables.Abstract;
 using _StoryGame.Game.Interactables.Data;

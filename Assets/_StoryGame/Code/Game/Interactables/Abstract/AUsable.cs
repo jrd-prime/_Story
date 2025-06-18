@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using UnityEngine;
 
 namespace _StoryGame.Game.Interactables.Abstract
@@ -7,7 +8,7 @@ namespace _StoryGame.Game.Interactables.Abstract
     /// <summary>
     /// Объект, который может быть использован, в т.ч. залутан(т.е. взят в рюкзак). Дверь, выключатель, предмет на полу
     /// </summary>
-    public abstract class AUsable : AInteractable
+    public abstract class AUsable : AInteractable<UseSystem>
     {
         [SerializeField] private EUsableAction usableAction = EUsableAction.NotSet;
         public override EInteractableType InteractableType => EInteractableType.Use;
