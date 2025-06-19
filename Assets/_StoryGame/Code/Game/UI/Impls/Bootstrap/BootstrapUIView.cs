@@ -29,9 +29,9 @@ namespace _StoryGame.Game.UI.Impls.Bootstrap
             await doc.WaitForReadyAsync();
             var root = doc.rootVisualElement;
 
-            _container = root.GetVisualElement<VisualElement>(BootstrapContainerId, name);
-            _loadingLabel = root.GetVisualElement<Label>(LoadingLabelId, name);
-            _appName = root.GetVisualElement<Label>(AppNameLabelId, name);
+            _container = root.GetVElement<VisualElement>(BootstrapContainerId, name);
+            _loadingLabel = root.GetVElement<Label>(LoadingLabelId, name);
+            _appName = root.GetVElement<Label>(AppNameLabelId, name);
 
             _appName.text = AppName;
         }

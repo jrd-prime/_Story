@@ -38,7 +38,7 @@ namespace _StoryGame.Game.UI.Abstract
         private void Initialize()
         {
             _layerRoot.SetFullScreen();
-            MainContainer = _layerRoot.GetVisualElement<VisualElement>(UIConst.MainContainer, GetType().Name);
+            MainContainer = _layerRoot.GetVElement<VisualElement>(UIConst.MainContainer, GetType().Name);
 
             ResolveDependencies();
 
@@ -70,7 +70,7 @@ namespace _StoryGame.Game.UI.Abstract
         protected abstract void Unsubscribe();
 
         protected T GetElement<T>(string id) where T : VisualElement =>
-            _layerRoot.GetVisualElement<T>(id, GetType().Name);
+            _layerRoot.GetVElement<T>(id, GetType().Name);
 
         protected virtual void OnDispose(){}
         public void Dispose()

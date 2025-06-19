@@ -25,7 +25,7 @@ namespace _StoryGame.Game.UI.Impls.Views.Menu
 
         protected override void InitElements()
         {
-            _visualelem = Root.GetVisualElement<VisualElement>("visualbtn", name);
+            _visualelem = Root.GetVElement<VisualElement>("visualbtn", name);
         }
 
 

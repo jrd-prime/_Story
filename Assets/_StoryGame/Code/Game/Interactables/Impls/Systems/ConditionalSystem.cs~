@@ -43,7 +43,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
         private async UniTask<bool> Locked()
         {
             Log.Debug("<color=yellow>Locked</color>".ToUpper());
-            var localizedThought = LocalizationProvider.Localize(Interactable.LockedStateThought.LocalizationKey, ETable.SmallPhrase);
+            var localizedThought = LocalizationProvider.Localize(Interactable., ETable.SmallPhrase);
             var thought = new ThoughtDataVo(localizedThought);
             Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
             await UniTask.Yield();

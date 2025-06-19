@@ -87,8 +87,8 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
             Log.Debug("OnStart Inspect");
 
             var source = new UniTaskCompletionSource<EDialogResult>();
-            var message = new ShowUIProgressOnPlayerActionMsg("Inspect", InspectDuration, source);
-            Publisher.ForPlayerAction(message);
+            var message = new DisplayProgressBarMsg("Inspect", InspectDuration, source);
+            Publisher.ForPlayerOverHeadUI(message);
             await source.Task;
         }
 
@@ -154,7 +154,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
             Log.Debug("OnStart Search");
             // anim hero // await progress bar
             var source = new UniTaskCompletionSource<EDialogResult>();
-            Publisher.ForPlayerAction(new ShowUIProgressOnPlayerActionMsg("Search", SearchDuration, source));
+            Publisher.ForPlayerOverHeadUI(new DisplayProgressBarMsg("Search", SearchDuration, source));
             await source.Task;
         }
 

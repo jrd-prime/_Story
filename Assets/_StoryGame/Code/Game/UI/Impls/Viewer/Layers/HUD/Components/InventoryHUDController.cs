@@ -51,8 +51,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components
 
         private void SetupCellVisuals(VisualElement cell, InventoryCellData cellData)
         {
-            var iconCont = cell.GetVisualElement<VisualElement>("icon", nameof(InventoryHUDController));
-            var label = cell.GetVisualElement<Label>("quantity", nameof(InventoryHUDController));
+            var iconCont = cell.GetVElement<VisualElement>("icon", nameof(InventoryHUDController));
+            var label = cell.GetVElement<Label>("quantity", nameof(InventoryHUDController));
 
             if (cellData.Item != null)
             {

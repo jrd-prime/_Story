@@ -95,7 +95,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             root.style.marginLeft = safeZoneOffset.x >= 16 ? safeZoneOffset.x : 16;
             root.style.marginTop = safeZoneOffset.y;
 
-            _mainContainer = root.GetVisualElement<VisualElement>(UIConst.MainContainer, name);
+            _mainContainer = root.GetVElement<VisualElement>(UIConst.MainContainer, name);
 
             if (_mainContainer == null)
                 throw new NullReferenceException($"VisualElement with ID '{UIConst.MainContainer}' not found. " +
@@ -107,19 +107,19 @@ namespace _StoryGame.Game.UI.Impls.Viewer
         private void InitializeLayers()
         {
             // Back Layer
-            var backLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerBackId, name);
+            var backLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerBackId, name);
             _backLayerHandler = new BackLayerHandler(_resolver, backLayerRoot);
 
             // Movement Layer
-            var movementLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerMovementId, name);
+            var movementLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerMovementId, name);
             _movementLayerHandler = new MovementLayerHandler(_resolver, movementLayerRoot);
 
             // HUD Layer
-            var hudLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerHudId, name);
+            var hudLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerHudId, name);
             _hudLayerHandler = new HUDLayerHandler(_resolver, hudLayerRoot);
 
             // Floating Layer
-            var floatingLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerFloatingId, name);
+            var floatingLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerFloatingId, name);
             _floatingLayerHandler = new FloatingLayerHandler(_resolver, floatingLayerRoot);
         }
 

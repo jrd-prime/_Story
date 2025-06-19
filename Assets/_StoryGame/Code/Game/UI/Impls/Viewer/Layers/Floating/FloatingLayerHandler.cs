@@ -41,9 +41,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
         protected override void InitElements()
         {
-            _left = MainContainer.GetVisualElement<VisualElement>(LeftId, nameof(FloatingLayerHandler));
-            _center = MainContainer.GetVisualElement<VisualElement>(CenterId, nameof(FloatingLayerHandler));
-            _right = MainContainer.GetVisualElement<VisualElement>(RightId, nameof(FloatingLayerHandler));
+            _left = MainContainer.GetVElement<VisualElement>(LeftId, nameof(FloatingLayerHandler));
+            _center = MainContainer.GetVElement<VisualElement>(CenterId, nameof(FloatingLayerHandler));
+            _right = MainContainer.GetVElement<VisualElement>(RightId, nameof(FloatingLayerHandler));
 
             InitializeWindows();
         }
@@ -75,12 +75,12 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             var window = _windows[msg.WindowType];
 
-            var title = window.GetVisualElement<Label>("title-label", window.name);
-            var desc = window.GetVisualElement<Label>("desc-label", window.name);
+            var title = window.GetVElement<Label>("title-label", window.name);
+            var desc = window.GetVElement<Label>("desc-label", window.name);
 
 
-            var close = window.GetVisualElement<Button>("close", window.name);
-            var search = window.GetVisualElement<Button>("search", window.name);
+            var close = window.GetVElement<Button>("close", window.name);
+            var search = window.GetVElement<Button>("search", window.name);
 
             title.text = msg.InspectableData.LocalizedName;
             desc.text = msg.Tip;
@@ -108,9 +108,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             var window = _windows[msg.WindowType];
 
-            var title = window.GetVisualElement<Label>("title-label", window.name);
-            var desc = window.GetVisualElement<Label>("desc-label", window.name);
-            var close = window.GetVisualElement<Button>("close", window.name);
+            var title = window.GetVElement<Label>("title-label", window.name);
+            var desc = window.GetVElement<Label>("desc-label", window.name);
+            var close = window.GetVElement<Button>("close", window.name);
             title.text = msg.ObjName;
             desc.text = msg.Tip;
 
@@ -134,9 +134,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             var window = _windows[msg.WindowType];
 
-            var title = window.GetVisualElement<Label>("title-label", window.name);
-            var close = window.GetVisualElement<Button>("close", window.name);
-            var takeAll = window.GetVisualElement<Button>("take-all", window.name);
+            var title = window.GetVElement<Label>("title-label", window.name);
+            var close = window.GetVElement<Button>("close", window.name);
+            var takeAll = window.GetVElement<Button>("take-all", window.name);
 
             title.text = msg.InspectableData.LocalizedName;
 
@@ -144,8 +144,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             int i = 0;
             foreach (var loot in msg.InspectableData.InspectablesLoot)
             {
-                var i1 = window.GetVisualElement<VisualElement>("loot-item-container" + i, window.name);
-                var ic1 = i1.GetVisualElement<VisualElement>("icon", window.name);
+                var i1 = window.GetVElement<VisualElement>("loot-item-container" + i, window.name);
+                var ic1 = i1.GetVElement<VisualElement>("icon", window.name);
                 ic1.style.backgroundImage = new StyleBackground(loot.Icon);
                 i++;
             }
@@ -174,9 +174,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             var window = _windows[EFloatingWindowType.Note];
 
-            var title = window.GetVisualElement<Label>("title-label", window.name);
-            var desc = window.GetVisualElement<Label>("desc-label", window.name);
-            var close = window.GetVisualElement<Button>("close", window.name);
+            var title = window.GetVElement<Label>("title-label", window.name);
+            var desc = window.GetVElement<Label>("desc-label", window.name);
+            var close = window.GetVElement<Button>("close", window.name);
 
             title.text = msg.Title;
             desc.text = msg.Text;
@@ -190,10 +190,10 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             var window = _windows[EFloatingWindowType.LeaveRoom];
 
-            var titleLab = window.GetVisualElement<Label>("title-label", window.name);
-            var descLab = window.GetVisualElement<Label>("desc-label", window.name);
-            var closeBtn = window.GetVisualElement<Button>("close", window.name);
-            var leaveRoomBtn = window.GetVisualElement<Button>("leave-room", window.name);
+            var titleLab = window.GetVElement<Label>("title-label", window.name);
+            var descLab = window.GetVElement<Label>("desc-label", window.name);
+            var closeBtn = window.GetVElement<Button>("close", window.name);
+            var leaveRoomBtn = window.GetVElement<Button>("leave-room", window.name);
 
             titleLab.text = msg.LocalizedName;
             descLab.text = msg.Question;

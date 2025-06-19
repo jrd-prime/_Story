@@ -39,12 +39,9 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         private Label _actionLab;
 
         [Inject]
-        private void Construct(ISubscriber<IPlayerActionMsg> subscriber)
+        private void Construct(ISubscriber<IPlayerOverHeadUIMsg> subscriber)
         {
-            subscriber.Subscribe(
-                OnMessage,
-                msg => msg is ShowUIProgressOnPlayerActionMsg
-            ).AddTo(_disposables);
+            subscriber.Subscribe(OnMessage).AddTo(_disposables);
         }
 
         private void Start()
@@ -81,10 +78,20 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
             transform.Rotate(0, 180f, 0);
         }
 
-        private void OnMessage(IPlayerActionMsg msg)
+        private void OnMessage(IPlayerOverHeadUIMsg msg)
         {
-            var message = msg as ShowUIProgressOnPlayerActionMsg ??
-                          throw new ArgumentException("Unexpected msg type", nameof(msg));
+            switch (msg)
+            {
+                case DisplayProgressBarMsg message:
+                    ShowProgressBar(message);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(msg), msg, null);
+            }
+        }
+
+        private void ShowProgressBar(DisplayProgressBarMsg message)
+        {
             _actionLab.text = message.ActionName.ToUpper();
             ShowRoot();
             var startWidth = 0f;

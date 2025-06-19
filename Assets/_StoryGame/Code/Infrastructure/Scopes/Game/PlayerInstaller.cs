@@ -30,7 +30,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             // _builder.RegisterComponent(_instance).AsImplementedInterfaces();
 
             _builder.RegisterComponentInHierarchy<PlayerView>().AsSelf().AsImplementedInterfaces();
-            _builder.RegisterComponentInHierarchy<PlayerOverHeadTipUI>();
+            _builder.RegisterComponentInHierarchy<PlayerOverHeadUI>();
 
             _builder.Register<PlayerInteractor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             _builder.Register<PlayerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

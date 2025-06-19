@@ -120,7 +120,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
 
             MainContainer.Clear();
             MainContainer.Add(value);
-            var newView = value.GetVisualElement<VisualElement>(UIConst.MainContainer, nameof(HUDLayerHandler));
+            var newView = value.GetVElement<VisualElement>(UIConst.MainContainer, nameof(HUDLayerHandler));
             newView.style.display = DisplayStyle.Flex;
             _currentViewMainContainer = newView;
 

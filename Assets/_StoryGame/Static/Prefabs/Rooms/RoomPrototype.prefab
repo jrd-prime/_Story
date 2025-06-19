@@ -1285,6 +1285,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: c5bc78edb80293e44b91941250091cc2, type: 2}
     - target: {fileID: 8647532996951183302, guid: 4569967a1f40e3b44be807e1b4176938, type: 3}
+      propertyPath: <LockedStateThought>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 74e5eda9329dd284ebd2d00619109f77, type: 2}
+    - target: {fileID: 8647532996951183302, guid: 4569967a1f40e3b44be807e1b4176938, type: 3}
       propertyPath: <ConditionalItems>k__BackingField.Array.size
       value: 1
       objectReference: {fileID: 0}

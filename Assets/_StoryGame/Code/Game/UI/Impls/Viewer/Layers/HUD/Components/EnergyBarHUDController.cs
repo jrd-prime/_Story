@@ -32,10 +32,10 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components
 
         public void Init(VisualElement mainContainer)
         {
-            _energyCont = mainContainer.GetVisualElement<VisualElement>(EnergyContId, nameof(EnergyBarHUDController));
-            _energyLab = _energyCont.GetVisualElement<Label>(EnergyLabId, nameof(EnergyBarHUDController));
-            _sliderCont = _energyCont.GetVisualElement<VisualElement>(SliderContId, nameof(EnergyBarHUDController));
-            _slider = _sliderCont.GetVisualElement<VisualElement>(SliderId, nameof(EnergyBarHUDController));
+            _energyCont = mainContainer.GetVElement<VisualElement>(EnergyContId, nameof(EnergyBarHUDController));
+            _energyLab = _energyCont.GetVElement<Label>(EnergyLabId, nameof(EnergyBarHUDController));
+            _sliderCont = _energyCont.GetVElement<VisualElement>(SliderContId, nameof(EnergyBarHUDController));
+            _slider = _sliderCont.GetVElement<VisualElement>(SliderId, nameof(EnergyBarHUDController));
 
             _sliderCont.RegisterCallback<GeometryChangedEvent>(OnSliderGeometryChanged);
 

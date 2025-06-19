@@ -1,6 +1,6 @@
 ﻿namespace _StoryGame.Core.Messaging.Interfaces
 {
-    public interface IPlayerActionMsg : IJMessage
+    public interface IPlayerOverHeadUIMsg : IJMessage
     {
     }
 }

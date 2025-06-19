@@ -7,7 +7,7 @@ namespace _StoryGame.Core.Messaging.Interfaces
     {
         void ForUIViewer(IUIViewerMsg msg);
         void ForGameManager(IGameManagerMsg msg);
-        void ForPlayerAction(IPlayerActionMsg msg);
+        void ForPlayerOverHeadUI(IPlayerOverHeadUIMsg msg);
         void ForInput(IInputMsg msg);
     }
 }

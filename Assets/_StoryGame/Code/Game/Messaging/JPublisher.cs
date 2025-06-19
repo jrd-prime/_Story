@@ -9,13 +9,13 @@ namespace _StoryGame.Game.Messaging
     {
         private readonly IPublisher<IGameManagerMsg> _gameManagerPublisher;
         private readonly IPublisher<IUIViewerMsg> _uiViewerPublisher;
-        private readonly IPublisher<IPlayerActionMsg> _playerActionPublisher;
+        private readonly IPublisher<IPlayerOverHeadUIMsg> _playerActionPublisher;
         private readonly IPublisher<IInputMsg> _inputPublisher;
 
         public JPublisher(
             IPublisher<IGameManagerMsg> gameManagerPublisher,
             IPublisher<IUIViewerMsg> uiViewerPublisher,
-            IPublisher<IPlayerActionMsg> playerActionPublisher,
+            IPublisher<IPlayerOverHeadUIMsg> playerActionPublisher,
             IPublisher<IInputMsg> inputPublisher
         )
         {
@@ -27,7 +27,7 @@ namespace _StoryGame.Game.Messaging
 
         public void ForUIViewer(IUIViewerMsg msg) => _uiViewerPublisher.Publish(msg);
         public void ForGameManager(IGameManagerMsg msg) => _gameManagerPublisher.Publish(msg);
-        public void ForPlayerAction(IPlayerActionMsg msg) => _playerActionPublisher.Publish(msg);
+        public void ForPlayerOverHeadUI(IPlayerOverHeadUIMsg msg) => _playerActionPublisher.Publish(msg);
         public void ForInput(IInputMsg msg) => _inputPublisher.Publish(msg);
     }
 }

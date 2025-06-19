@@ -27,7 +27,7 @@ namespace _StoryGame.Game.UI.Abstract
             Template.SetFullScreen();
             Template.pickingMode = PickingMode.Ignore;
 
-            Root = Template.GetVisualElement<VisualElement>(UIConst.MainContainer, name);
+            Root = Template.GetVElement<VisualElement>(UIConst.MainContainer, name);
         }
 
         public string Id => viewId;
