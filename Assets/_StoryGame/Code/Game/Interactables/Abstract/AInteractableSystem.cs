@@ -22,7 +22,7 @@ namespace _StoryGame.Game.Interactables.Abstract
         protected readonly IJLog Log;
         protected readonly ILocalizationProvider LocalizationProvider;
         protected readonly ISettingsProvider SettingsProvider;
-        private readonly IObjectResolver _resolver;
+        protected readonly IObjectResolver _resolver;
 
         protected AInteractableSystem(IObjectResolver resolver)
         {

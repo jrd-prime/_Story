@@ -43,14 +43,14 @@ namespace _StoryGame.Game.Interactables.Abstract
         private IInteractable _interactableImplementation;
         private ILocalizationProvider _localizationProvider;
         protected IObjectResolver Resolver;
-        // protected InteractablesTipUI InteractablesTipUI;
+        protected InteractablesTipUI InteractablesTipUI;
         private ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
 
         [Inject]
         private void Construct(
             IObjectResolver resolver,
             AppStartHandler appStartHandler,
-            // InteractablesTipUI interactablesTipUI,
+            InteractablesTipUI interactablesTipUI,
             ILocalizationProvider localizationProvider,
             IPublisher<IUIViewerMsg> uiViewerMessagePublisher,
             ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub)
@@ -60,7 +60,7 @@ namespace _StoryGame.Game.Interactables.Abstract
             _localizationProvider = localizationProvider;
             _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
 
-            // InteractablesTipUI = interactablesTipUI;
+            InteractablesTipUI = interactablesTipUI;
 
             appStartHandler.IsAppStarted
                 .Subscribe(OnAppStarted)
@@ -81,7 +81,7 @@ namespace _StoryGame.Game.Interactables.Abstract
 
         private void OnEnable()
         {
-            // InteractablesTipUI.transform.SetParent(transform, false); // TODO to object pool
+            InteractablesTipUI.transform.SetParent(transform, false); // TODO to object pool
             _roomLootGeneratedMsgSub
                 .Subscribe(
                     OnRoomLootGenerated
@@ -91,8 +91,8 @@ namespace _StoryGame.Game.Interactables.Abstract
 
         private void OnRoomLootGenerated(RoomLootGeneratedMsg msg)
         {
-            // if (InteractableType == EInteractableType.Inspect)
-            //     InteractablesTipUI.ShowObjLoot(Room.GetLoot(Id));
+            if (InteractableType == EInteractableType.Inspect)
+                InteractablesTipUI.ShowObjLoot(Room.GetLoot(Id));
         }
 
         private void OnAppStarted(Unit _)
@@ -106,14 +106,14 @@ namespace _StoryGame.Game.Interactables.Abstract
 
         private void ShowDebug()
         {
-            // if (!InteractablesTipUI)
-            //     throw new NullReferenceException("InteractableDebugController not found.");
-            //
-            // var text = _localizationProvider.Localize(LocalizationKey, ETable.Words);
-            // InteractablesTipUI.SetNameText(text.ToUpper());
-            // InteractablesTipUI.SetType(InteractableType.ToString().ToUpper());
-            //
-            // SetAdditionalDebugInfo(InteractablesTipUI);
+            if (!InteractablesTipUI)
+                throw new NullReferenceException("InteractableDebugController not found.");
+
+            var text = _localizationProvider.Localize(LocalizationKey, ETable.Words);
+            InteractablesTipUI.SetNameText(text.ToUpper());
+            InteractablesTipUI.SetType(InteractableType.ToString().ToUpper());
+
+            SetAdditionalDebugInfo(InteractablesTipUI);
         }
 
 

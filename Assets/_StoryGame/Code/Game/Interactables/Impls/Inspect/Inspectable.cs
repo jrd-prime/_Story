@@ -31,7 +31,6 @@ namespace _StoryGame.Game.Interactables.Impls.Inspect
 
         protected override void SetAdditionalDebugInfo(InteractablesTipUI tipUI)
         {
-            tipUI.ShowLootChance(lootChance);
         }
 
         public int GetLootChance(ELootType eLootType)

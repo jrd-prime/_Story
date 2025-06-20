@@ -27,8 +27,8 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         [SerializeField] private PanelSettings panelSettingsAsset;
         [SerializeField] private RenderTexture renderTextureAsset;
 
-        private const float ProgressBarShowHideDuration = 0.5f;
-        private const float ProgressBarDefaultWidth = 0f;
+        private const float ShowDuration = 0.3f;
+        private const float HideDuration = 0.5f;
 
         private UIDocument _uiDocument;
         private VisualElement _root;
@@ -111,32 +111,20 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
             }
         }
 
-        private void CancelCurrentAnimations()
-        {
-            _currentThoughtBubbleTween?.Kill();
-            _currentProgressBarTween?.Kill();
-
-            _thoughtBubbleTaskSource?.TrySetCanceled();
-            _progressBarTaskSource?.TrySetCanceled();
-        }
-
         private async UniTask DisplayThoughtBubble(DisplayThoughtBubbleMsg message)
         {
             ElementVisibility(_progressBarCont, false);
             ElementVisibility(_thoughtBubbleCont, true);
 
-            _thoughtLab.text = message.ThoughtDataVo.LocalizedThought;
-
+            _thoughtLab.text = "  " + message.ThoughtDataVo.LocalizedThought;
             _thoughtBubbleTaskSource = new UniTaskCompletionSource();
 
-            _currentThoughtBubbleTween = DOTween.Sequence()
+            _currentThoughtBubbleTween = DOTween
+                .Sequence()
+                .Append(ChangeOpacityAnimation(_thoughtBubbleCont, 1f, ShowDuration))
                 .AppendInterval(message.DurationMs / 1000f)
-                .Append(DOTween.To(
-                    () => _thoughtBubbleCont.style.opacity.value,
-                    x => _thoughtBubbleCont.style.opacity = x,
-                    ProgressBarDefaultWidth,
-                    ProgressBarShowHideDuration
-                ).SetEase(Ease.Linear))
+                .Append(ChangeOpacityAnimation(_thoughtBubbleCont, 0f, HideDuration))
+                .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
                     ElementVisibility(_thoughtBubbleCont, false);
@@ -144,6 +132,7 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
                 });
 
             await _thoughtBubbleTaskSource.Task;
+
             _currentThoughtBubbleTween = null;
             _thoughtBubbleTaskSource = null;
         }
@@ -152,31 +141,22 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         {
             ElementVisibility(_thoughtBubbleCont, false);
             ElementVisibility(_progressBarCont, true);
-
+            
             _actionLab.text = message.ActionName.ToUpper();
             var startWidth = 0f;
+            _progressCont.style.width = startWidth;
             var duration = message.Duration;
 
             _progressBarTaskSource = new UniTaskCompletionSource();
 
-            _currentProgressBarTween = DOTween.Sequence()
-                .Append(DOTween.To(
-                    () => startWidth,
-                    x =>
-                    {
-                        startWidth = x;
-                        _progressCont.style.width = new Length(x);
-                    },
-                    _progressBarContWidth,
-                    duration
-                ).SetEase(Ease.Linear))
+            _currentProgressBarTween = DOTween
+                .Sequence()
+                .Append(ChangeOpacityAnimation(_progressBarCont, 1f, ShowDuration))
+                .Append(FillProgressBarAnimation(startWidth, duration))
+                .SetEase(Ease.Linear)
                 .AppendCallback(() => message.CompletionSource.TrySetResult(EDialogResult.Close))
-                .Append(DOTween.To(
-                    () => _progressBarCont.style.opacity.value,
-                    x => _progressBarCont.style.opacity = x,
-                    ProgressBarDefaultWidth,
-                    ProgressBarShowHideDuration
-                ).SetEase(Ease.Linear))
+                .Append(ChangeOpacityAnimation(_progressBarCont, 0f, HideDuration))
+                .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
                     ElementVisibility(_progressBarCont, false);
@@ -189,6 +169,25 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
             _progressBarTaskSource = null;
         }
 
+        private static Tween ChangeOpacityAnimation(VisualElement element, float endValue, float duration) =>
+            DOTween.To(
+                () => element.style.opacity.value,
+                x => element.style.opacity = x,
+                endValue,
+                duration);
+
+        private Tween FillProgressBarAnimation(float startWidth, float duration) =>
+            DOTween.To(
+                () => startWidth,
+                x =>
+                {
+                    startWidth = x;
+                    _progressCont.style.width = new Length(x);
+                },
+                _progressBarContWidth,
+                duration);
+
+
         private static void ElementVisibility(VisualElement element, bool value)
         {
             if (element == null)
@@ -196,7 +195,7 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
 
             if (value)
             {
-                element.style.opacity = 1f;
+                element.style.opacity = 0f;
                 element.style.display = DisplayStyle.Flex;
                 return;
             }
@@ -208,10 +207,19 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         {
             _progressBarContWidth = _progressBarCont.resolvedStyle.width - 2;
             _progressBarCont.UnregisterCallback<GeometryChangedEvent>(OnGeometryLoaded);
-            _progressCont.style.width = ProgressBarDefaultWidth;
+            _progressCont.style.width = 0f;
 
             ElementVisibility(_progressBarCont, false);
             ElementVisibility(_thoughtBubbleCont, false);
+        }
+
+        private void CancelCurrentAnimations()
+        {
+            _currentThoughtBubbleTween?.Kill();
+            _currentProgressBarTween?.Kill();
+
+            _thoughtBubbleTaskSource?.TrySetCanceled();
+            _progressBarTaskSource?.TrySetCanceled();
         }
 
         private void OnDestroy()

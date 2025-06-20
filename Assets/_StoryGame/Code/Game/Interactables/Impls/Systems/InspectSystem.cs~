@@ -97,7 +97,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
                 if (result == EDialogResult.Close)
                 {
-                    Log.Debug("Inspect progress complete - CLOSE");
+                    Log.Debug("Inspect - CLOSE");
                 }
                 else Log.Warn("Unhandled result: " + result);
             }

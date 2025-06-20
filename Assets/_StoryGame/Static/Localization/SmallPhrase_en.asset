@@ -71,7 +71,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7255776488783872
-    m_Localized: I don't think I can pry it open with my bare hands..
+    m_Localized: "I don't think I can open it with my bare hands\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 7255776488783873
