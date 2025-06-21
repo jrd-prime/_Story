@@ -82,6 +82,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                 case CurrentOperationMsg msg:
                     _hudLayerHandler.ShowCurrentOperation(msg.CurrentOperation);
                     break;
+                case DisplayArtefactInfoMsg msg:
+                    _floatingLayerHandler.DisplayArtefactInfoWindow(msg);
+                    break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
         }

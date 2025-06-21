@@ -70,6 +70,10 @@ MonoBehaviour:
     m_Localized: ERROR
     m_Metadata:
       m_Items: []
+  - m_Id: 12447976218624000
+    m_Localized: 'Owl Figurine: A Little Guardian of Wisdom'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

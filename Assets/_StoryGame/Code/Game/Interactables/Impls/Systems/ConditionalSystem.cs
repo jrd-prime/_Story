@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
 using _StoryGame.Data;
 using _StoryGame.Data.Animator;
 using _StoryGame.Data.Interactable;
 using _StoryGame.Data.Loot;
+using _StoryGame.Data.SO.Currency;
 using _StoryGame.Game.Interactables.Abstract;
 using _StoryGame.Game.Interactables.Impls.ObjTypes;
 using _StoryGame.Game.Managers.Game.Messages;
@@ -84,15 +86,29 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
             await ShowOpenTip();
             SendBoolToPlayerAnimator(AnimatorConst.IsGatherHigh, false);
 
-            // on compl > show artefact info
-            // on comp art info > add to journal
-            // mb tip
+            var source = new UniTaskCompletionSource<EDialogResult>();
+            var lootData = new LootData(Room.Id, _conditional.Id, null, _conditional.Loot);
+            var message = new DisplayArtefactInfoMsg(lootData, source);
+            var inspdata =
+                new InspectableData(LocalizationProvider.Localize(_conditional.Loot.LocalizationKey, ETable.Words),
+                    new List<LootData>() { lootData });
+            try
+            {
+                Publisher.ForUIViewer(message);
 
+                var result = await source.Task;
+                source = null;
 
-            var aa = new InspectableLootData(Room.Id, _conditional.Id, null, _conditional.Loot);
-
-            var a = new InspectableData("afdasd", new List<InspectableLootData> { aa });
-            Publisher.ForGameManager(new TakeRoomLootMsg(a));
+                if (result == EDialogResult.Close)
+                {
+                    Publisher.ForGameManager(new TakeRoomLootMsg(inspdata));
+                }
+                else Log.Warn("Unhandled result: " + result);
+            }
+            finally
+            {
+                source?.TrySetCanceled();
+            }
 
             _conditional.SetConditionalState(EConditionalState.Looted);
             return true;

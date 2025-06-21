@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data;
 using _StoryGame.Data.SO.Abstract;
@@ -197,7 +198,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             titleLab.text = msg.LocalizedName;
             descLab.text = msg.Question;
-            
+
             var leaveRoomBtnHandler =
                 new ClickCompletionHandler<EDialogResult>(leaveRoomBtn, EDialogResult.Apply,
                     msg.CompletionSource, _center);
@@ -208,6 +209,29 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             leaveRoomBtnHandler.Register();
             closeBtnHandler.Register();
 
+            _center.Add(window);
+        }
+
+        public void DisplayArtefactInfoWindow(DisplayArtefactInfoMsg msg)
+        {
+            _center.Clear();
+
+            var window = _windows[EFloatingWindowType.ArtefactInfo];
+
+            var titleLab = window.GetVElement<Label>("title-label", window.name);
+            var descLab = window.GetVElement<Label>("desc-label", window.name);
+            var closeBtn = window.GetVElement<Button>("close", window.name);
+
+            titleLab.text = msg.ConditionalLoot.Currency.LocalizationKey;
+            descLab.text = Loca.Localize(msg.ConditionalLoot.Currency.DescriptionKey, ETable.SmallPhrase);
+
+            var closeBtnHandler =
+                new ClickCompletionHandler<EDialogResult>(closeBtn, EDialogResult.Close,
+                    msg.CompletionSource, _center);
+
+            closeBtnHandler.Register();
+
+            _center.style.alignItems = Align.Center;
             _center.Add(window);
         }
     }
@@ -225,6 +249,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         NoLoot,
         Loot,
         Note,
-        LeaveRoom
+        LeaveRoom,
+        ArtefactInfo
     }
 }

@@ -2,5 +2,5 @@
 
 namespace _StoryGame.Data.Loot
 {
-    public record InspectableData(string LocalizedName, List<InspectableLootData> InspectablesLoot);
+    public record InspectableData(string LocalizedName, List<LootData> InspectablesLoot);
 }

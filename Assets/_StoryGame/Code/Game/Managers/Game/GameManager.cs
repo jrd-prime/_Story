@@ -91,11 +91,13 @@ namespace _StoryGame.Game.Managers.Game
                 OnTakeRoomLootMsg,
                 msg => msg is TakeRoomLootMsg
             );
+
             _gameManagerMsgSub.Subscribe(
                 OnRoomChooseRequestMsg,
                 msg => msg is RoomChooseRequestMsg
             );
         }
+
 
         public bool IsPlayerHasItem(SpecialItemData itemData) => _player.Wallet.Has(itemData.Id, 1);
 
@@ -133,7 +135,7 @@ namespace _StoryGame.Game.Managers.Game
         }
 
         //TODO ужас
-        private void ProcessLoot(InspectableLootData lootData)
+        private void ProcessLoot(LootData lootData)
         {
             switch (lootData.Currency.Type)
             {

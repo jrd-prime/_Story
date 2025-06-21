@@ -46,7 +46,7 @@ namespace _StoryGame.Game.Loot.Impls
 
             foreach (var (inspectableId, typesList) in lootTypes.Loot)
             {
-                var lootList = new List<InspectableLootData>();
+                var lootList = new List<LootData>();
 
                 foreach (var lootType in typesList)
                 {
@@ -66,7 +66,7 @@ namespace _StoryGame.Game.Loot.Impls
         }
 
 
-        private InspectableLootData CreateLootData(
+        private LootData CreateLootData(
             ELootType type,
             string roomId,
             string inspectableId,
@@ -81,7 +81,7 @@ namespace _StoryGame.Game.Loot.Impls
             };
         }
 
-        private InspectableLootData Create(string roomId, string inspectableId, ACurrencyData data)
+        private LootData Create(string roomId, string inspectableId, ACurrencyData data)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace _StoryGame.Game.Loot.Impls
                 {
                 }
 
-                return new InspectableLootData(roomId, inspectableId, icon, data);
+                return new LootData(roomId, inspectableId, icon, data);
             }
             catch (Exception ex)
             {

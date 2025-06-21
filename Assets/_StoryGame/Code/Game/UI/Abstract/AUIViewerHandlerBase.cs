@@ -1,6 +1,7 @@
 ﻿using System;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Managers;
+using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Main;
@@ -31,9 +32,12 @@ namespace _StoryGame.Game.UI.Abstract
             _layerRoot = layerRoot;
 
             GameManager = _resolver.Resolve<IGameManager>();
+            Loca = _resolver.Resolve<ILocalizationProvider>();
 
             Initialize();
         }
+
+        protected ILocalizationProvider Loca { get; private set; }
 
         private void Initialize()
         {
@@ -72,7 +76,10 @@ namespace _StoryGame.Game.UI.Abstract
         protected T GetElement<T>(string id) where T : VisualElement =>
             _layerRoot.GetVElement<T>(id, GetType().Name);
 
-        protected virtual void OnDispose(){}
+        protected virtual void OnDispose()
+        {
+        }
+
         public void Dispose()
         {
             OnDispose();

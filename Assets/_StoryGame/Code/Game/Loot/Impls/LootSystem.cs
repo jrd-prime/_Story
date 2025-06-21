@@ -56,11 +56,11 @@ namespace _StoryGame.Game.Loot.Impls
                     return inspectableData;
 
                 _log.Error($"InspectableData for inspectable {inspectableId} in room {roomId} not found.");
-                return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootData>());
+                return new InspectableData(LocalizationConst.ErrorKey, new List<LootData>());
             }
 
             _log.Error($"Room {roomId} not found in loot cache.");
-            return new InspectableData(LocalizationConst.ErrorKey, new List<InspectableLootData>());
+            return new InspectableData(LocalizationConst.ErrorKey, new List<LootData>());
         }
 
 

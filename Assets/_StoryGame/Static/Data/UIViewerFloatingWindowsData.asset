@@ -23,3 +23,5 @@ MonoBehaviour:
     visualTreeAsset: {fileID: 9197481963319205126, guid: 80beb9c31eeea224e993d694d9f1fb5a, type: 3}
   - eFloatingWindowType: 4
     visualTreeAsset: {fileID: 9197481963319205126, guid: d4d5c0d1a86d3e947af20e660d92c342, type: 3}
+  - eFloatingWindowType: 5
+    visualTreeAsset: {fileID: 9197481963319205126, guid: 0f7a2ae5fe66a264885ba2d97b5e7f80, type: 3}

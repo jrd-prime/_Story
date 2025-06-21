@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: special_art
   localizationKey: special_art
-  descriptionKey: 
+  descriptionKey: special_art_desc
   iconId: art
   rarity: 0
   maxStackSize: 0

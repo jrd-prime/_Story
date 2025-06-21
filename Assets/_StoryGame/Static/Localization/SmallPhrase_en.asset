@@ -99,6 +99,20 @@ MonoBehaviour:
       already took it all."
     m_Metadata:
       m_Items: []
+  - m_Id: 8341090586263553
+    m_Localized: "This elegant owl figurine is more than just a decoration\u2014it\u2019s
+      a symbol that has traveled through the ages. Since ancient times, the owl has
+      been associated with wisdom, hidden knowledge, and intuition. In Greek mythology,
+      it was the companion of the goddess Athena, while in other cultures, it was
+      believed to ward off dark forces.\n\nPerhaps this figurine is crafted from
+      ceramic, wood, or even bronze\u2014each detail highlights the bird\u2019s mysterious
+      gaze, as if it knows far more than it lets on. Such statuettes were often given
+      as protective charms for the home, believed to bring luck and clarity of thought.\n\nDoes
+      this owl have its own story? Was it bought on a distant journey or passed down
+      through generations? Whatever its past, it now sits in quiet observation, reminding
+      you: wisdom often comes in silence."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,6 +1,8 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Loot;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Data.SO.Currency;
 using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -22,6 +24,7 @@ namespace _StoryGame.Core.Character.Player.Interfaces
         void SetEnergy(int energy);
         void AddEnergy(int energy);
         void SpendEnergy(int energy);
-        void AddNote(InspectableLootData lootData);
+        void AddNote(LootData lootData);
+        void AddItemToWallet(ACurrencyData itemData, int amount);
     }
 }

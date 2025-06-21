@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace _StoryGame.Data.Loot
 {
-    public record InspectableLootData(string RoomId, string InspectableId, Sprite Icon, ACurrencyData Currency)
+    public record LootData(string RoomId, string InteractableId, Sprite Icon, ACurrencyData Currency)
     {
         public string RoomId { get; } = RoomId;
-        public string InspectableId { get; } = InspectableId;
+        public string InteractableId { get; } = InteractableId;
         public Sprite Icon { get; } = Icon;
         public ACurrencyData Currency { get; } = Currency;
     }

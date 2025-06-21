@@ -67,8 +67,8 @@ MonoBehaviour:
     m_Key: key_leave_room_question
     m_Metadata:
       m_Items: []
-  - m_Id: 8256410704871424
-    m_Key: New Entry 1
+  - m_Id: 8341090552709120
+    m_Key: New Entry
     m_Metadata:
       m_Items: []
   - m_Id: 7255776488783872
@@ -79,8 +79,8 @@ MonoBehaviour:
     m_Key: td_woodenbox_locked_text
     m_Metadata:
       m_Items: []
-  - m_Id: 8256410704871425
-    m_Key: New Entry 3
+  - m_Id: 8341090573680640
+    m_Key: New Entry 2
     m_Metadata:
       m_Items: []
   - m_Id: 8256410704871426
@@ -101,6 +101,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 8256410704871430
     m_Key: cond_sys_looted_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8341090586263552
+    m_Key: New Entry 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8341090586263553
+    m_Key: special_art_desc
     m_Metadata:
       m_Items: []
   m_Metadata:
