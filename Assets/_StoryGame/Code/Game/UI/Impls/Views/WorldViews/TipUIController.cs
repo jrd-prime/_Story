@@ -1,6 +1,4 @@
 ﻿using _StoryGame.Data.Loot;
-using _StoryGame.Data.Room;
-using _StoryGame.Data.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
 

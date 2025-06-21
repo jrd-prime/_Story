@@ -1,5 +1,5 @@
-﻿using _StoryGame.Data.Interactable;
-using _StoryGame.Data.Loot;
+﻿using _StoryGame.Core.Loot;
+using _StoryGame.Data.Interactable;
 using _StoryGame.Data.Room;
 
 namespace _StoryGame.Game.Interactables.Interfaces

@@ -1,6 +1,6 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Room.Interfaces;
-using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Data.Interactable;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -15,7 +15,6 @@ namespace _StoryGame.Game.Interactables.Interfaces
         string LocalizationKey { get; }
         string Name { get; }
         UniTask InteractAsync(ICharacter character);
-        void ShowInteractionTip((string, string) interactionTip);
         void HideInteractionTip();
         Vector3 GetEntryPoint();
 

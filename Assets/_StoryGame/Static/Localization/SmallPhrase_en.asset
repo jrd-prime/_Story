@@ -78,6 +78,27 @@ MonoBehaviour:
     m_Localized: Found a wooden crate. I need to figure out how to open it.
     m_Metadata:
       m_Items: []
+  - m_Id: 8256410704871426
+    m_Localized: "There\u2019s nothing left here \u2014 I already took everything."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871427
+    m_Localized: "I\u2019ve already taken everything valuable from here."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871428
+    m_Localized: "Looks like there\u2019s nothing left to take."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871429
+    m_Localized: "I\u2019ve already searched this place top to bottom."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871430
+    m_Localized: "Expecting something new to show up here? That\u2019s a joke. I
+      already took it all."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

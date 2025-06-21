@@ -2,9 +2,9 @@
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Interfaces;
+using _StoryGame.Data;
 using _StoryGame.Game.Interactables.Abstract;
-using _StoryGame.Game.Interactables.Data;
-using _StoryGame.Game.Interactables.Impls.Use;
+using _StoryGame.Game.Interactables.Impls.ObjTypes.Usable;
 using _StoryGame.Game.Managers.Game.Messages;
 using Cysharp.Threading.Tasks;
 using VContainer;
@@ -13,13 +13,20 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 {
     public sealed class UseSystem : AInteractableSystem<AUsable>
     {
+        private AUsable _usable;
+
         public UseSystem(IObjectResolver resolver) : base(resolver)
         {
         }
 
-        protected override async UniTask<bool> OnProcess()
+        protected override void OnPreProcess(AUsable interactable)
         {
-            var result = Interactable.UseState switch
+            _usable = interactable;
+        }
+
+        protected override async UniTask<bool> OnProcessAsync()
+        {
+            var result = _usable.UseState switch
             {
                 EUseState.NotUsed => await Use(),
                 EUseState.Used => await Used(),
@@ -44,8 +51,8 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private async UniTask OnStartUse()
         {
-            Log.Debug("On Start Use " + Interactable.UsableAction);
-            var action = Interactable.UsableAction;
+            Log.Debug("On Start Use " + _usable.UsableAction);
+            var action = _usable.UsableAction;
 
             switch (action)
             {
@@ -70,7 +77,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
         private async UniTask OnRoomExitAction()
         {
             Log.Debug("OnRoomExitAction");
-            var exitObj = Interactable as RoomDoor ?? throw new Exception("Interactable is not RoomDoor");
+            var exitObj = _usable as RoomDoor ?? throw new Exception("Interactable is not RoomDoor");
 
             var price = 2;
             var source = new UniTaskCompletionSource<EDialogResult>();

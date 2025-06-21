@@ -1,0 +1,49 @@
+﻿using System;
+using _StoryGame.Data.Const;
+using _StoryGame.Data.SO.Abstract;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+namespace _StoryGame.Game.Interactables.Impls
+{
+    [CreateAssetMenu(fileName = nameof(InspectSystemTipData),
+        menuName = SOPathConst.Settings + nameof(InspectSystemTipData))]
+    public sealed class InspectSystemTipData : ASettingsBase
+    {
+        [SerializeField] private InspectSystemTipVo hasLoot;
+        [SerializeField] private InspectSystemTipVo noLoot;
+        [SerializeField] private InspectSystemTipVo condLooted;
+
+        public string GetRandomTip(InteractableSystemTipType interactableSystemTipType) =>
+            interactableSystemTipType switch
+            {
+                InteractableSystemTipType.InspHasLoot => hasLoot.GetRandomLocalizationKey(),
+                InteractableSystemTipType.InspNoLoot => noLoot.GetRandomLocalizationKey(),
+                InteractableSystemTipType.CondLooted => condLooted.GetRandomLocalizationKey(),
+                _ => throw new ArgumentOutOfRangeException(nameof(interactableSystemTipType), interactableSystemTipType,
+                    null)
+            };
+    }
+
+    [Serializable]
+    public struct InspectSystemTipVo
+    {
+        public InteractableSystemTipType type;
+        public int tipCount;
+        public string localizationKeyBase;
+
+        public string GetRandomLocalizationKey()
+        {
+            // localizationKeyBase_01 localizationKeyBase_02 etc
+            var random = Random.Range(1, tipCount + 1);
+            return $"{localizationKeyBase}_{random:D2}";
+        }
+    }
+
+    public enum InteractableSystemTipType
+    {
+        InspHasLoot,
+        InspNoLoot,
+        CondLooted
+    }
+}

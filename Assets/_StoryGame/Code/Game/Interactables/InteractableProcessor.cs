@@ -7,7 +7,6 @@ using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
-using UnityEngine;
 
 namespace _StoryGame.Game.Interactables
 {
@@ -15,10 +14,12 @@ namespace _StoryGame.Game.Interactables
     {
         public ReadOnlyReactiveProperty<string> CurrentInteractable => _currentInteractable;
 
+        private const string DefaultInteractableValue = "-";
+
         private readonly IPlayer _player;
         private readonly IJLog _log;
 
-        private readonly ReactiveProperty<string> _currentInteractable = new("-");
+        private readonly ReactiveProperty<string> _currentInteractable = new(DefaultInteractableValue);
         private readonly CompositeDisposable _disposables = new();
         private readonly ILocalizationProvider _localizationProvider;
 
@@ -34,33 +35,49 @@ namespace _StoryGame.Game.Interactables
             _localizationProvider = localizationProvider;
             movementProcessorMsgSub
                 .Subscribe(
-                    msg => ProcessInteracting(msg as InteractableEntranceReachedMsg),
+                    msg => ProcessInteracting(msg as InteractableEntranceReachedMsg).Forget(),
                     msg => msg is InteractableEntranceReachedMsg
                 ).AddTo(_disposables);
         }
 
         private async UniTask ProcessInteracting(InteractableEntranceReachedMsg message)
         {
-            var interactable = message.Interactable;
-
-            _currentInteractable.Value =
-                _localizationProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
-
-            _log.Debug($"Interactable Entrance Reached Start Interact: {interactable}");
-
-            if (!interactable.CanInteract)
+            try
             {
-                Debug.LogWarning("Can't interact with " + interactable.Name);
-                return;
+                if (message?.Interactable == null)
+                {
+                    _log.Error("Invalid interactable message received");
+                    return;
+                }
+
+                var interactable = message.Interactable;
+
+                var localizedText =
+                    _localizationProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
+                _currentInteractable.Value = localizedText ?? DefaultInteractableValue;
+
+                _log.Debug($"Interactable Entrance Reached: {interactable}");
+
+                if (!interactable.CanInteract)
+                {
+                    _log.Warn($"Can't interact with {interactable.Name}");
+                    return;
+                }
+
+                _player.OnStartInteract();
+
+                await interactable.InteractAsync(_player).SuppressCancellationThrow();
+
+                _player.OnEndInteract();
             }
-
-            _player.OnStartInteract();
-
-            await interactable.InteractAsync(_player);
-
-            _player.OnEndInteract();
-            
-            _currentInteractable.Value = "-";
+            catch (Exception ex)
+            {
+                _log.Error($"Error during interaction processing: {ex}");
+            }
+            finally
+            {
+                _currentInteractable.Value = DefaultInteractableValue;
+            }
         }
 
         public void Dispose() => _disposables?.Dispose();

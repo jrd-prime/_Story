@@ -1,4 +1,6 @@
-﻿using _StoryGame.Game.Interactables.Interfaces;
+﻿using System;
+using _StoryGame.Game.Interactables.Interfaces;
+using UnityEngine;
 using VContainer;
 
 namespace _StoryGame.Game.Interactables.Abstract
@@ -8,7 +10,13 @@ namespace _StoryGame.Game.Interactables.Abstract
     {
         protected TInteractableSystem System;
 
-        protected sealed override void ResolveSystem(IObjectResolver resolver) =>
-            System = resolver.Resolve<TInteractableSystem>();
+
+        private void Start()
+        {
+            Debug.LogWarning("ResolveSystem1");
+            System = Resolver.Resolve<TInteractableSystem>();
+            if (Equals(System, default(TInteractableSystem)))
+                throw new Exception("InteractableSystem is null. " + gameObject.name);
+        }
     }
 }

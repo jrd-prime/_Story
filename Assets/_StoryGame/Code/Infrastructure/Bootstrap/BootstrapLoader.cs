@@ -26,7 +26,7 @@ namespace _StoryGame.Infrastructure.Bootstrap
             _loadingQueue.Enqueue(bootable);
         }
 
-        public async UniTask StartServicesInitializationAsync(int pseudoDelay = 0)
+        public async UniTask InitServicesAsync(int pseudoDelay = 0)
         {
             if (_loadingQueue.Count == 0)
                 return;

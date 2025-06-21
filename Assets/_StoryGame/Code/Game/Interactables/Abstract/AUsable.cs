@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Data.Interactable;
 using _StoryGame.Game.Interactables.Impls.Systems;
 using UnityEngine;
 

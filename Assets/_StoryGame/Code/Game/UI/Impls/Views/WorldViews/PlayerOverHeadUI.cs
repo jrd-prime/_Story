@@ -1,10 +1,12 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.UI.Const;
 using _StoryGame.Core.UI.Msg;
+using _StoryGame.Data;
 using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Infrastructure.AppStarter;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MessagePipe;
@@ -27,6 +29,9 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         [SerializeField] private PanelSettings panelSettingsAsset;
         [SerializeField] private RenderTexture renderTextureAsset;
 
+        [SerializeField] private Shader transparentShader;
+        [SerializeField] private Shader textureShader;
+
         private const float ShowDuration = 0.3f;
         private const float HideDuration = 0.5f;
 
@@ -46,22 +51,32 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         private Tween _currentProgressBarTween;
         private UniTaskCompletionSource _thoughtBubbleTaskSource;
         private UniTaskCompletionSource _progressBarTaskSource;
+        private MeshFilter meshFilter;
+        private MeshRenderer meshRenderer;
+        private PanelSettings panelSettings;
+        private IJLog _log;
 
         [Inject]
-        private void Construct(ISubscriber<IPlayerOverHeadUIMsg> subscriber) =>
+        private void Construct(IJLog log, ISubscriber<IPlayerOverHeadUIMsg> subscriber, AppStartHandler appStartHandler)
+        {
+            _log = log;
             subscriber.Subscribe(OnMessage).AddTo(_disposables);
+            appStartHandler.IsAppStarted.Subscribe(OnAppStarted).AddTo(_disposables);
+        }
 
-        private void Start()
+        private void OnAppStarted(Unit _)
         {
             _uiDocument = GetComponent<UIDocument>();
-            var meshFilter = GetComponent<MeshFilter>();
-            var meshRenderer = GetComponent<MeshRenderer>();
-            var panelSettings = Instantiate(panelSettingsAsset);
+            meshFilter = GetComponent<MeshFilter>();
+            meshRenderer = GetComponent<MeshRenderer>();
+            panelSettings = Instantiate(panelSettingsAsset);
             panelSettings.name = "PlayerOverheadTipPanelSettings";
 
-            var initializer = new TipInitializer();
+
+            var initializer = new TipInitializer(_log);
             initializer.Init(new WorldTipData(_uiDocument, visualTreeAsset, transform, meshFilter, meshRenderer,
-                renderTextureAsset, panelSettings, panelWidth, panelHeight, panelScale, pixelsPerUnit));
+                renderTextureAsset, panelSettings, panelWidth, panelHeight, panelScale, pixelsPerUnit,
+                transparentShader, textureShader));
 
             _root = _uiDocument.rootVisualElement;
             _mainCont = _root.GetVElement<VisualElement>(OverHeadUIConst.MainCont, name);
@@ -70,6 +85,10 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
             InitThoughtBubbleElements();
 
             _progressBarCont.RegisterCallback<GeometryChangedEvent>(OnGeometryLoaded);
+        }
+
+        private void Start()
+        {
         }
 
         private void InitProgressBarElements()
@@ -141,7 +160,7 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         {
             ElementVisibility(_thoughtBubbleCont, false);
             ElementVisibility(_progressBarCont, true);
-            
+
             _actionLab.text = message.ActionName.ToUpper();
             var startWidth = 0f;
             _progressCont.style.width = startWidth;

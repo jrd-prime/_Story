@@ -38,7 +38,7 @@ namespace _StoryGame.Infrastructure.AppStarter
 
         public void Initialize()
         {
-            QualitySettings.vSyncCount = 0;
+            // QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = 30;
             InitializeAsync().Forget();
         }
@@ -57,7 +57,7 @@ namespace _StoryGame.Infrastructure.AppStarter
             _log.Info("<color=green><b>Starting Services initialization...</b></color>");
 
             await UniTask.WhenAll(
-                bootstrapLoader.StartServicesInitializationAsync(PseudoDelayMs),
+                bootstrapLoader.InitServicesAsync(PseudoDelayMs),
                 firstSceneProvider.LoadFirstSceneAsync()
             );
 

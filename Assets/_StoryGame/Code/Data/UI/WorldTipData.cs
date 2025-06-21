@@ -7,7 +7,8 @@ namespace _StoryGame.Data.UI
     {
         public WorldTipData(UIDocument uiDocument, VisualTreeAsset visualTreeAsset, Transform transform,
             MeshFilter meshFilter, MeshRenderer pixelsPerUnit, RenderTexture renderTextureAsset,
-            PanelSettings panelSettings, int panelWidth, int panelHeight, float panelScale, float pixelPerUnit)
+            PanelSettings panelSettings, int panelWidth, int panelHeight, float panelScale, float pixelPerUnit,
+            Shader transparentShader, Shader textureShader)
         {
             UiDocument = uiDocument;
             VisualTreeAsset = visualTreeAsset;
@@ -20,6 +21,8 @@ namespace _StoryGame.Data.UI
             PanelHeight = panelHeight;
             PanelScale = panelScale;
             PixelsPerUnit = pixelPerUnit;
+            TransparentShader = transparentShader;
+            TextureShader = textureShader;
         }
 
         public UIDocument UiDocument { get; private set; }
@@ -33,5 +36,7 @@ namespace _StoryGame.Data.UI
         public int PanelHeight { get; private set; }
         public float PanelScale { get; private set; }
         public float PixelsPerUnit { get; private set; }
+        public Shader TransparentShader { get; set; }
+        public Shader TextureShader { get; set; }
     }
 }

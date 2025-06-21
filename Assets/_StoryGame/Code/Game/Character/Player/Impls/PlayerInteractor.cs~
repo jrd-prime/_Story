@@ -3,10 +3,11 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.Character.Player.Messages;
-using _StoryGame.Game.Loot.Impls;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
@@ -28,7 +29,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         public IWallet Wallet => _wallet;
         public string Name => _playerView.name;
         public string Description => _playerView.Description;
-        public object Animator => _playerView.Animator;
+        public object Animator => _playerView.Animator as Animator;
         public int Health { get; set; }
         public int MaxHealth { get; set; }
 
@@ -52,6 +53,7 @@ namespace _StoryGame.Game.Character.Player.Impls
             PlayerView playerView,
             IJLog log,
             IWalletService walletService,
+            ISubscriber<IPlayerAnimatorMsg> playerAnimatorMsgSub,
             IPublisher<IPlayerMsg> selfMsgPub)
         {
             _playerView = playerView;
@@ -59,6 +61,20 @@ namespace _StoryGame.Game.Character.Player.Impls
             _log = log;
             _selfMsgPub = selfMsgPub;
             _wallet = walletService.GetOrCreate(Id);
+            playerAnimatorMsgSub.Subscribe(OnPlayerAnimatorMsg).AddTo(_disposables);
+        }
+
+        private void OnPlayerAnimatorMsg(IPlayerAnimatorMsg msg)
+        {
+            switch (msg)
+            {
+                case SetTriggerMsg message:
+                    _playerView.Animator.SetTrigger(message.TriggerName);
+                    break;
+                case ResetTriggerMsg message:
+                    _playerView.Animator.ResetTrigger(message.TriggerName);
+                    break;
+            }
         }
 
         public void Initialize()

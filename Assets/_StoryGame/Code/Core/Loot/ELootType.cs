@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Data.Loot
+﻿namespace _StoryGame.Core.Loot
 {
     public enum ELootType
     {

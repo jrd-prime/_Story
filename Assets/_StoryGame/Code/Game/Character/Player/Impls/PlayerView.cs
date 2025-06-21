@@ -17,7 +17,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         // [SerializeField] private float acceleration = 0f;
 
         public ReactiveProperty<Vector3> Position { get; } = new();
-        public object Animator { get; private set; }
+        public Animator Animator { get; private set; }
         public ECharacterState State { get; private set; } = ECharacterState.Idle;
         public NavMeshAgent NavMeshAgent { get; private set; }
         public string Description { get; set; }

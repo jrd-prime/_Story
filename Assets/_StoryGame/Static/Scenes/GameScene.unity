@@ -825,14 +825,6 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 2048250502}
-    - target: {fileID: 1075336431961072393, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
-      propertyPath: panelWidth
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 1075336431961072393, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
-      propertyPath: panelHeight
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 2236491483808667946, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -877,8 +869,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3867845503158998969, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 3ba5df55de38cf04d86504dab0da7464, type: 3}
+    - target: {fileID: 4757156988438852351, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7392482125863529605, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
+      propertyPath: m_SortingOrder
+      value: 999
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4757156988438852351, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}

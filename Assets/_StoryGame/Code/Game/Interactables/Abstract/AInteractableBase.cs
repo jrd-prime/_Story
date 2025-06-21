@@ -3,11 +3,10 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
-using _StoryGame.Game.Interactables.Data;
+using _StoryGame.Data.Interactable;
 using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
-using _StoryGame.Game.UI.Impls.Views.WorldViews;
 using _StoryGame.Infrastructure.AppStarter;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
@@ -42,7 +41,9 @@ namespace _StoryGame.Game.Interactables.Abstract
         private readonly CompositeDisposable _disposables = new();
         private IInteractable _interactableImplementation;
         private ILocalizationProvider _localizationProvider;
+
         protected IObjectResolver Resolver;
+
         // protected InteractablesTipUI InteractablesTipUI;
         private ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
 
@@ -50,7 +51,6 @@ namespace _StoryGame.Game.Interactables.Abstract
         private void Construct(
             IObjectResolver resolver,
             AppStartHandler appStartHandler,
-            // InteractablesTipUI interactablesTipUI,
             ILocalizationProvider localizationProvider,
             IPublisher<IUIViewerMsg> uiViewerMessagePublisher,
             ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub)
@@ -59,8 +59,6 @@ namespace _StoryGame.Game.Interactables.Abstract
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
             _localizationProvider = localizationProvider;
             _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
-
-            // InteractablesTipUI = interactablesTipUI;
 
             appStartHandler.IsAppStarted
                 .Subscribe(OnAppStarted)
@@ -79,49 +77,12 @@ namespace _StoryGame.Game.Interactables.Abstract
                 id = "id_" + localizationKey;
         }
 
-        private void OnEnable()
-        {
-            // InteractablesTipUI.transform.SetParent(transform, false); // TODO to object pool
-            _roomLootGeneratedMsgSub
-                .Subscribe(
-                    OnRoomLootGenerated
-                    // , msg => msg.RoomId == Room.Id
-                );
-        }
-
-        private void OnRoomLootGenerated(RoomLootGeneratedMsg msg)
-        {
-            // if (InteractableType == EInteractableType.Inspect)
-            //     InteractablesTipUI.ShowObjLoot(Room.GetLoot(Id));
-        }
-
         private void OnAppStarted(Unit _)
         {
-            ResolveSystem(Resolver);
             ResolveDependencies(Resolver);
-            ShowDebug();
         }
-
-        protected abstract void ResolveSystem(IObjectResolver resolver);
-
-        private void ShowDebug()
-        {
-            // if (!InteractablesTipUI)
-            //     throw new NullReferenceException("InteractableDebugController not found.");
-            //
-            // var text = _localizationProvider.Localize(LocalizationKey, ETable.Words);
-            // InteractablesTipUI.SetNameText(text.ToUpper());
-            // InteractablesTipUI.SetType(InteractableType.ToString().ToUpper());
-            //
-            // SetAdditionalDebugInfo(InteractablesTipUI);
-        }
-
 
         protected virtual void ResolveDependencies(IObjectResolver resolver)
-        {
-        }
-
-        protected virtual void SetAdditionalDebugInfo(InteractablesTipUI tipUI)
         {
         }
 
