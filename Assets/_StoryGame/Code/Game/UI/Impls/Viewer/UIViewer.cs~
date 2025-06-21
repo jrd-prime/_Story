@@ -79,9 +79,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                 case ShowExitRoomWindowMsg msg:
                     _floatingLayerHandler.ShowRoomChooseWindow(msg);
                     break;
-                case CurrentOperationMsg msg:
-                    _hudLayerHandler.ShowCurrentOperation(msg.CurrentOperation);
-                    break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
         }

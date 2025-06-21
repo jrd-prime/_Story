@@ -90,17 +90,17 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
         {
             // anim hero // await progress bar
             Log.Debug("OnStart Inspect");
+            Publisher.ForUIViewer(new CurrentOperationMsg("Inspect"));
 
             var source = new UniTaskCompletionSource<EDialogResult>();
             var message = new DisplayProgressBarMsg("Inspect", InspectDuration, source);
-
-
+            
             try
             {
-                SendMsgToPlayerAnimator(AnimatorConst.IsGatherHigh, true);
+                SendBoolToPlayerAnimator(AnimatorConst.IsGatherHigh, true);
                 Publisher.ForPlayerOverHeadUI(message);
                 var result = await source.Task;
-                SendMsgToPlayerAnimator(AnimatorConst.IsGatherHigh, false);
+                SendBoolToPlayerAnimator(AnimatorConst.IsGatherHigh, false);
 
                 if (result == EDialogResult.Close)
                 {
@@ -174,15 +174,12 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
         private async UniTask OnStartSearch()
         {
             var source = new UniTaskCompletionSource<EDialogResult>();
-            SendMsgToPlayerAnimator(AnimatorConst.IsGatherHigh, true);
+            SendBoolToPlayerAnimator(AnimatorConst.IsGatherHigh, true);
             Publisher.ForPlayerOverHeadUI(new DisplayProgressBarMsg("Search", SearchDuration, source));
             await source.Task;
 
-            SendMsgToPlayerAnimator(AnimatorConst.IsGatherHigh, false);
+            SendBoolToPlayerAnimator(AnimatorConst.IsGatherHigh, false);
         }
-
-        private void SendMsgToPlayerAnimator(string key, bool value) =>
-            Publisher.ForPlayerAnimator(new SetBoolMsg(key, value));
 
 
         private async UniTask OnCompleteSearch()
@@ -234,4 +231,6 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
             return UniTask.CompletedTask;
         }
     }
+
+    public record CurrentOperationMsg(string CurrentOperation) : IUIViewerMsg;
 }

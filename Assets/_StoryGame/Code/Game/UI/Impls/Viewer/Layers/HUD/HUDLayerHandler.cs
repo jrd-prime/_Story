@@ -35,6 +35,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
         private VisualTreeAsset _invCellTemplate;
         private IPlayer _player;
         private InteractableProcessor _interactableProcessor;
+        private Label _currentOperationLab;
 
         public HUDLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver, layerBack)
         {
@@ -64,7 +65,12 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
             _fpsLab = GetElement<Label>(FpsLabelId);
             _stateLab = GetElement<Label>(StateLabelId);
             _currentInteractableLab = GetElement<Label>(CurrentInteractableLabelId);
+            _currentOperationLab = GetElement<Label>(CurrentOperationLabelId);
+
+            _currentOperationLab.text = "-";
         }
+
+        private const string CurrentOperationLabelId = "currOp";
 
         protected override void Subscribe()
         {
@@ -127,5 +133,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
             _inventoryHUDController.Init(MainContainer, _invCellTemplate);
             _energyBarHUDController.Init(MainContainer);
         }
+
+        public void ShowCurrentOperation(string msgCurrentOperation) =>
+            _currentOperationLab.text = msgCurrentOperation;
     }
 }

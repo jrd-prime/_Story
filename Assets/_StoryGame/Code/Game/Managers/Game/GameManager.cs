@@ -50,7 +50,6 @@ namespace _StoryGame.Game.Managers.Game
         private IJPublisher _publisher;
         private ILocalizationProvider _localizationProvider;
 
-
         [Inject]
         private void Construct(IObjectResolver resolver)
         {
@@ -71,12 +70,10 @@ namespace _StoryGame.Game.Managers.Game
         {
             _cameraManager.SetTarget(_player);
             TempWallet = _walletService.GetOrCreate(ProjectConstant.TempWalletId);
-            Debug.LogWarning("TempWallet: " + TempWallet);
 
             _player.SetEnergy(10);
 
             PlayerWallet = _player.Wallet;
-
 
             _enableInputCachedMsg = new EnableInputMsg();
             _disableInputCachedMsg = new DisableInputMsg();

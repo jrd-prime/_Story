@@ -52,7 +52,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private async UniTask<bool> StartInspect()
         {
-            Log.Debug("<color=green>Start Inspect</color>".ToUpper());
+            Publisher.ForUIViewer(new CurrentOperationMsg("Inspect"));
             await OnStartInspect();
             await Inspected();
             return true;
@@ -67,7 +67,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private async UniTask<bool> StartSearch()
         {
-            Log.Debug("<color=green>Start Search</color>".ToUpper());
+            Publisher.ForUIViewer(new CurrentOperationMsg("Search"));
             await OnStartSearch();
             await Searched();
             return true;
@@ -75,7 +75,6 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private async UniTask<bool> Searched()
         {
-            Log.Debug("<color=green>Searched</color>".ToUpper());
             await OnCompleteSearch();
             return true;
         }
@@ -88,12 +87,8 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private async UniTask OnStartInspect()
         {
-            // anim hero // await progress bar
-            Log.Debug("OnStart Inspect");
-
             var source = new UniTaskCompletionSource<EDialogResult>();
             var message = new DisplayProgressBarMsg("Inspect", InspectDuration, source);
-
 
             try
             {
@@ -116,7 +111,6 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private async UniTask OnCompleteInspect()
         {
-            Log.Debug("OnComplete Inspect");
             _inspectable.SetInspectState(EInspectState.Inspected);
             await ShowLootTipAfterInspect();
         }
@@ -184,14 +178,13 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private async UniTask OnCompleteSearch()
         {
-            Log.Debug("OnComplete Search");
             _inspectable.SetInspectState(EInspectState.Searched);
             await ShowLootTipAfterSearch();
         }
 
         private async UniTask ShowLootTipAfterSearch()
         {
-            Log.Debug("ShowLootTipAfterSearch - wait callback from tip ");
+            Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
 
             var source = new UniTaskCompletionSource<EDialogResult>();
             var lootData = Room.GetLoot(InteractableId);
@@ -223,7 +216,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
 
         private UniTask OnTakeAllLoot(InspectableData lootData)
         {
-            Log.Debug("OnTakeAllLoot");
+            Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
 
             _inspectable.CanInteract = false;
             Publisher.ForGameManager(new TakeRoomLootMsg(lootData));
@@ -231,4 +224,6 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
             return UniTask.CompletedTask;
         }
     }
+
+    public record CurrentOperationMsg(string CurrentOperation) : IUIViewerMsg;
 }

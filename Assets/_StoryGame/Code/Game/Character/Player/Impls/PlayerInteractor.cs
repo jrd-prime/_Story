@@ -29,7 +29,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         public IWallet Wallet => _wallet;
         public string Name => _playerView.name;
         public string Description => _playerView.Description;
-        public object Animator => _playerView.Animator as Animator;
+        public object Animator => _playerView.Animator;
         public int Health { get; set; }
         public int MaxHealth { get; set; }
 
@@ -43,41 +43,26 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         private readonly PlayerService _service;
         private readonly IWallet _wallet;
-        private readonly CompositeDisposable _disposables = new();
         private readonly PlayerView _playerView;
         private readonly IPublisher<IPlayerMsg> _selfMsgPub;
         private readonly IJLog _log;
+        private readonly PlayerMessageHandler _messageHandler;
 
         public PlayerInteractor(
             PlayerService service,
             PlayerView playerView,
             IJLog log,
             IWalletService walletService,
-            ISubscriber<IPlayerAnimatorMsg> playerAnimatorMsgSub,
-            IPublisher<IPlayerMsg> selfMsgPub)
+            IPublisher<IPlayerMsg> selfMsgPub,
+            ISubscriber<IPlayerAnimatorMsg> playerAnimatorMsgSub)
         {
             _playerView = playerView;
             _service = service;
             _log = log;
-            _selfMsgPub = selfMsgPub;
             _wallet = walletService.GetOrCreate(Id);
-            playerAnimatorMsgSub.Subscribe(OnPlayerAnimatorMsg).AddTo(_disposables);
-        }
+            _selfMsgPub = selfMsgPub;
 
-        private void OnPlayerAnimatorMsg(IPlayerAnimatorMsg msg)
-        {
-            switch (msg)
-            {
-                case SetTriggerMsg message:
-                    _playerView.Animator.SetTrigger(message.TriggerName);
-                    break;
-                case ResetTriggerMsg message:
-                    _playerView.Animator.ResetTrigger(message.TriggerName);
-                    break;
-                case SetBoolMsg message:
-                    _playerView.Animator.SetBool(message.Id, message.Value);
-                    break;
-            }
+            _messageHandler = new PlayerMessageHandler(this, playerAnimatorMsgSub);
         }
 
         public void Initialize()
@@ -97,7 +82,6 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         public async UniTask MoveToPointAsync(Vector3 position, EDestinationPoint destinationPointType)
         {
-            // Debug.Log($"SetDestination interactor {position}");
             _destinationPoint.Value = position;
 
             switch (destinationPointType)
@@ -114,21 +98,19 @@ namespace _StoryGame.Game.Character.Player.Impls
 
             await _playerView.MoveToAsync(position);
 
-            // _log.Debug($"MoveToPointAsync: {position} done");
-
             SetState(ECharacterState.Idle);
         }
 
         public void OnStartInteract()
         {
-            _log.Debug("OnStartInteract: Animate & set state to Interacting");
+            _log.Debug("On Start Interact");
 
             SetState(ECharacterState.Interacting);
         }
 
         public void OnEndInteract()
         {
-            _log.Debug("OnEndInteract: Animate & set state to Idle");
+            _log.Debug("On End Interact");
             SetState(ECharacterState.Idle);
         }
 

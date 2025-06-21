@@ -55,6 +55,7 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Room\Interfaces\IRoom.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Interfaces\ICurrency.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interactable\EInteractableSystemTip.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Interactable\InteractableSystemTipVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Interactables\InteractableSystemTipData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\UIManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\States\BaseState.cs" />

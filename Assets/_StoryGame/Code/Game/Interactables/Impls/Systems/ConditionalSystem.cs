@@ -55,7 +55,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
         /// </summary>
         private UniTask<bool> LootedAsync()
         {
-            Log.Debug("<color=yellow>Looted. Show thought</color>".ToUpper());
+            Publisher.ForUIViewer(new CurrentOperationMsg("Looted. Show thought"));
             var thought = new ThoughtDataVo(_lootedThought);
             Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
             return UniTask.FromResult(true);
@@ -66,7 +66,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
         /// </summary>
         private UniTask<bool> Locked()
         {
-            Log.Debug("<color=yellow>Locked. Show thought</color>".ToUpper());
+            Publisher.ForUIViewer(new CurrentOperationMsg("Locked. Show thought"));
             var thought = new ThoughtDataVo(_lockedThought);
             Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
             return UniTask.FromResult(true);
@@ -78,7 +78,7 @@ namespace _StoryGame.Game.Interactables.Impls.Systems
         /// <returns></returns>
         private async UniTask<bool> Unlocked()
         {
-            Log.Debug("<color=yellow>Unlocked</color>".ToUpper());
+            Publisher.ForUIViewer(new CurrentOperationMsg("Unlocked. Looting"));
 
             SendBoolToPlayerAnimator(AnimatorConst.IsGatherHigh, true);
             await ShowOpenTip();

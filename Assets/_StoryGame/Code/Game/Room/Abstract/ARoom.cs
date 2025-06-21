@@ -102,7 +102,8 @@ namespace _StoryGame.Game.Room.Abstract
         // TODO call on game start
         public bool UpdateStateForConditionalObjects()
         {
-            _log.Debug("<color=green>UpdateStateForConditionalObjects</color>".ToUpper());
+            _log.Debug("<color=green>Update State For Conditional Objects</color>".ToUpper());
+
             if (_conditionalObjects.Count == 0)
             {
                 _log.Error("Room has no conditional objects");
@@ -111,25 +112,18 @@ namespace _StoryGame.Game.Room.Abstract
 
             foreach (var conditionalObject in _conditionalObjects)
             {
-                _log.Debug($"Init state for {conditionalObject.Id}");
                 var hasItem = _gameManager.IsPlayerHasItem(conditionalObject.Loot);
-                _log.Debug($"Has item: {hasItem}");
-
                 var hasConditionItems = _gameManager.IsPlayerHasConditionalItems(conditionalObject.ConditionalItems);
-                _log.Debug($"Has condition items: {hasConditionItems}");
 
                 if (hasItem)
-                {
                     conditionalObject.SetConditionalState(EConditionalState.Looted);
-                }
                 else if (hasConditionItems)
-                {
                     conditionalObject.SetConditionalState(EConditionalState.Unlocked);
-                }
                 else
-                {
                     conditionalObject.SetConditionalState(EConditionalState.Locked);
-                }
+
+                _log.Debug(
+                    $"Init state for {conditionalObject.Id} / Player already has item: {hasItem} / Has items for unlock: {hasConditionItems}");
             }
 
             return true;

@@ -29,6 +29,7 @@ namespace _StoryGame.Game.Managers.Game
     public sealed class GameManager : MonoBehaviour, IGameManager, IInitializable
     {
         public IWallet TempWallet { get; private set; }
+        public IWallet PlayerWallet { get; private set; }
         public ReactiveProperty<GameState> CurrentGameState { get; }
         public ReactiveProperty<float> GameTime { get; }
 
@@ -73,6 +74,8 @@ namespace _StoryGame.Game.Managers.Game
             Debug.LogWarning("TempWallet: " + TempWallet);
 
             _player.SetEnergy(10);
+
+            PlayerWallet = _player.Wallet;
 
 
             _enableInputCachedMsg = new EnableInputMsg();

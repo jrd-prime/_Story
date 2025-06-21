@@ -6,8 +6,10 @@ using UnityEngine;
 
 namespace _StoryGame.Data.SO.Interactables
 {
-    [CreateAssetMenu(fileName = nameof(InteractableSystemTipData),
-        menuName = SOPathConst.Settings + nameof(InteractableSystemTipData))]
+    [CreateAssetMenu(
+        fileName = nameof(InteractableSystemTipData),
+        menuName = SOPathConst.Settings + nameof(InteractableSystemTipData)
+    )]
     public sealed class InteractableSystemTipData : ASettingsBase
     {
         [SerializeField] private InteractableSystemTipVo hasLoot;
