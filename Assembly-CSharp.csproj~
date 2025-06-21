@@ -49,10 +49,13 @@
   <ItemGroup>
     <Compile Include="Assets\_StoryGame\Code\Core\Animations\Messages\ResetTriggerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Animations\Messages\SetBoolMsg.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Animations\Messages\SetTriggerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Loot\Interfaces\ILootGenerator.cs" />
     <Compile Include="Assets\ToggleInspectorLock.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Room\Interfaces\IRoom.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Interfaces\ICurrency.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Interactable\EInteractableSystemTip.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\SO\Interactables\InteractableSystemTipData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\UIManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\States\BaseState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IMovementProcessorMsg.cs" />
@@ -258,7 +261,6 @@
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIViewerLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IJMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\Systems\InspectSystem.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interactables\Impls\InteractableSystemTipData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\CoreNoteData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ANoteData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Room\RoomData.cs" />

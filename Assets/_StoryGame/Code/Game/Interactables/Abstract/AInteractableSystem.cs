@@ -5,6 +5,7 @@ using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Core.Room.Interfaces;
+using _StoryGame.Data.SO.Interactables;
 using _StoryGame.Game.Interactables.Impls;
 using _StoryGame.Game.Interactables.Interfaces;
 using Cysharp.Threading.Tasks;

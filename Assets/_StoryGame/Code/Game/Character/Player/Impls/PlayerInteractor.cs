@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Character.Player.Interfaces;
@@ -7,7 +8,6 @@ using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.Character.Player.Messages;
-using _StoryGame.Game.Interactables.Impls.Systems;
 using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
 using MessagePipe;

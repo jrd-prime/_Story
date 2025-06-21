@@ -9,7 +9,6 @@ using _StoryGame.Data.Loot;
 using _StoryGame.Game.Interactables.Abstract;
 using _StoryGame.Game.Interactables.Impls.ObjTypes;
 using _StoryGame.Game.Managers.Game.Messages;
-using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using Cysharp.Threading.Tasks;
 using VContainer;
 

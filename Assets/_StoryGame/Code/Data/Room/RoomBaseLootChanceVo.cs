@@ -1,6 +1,5 @@
 ﻿using System;
 using _StoryGame.Core.Loot;
-using _StoryGame.Data.Loot;
 
 namespace _StoryGame.Data.Room
 {
