@@ -7,14 +7,14 @@ using VContainer;
 
 namespace _StoryGame.Infrastructure.Interact
 {
-    public sealed class InteractSystemDepFlyweight
+    public sealed class InteracSystemDepFlyweight
     {
         public readonly IJPublisher Publisher;
         public readonly IJLog Log;
         public readonly ILocalizationProvider LocalizationProvider;
         public readonly InteractableSystemTipData InteractableSystemTipData;
 
-        public InteractSystemDepFlyweight(IObjectResolver resolver)
+        public InteracSystemDepFlyweight(IObjectResolver resolver)
         {
             Publisher = resolver.Resolve<IJPublisher>();
             Log = resolver.Resolve<IJLog>();

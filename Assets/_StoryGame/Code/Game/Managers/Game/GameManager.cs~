@@ -13,7 +13,7 @@ using _StoryGame.Data.Const;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Currency;
-using _StoryGame.Game.Interact.Systems;
+using _StoryGame.Game.Interactables.Impls.Systems;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;

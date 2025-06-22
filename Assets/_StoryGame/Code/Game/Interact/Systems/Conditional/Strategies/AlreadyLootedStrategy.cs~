@@ -11,7 +11,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     /// <summary>
     /// Если объект уже был залутан
     /// </summary>
-    public sealed class AlreadyLootedStrategy : IConditionalSystemStrategy
+    public class AlreadyLootedStrategy : IConditionalSystemStrategy
     {
         public string StrategyName => nameof(AlreadyLootedStrategy);
         private readonly InteractSystemDepFlyweight _systemDep;

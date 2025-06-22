@@ -10,11 +10,11 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     /// <summary>
     /// Если объект в заблокированном состоянии
     /// </summary>
-    public class LockedObjectStrategy : IConditionalSystemStrategy
+    public sealed class LockedStrategy : IConditionalSystemStrategy
     {
-        public string StrategyName => nameof(LockedObjectStrategy);
+        public string StrategyName => nameof(LockedStrategy);
         private readonly InteractSystemDepFlyweight _systemDep;
-        public LockedObjectStrategy(InteractSystemDepFlyweight systemDep) => _systemDep = systemDep;
+        public LockedStrategy(InteractSystemDepFlyweight systemDep) => _systemDep = systemDep;
 
 
         public UniTask<bool> ExecuteAsync(IConditional interactable)

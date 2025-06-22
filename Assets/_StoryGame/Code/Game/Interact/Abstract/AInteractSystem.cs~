@@ -1,11 +1,11 @@
 ﻿using System;
-using _StoryGame.Core.Interact;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
-using _StoryGame.Infrastructure.Interact;
+using _StoryGame.Game.Interactables.Interfaces;
+using _StoryGame.Infrastructure.Interactables;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Abstract
+namespace _StoryGame.Game.Interactables.Abstract
 {
     public abstract class AInteractSystem<TInteractable> : IInteractableSystem
         where TInteractable : class, IInteractable
@@ -14,11 +14,11 @@ namespace _StoryGame.Game.Interact.Abstract
         protected IRoom Room { get; private set; }
         protected string LocalizedName { get; private set; }
 
-        protected readonly InteractSystemDepFlyweight SystemDep;
+        protected readonly InteracSystemDepFlyweight SystemDep;
 
         private TInteractable Interactable;
 
-        protected AInteractSystem(InteractSystemDepFlyweight systemDep) => SystemDep = systemDep;
+        protected AInteractSystem(InteracSystemDepFlyweight systemDep) => SystemDep = systemDep;
 
         public UniTask<bool> Process(IInteractable interactable)
         {

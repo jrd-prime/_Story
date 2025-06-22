@@ -3,19 +3,19 @@ using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data;
-using _StoryGame.Game.Interactables.Abstract;
-using _StoryGame.Game.Interactables.Impls.ObjTypes.Usable;
+using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.ObjTypes.Usable;
 using _StoryGame.Game.Managers.Game.Messages;
-using _StoryGame.Infrastructure.Interactables;
+using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interactables.Impls.Systems
+namespace _StoryGame.Game.Interact.Systems
 {
     public sealed class UseSystem : AInteractSystem<AUsable>
     {
         private AUsable _usable;
 
-        public UseSystem(InteracSystemDepFlyweight systemDep) : base(systemDep)
+        public UseSystem(InteractSystemDepFlyweight systemDep) : base(systemDep)
         {
         }
 

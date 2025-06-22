@@ -1,10 +1,10 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Interact;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
-using _StoryGame.Data.Interactable;
-using _StoryGame.Game.Interactables.Interfaces;
+using _StoryGame.Data.Interact;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
@@ -14,7 +14,7 @@ using R3;
 using UnityEngine;
 using VContainer;
 
-namespace _StoryGame.Game.Interactables.Abstract
+namespace _StoryGame.Game.Interact.Abstract
 {
     [RequireComponent(typeof(Collider))]
     public abstract class AInteractableBase : MonoBehaviour, IInteractable

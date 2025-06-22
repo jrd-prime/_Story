@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Interfaces;
-using _StoryGame.Game.Interactables.Interfaces;
 using MessagePipe;
 using UnityEngine;
 using VContainer;
