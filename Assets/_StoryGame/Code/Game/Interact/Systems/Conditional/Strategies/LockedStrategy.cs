@@ -8,9 +8,9 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 {
     /// <summary>
-    /// Если объект в заблокированном состоянии
+    /// Implementation of interaction strategy for locked objects.
     /// </summary>
-    public sealed class LockedStrategy : IConditionalSystemStrategy
+    public sealed class LockedStrategy : IConditionSystemStrategy
     {
         public string StrategyName => nameof(LockedStrategy);
         private readonly InteractSystemDepFlyweight _systemDep;

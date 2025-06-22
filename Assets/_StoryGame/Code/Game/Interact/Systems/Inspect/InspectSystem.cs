@@ -9,6 +9,7 @@ using _StoryGame.Data.Animator;
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
@@ -24,9 +25,12 @@ namespace _StoryGame.Game.Interact.Systems.Inspect
 
         private EInspectState _inspectState;
         private IInspectable _inspectable;
+        private readonly InspectStrategyProvider _strategyProvider;
 
-        public InspectSystem(InteractSystemDepFlyweight systemDep) : base(systemDep)
+        public InspectSystem(InteractSystemDepFlyweight systemDep, InspectStrategyProvider strategyProvider) :
+            base(systemDep)
         {
+            _strategyProvider = strategyProvider;
         }
 
         protected override void OnPreProcess(IInspectable interactable)
@@ -37,6 +41,9 @@ namespace _StoryGame.Game.Interact.Systems.Inspect
 
         protected override async UniTask<bool> OnProcessAsync()
         {
+            var strategy = _strategyProvider.GetStrategy(_inspectable.InspectState);
+            return await strategy.ExecuteAsync(_inspectable);
+
             var result = _inspectState switch
             {
                 EInspectState.NotInspected => await StartInspect(),

@@ -7,6 +7,14 @@ using VContainer;
 
 namespace _StoryGame.Infrastructure.Interact
 {
+    /// <summary>
+    /// Легковесный (Flyweight) контейнер зависимостей для системы взаимодействий.
+    /// Содержит общие сервисы, необходимые для работы интерактивных объектов.
+    /// </summary>
+    /// <remarks>
+    /// Этот класс предназначен для уменьшения количества зависимостей в стратегиях и других компонентах,
+    /// связанных с обработкой взаимодействий. Все зависимости разрешаются через DI-контейнер (VContainer).
+    /// </remarks>
     public sealed class InteractSystemDepFlyweight
     {
         public readonly IJPublisher Publisher;

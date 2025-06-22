@@ -12,7 +12,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional
     /// </summary>
     public sealed class ConditionalStrategyProvider
     {
-        private readonly Dictionary<EConditionalState, IConditionSystemStrategy> _strategies = new();
+        private readonly Dictionary<EConditionalState, IConditionalSystemStrategy> _strategies = new();
 
         public ConditionalStrategyProvider(InteractSystemDepFlyweight systemDep)
         {
@@ -24,7 +24,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional
         /// <summary>
         /// Gets the strategy implementation for the specified conditional state.
         /// </summary>
-        public IConditionSystemStrategy GetStrategy(EConditionalState state)
+        public IConditionalSystemStrategy GetStrategy(EConditionalState state)
         {
             if (!_strategies.TryGetValue(state, out var strategy))
                 throw new ArgumentException($"Unknown conditional state: {state}");

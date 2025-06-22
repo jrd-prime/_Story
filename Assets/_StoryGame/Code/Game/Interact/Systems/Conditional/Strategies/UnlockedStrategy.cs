@@ -15,10 +15,9 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 {
     /// <summary>
-    /// Если объект можно "открыть" и залутать
+    /// Implementation of interaction strategy for unlocking objects.
     /// </summary>
-    /// <returns></returns>
-    public sealed class UnlockStrategy : IConditionalSystemStrategy
+    public sealed class UnlockStrategy : IConditionSystemStrategy
     {
         public string StrategyName => nameof(UnlockStrategy);
         private readonly InteractSystemDepFlyweight _systemDep;
@@ -61,6 +60,9 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
             return true;
         }
 
+        /// <summary>
+        /// Displays the progress bar for "opening" animation.
+        /// </summary>
         private async UniTask ShowOpenTip()
         {
             var source = new UniTaskCompletionSource<EDialogResult>();

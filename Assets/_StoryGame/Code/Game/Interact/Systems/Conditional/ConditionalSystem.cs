@@ -5,6 +5,10 @@ using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.Systems.Conditional
 {
+    /// <summary>
+    /// Система обработки условных (conditional) взаимодействий с объектами.
+    /// Выбирает стратегию выполнения в зависимости от текущего состояния объекта (<see cref="IConditional.ConditionalState"/>).
+    /// </summary>
     public sealed class ConditionalSystem : AInteractSystem<IConditional>
     {
         private IConditional _conditional;

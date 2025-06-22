@@ -8,4 +8,5 @@ namespace _StoryGame.Core.Interact
     {
         UniTask<bool> ExecuteAsync(TInteractable interactable);
     }
+
 }

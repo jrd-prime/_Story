@@ -9,9 +9,9 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 {
     /// <summary>
-    /// Если объект уже был залутан
+    /// Strategy implementation for handling already looted interactable objects.
     /// </summary>
-    public sealed class AlreadyLootedStrategy : IConditionalSystemStrategy
+    public sealed class AlreadyLootedStrategy : IConditionSystemStrategy
     {
         public string StrategyName => nameof(AlreadyLootedStrategy);
         private readonly InteractSystemDepFlyweight _systemDep;
