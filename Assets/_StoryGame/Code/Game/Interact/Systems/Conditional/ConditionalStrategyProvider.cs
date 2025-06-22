@@ -21,9 +21,6 @@ namespace _StoryGame.Game.Interact.Systems.Conditional
             _strategies.Add(EConditionalState.Looted, new AlreadyLootedStrategy(systemDep));
         }
 
-        /// <summary>
-        /// Gets the strategy implementation for the specified conditional state.
-        /// </summary>
         public IConditionSystemStrategy GetStrategy(EConditionalState state)
         {
             if (!_strategies.TryGetValue(state, out var strategy))

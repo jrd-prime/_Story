@@ -27,20 +27,21 @@ namespace _StoryGame.Game.Interact
             IPlayer player,
             IJLog log,
             ILocalizationProvider localizationProvider,
-            ISubscriber<IMovementProcessorMsg> movementProcessorMsgSub
+            ISubscriber<IInteractProcessorMsg> movementProcessorMsgSub
         )
         {
             _player = player;
             _log = log;
             _localizationProvider = localizationProvider;
+            
             movementProcessorMsgSub
                 .Subscribe(
-                    msg => ProcessInteracting(msg as InteractableEntranceReachedMsg).Forget(),
-                    msg => msg is InteractableEntranceReachedMsg
+                    msg => ProcessInteracting(msg as InteractRequestMsg).Forget(),
+                    msg => msg is InteractRequestMsg
                 ).AddTo(_disposables);
         }
 
-        private async UniTask ProcessInteracting(InteractableEntranceReachedMsg message)
+        private async UniTask ProcessInteracting(InteractRequestMsg message)
         {
             try
             {

@@ -1,4 +1,5 @@
 ﻿using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
 using _StoryGame.Game.Interact.Systems.Inspect;
@@ -13,20 +14,19 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     public sealed class LockedStrategy : IConditionSystemStrategy
     {
         public string StrategyName => nameof(LockedStrategy);
-        private readonly InteractSystemDepFlyweight _systemDep;
-        public LockedStrategy(InteractSystemDepFlyweight systemDep) => _systemDep = systemDep;
+        private readonly InteractSystemDepFlyweight _dep;
+        public LockedStrategy(InteractSystemDepFlyweight dep) => _dep = dep;
 
 
         public UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            _systemDep.Log.Debug("Conditional = " + interactable);
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
+            
             var lockedThoughtKey = interactable.LockedStateThought.LocalizationKey;
-            var lockedThought = _systemDep.LocalizationProvider.Localize(lockedThoughtKey, ETable.SmallPhrase);
-
-            _systemDep.Publisher.ForUIViewer(new CurrentOperationMsg("Locked. Show thought"));
+            var lockedThought = _dep.LocalizationProvider.Localize(lockedThoughtKey, ETable.SmallPhrase);
 
             var thought = new ThoughtDataVo(lockedThought);
-            _systemDep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
+            _dep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
             return UniTask.FromResult(true);
         }
     }

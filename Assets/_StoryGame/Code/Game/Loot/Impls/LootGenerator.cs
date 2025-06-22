@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _StoryGame.Core.Currency;
-using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Loot;
 using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.Providers.Assets;

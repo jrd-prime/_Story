@@ -1,6 +1,6 @@
 ﻿namespace _StoryGame.Core.Messaging.Interfaces
 {
-    public interface IMovementProcessorMsg : IJMessage
+    public interface IInteractProcessorMsg : IJMessage
     {
     }
 }

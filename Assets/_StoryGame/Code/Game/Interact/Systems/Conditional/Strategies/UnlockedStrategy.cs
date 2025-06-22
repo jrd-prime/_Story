@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
 using _StoryGame.Data;
@@ -20,36 +21,36 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     public sealed class UnlockStrategy : IConditionSystemStrategy
     {
         public string StrategyName => nameof(UnlockStrategy);
-        private readonly InteractSystemDepFlyweight _systemDep;
+        private readonly InteractSystemDepFlyweight _dep;
 
-        public UnlockStrategy(InteractSystemDepFlyweight systemDep) => _systemDep = systemDep;
+        public UnlockStrategy(InteractSystemDepFlyweight dep) => _dep = dep;
 
         public async UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            _systemDep.Publisher.ForUIViewer(new CurrentOperationMsg("Unlocked. Looting"));
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
 
-            _systemDep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, true));
+            _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, true));
 
             await ShowOpenTip();
-            _systemDep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
+            _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
 
             var source = new UniTaskCompletionSource<EDialogResult>();
             var lootData = new LootData(interactable.Room.Id, interactable.Id, null, interactable.Loot);
             var message = new DisplayArtefactInfoMsg(lootData, source);
-            var locName = _systemDep.LocalizationProvider.Localize(interactable.LocalizationKey, ETable.Words);
+            var locName = _dep.LocalizationProvider.Localize(interactable.LocalizationKey, ETable.Words);
             var inspdata = new InspectableData(locName, new List<LootData>() { lootData });
             try
             {
-                _systemDep.Publisher.ForUIViewer(message);
+                _dep.Publisher.ForUIViewer(message);
 
                 var result = await source.Task;
                 source = null;
 
                 if (result == EDialogResult.Close)
                 {
-                    _systemDep.Publisher.ForGameManager(new TakeRoomLootMsg(inspdata));
+                    _dep.Publisher.ForGameManager(new TakeRoomLootMsg(inspdata));
                 }
-                else _systemDep.Log.Warn("Unhandled unexpected result: " + result);
+                else _dep.Log.Warn("Unhandled unexpected result: " + result);
             }
             finally
             {
@@ -66,7 +67,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
         private async UniTask ShowOpenTip()
         {
             var source = new UniTaskCompletionSource<EDialogResult>();
-            _systemDep.Publisher.ForPlayerOverHeadUI(new DisplayProgressBarMsg("Open", 3, source));
+            _dep.Publisher.ForPlayerOverHeadUI(new DisplayProgressBarMsg("Open", 3, source));
             await source.Task;
         }
     }

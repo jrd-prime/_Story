@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
-using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
 using _StoryGame.Game.Movement.Messages;
@@ -42,7 +42,7 @@ namespace _StoryGame.Game.Movement
             IJLog log,
             IPublisher<IMovementHandlerMsg> selfMsgPub,
             ISubscriber<IPlayerMsg> playerMsgSub,
-            ISubscriber<IMovementProcessorMsg> movementProcessorMsgSub)
+            ISubscriber<IInteractProcessorMsg> movementProcessorMsgSub)
         {
             _log = log;
 

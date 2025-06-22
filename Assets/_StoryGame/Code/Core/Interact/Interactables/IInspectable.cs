@@ -2,7 +2,7 @@
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.Room;
 
-namespace _StoryGame.Core.Interact
+namespace _StoryGame.Core.Interact.Interactables
 {
     public interface IInspectable : IInteractable
     {

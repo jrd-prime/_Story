@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
-using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Providers.Settings;
@@ -10,8 +10,8 @@ using _StoryGame.Data.Interact;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
-using _StoryGame.Game.Interact.ObjTypes;
-using _StoryGame.Game.Interact.ObjTypes.Usable;
+using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables.Usable;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -26,7 +26,7 @@ namespace _StoryGame.Game.Room.Abstract
         [SerializeField] private string roomId;
         [SerializeField] private string roomName;
         [SerializeField] private RoomInteractablesVo interactables;
-        [SerializeField] private List<RoomDoor> doors;
+        [SerializeField] private List<Exit> doors;
 
         public string Id => roomId;
         public string Name => roomName;

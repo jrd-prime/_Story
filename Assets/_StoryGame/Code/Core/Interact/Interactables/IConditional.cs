@@ -2,7 +2,7 @@
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Currency;
 
-namespace _StoryGame.Core.Interact
+namespace _StoryGame.Core.Interact.Interactables
 {
     public interface IConditional : IInteractable
     {

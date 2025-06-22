@@ -1,0 +1,98 @@
+﻿using _StoryGame.Core.Animations.Messages;
+using _StoryGame.Core.Interact;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI.Msg;
+using _StoryGame.Data;
+using _StoryGame.Data.Animator;
+using _StoryGame.Data.Interact;
+using _StoryGame.Data.Loot;
+using _StoryGame.Game.Managers.Game.Messages;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
+using _StoryGame.Infrastructure.Interact;
+using Cysharp.Threading.Tasks;
+
+namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
+{
+    public sealed class SearchedStrategy : IInspectSystemStrategy
+    {
+        private const float SearchDuration = 2f;
+        public string StrategyName => nameof(SearchedStrategy);
+
+        private readonly InteractSystemDepFlyweight _systemDep;
+        private IInspectable _inspectable;
+        private string _objLocalizedName;
+        private readonly DialogResultHandler _dialogResultHandler;
+        private InspectableData _lootData;
+
+        public SearchedStrategy(InteractSystemDepFlyweight systemDep)
+        {
+            _systemDep = systemDep;
+            _dialogResultHandler = new DialogResultHandler();
+
+            _dialogResultHandler.AddCallback(EDialogResult.TakeAll, OnTakeAllAction);
+            _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
+        }
+
+        public async UniTask<bool> ExecuteAsync(IInspectable inspectable)
+        {
+            _inspectable = inspectable;
+            _objLocalizedName =
+                _systemDep.LocalizationProvider.Localize(_inspectable.LocalizationKey, ETable.Words,
+                    ETextTransform.Upper);
+
+            _systemDep.Publisher.ForUIViewer(new CurrentOperationMsg("SearchLoot"));
+
+            await SearchLoot();
+            return true;
+        }
+
+        private async UniTask SearchLoot()
+        {
+            var source = new UniTaskCompletionSource<EDialogResult>();
+
+            _systemDep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, true));
+
+            _systemDep.Publisher.ForPlayerOverHeadUI(new DisplayProgressBarMsg("SearchLoot", SearchDuration, source));
+            await source.Task;
+
+            _systemDep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
+
+            _inspectable.SetInspectState(EInspectState.Searched);
+            await ShowLootTipAfterSearch();
+        }
+
+        private async UniTask ShowLootTipAfterSearch()
+        {
+            _systemDep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
+
+            var source = new UniTaskCompletionSource<EDialogResult>();
+            _lootData = _inspectable.Room.GetLoot(_inspectable.Id);
+            var message = new ShowLootWindowMsg(_objLocalizedName, _lootData, source);
+
+            try
+            {
+                _systemDep.Publisher.ForUIViewer(message);
+
+                var result = await source.Task;
+                source = null;
+
+                _dialogResultHandler.HandleResult(result);
+            }
+            finally
+            {
+                source?.TrySetCanceled();
+            }
+        }
+
+        private void OnCloseAction()
+        {
+        }
+
+        private void OnTakeAllAction()
+        {
+            _systemDep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
+            _inspectable.CanInteract = false; // TODO подумать, мб не вырубать, а показывать хинт
+            _systemDep.Publisher.ForGameManager(new TakeRoomLootMsg(_lootData));
+        }
+    }
+}

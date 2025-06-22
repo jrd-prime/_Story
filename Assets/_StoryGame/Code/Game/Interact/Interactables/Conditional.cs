@@ -1,6 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
-using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Currency;
@@ -9,7 +9,7 @@ using _StoryGame.Game.Interact.Systems.Conditional;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _StoryGame.Game.Interact.ObjTypes
+namespace _StoryGame.Game.Interact.Interactables
 {
     /// <summary>
     /// Объект, для которого необходимо выполнение каких-либо условий чтобы он стал активен.

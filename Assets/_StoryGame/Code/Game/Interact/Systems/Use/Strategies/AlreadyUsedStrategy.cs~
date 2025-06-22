@@ -1,0 +1,24 @@
+﻿using System;
+using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Infrastructure.Interact;
+using Cysharp.Threading.Tasks;
+
+namespace _StoryGame.Game.Interact.Systems.Use
+{
+    public class AlreadyUsedStrategy : IUseSystemStrategy
+    {
+        public AlreadyUsedStrategy(InteractSystemDepFlyweight systemDep)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public UniTask<bool> ExecuteAsync(IUsable interactable)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string StrategyName => nameof(AlreadyUsedStrategy);
+    }
+}

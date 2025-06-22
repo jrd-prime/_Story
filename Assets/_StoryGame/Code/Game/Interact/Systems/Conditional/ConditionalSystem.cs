@@ -1,4 +1,4 @@
-﻿using _StoryGame.Core.Interact;
+﻿using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
@@ -11,18 +11,15 @@ namespace _StoryGame.Game.Interact.Systems.Conditional
     /// </summary>
     public sealed class ConditionalSystem : AInteractSystem<IConditional>
     {
-        private IConditional _conditional;
         private readonly ConditionalStrategyProvider _strategyProvider;
 
-        public ConditionalSystem(InteractSystemDepFlyweight systemDep, ConditionalStrategyProvider strategyProvider)
-            : base(systemDep) => _strategyProvider = strategyProvider;
+        public ConditionalSystem(InteractSystemDepFlyweight dep, ConditionalStrategyProvider strategyProvider)
+            : base(dep) => _strategyProvider = strategyProvider;
 
-        protected override void OnPreProcess(IConditional interactable) => _conditional = interactable;
-
-        protected override async UniTask<bool> OnProcessAsync()
+        protected override async UniTask<bool> OnInteractAsync()
         {
-            var strategy = _strategyProvider.GetStrategy(_conditional.ConditionalState);
-            return await strategy.ExecuteAsync(_conditional);
+            var strategy = _strategyProvider.GetStrategy(Interactable.ConditionalState);
+            return await strategy.ExecuteAsync(Interactable);
         }
     }
 }

@@ -1,4 +1,4 @@
-using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using R3;
 
 namespace _StoryGame.Core.Common.Interfaces

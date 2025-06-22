@@ -1,43 +1,44 @@
 ﻿using System;
+using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
-using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Infrastructure.Interactables;
+using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interactables.Abstract
+namespace _StoryGame.Game.Interact.Abstract
 {
     public abstract class AInteractSystem<TInteractable> : IInteractableSystem
         where TInteractable : class, IInteractable
     {
-        protected string InteractableId { get; private set; }
-        protected IRoom Room { get; private set; }
-        protected string LocalizedName { get; private set; }
+        protected readonly InteractSystemDepFlyweight Dep;
 
-        protected readonly InteracSystemDepFlyweight SystemDep;
+        protected TInteractable Interactable;
 
-        private TInteractable Interactable;
+        protected AInteractSystem(InteractSystemDepFlyweight dep) => Dep = dep;
 
-        protected AInteractSystem(InteracSystemDepFlyweight systemDep) => SystemDep = systemDep;
-
-        public UniTask<bool> Process(IInteractable interactable)
+        public async UniTask<bool> Process(IInteractable interactable)
         {
             Interactable = interactable as TInteractable ??
                            throw new Exception($"Interact is null as {typeof(TInteractable)}.");
 
-            InteractableId = Interactable.Id;
-            Room = Interactable.Room;
-            LocalizedName =
-                SystemDep.LocalizationProvider.Localize(Interactable.LocalizationKey, ETable.Words,
-                    ETextTransform.Upper);
+            OnPreInteract();
 
-            OnPreProcess(Interactable);
+            var result = await OnInteractAsync();
 
-            return OnProcessAsync();
+            OnPostInteract();
+
+            return result;
         }
 
-        protected abstract void OnPreProcess(TInteractable interactable);
+        protected virtual void OnPreInteract()
+        {
+        }
 
-        protected abstract UniTask<bool> OnProcessAsync();
+        protected abstract UniTask<bool> OnInteractAsync();
+
+        protected virtual void OnPostInteract()
+        {
+        }
     }
 }

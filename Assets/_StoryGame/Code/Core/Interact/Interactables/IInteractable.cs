@@ -4,7 +4,7 @@ using _StoryGame.Data.Interact;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _StoryGame.Core.Interact
+namespace _StoryGame.Core.Interact.Interactables
 {
     public interface IInteractable
     {

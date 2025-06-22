@@ -1,12 +1,13 @@
 ﻿using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.Abstract;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _StoryGame.Game.Interact.ObjTypes.Usable
+namespace _StoryGame.Game.Interact.Interactables.Usable
 {
-    public sealed class RoomDoor : AUsable
+    public sealed class Exit : AUsable , IUsableExit
     {
         [SerializeField] private GameObject door;
         [SerializeField] private string exitQuestionLocalizationKey;

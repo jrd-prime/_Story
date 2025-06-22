@@ -6,9 +6,9 @@ using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Interact.Systems.Inspect;
+using _StoryGame.Game.Interact.Systems.Use;
 using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
@@ -92,6 +92,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<InspectStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<UseStrategyProvider>(Lifetime.Singleton).AsSelf();
         }
 
         private void RegisterRooms(IContainerBuilder builder)

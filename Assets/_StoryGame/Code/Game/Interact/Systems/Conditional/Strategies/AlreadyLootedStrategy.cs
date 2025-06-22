@@ -1,4 +1,5 @@
 ﻿using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
 using _StoryGame.Data.Interact;
@@ -14,18 +15,20 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     public sealed class AlreadyLootedStrategy : IConditionSystemStrategy
     {
         public string StrategyName => nameof(AlreadyLootedStrategy);
-        private readonly InteractSystemDepFlyweight _systemDep;
+        private readonly InteractSystemDepFlyweight _dep;
 
-        public AlreadyLootedStrategy(InteractSystemDepFlyweight systemDep) => _systemDep = systemDep;
+        public AlreadyLootedStrategy(InteractSystemDepFlyweight dep) => _dep = dep;
 
         public UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            var lootedThought = _systemDep.LocalizationProvider.Localize(
-                _systemDep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.CondLooted),
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
+
+            var lootedThought = _dep.LocalizationProvider.Localize(
+                _dep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.CondLooted),
                 ETable.SmallPhrase);
-            _systemDep.Publisher.ForUIViewer(new CurrentOperationMsg("Looted. Show thought"));
+
             var thought = new ThoughtDataVo(lootedThought);
-            _systemDep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
+            _dep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
             return UniTask.FromResult(true);
         }
     }

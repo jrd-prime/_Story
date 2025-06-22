@@ -10,5 +10,6 @@ namespace _StoryGame.Core.Messaging.Interfaces
         void ForPlayerOverHeadUI(IPlayerOverHeadUIMsg msg);
         void ForInput(IInputMsg msg);
         void ForPlayerAnimator(IPlayerAnimatorMsg msg);
+        void ForInteractProcessor(IInteractProcessorMsg msg);
     }
 }

@@ -5,7 +5,7 @@ using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.ObjTypes
+namespace _StoryGame.Game.Interact.Interactables
 {
     /// <summary>
     /// Объекты с несколькими стадиями взаимодействия

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _StoryGame.Core.Interact;
-using _StoryGame.Game.Interact.ObjTypes;
+using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables;
 
 namespace _StoryGame.Data.Room
 {

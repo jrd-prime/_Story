@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using _StoryGame.Core.Interact.Interactables;
+using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Core.Interact
 {

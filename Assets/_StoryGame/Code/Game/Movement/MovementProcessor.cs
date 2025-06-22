@@ -1,7 +1,7 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
-using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Game.Movement.Messages;
 using Cysharp.Threading.Tasks;
@@ -15,14 +15,14 @@ namespace _StoryGame.Game.Movement
     {
         private readonly IJLog _log;
         private readonly IPlayer _player;
-        private readonly IPublisher<IMovementProcessorMsg> _selfMsgPub;
+        private readonly IPublisher<IInteractProcessorMsg> _selfMsgPub;
 
         private readonly CompositeDisposable _disposables = new();
 
         public MovementProcessor(
             IJLog log,
             IPlayer player,
-            IPublisher<IMovementProcessorMsg> selfMsgPub,
+            IPublisher<IInteractProcessorMsg> selfMsgPub,
             ISubscriber<IMovementHandlerMsg> movementHandlerMsgSub
         )
         {
@@ -42,7 +42,7 @@ namespace _StoryGame.Game.Movement
             await _player.MoveToPointAsync(entryPoint, EDestinationPoint.Entrance);
             // _log.Debug($"MoveToInteractable: {entryPoint} done");
 
-            _selfMsgPub.Publish(new InteractableEntranceReachedMsg(interactable));
+            _selfMsgPub.Publish(new InteractRequestMsg(interactable));
         }
 
         private async UniTask MoveToPoint(Vector3 position)
@@ -71,9 +71,8 @@ namespace _StoryGame.Game.Movement
         public void Dispose() => _disposables?.Dispose();
     }
 
-    public record InteractableEntranceReachedMsg(IInteractable Interactable) : IMovementProcessorMsg
+    public record InteractRequestMsg(IInteractable Interactable) : IInteractProcessorMsg
     {
-        public string Name => nameof(InteractableEntranceReachedMsg);
         public IInteractable Interactable { get; } = Interactable;
     }
 }
