@@ -52,10 +52,10 @@ MonoBehaviour:
   interactionTipNameId: 
   localizationKey: wood_box
   _entrance: {fileID: 9105764197919182745}
-  <Loot>k__BackingField: {fileID: 11400000, guid: c4eaa8339adbf534d84fbbdcf81c342f, type: 2}
-  <ConditionalItems>k__BackingField:
+  loot: {fileID: 11400000, guid: c5bc78edb80293e44b91941250091cc2, type: 2}
+  conditionalItems:
   - {fileID: 11400000, guid: a9020e71f09c2624ebc76375b685f57f, type: 2}
-  <LockedStateThought>k__BackingField: {fileID: 11400000, guid: 74e5eda9329dd284ebd2d00619109f77, type: 2}
+  lockedStateThought: {fileID: 11400000, guid: 74e5eda9329dd284ebd2d00619109f77, type: 2}
 --- !u!65 &2291404590153465615
 BoxCollider:
   m_ObjectHideFlags: 0

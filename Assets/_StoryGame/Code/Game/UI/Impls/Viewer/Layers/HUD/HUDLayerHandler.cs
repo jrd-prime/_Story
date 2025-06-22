@@ -5,7 +5,7 @@ using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Interactables;
+using _StoryGame.Game.Interact;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components;
 using _StoryGame.Infrastructure.Tools;

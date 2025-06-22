@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact;
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
-using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Movement.Messages;
 using MessagePipe;
 using R3;
@@ -123,7 +123,7 @@ namespace _StoryGame.Game.Movement
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, interactableLayer))
             {
-                // _log.Debug($"Hit layer Interactable object: {hit.collider.gameObject.name}");
+                // _log.Debug($"Hit layer Interact object: {hit.collider.gameObject.name}");
 
                 var interactable = hit.collider.GetComponent<IInteractable>();
                 if (interactable != null)

@@ -4,9 +4,11 @@ using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.WalletNew.Impls;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
-using _StoryGame.Game.Interactables;
-using _StoryGame.Game.Interactables.Abstract;
-using _StoryGame.Game.Interactables.Impls.Systems;
+using _StoryGame.Game.Interact;
+using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Systems;
+using _StoryGame.Game.Interact.Systems.Conditional;
+using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
@@ -17,6 +19,7 @@ using _StoryGame.Game.UI.Impls.Viewer;
 using _StoryGame.Game.UI.Impls.Views.Gameplay;
 using _StoryGame.Game.UI.Impls.Views.Menu;
 using _StoryGame.Game.UI.Impls.Views.WorldViews;
+using _StoryGame.Infrastructure.Interact;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;
@@ -86,6 +89,9 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.RegisterComponentInNewPrefab<InteractablesTipUI>(interactablesTipUIPrefab, Lifetime.Transient);
 
             builder.Register<ILootGenerator, LootGenerator>(Lifetime.Singleton);
+
+            builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
+            builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
         }
 
         private void RegisterRooms(IContainerBuilder builder)
@@ -116,7 +122,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             var interactables =
                 FindObjectsByType<AInteractableBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            Debug.Log($"Interactables on scene: {interactables.Length}");
+            Debug.Log($"Interact on scene: {interactables.Length}");
             foreach (var interactable in interactables)
                 Container.Inject(interactable);
         }

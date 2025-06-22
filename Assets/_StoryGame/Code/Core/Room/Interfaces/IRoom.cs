@@ -1,4 +1,4 @@
-﻿using _StoryGame.Data.Interactable;
+﻿using _StoryGame.Data.Interact;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.Room;
 

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact;
 using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Core.Room.Interfaces;
-using _StoryGame.Data.Interactable;
+using _StoryGame.Data.Interact;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
-using _StoryGame.Game.Interactables.Impls.ObjTypes;
-using _StoryGame.Game.Interactables.Impls.ObjTypes.Usable;
+using _StoryGame.Game.Interact.ObjTypes;
+using _StoryGame.Game.Interact.ObjTypes.Usable;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -39,7 +39,7 @@ namespace _StoryGame.Game.Room.Abstract
         private IPublisher<RoomLootGeneratedMsg> _roomLootGeneratedMsgPub;
         private readonly CompositeDisposable _disposables = new();
 
-        private List<Conditional> _conditionalObjects = new();
+        private readonly List<IConditional> _conditionalObjects = new();
         private IJLog _log;
         private IGameManager _gameManager;
 
@@ -69,8 +69,10 @@ namespace _StoryGame.Game.Room.Abstract
         {
             SayMyNameToObjects();
 
-            _conditionalObjects =
-                FindObjectsByType<Conditional>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
+            var conditionals =
+                FindObjectsByType<Conditional>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            _conditionalObjects.AddRange(conditionals);
 
             UpdateStateForConditionalObjects();
         }
@@ -133,8 +135,8 @@ namespace _StoryGame.Game.Room.Abstract
         {
             interactables.core.SetRoom(this);
 
-            foreach (var interactable in interactables.hidden)
-                interactable.SetRoom(this);
+            foreach (var conditional in interactables.hidden)
+                conditional.SetRoom(this);
 
             foreach (var inspectable in interactables.inspectables)
                 inspectable.SetRoom(this);

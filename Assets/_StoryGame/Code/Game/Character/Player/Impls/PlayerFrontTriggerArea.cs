@@ -74,7 +74,7 @@ namespace _StoryGame.Game.Character.Player.Impls
                 return;
 
             if (interactable != _currentInteractable)
-                _log.Warn($"Interactable {other.gameObject.name} not in trigger zone.");
+                _log.Warn($"Interact {other.gameObject.name} not in trigger zone.");
 
             _currentInteractable.HideInteractionTip();
             _interactablesInTrigger.Remove(interactable);
@@ -90,7 +90,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         {
             if (interactable == null)
             {
-                Debug.LogWarning("Interactable is null when getting interaction tip.", this);
+                Debug.LogWarning("Interact is null when getting interaction tip.", this);
                 return (string.Empty, string.Empty);
             }
 

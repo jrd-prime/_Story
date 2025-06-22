@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using _StoryGame.Core.Currency;
+using _StoryGame.Core.Interact;
 using _StoryGame.Core.Loot;
 using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.Providers.Assets;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Const;
-using _StoryGame.Data.Interactable;
+using _StoryGame.Data.Interact;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Game.Interactables.Interfaces;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

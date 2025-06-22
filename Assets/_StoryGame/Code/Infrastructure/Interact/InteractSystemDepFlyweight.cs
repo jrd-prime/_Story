@@ -1,0 +1,27 @@
+﻿using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Messaging.Interfaces;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.Providers.Settings;
+using _StoryGame.Data.SO.Interactables;
+using VContainer;
+
+namespace _StoryGame.Infrastructure.Interact
+{
+    public sealed class InteracSystemDepFlyweight
+    {
+        public readonly IJPublisher Publisher;
+        public readonly IJLog Log;
+        public readonly ILocalizationProvider LocalizationProvider;
+        public readonly InteractableSystemTipData InteractableSystemTipData;
+
+        public InteracSystemDepFlyweight(IObjectResolver resolver)
+        {
+            Publisher = resolver.Resolve<IJPublisher>();
+            Log = resolver.Resolve<IJLog>();
+            LocalizationProvider = resolver.Resolve<ILocalizationProvider>();
+
+            var settingsProvider = resolver.Resolve<ISettingsProvider>();
+            InteractableSystemTipData = settingsProvider.GetSettings<InteractableSystemTipData>();
+        }
+    }
+}

@@ -1,8 +1,8 @@
 ﻿using System;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact;
 using _StoryGame.Core.Messaging.Interfaces;
-using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Movement.Messages;
 using Cysharp.Threading.Tasks;
 using MessagePipe;

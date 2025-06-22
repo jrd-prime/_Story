@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Data.Interactable;
+using _StoryGame.Data.Interact;
 using _StoryGame.Data.SO.Currency;
 
 namespace _StoryGame.Data.Room

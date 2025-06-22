@@ -45,12 +45,6 @@ namespace _StoryGame.Game.Character.Player.Impls
                 return;
 
             UpdateCurrentInteractable();
-
-            if (_currentInteractable == null)
-                return;
-
-            _log.Debug($"Interactable '{other.gameObject.name}' triggered.");
-            _currentInteractable.ShowInteractionTip(GetInteractionTip(_currentInteractable));
         }
 
         private bool IsInitialized()

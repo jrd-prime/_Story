@@ -2,7 +2,6 @@
 using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Interactables;
-using _StoryGame.Game.Interactables.Impls;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 

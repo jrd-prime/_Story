@@ -160,7 +160,7 @@ namespace _StoryGame.Game.Character.Player.Impls
                 _selfMsgPub.Publish(new OutOfEnergyMsg());
         }
 
-        public void AddNote(InspectableLootData lootData)
+        public void AddNote(LootData lootData)
         {
             _wallet.Add(lootData.Currency.Id, lootData.Currency.Amount);
         }

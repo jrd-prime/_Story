@@ -1,0 +1,32 @@
+﻿using _StoryGame.Core.Interactables;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI.Msg;
+using _StoryGame.Infrastructure.Interactables;
+using Cysharp.Threading.Tasks;
+
+namespace _StoryGame.Game.Interactables.Impls.Systems
+{
+    /// <summary>
+    /// Если объект в заблокированном состоянии
+    /// </summary>
+    public class LockedObjectStrategy : IConditionalSystemStrategy
+    {
+        public string StrategyName => nameof(LockedObjectStrategy);
+        private readonly InteracSystemDepFlyweight _systemDep;
+        public LockedObjectStrategy(InteracSystemDepFlyweight systemDep) => _systemDep = systemDep;
+
+
+        public UniTask<bool> ExecuteAsync(IConditional interactable)
+        {
+            _systemDep.Log.Debug("Conditional = " + interactable);
+            var lockedThoughtKey = interactable.LockedStateThought.LocalizationKey;
+            var lockedThought = _systemDep.LocalizationProvider.Localize(lockedThoughtKey, ETable.SmallPhrase);
+
+            _systemDep.Publisher.ForUIViewer(new CurrentOperationMsg("Locked. Show thought"));
+
+            var thought = new ThoughtDataVo(lockedThought);
+            _systemDep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
+            return UniTask.FromResult(true);
+        }
+    }
+}

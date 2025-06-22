@@ -1,5 +1,4 @@
 ﻿using System;
-using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Character.Player.Interfaces;
