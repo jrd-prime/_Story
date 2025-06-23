@@ -51,9 +51,9 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         private Tween _currentProgressBarTween;
         private UniTaskCompletionSource _thoughtBubbleTaskSource;
         private UniTaskCompletionSource _progressBarTaskSource;
-        private MeshFilter _meshFilter;
-        private MeshRenderer _meshRenderer;
-        private PanelSettings _panelSettings;
+        private MeshFilter meshFilter;
+        private MeshRenderer meshRenderer;
+        private PanelSettings panelSettings;
         private IJLog _log;
 
         [Inject]
@@ -67,15 +67,15 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
         private void OnAppStarted(Unit _)
         {
             _uiDocument = GetComponent<UIDocument>();
-            _meshFilter = GetComponent<MeshFilter>();
-            _meshRenderer = GetComponent<MeshRenderer>();
-            _panelSettings = Instantiate(panelSettingsAsset);
-            _panelSettings.name = "PlayerOverheadTipPanelSettings";
+            meshFilter = GetComponent<MeshFilter>();
+            meshRenderer = GetComponent<MeshRenderer>();
+            panelSettings = Instantiate(panelSettingsAsset);
+            panelSettings.name = "PlayerOverheadTipPanelSettings";
 
 
             var initializer = new TipInitializer(_log);
-            initializer.Init(new WorldTipData(_uiDocument, visualTreeAsset, transform, _meshFilter, _meshRenderer,
-                renderTextureAsset, _panelSettings, panelWidth, panelHeight, panelScale, pixelsPerUnit,
+            initializer.Init(new WorldTipData(_uiDocument, visualTreeAsset, transform, meshFilter, meshRenderer,
+                renderTextureAsset, panelSettings, panelWidth, panelHeight, panelScale, pixelsPerUnit,
                 transparentShader, textureShader));
 
             _root = _uiDocument.rootVisualElement;

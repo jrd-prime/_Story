@@ -15,9 +15,6 @@ namespace _StoryGame.Game.Interact.Systems.Inspect
         protected override async UniTask<bool> OnInteractAsync()
         {
             var strategy = _strategyProvider.GetStrategy(Interactable.InspectState);
-
-            Dep.Publisher.ForUIViewer(new CurrentOperationMsg(strategy.StrategyName));
-
             var result = await strategy.ExecuteAsync(Interactable);
 
             return result;

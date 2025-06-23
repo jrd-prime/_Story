@@ -21,6 +21,8 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 
         public UniTask<bool> ExecuteAsync(IConditional interactable)
         {
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
+
             var lootedThought = _dep.LocalizationProvider.Localize(
                 _dep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.CondLooted),
                 ETable.SmallPhrase);

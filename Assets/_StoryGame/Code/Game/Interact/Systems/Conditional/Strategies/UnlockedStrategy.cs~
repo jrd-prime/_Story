@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Interactables;
@@ -16,7 +15,6 @@ using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 {
-    // TODO надо отрефакторить
     /// <summary>
     /// Implementation of interaction strategy for unlocking objects.
     /// </summary>
@@ -24,33 +22,23 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     {
         public string StrategyName => nameof(UnlockStrategy);
         private readonly InteractSystemDepFlyweight _dep;
-        private readonly DialogResultHandler _dialogResultHandler;
-        private InspectableData inspdata;
-        private IConditional _interactable;
 
-        public UnlockStrategy(InteractSystemDepFlyweight dep)
-        {
-            _dep = dep;
-            _dialogResultHandler = new DialogResultHandler();
-            _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
-        }
+        public UnlockStrategy(InteractSystemDepFlyweight dep) => _dep = dep;
 
         public async UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            _interactable = interactable;
-            await ShowOpenProgress();
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
 
-            return await ShowLootDialog();
-        }
+            _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, true));
 
-        private async UniTask<bool> ShowLootDialog()
-        {
+            await ShowOpenTip();
+            _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
+
             var source = new UniTaskCompletionSource<EDialogResult>();
-            var lootData = new LootData(_interactable.Room.Id, _interactable.Id, null, _interactable.Loot);
+            var lootData = new LootData(interactable.Room.Id, interactable.Id, null, interactable.Loot);
             var message = new DisplayArtefactInfoMsg(lootData, source);
-            var locName = _dep.LocalizationProvider.Localize(_interactable.LocalizationKey, ETable.Words);
-            inspdata = new InspectableData(locName, new List<LootData>() { lootData });
-
+            var locName = _dep.LocalizationProvider.Localize(interactable.LocalizationKey, ETable.Words);
+            var inspdata = new InspectableData(locName, new List<LootData>() { lootData });
             try
             {
                 _dep.Publisher.ForUIViewer(message);
@@ -58,34 +46,29 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
                 var result = await source.Task;
                 source = null;
 
-                _dialogResultHandler.HandleResult(result);
+                if (result == EDialogResult.Close)
+                {
+                    _dep.Publisher.ForGameManager(new TakeRoomLootMsg(inspdata));
+                }
+                else _dep.Log.Warn("Unhandled unexpected result: " + result);
             }
             finally
             {
                 source?.TrySetCanceled();
             }
 
-            _interactable.SetConditionalState(EConditionalState.Looted);
+            interactable.SetConditionalState(EConditionalState.Looted);
             return true;
-        }
-
-        private void OnCloseAction()
-        {
-            _dep.Publisher.ForGameManager(new TakeRoomLootMsg(inspdata));
         }
 
         /// <summary>
         /// Displays the progress bar for "opening" animation.
         /// </summary>
-        private async UniTask ShowOpenProgress()
+        private async UniTask ShowOpenTip()
         {
-            _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, true));
-
             var source = new UniTaskCompletionSource<EDialogResult>();
             _dep.Publisher.ForPlayerOverHeadUI(new DisplayProgressBarMsg("Open", 3, source));
             await source.Task;
-
-            _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
         }
     }
 }

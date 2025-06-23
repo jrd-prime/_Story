@@ -2,7 +2,6 @@
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
@@ -20,8 +19,6 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 
         public UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
-            
             var lockedThoughtKey = interactable.LockedStateThought.LocalizationKey;
             var lockedThought = _dep.LocalizationProvider.Localize(lockedThoughtKey, ETable.SmallPhrase);
 

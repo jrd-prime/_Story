@@ -11,6 +11,9 @@ using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
 {
+    /// <summary>
+    /// Исследуем объект. Меняем состояние на Inspected
+    /// </summary>
     public sealed class NotInspectedStrategy : IInspectSystemStrategy
     {
         public string StrategyName => nameof(NotInspectedStrategy);
@@ -24,17 +27,27 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         {
             _dep = dep;
             _dialogResultHandler = new DialogResultHandler();
+
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
+        }
+
+        private void OnCloseAction()
+        {
+            _inspectable.SetInspectState(EInspectState.Inspected);
+            _dep.Publisher.ForInteractProcessor(new InteractRequestMsg(_inspectable));
         }
 
         public async UniTask<bool> ExecuteAsync(IInspectable inspectable)
         {
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
+
             _inspectable = inspectable;
 
-            return await Inspect();
+            await Inspect();
+            return true;
         }
 
-        private async UniTask<bool> Inspect()
+        private async UniTask Inspect()
         {
             var source = new UniTaskCompletionSource<EDialogResult>();
             var message = new DisplayProgressBarMsg("Inspect", InspectDuration, source);
@@ -42,7 +55,6 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             try
             {
                 _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, true));
-
                 _dep.Publisher.ForPlayerOverHeadUI(message);
 
                 var result = await source.Task;
@@ -55,14 +67,6 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             {
                 source?.TrySetCanceled();
             }
-
-            return true;
-        }
-
-        private void OnCloseAction()
-        {
-            _inspectable.SetInspectState(EInspectState.Inspected);
-            _dep.Publisher.ForInteractProcessor(new InteractRequestMsg(_inspectable));
         }
     }
 }

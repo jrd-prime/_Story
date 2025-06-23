@@ -36,14 +36,16 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
 
         public async UniTask<bool> ExecuteAsync(IInspectable inspectable)
         {
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
             _inspectable = inspectable;
             _objLocalizedName =
                 _dep.LocalizationProvider.Localize(_inspectable.LocalizationKey, ETable.Words, ETextTransform.Upper);
 
-            return await ShowLootTip();
+            await ShowLootTip();
+            return true;
         }
 
-        private async UniTask<bool> ShowLootTip()
+        private async UniTask ShowLootTip()
         {
             var lootData = _inspectable.Room.GetLoot(_inspectable.Id) ??
                            throw new Exception("ShowLootTip - no loot data");
@@ -77,8 +79,6 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             {
                 source?.TrySetCanceled();
             }
-
-            return true;
         }
 
         private void OnCloseAction()

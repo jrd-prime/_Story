@@ -2,7 +2,6 @@
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data.Interact;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
@@ -10,22 +9,23 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 {
     /// <summary>
-    /// Strategy implementation for handling already looted interactable objects.
+    /// Implementation of interaction strategy for locked objects.
     /// </summary>
-    public sealed class AlreadyLootedStrategy : IConditionSystemStrategy
+    public sealed class LockedStrategy : IConditionSystemStrategy
     {
-        public string StrategyName => nameof(AlreadyLootedStrategy);
+        public string StrategyName => nameof(LockedStrategy);
         private readonly InteractSystemDepFlyweight _dep;
+        public LockedStrategy(InteractSystemDepFlyweight dep) => _dep = dep;
 
-        public AlreadyLootedStrategy(InteractSystemDepFlyweight dep) => _dep = dep;
 
         public UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            var lootedThought = _dep.LocalizationProvider.Localize(
-                _dep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.CondLooted),
-                ETable.SmallPhrase);
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
+            
+            var lockedThoughtKey = interactable.LockedStateThought.LocalizationKey;
+            var lockedThought = _dep.LocalizationProvider.Localize(lockedThoughtKey, ETable.SmallPhrase);
 
-            var thought = new ThoughtDataVo(lootedThought);
+            var thought = new ThoughtDataVo(lockedThought);
             _dep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
             return UniTask.FromResult(true);
         }

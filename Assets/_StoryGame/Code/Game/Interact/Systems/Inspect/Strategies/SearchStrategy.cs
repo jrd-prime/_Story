@@ -29,25 +29,21 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         {
             _dep = dep;
             _dialogResultHandler = new DialogResultHandler();
-
             _dialogResultHandler.AddCallback(EDialogResult.TakeAll, OnTakeAllAction);
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
         }
 
         public async UniTask<bool> ExecuteAsync(IInspectable inspectable)
         {
-            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
-
             _inspectable = inspectable;
             _objLocalizedName =
                 _dep.LocalizationProvider.Localize(_inspectable.LocalizationKey, ETable.Words,
                     ETextTransform.Upper);
-            
-            await SearchLoot();
-            return true;
+
+            return await SearchLoot();
         }
 
-        private async UniTask SearchLoot()
+        private async UniTask<bool> SearchLoot()
         {
             var source = new UniTaskCompletionSource<EDialogResult>();
 
@@ -59,10 +55,10 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
 
             _inspectable.SetInspectState(EInspectState.Searched);
-            await ShowLootTipAfterSearch();
+            return await ShowLootTipAfterSearch();
         }
 
-        private async UniTask ShowLootTipAfterSearch()
+        private async UniTask<bool> ShowLootTipAfterSearch()
         {
             _dep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
 
@@ -83,6 +79,8 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             {
                 source?.TrySetCanceled();
             }
+
+            return true;
         }
 
         private void OnCloseAction()
