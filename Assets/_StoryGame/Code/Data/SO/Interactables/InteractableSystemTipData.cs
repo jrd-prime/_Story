@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.SO.Abstract;

@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Data.Interact
+﻿namespace _StoryGame.Core.Interact.Enums
 {
     public enum EInspectState
     {

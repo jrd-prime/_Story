@@ -2,7 +2,7 @@
 using _StoryGame.Core.Interact.Interactables;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Systems.Use
+namespace _StoryGame.Core.Interact
 {
     public interface IUseActionStrategy : IStrategy
     {

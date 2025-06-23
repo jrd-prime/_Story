@@ -1,10 +1,10 @@
 ﻿using System;
 using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
-using _StoryGame.Data;
-using _StoryGame.Data.Interact;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Movement;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -28,7 +28,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         public AlreadyInspectedStrategy(InteractSystemDepFlyweight dep)
         {
             _dep = dep;
-            _dialogResultHandler = new DialogResultHandler();
+            _dialogResultHandler = new DialogResultHandler(_dep.Log);
 
             _dialogResultHandler.AddCallback(EDialogResult.Search, OnSearchAction);
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);

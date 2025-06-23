@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Data;
+using _StoryGame.Core.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;

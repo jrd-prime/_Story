@@ -1,21 +1,21 @@
 ﻿using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
+using _StoryGame.Data;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Messages
 {
-    public record ShowHasLootWindowMsg(
+    public record ShowLootWindowMsg(
         string ObjName,
-        string Tip,
         InspectableData InspectableData,
-        UniTaskCompletionSource<EDialogResult> CompletionSource) : IUIViewerMsg
+        UniTaskCompletionSource<EDialogResult> CompletionSource
+    ) : IUIViewerMsg
     {
         public string ObjName { get; } = ObjName;
-        public string Tip { get; } = Tip;
         public InspectableData InspectableData { get; } = InspectableData;
         public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
-        public EFloatingWindowType WindowType => EFloatingWindowType.HasLoot;
+        public EFloatingWindowType WindowType => EFloatingWindowType.Loot;
     }
 }

@@ -1,5 +1,5 @@
-﻿using _StoryGame.Core.Loot;
-using _StoryGame.Data.Interact;
+﻿using _StoryGame.Core.Interact.Enums;
+using _StoryGame.Core.Loot;
 using _StoryGame.Data.Room;
 
 namespace _StoryGame.Core.Interact.Interactables

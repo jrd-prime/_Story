@@ -1,10 +1,11 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Systems.Conditional
+namespace _StoryGame.Game.Interact.Systems
 {
     /// <summary>
     /// Система обработки условных (conditional) взаимодействий с объектами.

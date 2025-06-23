@@ -1,9 +1,9 @@
 ﻿using System;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Messaging.Interfaces;
+using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Const;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data;
 using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Infrastructure.AppStarter;

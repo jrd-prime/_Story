@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Interact;
-using _StoryGame.Data.Interact;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Systems.Inspect.Strategies;
 using _StoryGame.Infrastructure.Interact;
 

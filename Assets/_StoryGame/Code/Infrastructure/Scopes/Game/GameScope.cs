@@ -6,6 +6,7 @@ using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Interact.Systems.Use;
@@ -73,8 +74,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<MovementProcessor>(Lifetime.Singleton).AsSelf();
             builder.RegisterBuildCallback(resolver => resolver.Resolve<MovementProcessor>());
 
-            builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
-            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
+            builder.Register<InteractProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractProcessor>());
 
             RegisterLoot(builder);
 

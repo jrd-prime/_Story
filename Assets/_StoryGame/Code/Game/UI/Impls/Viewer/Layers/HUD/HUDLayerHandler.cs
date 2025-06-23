@@ -34,7 +34,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
         private IWallet _tempWallet;
         private VisualTreeAsset _invCellTemplate;
         private IPlayer _player;
-        private InteractableProcessor _interactableProcessor;
+        private InteractProcessor _interactProcessor;
         private Label _currentOperationLab;
 
         public HUDLayerHandler(IObjectResolver resolver, VisualElement layerBack) : base(resolver, layerBack)
@@ -57,7 +57,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
 
             _fpsCounter = resolver.Resolve<FPSCounter>();
 
-            _interactableProcessor = resolver.Resolve<InteractableProcessor>();
+            _interactProcessor = resolver.Resolve<InteractProcessor>();
         }
 
         protected override void InitElements()
@@ -88,7 +88,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
                 .Subscribe(ShowState)
                 .AddTo(Disposables);
 
-            _interactableProcessor.CurrentInteractable
+            _interactProcessor.CurrentInteractable
                 .Subscribe(ShowCurrentInteractable)
                 .AddTo(Disposables);
         }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using _StoryGame.Data;
-using UnityEngine;
+using _StoryGame.Core.Common.Interfaces;
 
-namespace _StoryGame.Game.Interact.Systems
+namespace _StoryGame.Core.UI
 {
     /// <summary>
     /// Handles dialog results by executing registered callbacks for specific dialog outcomes.
@@ -11,17 +10,25 @@ namespace _StoryGame.Game.Interact.Systems
     public sealed class DialogResultHandler
     {
         private readonly Dictionary<EDialogResult, Action> _resultHandlers = new();
+        private readonly IJLog _log;
+
+        public DialogResultHandler(IJLog log) => _log = log;
 
         public void AddCallback(EDialogResult dialogResult, Action callback) =>
             _resultHandlers.Add(dialogResult, callback);
 
-        public void HandleResult(EDialogResult result)
+        public bool HandleResult(EDialogResult result)
         {
             var action = _resultHandlers[result];
 
             if (action != null)
+            {
                 action.Invoke();
-            else Debug.LogWarning("No action for result: " + result);
+                return true;
+            }
+
+            _log.Error("No action for result: " + result);
+            return false;
         }
     }
 }

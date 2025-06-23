@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Data.Interact;
 using _StoryGame.Game.Interact.Systems.Inspect.Strategies;
 using _StoryGame.Infrastructure.Interact;
@@ -18,7 +19,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect
         {
             _strategies.Add(EInspectState.NotInspected, new NotInspectedStrategy(systemDep));
             _strategies.Add(EInspectState.Inspected, new AlreadyInspectedStrategy(systemDep));
-            _strategies.Add(EInspectState.Searched, new SearchedStrategy(systemDep));
+            _strategies.Add(EInspectState.Searched, new SearchStrategy(systemDep));
         }
 
         /// <summary>

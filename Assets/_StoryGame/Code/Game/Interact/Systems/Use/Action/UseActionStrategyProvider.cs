@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _StoryGame.Core.Interact;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Systems.Use.Action.Strategies;
 using _StoryGame.Infrastructure.Interact;

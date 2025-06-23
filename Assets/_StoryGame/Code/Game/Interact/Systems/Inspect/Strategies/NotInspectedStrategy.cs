@@ -1,10 +1,10 @@
 ﻿using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data;
 using _StoryGame.Data.Animator;
-using _StoryGame.Data.Interact;
 using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         public NotInspectedStrategy(InteractSystemDepFlyweight dep)
         {
             _dep = dep;
-            _dialogResultHandler = new DialogResultHandler();
+            _dialogResultHandler = new DialogResultHandler(_dep.Log);
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
         }
 

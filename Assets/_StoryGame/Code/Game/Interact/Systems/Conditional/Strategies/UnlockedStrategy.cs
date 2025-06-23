@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data;
 using _StoryGame.Data.Animator;
-using _StoryGame.Data.Interact;
 using _StoryGame.Data.Loot;
-using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Managers.Game.Messages;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
@@ -31,7 +30,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
         public UnlockStrategy(InteractSystemDepFlyweight dep)
         {
             _dep = dep;
-            _dialogResultHandler = new DialogResultHandler();
+            _dialogResultHandler = new DialogResultHandler(dep.Log);
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
         }
 

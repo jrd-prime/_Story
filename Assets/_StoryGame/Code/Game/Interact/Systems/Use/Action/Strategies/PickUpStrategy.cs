@@ -1,4 +1,4 @@
-﻿using System;
+﻿using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
@@ -11,7 +11,6 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
         public PickUpStrategy(InteractSystemDepFlyweight systemDep)
         {
-            throw new NotImplementedException();
         }
 
         public async UniTask<bool> ExecuteAsync(IUsable usable)

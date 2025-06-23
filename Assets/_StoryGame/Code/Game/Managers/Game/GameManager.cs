@@ -13,7 +13,6 @@ using _StoryGame.Data.Const;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Currency;
-using _StoryGame.Game.Interact.Systems.Use;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -94,7 +93,7 @@ namespace _StoryGame.Game.Managers.Game
 
             _gameManagerMsgSub.Subscribe(
                 OnRoomChooseRequestMsg,
-                msg => msg is RoomChooseRequestMsg
+                msg => msg is ChooseNextRoomRequestMsg
             );
         }
 
@@ -115,7 +114,7 @@ namespace _StoryGame.Game.Managers.Game
         private void OnRoomChooseRequestMsg(IGameManagerMsg obj)
         {
             Debug.Log($"OnMessage: {obj.GetType().Name}");
-            var msg = obj as RoomChooseRequestMsg ?? throw new ArgumentNullException(nameof(obj));
+            var msg = obj as ChooseNextRoomRequestMsg ?? throw new ArgumentNullException(nameof(obj));
         }
 
         private void OnSpendEnergyMsg(IGameManagerMsg message)

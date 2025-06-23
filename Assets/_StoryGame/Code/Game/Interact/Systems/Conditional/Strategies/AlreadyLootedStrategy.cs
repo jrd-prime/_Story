@@ -1,9 +1,8 @@
 ﻿using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data.Interact;
-using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 

@@ -1,7 +1,9 @@
 ﻿using System;
 using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data;
 using _StoryGame.Data.Interact;
@@ -28,7 +30,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         public AlreadyInspectedStrategy(InteractSystemDepFlyweight dep)
         {
             _dep = dep;
-            _dialogResultHandler = new DialogResultHandler();
+            _dialogResultHandler = new DialogResultHandler(_dep.Log);
 
             _dialogResultHandler.AddCallback(EDialogResult.Search, OnSearchAction);
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
@@ -36,16 +38,14 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
 
         public async UniTask<bool> ExecuteAsync(IInspectable inspectable)
         {
-            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
             _inspectable = inspectable;
             _objLocalizedName =
                 _dep.LocalizationProvider.Localize(_inspectable.LocalizationKey, ETable.Words, ETextTransform.Upper);
 
-            await ShowLootTip();
-            return true;
+            return await ShowLootTip();
         }
 
-        private async UniTask ShowLootTip()
+        private async UniTask<bool> ShowLootTip()
         {
             var lootData = _inspectable.Room.GetLoot(_inspectable.Id) ??
                            throw new Exception("ShowLootTip - no loot data");
@@ -79,6 +79,8 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             {
                 source?.TrySetCanceled();
             }
+
+            return true;
         }
 
         private void OnCloseAction()

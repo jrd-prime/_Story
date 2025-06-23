@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Interact.Enums;
 using Random = UnityEngine.Random;
 
 namespace _StoryGame.Data.Interact

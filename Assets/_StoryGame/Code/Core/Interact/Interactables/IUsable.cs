@@ -6,5 +6,6 @@ namespace _StoryGame.Core.Interact.Interactables
     {
         EUseAction UseAction { get; }
         EUseState UseState { get; }
+        void SetState(EUseState used);
     }
 }

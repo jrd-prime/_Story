@@ -1,9 +1,10 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Systems.Inspect
+namespace _StoryGame.Game.Interact.Systems
 {
     public sealed class InspectSystem : AInteractSystem<IInspectable>
     {
