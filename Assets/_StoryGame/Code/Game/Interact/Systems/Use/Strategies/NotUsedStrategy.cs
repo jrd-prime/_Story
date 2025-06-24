@@ -1,9 +1,5 @@
-﻿using System;
-using _StoryGame.Core.Interact;
+﻿using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Core.Providers.Localization;
-using _StoryGame.Data;
-using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Interact.Systems.Use.Action;
 using _StoryGame.Infrastructure.Interact;

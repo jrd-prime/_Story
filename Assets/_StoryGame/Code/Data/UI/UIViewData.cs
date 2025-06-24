@@ -7,7 +7,7 @@ namespace _StoryGame.Data.UI
     [Serializable]
     public struct UIViewData
     {
-        public GameStateType type;
+        public EGameStateType type;
         public AUIViewBase view;
     }
 }

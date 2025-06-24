@@ -3,6 +3,8 @@ using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Currency;
 using _StoryGame.Core.HSM.Impls;
+using _StoryGame.Core.HSM.Impls.States;
+using _StoryGame.Core.HSM.Messages;
 using _StoryGame.Core.Input.Messages;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Messaging.Interfaces;
@@ -115,6 +117,7 @@ namespace _StoryGame.Game.Managers.Game
         {
             Debug.Log($"OnMessage: {obj.GetType().Name}");
             var msg = obj as ChooseNextRoomRequestMsg ?? throw new ArgumentNullException(nameof(obj));
+            _publisher.ForHSM(new ChangeGameStateMessage(EGameStateType.RoomDraft));
         }
 
         private void OnSpendEnergyMsg(IGameManagerMsg message)

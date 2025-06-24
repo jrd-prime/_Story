@@ -3,8 +3,8 @@ using _StoryGame.Core.UI.Interfaces;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Messages
 {
-    public record SwitchBaseViewMsg(GameStateType StateType) : IUIViewerMsg
+    public record SwitchBaseViewMsg(EGameStateType StateType) : IUIViewerMsg
     {
-        public GameStateType StateType { get; } = StateType;
+        public EGameStateType StateType { get; } = StateType;
     }
 }

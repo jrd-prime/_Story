@@ -8,7 +8,7 @@ namespace _StoryGame.Core.HSM.Impls.States
     public abstract class BaseState : IState
     {
         public IState PreviousState;
-        public abstract GameStateType StateType { get; }
+        public abstract EGameStateType StateType { get; }
 
         protected internal readonly HSM Hsm;
         protected IState CurrentSubState;
@@ -61,12 +61,5 @@ namespace _StoryGame.Core.HSM.Impls.States
             CurrentSubState = newState;
             CurrentSubState?.Enter(PreviousState);
         }
-    }
-
-    public enum GameStateType
-    {
-        NotSet,
-        Menu,
-        Gameplay
     }
 }

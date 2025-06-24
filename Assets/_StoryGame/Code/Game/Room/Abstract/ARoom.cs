@@ -28,6 +28,7 @@ namespace _StoryGame.Game.Room.Abstract
         [SerializeField] private string roomName;
         [SerializeField] private RoomInteractablesVo interactables;
         [SerializeField] private List<Exit> doors;
+        [SerializeField] private Transform spawnPoint;
 
         public string Id => roomId;
         public string Name => roomName;
@@ -131,6 +132,8 @@ namespace _StoryGame.Game.Room.Abstract
 
             return true;
         }
+
+        public Vector3 GetSpawnPosition() => spawnPoint.position;
 
         private void SayMyNameToObjects()
         {

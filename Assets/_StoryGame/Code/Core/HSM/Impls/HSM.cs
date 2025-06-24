@@ -4,6 +4,7 @@ using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.HSM.Impls.States.Gameplay;
 using _StoryGame.Core.HSM.Impls.States.Menu;
+using _StoryGame.Core.HSM.Impls.States.RoomDraft;
 using _StoryGame.Core.HSM.Interfaces;
 using _StoryGame.Core.HSM.Messages;
 using MessagePipe;
@@ -16,12 +17,12 @@ namespace _StoryGame.Core.HSM.Impls
     /// </summary>
     public sealed class HSM : IDisposable
     {
-        public Observable<GameStateType> CurrentStateType => _currentStateType;
+        public Observable<EGameStateType> CurrentStateType => _currentStateType;
 
         private IState _currentState;
         private IState _previousState;
-        private readonly ReactiveProperty<GameStateType> _currentStateType = new();
-        private readonly Dictionary<GameStateType, IState> _states = new();
+        private readonly ReactiveProperty<EGameStateType> _currentStateType = new();
+        private readonly Dictionary<EGameStateType, IState> _states = new();
 
         private readonly CompositeDisposable _disposables = new();
         private readonly IJLog _log;
@@ -38,8 +39,9 @@ namespace _StoryGame.Core.HSM.Impls
         /// </summary>
         private void InitializeMainStates()
         {
-            RegisterState<MenuState>(new MenuState(this), GameStateType.Menu);
-            RegisterState<GameplayState>(new GameplayState(this), GameStateType.Gameplay);
+            RegisterState<MenuState>(new MenuState(this), EGameStateType.Menu);
+            RegisterState<GameplayState>(new GameplayState(this), EGameStateType.Gameplay);
+            RegisterState<RoomDraftState>(new RoomDraftState(this), EGameStateType.RoomDraft);
         }
 
         /// <summary>
@@ -47,7 +49,9 @@ namespace _StoryGame.Core.HSM.Impls
         /// </summary>
         public void Start()
         {
-            var rootState = _states[GameStateType.Gameplay];
+            var rootState = _states[EGameStateType.Gameplay];
+            rootState = _states[EGameStateType.Menu];
+            rootState = _states[EGameStateType.RoomDraft];
             _previousState = null;
             _currentState = rootState;
             _currentStateType.Value = _currentState.StateType;
@@ -59,7 +63,7 @@ namespace _StoryGame.Core.HSM.Impls
         /// </summary>
         public void Update()
         {
-            _log.Warn($"<color=green>[{nameof(HSM)}]</color> Update!");
+            _log.Warn($"<color=green>Update!");
             _currentState.Update();
 
             var nextState = _currentState.HandleTransition();
@@ -71,13 +75,12 @@ namespace _StoryGame.Core.HSM.Impls
         /// <summary>
         /// Смена состояния
         /// </summary>
-        private void TransitionTo(GameStateType stateType)
+        private void TransitionTo(EGameStateType stateType)
         {
             if (!_states.TryGetValue(stateType, out var newState))
                 throw new Exception($"state {stateType} not found");
 
-            _log.Info(
-                $"<color=green>[{nameof(HSM)}]</color> {_currentStateType.Value.GetType().Name} > {newState.GetType().Name}");
+            _log.Info($"{_currentStateType.Value.GetType().Name} > {newState.GetType().Name}");
             _previousState = _currentState;
             _currentState.Exit(_previousState);
             _currentState = newState;
@@ -88,8 +91,8 @@ namespace _StoryGame.Core.HSM.Impls
         /// <summary>
         /// Регистрация глобального состояния
         /// </summary>
-        private void RegisterState<T>(IState state, GameStateType gameplay) where T : IState =>
-            _states[gameplay] = state;
+        private void RegisterState<T>(IState state, EGameStateType stateType) where T : IState =>
+            _states[stateType] = state;
 
         private void HandleMessage(IHSMMessage msg)
         {

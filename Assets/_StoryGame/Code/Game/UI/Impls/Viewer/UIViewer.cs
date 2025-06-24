@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices.Game;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.UI.Interfaces;
@@ -40,7 +41,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer
         private bool _isInitialized;
         private VisualElement _mainContainer;
 
-        private readonly Dictionary<GameStateType, TemplateContainer> _viewsCache = new();
+        private readonly Dictionary<EGameStateType, TemplateContainer> _viewsCache = new();
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
@@ -84,6 +85,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                     break;
                 case DisplayArtefactInfoMsg msg:
                     _floatingLayerHandler.DisplayArtefactInfoWindow(msg);
+                    break;
+                case DisplayRoomDraftWindowMsg msg:
+                    _floatingLayerHandler.DisplayRoomDraftWindow(msg);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
@@ -129,15 +133,19 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             _floatingLayerHandler = new FloatingLayerHandler(_resolver, floatingLayerRoot);
         }
 
-        private void Initialize(IDictionary<GameStateType, AUIViewBase> viewsCache)
+        private void Initialize(IDictionary<EGameStateType, AUIViewBase> viewsCache)
         {
+            _log.Debug("Initialize UIViewer message");
             foreach (var view in viewsCache)
+            {
+                _resolver.Inject(view.Value);
                 _viewsCache.TryAdd(view.Key, view.Value.Template);
+            }
 
             _isInitialized = true;
         }
 
-        private void SwitchBaseViewTo(GameStateType state)
+        private void SwitchBaseViewTo(EGameStateType state)
         {
             if (!_isInitialized)
                 throw new NullReferenceException("UIViewer is not initialized. " + nameof(SwitchBaseViewTo));

@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Input.Interfaces;
+﻿using _StoryGame.Core.HSM.Interfaces;
+using _StoryGame.Core.Input.Interfaces;
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
 using MessagePipe;
@@ -13,6 +14,7 @@ namespace _StoryGame.Game.Messaging
         private readonly IPublisher<IInputMsg> _inputPublisher;
         private readonly IPublisher<IPlayerAnimatorMsg> _playerAnimatorPublisher;
         private readonly IPublisher<IInteractProcessorMsg> _interactProcessorPublisher;
+        private readonly IPublisher<IHSMMessage> _hsmPublisher;
 
         public JPublisher(
             IPublisher<IGameManagerMsg> gameManagerPublisher,
@@ -20,7 +22,8 @@ namespace _StoryGame.Game.Messaging
             IPublisher<IPlayerOverHeadUIMsg> playerActionPublisher,
             IPublisher<IInputMsg> inputPublisher,
             IPublisher<IPlayerAnimatorMsg> playerAnimatorPublisher,
-            IPublisher<IInteractProcessorMsg> interactProcessorPublisher
+            IPublisher<IInteractProcessorMsg> interactProcessorPublisher,
+            IPublisher<IHSMMessage> hsmPublisher
         )
         {
             _gameManagerPublisher = gameManagerPublisher;
@@ -29,6 +32,7 @@ namespace _StoryGame.Game.Messaging
             _inputPublisher = inputPublisher;
             _playerAnimatorPublisher = playerAnimatorPublisher;
             _interactProcessorPublisher = interactProcessorPublisher;
+            _hsmPublisher = hsmPublisher;
         }
 
         public void ForUIViewer(IUIViewerMsg msg) => _uiViewerPublisher.Publish(msg);
@@ -37,5 +41,6 @@ namespace _StoryGame.Game.Messaging
         public void ForInput(IInputMsg msg) => _inputPublisher.Publish(msg);
         public void ForPlayerAnimator(IPlayerAnimatorMsg msg) => _playerAnimatorPublisher.Publish(msg);
         public void ForInteractProcessor(IInteractProcessorMsg msg) => _interactProcessorPublisher.Publish(msg);
+        public void ForHSM(IHSMMessage msg) => _hsmPublisher.Publish(msg);
     }
 }

@@ -20,12 +20,12 @@ namespace _StoryGame.Game.Managers
     {
         [SerializeField] private UIViewData[] baseViews;
 
-        private GameStateType _currentBaseView;
+        private EGameStateType _currentBaseView;
         private IJPublisher _publisher;
         private IJLog _log;
         private HSM _hsm;
 
-        private readonly Dictionary<GameStateType, AUIViewBase> _viewsCache = new();
+        private readonly Dictionary<EGameStateType, AUIViewBase> _viewsCache = new();
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
@@ -47,13 +47,19 @@ namespace _StoryGame.Game.Managers
             _hsm.CurrentStateType
                 .Subscribe(OnStateChange)
                 .AddTo(_disposables);
+            
+            Debug.Log("UIManager.Initialize");
+            _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
         }
 
-        private void Start() => _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
+        private void Start()
+        { 
+            _log.Debug("UIManager.Start");
+        }
 
-        private async void OnStateChange(GameStateType state)
+        private async void OnStateChange(EGameStateType state)
         {
-            if (state == GameStateType.NotSet)
+            if (state == EGameStateType.NotSet)
                 return;
 
             await UniTask.Yield();

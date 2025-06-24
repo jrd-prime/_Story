@@ -1,6 +1,7 @@
 ﻿using _StoryGame.Data.Interact;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.Room;
+using UnityEngine;
 
 namespace _StoryGame.Core.Room.Interfaces
 {
@@ -15,5 +16,6 @@ namespace _StoryGame.Core.Room.Interfaces
         InspectableLootVo GetLootData();
         InspectableData GetLoot(string inspectableId);
         bool UpdateStateForConditionalObjects();
+        Vector3 GetSpawnPosition();
     }
 }

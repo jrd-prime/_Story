@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices.Game;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
@@ -233,6 +234,13 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             _center.style.alignItems = Align.Center;
             _center.Add(window);
         }
+
+        public void DisplayRoomDraftWindow(DisplayRoomDraftWindowMsg msg)
+        {
+            _center.Clear();
+
+            var window = _windows[EFloatingWindowType.RoomDraft];
+        }
     }
 
     public enum PositionType
@@ -249,6 +257,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         Loot,
         Note,
         LeaveRoom,
-        ArtefactInfo
+        ArtefactInfo,
+        RoomDraft
     }
 }

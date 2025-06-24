@@ -1,5 +1,4 @@
 ﻿using _StoryGame.Core.Messaging.Interfaces;
-using _StoryGame.Data;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Core.UI.Msg

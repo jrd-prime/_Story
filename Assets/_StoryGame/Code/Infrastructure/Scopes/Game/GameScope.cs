@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices.Game;
 using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.WalletNew.Impls;
@@ -57,6 +58,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<WalletService>(Lifetime.Singleton).As<IWalletService>();
             builder.Register<GameplayUIViewModel>(Lifetime.Singleton).As<IGameplayUIViewModel>();
             builder.Register<MenuUIViewModel>(Lifetime.Singleton).As<IMenuUIViewModel>();
+            builder.Register<RoomDraftUIViewModel>(Lifetime.Singleton).As<IRoomDraftUIViewModel>();
 
             InitializeManagers(builder);
             InitializeUIModelsAndViewModels(builder);
@@ -95,6 +97,13 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<InspectStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<UseStrategyProvider>(Lifetime.Singleton).AsSelf();
+
+            RegisterRoomDraft(builder);
+        }
+
+        private void RegisterRoomDraft(IContainerBuilder builder)
+        {
+            builder.Register<RoomDraftProcessor>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         private void RegisterRooms(IContainerBuilder builder)

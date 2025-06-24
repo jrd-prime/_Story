@@ -12,6 +12,7 @@ namespace _StoryGame.Game.UI.Abstract
 
         private void Start()
         {
+            Debug.Log("view start " + name);
             ResolveDependencies();
 
             InitElements();

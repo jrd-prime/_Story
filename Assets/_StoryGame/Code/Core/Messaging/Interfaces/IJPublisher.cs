@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Input.Interfaces;
+﻿using _StoryGame.Core.HSM.Interfaces;
+using _StoryGame.Core.Input.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
 
 namespace _StoryGame.Core.Messaging.Interfaces
@@ -11,5 +12,6 @@ namespace _StoryGame.Core.Messaging.Interfaces
         void ForInput(IInputMsg msg);
         void ForPlayerAnimator(IPlayerAnimatorMsg msg);
         void ForInteractProcessor(IInteractProcessorMsg msg);
+        void ForHSM(IHSMMessage msg);
     }
 }

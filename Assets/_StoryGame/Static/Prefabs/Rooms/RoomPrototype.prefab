@@ -194,7 +194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8192114921744825705
 Transform:
   m_ObjectHideFlags: 0
@@ -241,6 +241,7 @@ MonoBehaviour:
     - {fileID: 3141621355858489562}
   doors:
   - {fileID: 4575433421602085481}
+  spawnPoint: {fileID: 0}
 --- !u!1 &2486501670642609971
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +575,7 @@ MonoBehaviour:
   interactionTipNameId: 
   localizationKey: door
   _entrance: {fileID: 4197047189796454589}
-  usableAction: 0
+  useAction: 0
   door: {fileID: 4267724946763530369}
   exitQuestionLocalizationKey: key_leave_room_question
 --- !u!1 &5647184289169896453

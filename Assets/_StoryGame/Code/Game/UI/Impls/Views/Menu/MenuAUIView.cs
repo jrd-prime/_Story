@@ -32,7 +32,7 @@ namespace _StoryGame.Game.UI.Impls.Views.Menu
         private void OnMenuClick2(PointerDownEvent evt)
         {
             Debug.LogWarning("OnMenuClick");
-            hsmMessagePublisher.Publish(new ChangeGameStateMessage(GameStateType.Gameplay));
+            hsmMessagePublisher.Publish(new ChangeGameStateMessage(EGameStateType.Gameplay));
         }
 
         protected override void Subscribe()

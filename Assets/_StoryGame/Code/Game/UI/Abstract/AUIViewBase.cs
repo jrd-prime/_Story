@@ -14,15 +14,24 @@ namespace _StoryGame.Game.UI.Abstract
         [SerializeField] private string viewName;
         [SerializeField] private VisualTreeAsset viewBaseDocument;
 
-        [Inject] protected IObjectResolver Resolver;
+        protected IObjectResolver Resolver;
+
 
         protected VisualElement Root;
 
         protected readonly CompositeDisposable Disposables = new();
         public TemplateContainer Template { get; private set; }
 
+
+        [Inject]
+        private void Construct(IObjectResolver Resolver)
+        {
+            this.Resolver = Resolver;
+        }
+
         private void Awake()
         {
+            Debug.Log("view awake " + name);
             Template = viewBaseDocument.Instantiate();
             Template.SetFullScreen();
             Template.pickingMode = PickingMode.Ignore;

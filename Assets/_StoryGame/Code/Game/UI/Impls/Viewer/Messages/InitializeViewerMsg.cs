@@ -5,8 +5,8 @@ using _StoryGame.Game.UI.Abstract;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Messages
 {
-    public record InitializeViewerMsg(IDictionary<GameStateType, AUIViewBase> Views) : IUIViewerMsg
+    public record InitializeViewerMsg(IDictionary<EGameStateType, AUIViewBase> Views) : IUIViewerMsg
     {
-        public IDictionary<GameStateType, AUIViewBase> Views { get; } = Views;
+        public IDictionary<EGameStateType, AUIViewBase> Views { get; } = Views;
     }
 }
