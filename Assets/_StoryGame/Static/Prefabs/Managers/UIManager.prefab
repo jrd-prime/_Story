@@ -51,8 +51,6 @@ MonoBehaviour:
     view: {fileID: 5003438754323005073}
   - type: 2
     view: {fileID: 3719641847445740828}
-  - type: 3
-    view: {fileID: 7590694375759153363}
 --- !u!1 &9071622844097836287
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +81,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2544805566024326776}
-  - {fileID: 4623898906497880797}
   - {fileID: 6426202999291762836}
   m_Father: {fileID: 6349992842217603378}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,79 +150,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6303934574085106597, guid: 3dcc595217ba6ed49bad7a0b6ed46d79, type: 3}
   m_PrefabInstance: {fileID: 4373988872674557602}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4959208969341188860
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4696709601968370038}
-    m_Modifications:
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6204524182701735377, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-      propertyPath: m_Name
-      value: RoomDraftUIView
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
---- !u!4 &4623898906497880797 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 358535103030011937, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-  m_PrefabInstance: {fileID: 4959208969341188860}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7590694375759153363 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3280087384899531311, guid: 682b3dcba11208b4fb0032fbce27e5f0, type: 3}
-  m_PrefabInstance: {fileID: 4959208969341188860}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ae26ebb554d4b42a86349cd07541f38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6683034840904961593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -234,6 +158,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4696709601968370038}
     m_Modifications:
+    - target: {fileID: 1860305290657493160, guid: 705343ac58edadf4db97971d67d385c1, type: 3}
+      propertyPath: viewBaseDocument
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: a65d1910ec12ecf46a058830eb6388ee, type: 3}
     - target: {fileID: 3246321222287312305, guid: 705343ac58edadf4db97971d67d385c1, type: 3}
       propertyPath: m_Name
       value: MenuUIView

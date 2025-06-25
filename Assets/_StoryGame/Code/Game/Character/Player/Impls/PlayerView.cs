@@ -74,7 +74,7 @@ namespace _StoryGame.Game.Character.Player.Impls
             {
                 await UniTask
                     .WaitUntil(HasReachedDestination)
-                    .Timeout(TimeSpan.FromSeconds(5));
+                    .Timeout(TimeSpan.FromSeconds(20));
 
                 // Debug.Log($"MoveToAsync: {destination} done");
 

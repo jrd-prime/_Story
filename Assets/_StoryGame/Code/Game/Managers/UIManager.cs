@@ -42,19 +42,22 @@ namespace _StoryGame.Game.Managers
                 throw new NullReferenceException("No ui views. " + nameof(UIManager));
 
             foreach (var uiView in baseViews)
+            {
+                _log.Debug($"Register view: {uiView.type}");
                 _viewsCache.Add(uiView.type, uiView.view);
+            }
+
 
             _hsm.CurrentStateType
                 .Subscribe(OnStateChange)
                 .AddTo(_disposables);
-            
-            Debug.Log("UIManager.Initialize");
-            _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
         }
 
         private void Start()
-        { 
+        {
             _log.Debug("UIManager.Start");
+            Debug.Log("UIManager publish InitializeViewerMsg");
+            _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
         }
 
         private async void OnStateChange(EGameStateType state)

@@ -57,6 +57,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer
 
         private void OnMessage(IUIViewerMsg message)
         {
+            _log.Debug($"OnMessage: {message.GetType().Name}");
             switch (message)
             {
                 case InitializeViewerMsg msg:

@@ -4,7 +4,6 @@ using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.HSM.Impls.States.Gameplay;
 using _StoryGame.Core.HSM.Impls.States.Menu;
-using _StoryGame.Core.HSM.Impls.States.RoomDraft;
 using _StoryGame.Core.HSM.Interfaces;
 using _StoryGame.Core.HSM.Messages;
 using MessagePipe;
@@ -41,7 +40,6 @@ namespace _StoryGame.Core.HSM.Impls
         {
             RegisterState<MenuState>(new MenuState(this), EGameStateType.Menu);
             RegisterState<GameplayState>(new GameplayState(this), EGameStateType.Gameplay);
-            RegisterState<RoomDraftState>(new RoomDraftState(this), EGameStateType.RoomDraft);
         }
 
         /// <summary>
@@ -50,8 +48,7 @@ namespace _StoryGame.Core.HSM.Impls
         public void Start()
         {
             var rootState = _states[EGameStateType.Gameplay];
-            rootState = _states[EGameStateType.Menu];
-            rootState = _states[EGameStateType.RoomDraft];
+            // rootState = _states[EGameStateType.Menu];
             _previousState = null;
             _currentState = rootState;
             _currentStateType.Value = _currentState.StateType;

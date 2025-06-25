@@ -48,10 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_StoryGame\Code\Core\Loot\Interfaces\ILootGenerator.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\RoomDraft\RoomDraftAUIView.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\RoomDraft\MenuUIViewModel.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\ыафв.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Interact\InteractSystemDepFlyweight.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Core\HSM\Impls\States\RoomDraft\RoomDraftState.cs" />
     <Compile Include="Assets\ToggleInspectorLock.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Room\Interfaces\IRoom.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\Interfaces\ICurrency.cs" />
@@ -74,7 +72,9 @@
     <Compile Include="Assets\_StoryGame\Code\Core\UI\EDialogResult.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Conditional\Strategies\AlreadyLootedStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\WorldViews\PlayerOverHeadUI.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\RoomDraft\RoomDraftAUIView.cs" />
     <Compile Include="Assets\_StoryGame\IsExternalInit.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\RoomDraft\RoomDraftUIViewModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\Interfaces\IPlayerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\MainRoomSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Character\Player\Messages\PlayerStateMsg.cs" />
