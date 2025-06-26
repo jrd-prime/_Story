@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_StoryGame\Code\Core\Loot\Interfaces\ILootGenerator.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\ыафв.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Interact\InteractSystemDepFlyweight.cs" />
     <Compile Include="Assets\ToggleInspectorLock.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Room\Interfaces\IRoom.cs" />
@@ -223,6 +222,7 @@
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Messages\ShowHasLootWindowMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interact\InspectableLootVo.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\OptimizedWallHider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIViewModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\AppStarter\AppStartHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Messages\SwitchBaseViewMsg.cs" />

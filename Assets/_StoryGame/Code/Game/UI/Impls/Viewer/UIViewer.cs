@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices.Game;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.UI.Interfaces;
@@ -86,9 +85,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                     break;
                 case DisplayArtefactInfoMsg msg:
                     _floatingLayerHandler.DisplayArtefactInfoWindow(msg);
-                    break;
-                case DisplayRoomDraftWindowMsg msg:
-                    _floatingLayerHandler.DisplayRoomDraftWindow(msg);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }

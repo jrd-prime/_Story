@@ -18,6 +18,7 @@ using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
 using R3;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace _StoryGame.Game.Room.Abstract
@@ -29,6 +30,8 @@ namespace _StoryGame.Game.Room.Abstract
         [SerializeField] private RoomInteractablesVo interactables;
         [SerializeField] private List<Exit> doors;
         [SerializeField] private Transform spawnPoint;
+
+        [SerializeField] private RoomExitVo[] exit;
 
         public string Id => roomId;
         public string Name => roomName;
@@ -145,5 +148,90 @@ namespace _StoryGame.Game.Room.Abstract
             foreach (var inspectable in interactables.inspectables)
                 inspectable.SetRoom(this);
         }
+    }
+
+    [Serializable]
+    public struct RoomExitVo
+    {
+        public ERoom toRoom;
+        public Exit exit;
+    }
+
+    public enum ERoom
+    {
+        /// <summary>
+        /// Exit from the bunker
+        /// </summary>
+        SurfaceAccessModule0,
+
+        /// <summary>
+        ///  Main corridor -1 floor
+        /// </summary>
+        CorridorMain1,
+
+        /// <summary>
+        /// Living quarters corridor -1 floor
+        /// </summary>
+        CorridorLivingQuarters1,
+
+        /// <summary>
+        /// Server room -1 floor
+        /// </summary>
+        ServerFacilityModule1,
+
+        /// <summary>
+        /// Hygiene module -1 floor
+        /// </summary>
+        HygieneModule1,
+
+        /// <summary>
+        /// Med module -1 floor
+        /// </summary>
+        MedModule1,
+
+        /// <summary>        
+        /// Relaxation module -1 floor
+        /// </summary>
+        RelaxationModule1,
+
+        /// <summary>
+        /// Nutrition module  -1 floor
+        /// </summary>
+        NutritionModule1,
+
+        /// <summary>
+        /// Habitation module -1 floor
+        /// </summary>
+        HabitationModule1,
+
+        /// <summary>        
+        /// Main corridor -2 floor
+        /// </summary>
+        CorridorMain2,
+
+        /// <summary>
+        /// Waste reclamation module -2 floor
+        /// </summary>
+        WasteReclamationModule2,
+
+        /// <summary>
+        /// Electro mechanical module -2 floor
+        /// </summary>  
+        ElectroMechanicalModule2,
+
+        /// <summary>
+        /// Climate control module -2 floor
+        /// </summary>
+        ClimateControlModule2,
+
+        /// <summary>
+        /// Vault -2 floor
+        /// </summary>
+        Vault2,
+
+        /// <summary>
+        /// Warehouse -2 floor
+        /// </summary>
+        Warehouse2
     }
 }
