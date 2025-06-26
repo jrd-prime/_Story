@@ -4,7 +4,6 @@ using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
-using _StoryGame.Data;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -29,6 +28,11 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
             _dialogResultHandler = new DialogResultHandler(_dep.Log);
 
             _dialogResultHandler.AddCallback(EDialogResult.Apply, OnApplyAction);
+            _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
+        }
+
+        private void OnCloseAction()
+        {
         }
 
         public async UniTask<bool> ExecuteAsync(IUsable usable)

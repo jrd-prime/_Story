@@ -28,7 +28,7 @@ namespace _StoryGame.Game.Room.Abstract
         [SerializeField] private string roomId;
         [SerializeField] private string roomName;
         [SerializeField] private RoomInteractablesVo interactables;
-        [SerializeField] private List<Exit> doors;
+        [SerializeField] private List<ExitDoor> doors;
         [SerializeField] private Transform spawnPoint;
 
         [SerializeField] private RoomExitVo[] exit;
@@ -154,7 +154,7 @@ namespace _StoryGame.Game.Room.Abstract
     public struct RoomExitVo
     {
         public ERoom toRoom;
-        public Exit exit;
+        [FormerlySerializedAs("exit")] public ExitDoor exitDoor;
     }
 
     public enum ERoom

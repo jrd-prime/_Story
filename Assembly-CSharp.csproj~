@@ -127,7 +127,6 @@
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\Gameplay\GameplayUIViewModel.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\ICharacter.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\UI\UIViewerFloatingWindowsData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\RoomDraftProcessor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Room\Impls\RoomPrototype.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Anima\Impls\PlayerAnimationService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\HeroSettings.cs" />

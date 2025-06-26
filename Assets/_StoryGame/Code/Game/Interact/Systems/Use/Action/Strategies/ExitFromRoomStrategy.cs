@@ -28,6 +28,11 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
             _dialogResultHandler = new DialogResultHandler(_dep.Log);
 
             _dialogResultHandler.AddCallback(EDialogResult.Apply, OnApplyAction);
+            _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
+        }
+
+        private void OnCloseAction()
+        {
         }
 
         public async UniTask<bool> ExecuteAsync(IUsable usable)
@@ -36,10 +41,11 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
             var source = new UniTaskCompletionSource<EDialogResult>();
 
+            var localizedName = _dep.LocalizationProvider.Localize(_usableExit.LocalizationKey, ETable.Words);
             var localizedQuestion =
                 _dep.LocalizationProvider.Localize(_usableExit.ExitQuestionLocalizationKey, ETable.SmallPhrase);
 
-            IUIViewerMsg msg = new ShowExitRoomWindowMsg("LocalizedName", localizedQuestion, Price, source);
+            IUIViewerMsg msg = new ShowExitRoomWindowMsg(localizedName, localizedQuestion, Price, source);
 
             return await ProcessExitFromRoom(source, msg);
         }

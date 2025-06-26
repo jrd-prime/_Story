@@ -14,6 +14,12 @@ namespace _StoryGame.Game.Interact.Abstract
             System = Resolver.Resolve<TInteractableSystem>();
             if (Equals(System, default(TInteractableSystem)))
                 throw new Exception("InteractableSystem is null. " + gameObject.name);
+
+            OnStart();
+        }
+
+        protected virtual void OnStart()
+        {
         }
     }
 }

@@ -16,7 +16,6 @@ using VContainer;
 
 namespace _StoryGame.Game.Interact.Abstract
 {
-    [RequireComponent(typeof(Collider))]
     public abstract class AInteractableBase : MonoBehaviour, IInteractable
     {
         [SerializeField] private string id;

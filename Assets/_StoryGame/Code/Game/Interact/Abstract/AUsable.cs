@@ -20,6 +20,7 @@ namespace _StoryGame.Game.Interact.Abstract
         public EUseAction UseAction => useAction;
         public EUseState UseState { get; private set; } = EUseState.NotUsed;
         public void SetState(EUseState used) => UseState = used;
+        protected void SetUseAction(EUseAction action) => useAction = action;
 
 #if UNITY_EDITOR
         private void OnValidate()

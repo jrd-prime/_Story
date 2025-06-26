@@ -74,6 +74,10 @@ MonoBehaviour:
     m_Localized: 'Owl Figurine: A Little Guardian of Wisdom'
     m_Metadata:
       m_Items: []
+  - m_Id: 14222558420205568
+    m_Localized: -1 floor
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

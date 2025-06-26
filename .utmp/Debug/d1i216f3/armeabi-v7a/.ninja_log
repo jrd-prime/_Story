@@ -1,10 +1,19 @@
 # ninja log v5
 59	1168	7721275349713522	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	5da46fda7f5ce3ad
 10	1217	7721275350000360	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a498693f682977c7
-5	1222	7721275350010557	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	8368c2a57ad64262
-66	1232	7721275350452164	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	2acd19d79cb667de
-42	1264	7721275350783430	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	6b6e4e23e85c4645
 73	1365	7721275351429423	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	e4db7282cc8277f
+5	1222	7721275350010557	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	8368c2a57ad64262
+42	1264	7721275350783430	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	6b6e4e23e85c4645
+66	1232	7721275350452164	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	2acd19d79cb667de
 36	1373	7721275351846156	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	5f0c1fc7475c07e0
 0	1393	7721275351992702	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	39c6150a2b941e82
 1393	1510	7721275353256325	C:/Users/jrd/_unity_jrd_projects/_Story/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/Debug/d1i216f3/obj/armeabi-v7a/libgame.so	21709eabb4850f46
+531	8510	7726565854164691	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	5da46fda7f5ce3ad
+512	8513	7726565854164691	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	8368c2a57ad64262
+544	8515	7726565854287708	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	2acd19d79cb667de
+525	8517	7726565854164691	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a498693f682977c7
+518	8522	7726565854468999	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	6b6e4e23e85c4645
+538	8608	7726565855308295	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	5f0c1fc7475c07e0
+39	8634	7726565855594794	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	39c6150a2b941e82
+552	8746	7726565856702794	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	e4db7282cc8277f
+8746	9475	7726565863975833	C:/Users/jrd/_unity_jrd_projects/_Story/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/Debug/d1i216f3/obj/armeabi-v7a/libgame.so	21709eabb4850f46

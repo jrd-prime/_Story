@@ -71,6 +71,10 @@ MonoBehaviour:
     m_Key: special_art
     m_Metadata:
       m_Items: []
+  - m_Id: 14222558420205568
+    m_Key: entrance_MinusOneFloor
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
