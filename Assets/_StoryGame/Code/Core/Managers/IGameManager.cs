@@ -1,6 +1,5 @@
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Data.SO.Currency;
 using R3;
 
 namespace _StoryGame.Core.Managers

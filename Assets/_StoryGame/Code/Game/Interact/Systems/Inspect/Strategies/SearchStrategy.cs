@@ -1,5 +1,4 @@
-﻿using System;
-using _StoryGame.Core.Animations.Messages;
+﻿using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;

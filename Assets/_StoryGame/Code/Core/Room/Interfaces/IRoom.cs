@@ -1,6 +1,4 @@
-﻿using _StoryGame.Data.Interact;
-using _StoryGame.Data.Loot;
-using _StoryGame.Data.Room;
+﻿using _StoryGame.Data.Room;
 using UnityEngine;
 
 namespace _StoryGame.Core.Room.Interfaces

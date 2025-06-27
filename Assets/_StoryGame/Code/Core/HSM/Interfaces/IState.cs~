@@ -1,4 +1,6 @@
-﻿namespace _StoryGame.Core.HSM.Interfaces
+﻿using _StoryGame.Core.HSM.Impls.States;
+
+namespace _StoryGame.Core.HSM.Interfaces
 {
     public interface IState
     {
