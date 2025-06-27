@@ -54,13 +54,13 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
 
         public void SetType(string type) => _tipLabel.text = type;
 
-        public void ShowObjLoot(InspectableData lootFor)
+        public void ShowObjLoot(PreparedObjLootData objLootFor)
         {
             _lootC.style.display = DisplayStyle.Flex;
 
             var s = "";
 
-            foreach (var loot in lootFor.InspectablesLoot)
+            foreach (var loot in objLootFor.InspectablesLoot)
                 s += loot.Currency.LocalizationKey + " ";
 
             _my.text = s.ToUpper();

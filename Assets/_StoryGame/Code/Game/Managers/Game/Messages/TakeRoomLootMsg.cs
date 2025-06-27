@@ -3,8 +3,8 @@ using _StoryGame.Data.Loot;
 
 namespace _StoryGame.Game.Managers.Game.Messages
 {
-    public record TakeRoomLootMsg(InspectableData Loot) : IGameManagerMsg
+    public record TakeRoomLootMsg(PreparedObjLootData ObjLoot) : IGameManagerMsg
     {
-        public InspectableData Loot { get; } = Loot;
+        public PreparedObjLootData ObjLoot { get; } = ObjLoot;
     }
 }

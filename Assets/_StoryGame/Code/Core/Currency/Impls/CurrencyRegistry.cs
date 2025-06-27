@@ -5,7 +5,9 @@ using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Currency.Interfaces;
 using _StoryGame.Core.Providers.Assets;
 using _StoryGame.Core.Providers.Settings;
+using _StoryGame.Data.SO.Currency;
 using _StoryGame.Data.SO.Main;
+using _StoryGame.Data.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -44,9 +46,20 @@ namespace _StoryGame.Core.Currency.Impls
                 throw new Exception("CurrenciesData is null.");
 
             foreach (var currency in currenciesData.GetAll())
+            {
+                _log.Warn("Load icon for currency: " + currency.IconId + ". Currency id: " + currency.Id);
+
+                if (currency is ThoughtData)
+                    continue;
+
+                var loadIcon = LoadIcon(currency.IconId);
+                _currencyIcons.TryAdd(currency.IconId, loadIcon);
                 _currencyData.TryAdd(currency.Id, currency);
+            }
 
             _log.Info("CurrencyRegistry initialized with " + _currencyData.Count + " currencies.");
+
+
             IsInitialized = true;
 
             await UniTask.Yield();

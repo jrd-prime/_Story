@@ -82,7 +82,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             var close = window.GetVElement<Button>("close", window.name);
             var search = window.GetVElement<Button>("search", window.name);
 
-            title.text = msg.InspectableData.LocalizedName;
+            title.text = msg.PreparedObjLootData.LocalizedName;
             desc.text = msg.Tip;
 
 
@@ -138,11 +138,11 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             var close = window.GetVElement<Button>("close", window.name);
             var takeAll = window.GetVElement<Button>("take-all", window.name);
 
-            title.text = msg.InspectableData.LocalizedName;
+            title.text = msg.PreparedObjLootData.LocalizedName;
 
             //TODO переделать эту жесть, вообще весь класс
             int i = 0;
-            foreach (var loot in msg.InspectableData.InspectablesLoot)
+            foreach (var loot in msg.PreparedObjLootData.InspectablesLoot)
             {
                 var i1 = window.GetVElement<VisualElement>("loot-item-container" + i, window.name);
                 var ic1 = i1.GetVElement<VisualElement>("icon", window.name);
@@ -167,7 +167,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         {
             Debug.Log("ShowNewNote");
 
-            var note = msg.Loot.Currency as ANoteData;
+            var note = msg.PreparedLoot.Currency as ANoteData;
 
             Debug.Log("ShowNewNote: " + note?.GetTextLocalizationKey());
             _left.Clear();
@@ -221,8 +221,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             var descLab = window.GetVElement<Label>("desc-label", window.name);
             var closeBtn = window.GetVElement<Button>("close", window.name);
 
-            titleLab.text = msg.ConditionalLoot.Currency.LocalizationKey;
-            descLab.text = Loca.Localize(msg.ConditionalLoot.Currency.DescriptionKey, ETable.SmallPhrase);
+            var item = msg.PreparedItemVo;
+            titleLab.text = item.LocalizedName;
+            descLab.text = Loca.Localize(item.Currency.DescriptionKey, ETable.SmallPhrase);
 
             var closeBtnHandler =
                 new ClickCompletionHandler<EDialogResult>(closeBtn, EDialogResult.Close,

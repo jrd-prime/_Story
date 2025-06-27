@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Animations.Messages;
+﻿using System;
+using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
@@ -23,7 +24,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         private IInspectable _inspectable;
         private string _objLocalizedName;
         private readonly DialogResultHandler _dialogResultHandler;
-        private InspectableData _lootData;
+        private PreparedObjLootData _objLootData;
 
         public SearchStrategy(InteractSystemDepFlyweight dep)
         {
@@ -63,8 +64,10 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             _dep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
 
             var source = new UniTaskCompletionSource<EDialogResult>();
-            _lootData = _inspectable.Room.GetLoot(_inspectable.Id);
-            var message = new ShowLootWindowMsg(_objLocalizedName, _lootData, source);
+
+
+            _objLootData = _dep.LootGenerator.GenerateLootData(_inspectable);
+            var message = new ShowLootWindowMsg(_objLootData, source);
 
             try
             {
@@ -91,7 +94,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         {
             _dep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
             _inspectable.CanInteract = false; // TODO подумать, мб не вырубать, а показывать хинт
-            _dep.Publisher.ForGameManager(new TakeRoomLootMsg(_lootData));
+            _dep.Publisher.ForGameManager(new TakeRoomLootMsg(_objLootData));
         }
     }
 }

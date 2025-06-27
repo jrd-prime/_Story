@@ -21,7 +21,6 @@ namespace _StoryGame.Data.SO.Abstract
         public string Id => id;
         public string Name { get; }
         public string Description { get; }
-        public string Icon { get; }
 
         public string LocalizationKey => localizationKey;
         public string DescriptionKey => descriptionKey;

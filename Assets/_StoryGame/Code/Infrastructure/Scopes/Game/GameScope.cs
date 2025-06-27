@@ -1,6 +1,5 @@
 ﻿using System;
 using _StoryGame.Core.HSM.Impls;
-using _StoryGame.Core.Loot.Interfaces;
 using _StoryGame.Core.WalletNew.Impls;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
@@ -9,8 +8,8 @@ using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Interact.Systems.Inspect;
+using _StoryGame.Game.Interact.Systems.Inspect.Strategies;
 using _StoryGame.Game.Interact.Systems.Use;
-using _StoryGame.Game.Loot.Impls;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Game.Managers.Game;
@@ -77,8 +76,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<InteractProcessor>(Lifetime.Singleton).AsSelf();
             builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractProcessor>());
 
-            RegisterLoot(builder);
-
             RegisterInteractableSystems(builder);
 
             RegisterDialogSystems(builder);
@@ -89,7 +86,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
                 throw new NullReferenceException("interactablesTipUIPrefab is null.");
             builder.RegisterComponentInNewPrefab<InteractablesTipUI>(interactablesTipUIPrefab, Lifetime.Transient);
 
-            builder.Register<ILootGenerator, LootGenerator>(Lifetime.Singleton);
+            builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
 
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
@@ -106,11 +103,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         private void RegisterDialogSystems(IContainerBuilder builder)
         {
             // builder.Register<InteractableDialogSystem>(Lifetime.Singleton).AsSelf();
-        }
-
-        private static void RegisterLoot(IContainerBuilder builder)
-        {
-            builder.Register<LootSystem>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private static void RegisterInteractableSystems(IContainerBuilder builder)

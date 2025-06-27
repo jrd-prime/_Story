@@ -10,12 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3531576487571336853}
   - component: {fileID: 823273634828694339}
-  m_Layer: 0
+  - component: {fileID: 8857653360757240303}
+  m_Layer: 31
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3531576487571336853
 Transform:
@@ -49,13 +50,33 @@ MonoBehaviour:
   id: 
   objName: Not set
   interactionTipNameId: 
-  localizationKey: 
+  localizationKey: double_bed
   _entrance: {fileID: 6519620807710657170}
-  lootChance:
-    coreItemBaseChance: 0
-    noteBaseChance: 0
-    energyBaseChance: 0
-    emptyBaseChance: 0
+  loot:
+  - chance: 100
+    currency: {fileID: 11400000, guid: 90737c0c580c1ad42b51e419ef172792, type: 2}
+    amount: 1
+--- !u!65 &8857653360757240303
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159848323213662854}
+  m_Material: {fileID: 13400000, guid: 1e11c52cd69583242be1a639ee9cf927, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1, y: 0.8, z: 1.7}
+  m_Center: {x: 0, y: 0.18, z: 0}
 --- !u!1 &460864794298493976
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +397,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6519620807710657170
 Transform:
@@ -1327,41 +1348,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Props_Interior_House_Room_Bed_03
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9254870fd8b5cf44194162d991c5a2da, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9254870fd8b5cf44194162d991c5a2da, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9254870fd8b5cf44194162d991c5a2da, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7511642139073058350}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9254870fd8b5cf44194162d991c5a2da, type: 3}
---- !u!1 &1507209208997226005 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9254870fd8b5cf44194162d991c5a2da, type: 3}
-  m_PrefabInstance: {fileID: 1741704602446142276}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &7511642139073058350
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507209208997226005}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6659116258248954545, guid: 9254870fd8b5cf44194162d991c5a2da, type: 3}
 --- !u!4 &2279241866648648879 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9254870fd8b5cf44194162d991c5a2da, type: 3}

@@ -17,11 +17,13 @@ namespace _StoryGame.Game.Interact.Interactables
     /// </summary>
     public sealed class Conditional : AInteractable<ConditionalSystem>, IConditional
     {
-        [SerializeField] private SpecialItemData loot;
+        [SerializeField] private OjectLootVo[] loot;
         [SerializeField] private ACurrencyData[] conditionalItems;
         [SerializeField] private ThoughtData lockedStateThought;
 
-        public SpecialItemData Loot => loot;
+        public OjectLootVo[] Loot => loot;
+        public bool HasLoot() => loot.Length > 0;
+
         public ThoughtData LockedStateThought => lockedStateThought;
         public ACurrencyData[] ConditionalItems => conditionalItems;
         public override EInteractableType InteractableType => EInteractableType.Condition;
@@ -29,6 +31,18 @@ namespace _StoryGame.Game.Interact.Interactables
 
         public void SetConditionalState(EConditionalState conditionalState) =>
             ConditionalState = conditionalState;
+
+        public string GetSpecialItemId()
+        {
+            if (loot == null || loot.Length == 0)
+                throw new Exception("ObjLoot is null or empty. " + name);
+
+            foreach (var lootVo in loot)
+                if (lootVo.currency is SpecialItemData specialItemData)
+                    return specialItemData.Id;
+
+            throw new Exception("Special item id not found. " + name);
+        }
 
         public override async UniTask InteractAsync(ICharacter character)
         {
@@ -41,8 +55,8 @@ namespace _StoryGame.Game.Interact.Interactables
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (!loot)
-                throw new Exception("Loot is null. " + name);
+            if (loot == null || loot.Length == 0)
+                throw new Exception("ObjLoot is null. " + name);
 
             if (conditionalItems == null || conditionalItems.Length == 0)
                 throw new Exception("Conditional items is null or empty. " + name);

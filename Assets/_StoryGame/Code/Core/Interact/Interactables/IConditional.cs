@@ -1,15 +1,16 @@
 ﻿using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Currency;
+using _StoryGame.Game.Interact.Systems.Inspect.Strategies;
 
 namespace _StoryGame.Core.Interact.Interactables
 {
-    public interface IConditional : IInteractable
+    public interface IConditional :  ILootable
     {
-        SpecialItemData Loot { get; }
         ThoughtData LockedStateThought { get; }
         EConditionalState ConditionalState { get; }
         ACurrencyData[] ConditionalItems { get; }
         void SetConditionalState(EConditionalState state);
+        string GetSpecialItemId();
     }
 }

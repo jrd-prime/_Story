@@ -2,11 +2,11 @@
 
 namespace _StoryGame.Data.Loot
 {
-    public record RoomLootData(Dictionary<string, InspectableData> InspectableData)
+    public record RoomLootData(Dictionary<string, PreparedObjLootData> InspectableData)
     {
         /// <summary>
-        /// InteractableId -> InspectableData  
+        /// InteractableId -> PreparedObjLootData  
         /// </summary>
-        public Dictionary<string, InspectableData> InspectableData { get; } = InspectableData;
+        public Dictionary<string, PreparedObjLootData> InspectableData { get; } = InspectableData;
     }
 }

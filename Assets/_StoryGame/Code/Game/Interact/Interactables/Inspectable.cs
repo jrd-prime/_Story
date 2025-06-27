@@ -4,6 +4,7 @@ using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Loot;
 using _StoryGame.Data.Room;
+using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Systems;
 using Cysharp.Threading.Tasks;
@@ -16,11 +17,12 @@ namespace _StoryGame.Game.Interact.Interactables
     /// </summary>
     public sealed class Inspectable : AInteractable<InspectSystem>, IInspectable
     {
-        [SerializeField] private RoomBaseLootChanceVo lootChance;
+        [SerializeField] private OjectLootVo[] loot;
 
         public override EInteractableType InteractableType => EInteractableType.Inspect;
         public EInspectState InspectState { get; private set; } = EInspectState.NotInspected;
-        public RoomBaseLootChanceVo Chances => lootChance;
+        public OjectLootVo[] Loot => loot;
+        public bool HasLoot() => loot.Length > 0; 
 
         public override async UniTask InteractAsync(ICharacter character)
         {
@@ -33,9 +35,20 @@ namespace _StoryGame.Game.Interact.Interactables
         public void SetInspectState(EInspectState inspectState) =>
             InspectState = inspectState;
 
-        public int GetLootChance(ELootType eLootType)
+#if UNITY_EDITOR
+        private void OnValidate()
         {
-            return lootChance.GetLootChance(eLootType);
+            if (loot == null || loot.Length == 0)
+                throw new Exception("ObjLoot is null or empty. " + name);
         }
+#endif
+    }
+
+    [Serializable]
+    public struct OjectLootVo
+    {
+        public int chance;
+        public ACurrencyData currency;
+        public int amount;
     }
 }

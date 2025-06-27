@@ -159,9 +159,9 @@ namespace _StoryGame.Game.Character.Player.Impls
                 _selfMsgPub.Publish(new OutOfEnergyMsg());
         }
 
-        public void AddNote(LootData lootData)
+        public void AddNote(PreparedLootVo preparedLootVo)
         {
-            _wallet.Add(lootData.Currency.Id, lootData.Currency.Amount);
+            _wallet.Add(preparedLootVo.Currency.Id, preparedLootVo.Currency.Amount);
         }
 
         public void AddItemToWallet(ACurrencyData itemData, int amount)

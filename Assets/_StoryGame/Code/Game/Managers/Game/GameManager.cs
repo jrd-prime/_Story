@@ -100,7 +100,7 @@ namespace _StoryGame.Game.Managers.Game
         }
 
 
-        public bool IsPlayerHasItem(SpecialItemData itemData) => _player.Wallet.Has(itemData.Id, 1);
+        public bool IsPlayerHasItem(string itemId) => _player.Wallet.Has(itemId, 1);
 
         public bool IsPlayerHasConditionalItems(ACurrencyData[] conditionalItems)
         {
@@ -132,47 +132,47 @@ namespace _StoryGame.Game.Managers.Game
             Debug.Log($"OnMessage: {message.GetType().Name}");
             var msg = message as TakeRoomLootMsg ?? throw new ArgumentNullException(nameof(message));
 
-            foreach (var lootDataNew in msg.Loot.InspectablesLoot)
+            foreach (var lootDataNew in msg.ObjLoot.InspectablesLoot)
                 ProcessLoot(lootDataNew);
         }
 
         //TODO ужас
-        private void ProcessLoot(LootData lootData)
+        private void ProcessLoot(PreparedLootVo preparedLootVo)
         {
-            switch (lootData.Currency.Type)
+            switch (preparedLootVo.Currency.Type)
             {
                 case ECurrencyType.Energy:
-                    _player.AddEnergy(lootData.Currency.Amount);
+                    _player.AddEnergy(preparedLootVo.Currency.Amount);
                     break;
                 case ECurrencyType.CoreItem:
-                    TempWallet.Add(lootData.Currency.Id, lootData.Currency.Amount);
+                    TempWallet.Add(preparedLootVo.Currency.Id, preparedLootVo.Currency.Amount);
                     break;
                 case ECurrencyType.Note:
-                    _player.AddNote(lootData);
-                    var noteTitle = _localizationProvider.Localize(lootData.Currency.LocalizationKey,
+                    _player.AddNote(preparedLootVo);
+                    var noteTitle = _localizationProvider.Localize(preparedLootVo.Currency.LocalizationKey,
                         ETable.SimpleNote,
                         ETextTransform.Upper);
                     var noteText = _localizationProvider.Localize(
-                        (lootData.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.SimpleNote);
-                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootData, noteTitle, noteText));
+                        (preparedLootVo.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.SimpleNote);
+                    _publisher.ForUIViewer(new ShowNewNoteMsg(preparedLootVo, noteTitle, noteText));
                     break;
                 case ECurrencyType.CoreNote:
-                    _player.AddNote(lootData);
-                    var title = _localizationProvider.Localize(lootData.Currency.LocalizationKey, ETable.CoreNote,
+                    _player.AddNote(preparedLootVo);
+                    var title = _localizationProvider.Localize(preparedLootVo.Currency.LocalizationKey, ETable.CoreNote,
                         ETextTransform.Upper);
                     var text = _localizationProvider.Localize(
-                        (lootData.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.CoreNote);
-                    _publisher.ForUIViewer(new ShowNewNoteMsg(lootData, title, text));
+                        (preparedLootVo.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.CoreNote);
+                    _publisher.ForUIViewer(new ShowNewNoteMsg(preparedLootVo, title, text));
                     break;
                 case ECurrencyType.Tip:
                     _log.Warn("Show tip");
                     break;
                 case ECurrencyType.Special:
                     _log.Warn("Process special loot");
-                    _player.Wallet.Add(lootData.Currency.Id, 1);
+                    _player.Wallet.Add(preparedLootVo.Currency.Id, 1);
                     break;
                 default:
-                    _log.Error($"Unknown currency type: {lootData.Currency.Type}");
+                    _log.Error($"Unknown currency type: {preparedLootVo.Currency.Type}");
                     throw new ArgumentOutOfRangeException();
             }
         }

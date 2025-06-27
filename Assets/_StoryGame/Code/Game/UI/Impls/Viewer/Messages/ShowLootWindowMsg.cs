@@ -7,13 +7,11 @@ using Cysharp.Threading.Tasks;
 namespace _StoryGame.Game.UI.Impls.Viewer.Messages
 {
     public record ShowLootWindowMsg(
-        string ObjName,
-        InspectableData InspectableData,
+        PreparedObjLootData PreparedObjLootData,
         UniTaskCompletionSource<EDialogResult> CompletionSource
     ) : IUIViewerMsg
     {
-        public string ObjName { get; } = ObjName;
-        public InspectableData InspectableData { get; } = InspectableData;
+        public PreparedObjLootData PreparedObjLootData { get; } = PreparedObjLootData;
         public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
         public EFloatingWindowType WindowType => EFloatingWindowType.Loot;
     }

@@ -75,6 +75,14 @@ MonoBehaviour:
     m_Key: entrance_MinusOneFloor
     m_Metadata:
       m_Items: []
+  - m_Id: 14528387149135872
+    m_Key: double_bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14530379292540928
+    m_Key: blanket
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

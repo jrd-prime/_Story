@@ -15,7 +15,7 @@ MonoBehaviour:
   id: special_art
   localizationKey: special_art
   descriptionKey: special_art_desc
-  iconId: art
+  iconId: goblet
   rarity: 0
   maxStackSize: 0
   amount: 1

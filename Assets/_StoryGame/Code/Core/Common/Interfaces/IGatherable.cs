@@ -7,7 +7,7 @@ namespace _StoryGame.Core.Common.Interfaces
         void Gather(Transform viewMuzzleTransform);
         void ResetSuctionBar();
         Vector3 Position { get; }
-        // LootDataVo[] Loot { get; }
+        // LootDataVo[] ObjLoot { get; }
         string Id { get; }
         QuestEventIdType qEvtId { get; }
         void UpdateSuctionTime(float currentSuctionTime, float suctionTime);

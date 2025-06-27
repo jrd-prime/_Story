@@ -40,7 +40,6 @@ namespace _StoryGame.Game.Room.Abstract
         public RoomInteractablesVo Interactables => interactables;
 
         private RoomData _roomData;
-        private ILootSystem _lootSystem;
         private IPublisher<RoomLootGeneratedMsg> _roomLootGeneratedMsgPub;
         private readonly CompositeDisposable _disposables = new();
 
@@ -49,13 +48,12 @@ namespace _StoryGame.Game.Room.Abstract
         private IGameManager _gameManager;
 
         [Inject]
-        private void Construct(IJLog log, ISettingsProvider settingsProvider, ILootSystem lootSystem,
+        private void Construct(IJLog log, ISettingsProvider settingsProvider,
             IPublisher<RoomLootGeneratedMsg> roomLootGeneratedMsgPub, AppStartHandler appStartHandler,
             IGameManager gameManager)
         {
             _log = log;
             _roomData = settingsProvider.GetRoomSettings(Id);
-            _lootSystem = lootSystem;
             _roomLootGeneratedMsgPub = roomLootGeneratedMsgPub;
 
             _gameManager = gameManager;
@@ -84,7 +82,6 @@ namespace _StoryGame.Game.Room.Abstract
 
         private void OnAppStarted(Unit _)
         {
-            _lootSystem.GenerateLoot(this);
             _roomLootGeneratedMsgPub.Publish(new RoomLootGeneratedMsg(roomId));
         }
 
@@ -98,13 +95,7 @@ namespace _StoryGame.Game.Room.Abstract
                 throw new Exception($"Room {Id} settings is not correct.");
         }
 
-        public bool HasLoot(string inspectableId) =>
-            _lootSystem.HasLoot(roomId, inspectableId);
-
         public InspectableLootVo GetLootData() => _roomData.Loot.inspectableLoot;
-
-        public InspectableData GetLoot(string inspectableId) =>
-            _lootSystem.GetLootForInspectable(Id, inspectableId);
 
         // TODO call on game start
         public bool UpdateStateForConditionalObjects()
@@ -119,7 +110,7 @@ namespace _StoryGame.Game.Room.Abstract
 
             foreach (var conditionalObject in _conditionalObjects)
             {
-                var hasItem = _gameManager.IsPlayerHasItem(conditionalObject.Loot);
+                var hasItem = _gameManager.IsPlayerHasItem(conditionalObject.GetSpecialItemId());
                 var hasConditionItems = _gameManager.IsPlayerHasConditionalItems(conditionalObject.ConditionalItems);
 
                 if (hasItem)

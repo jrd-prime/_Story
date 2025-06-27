@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Core.Providers.Assets;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
+using _StoryGame.Data.Loot;
+using _StoryGame.Game.Interact.Interactables;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Movement;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -45,10 +49,10 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
 
         private async UniTask<bool> ShowLootTip()
         {
-            var lootData = _inspectable.Room.GetLoot(_inspectable.Id) ??
-                           throw new Exception("ShowLootTip - no loot data");
-
-            var hasLoot = _inspectable.Room.HasLoot(_inspectable.Id);
+            var loot = _inspectable.Loot ??
+                       throw new Exception("ShowLootTip - no loot data");
+            PreparedObjLootData objLootData = _dep.LootGenerator.GenerateLootData(_inspectable);
+            var hasLoot = _inspectable.HasLoot();
 
             var tipLocalizationId = hasLoot
                 ? _dep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.InspHasLoot)
@@ -59,7 +63,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             var source = new UniTaskCompletionSource<EDialogResult>();
 
             IUIViewerMsg msg = hasLoot
-                ? new ShowHasLootWindowMsg(_objLocalizedName, tip, lootData, source)
+                ? new ShowHasLootWindowMsg(_objLocalizedName, tip, objLootData, source)
                 : new ShowNoLootWindowMsg(_objLocalizedName.ToUpper(), tip, source);
 
             try

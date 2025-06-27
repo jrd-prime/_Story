@@ -47,7 +47,7 @@
     <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Library\PackageCache\com.unity.project-auditor@94c6e4e98816\RoslynAnalyzers\Domain_Reload_Analyzer.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_StoryGame\Code\Core\Loot\Interfaces\ILootGenerator.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Loot\LootGenerator.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Interact\InteractSystemDepFlyweight.cs" />
     <Compile Include="Assets\ToggleInspectorLock.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Room\Interfaces\IRoom.cs" />
@@ -62,7 +62,6 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Use\Strategies\NotUsedStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\WorldViews\TipInitializer.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIViewerMsg.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Loot\Impls\LootGenerator.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\NoteData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Use\Action\Strategies\SwitchStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Conditional\Strategies\UnlockedStrategy.cs" />
@@ -201,7 +200,6 @@
     <Compile Include="Assets\_StoryGame\Code\Core\WalletNew\Impls\Wallet.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Interfaces\IHSMMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Interactables\InteractableLootData.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Loot\Impls\LootSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Abstract\AInteractSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Loot\RoomLootData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIView.cs" />
@@ -228,7 +226,7 @@
     <Compile Include="Assets\_StoryGame\Code\Data\Const\SOPathConst.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Currency\NotesVo.cs" />
     <Compile Include="Assets\EditSceneHelper.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\Loot\LootData.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Loot\PreparedLootVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IBootable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IMovementHandlerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interact\InteractableSystemTipVo.cs" />
@@ -274,6 +272,7 @@
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Game\PlayerInstaller.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\HUD\Components\EnergyBarHUDController.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Loot\Interfaces\ILootSystem.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Usable\ExitDoor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\JLocalizationSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Player\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Providers\Localization\ETable.cs" />
@@ -286,7 +285,6 @@
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Game\GameScope.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Use\Action\Strategies\ExitFromRoomStrategy.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Usable\Exit.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\ContainerExtensions.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIViewerLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IJMessage.cs" />
@@ -309,7 +307,7 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Interact\Interactables\IUsableExit.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Conditional\Strategies\LockedStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Anima\Data\Interactables\InteractableAnimationName.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\Loot\InspectableData.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Data\Loot\PreparedObjLootData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IPlayerAnimatorMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Animations\Messages\SetBoolMsg.cs" />
     <None Include="Assets\_StoryGame\Static\UI\USS\popup.uss" />

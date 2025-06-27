@@ -78,6 +78,14 @@ MonoBehaviour:
     m_Localized: -1 floor
     m_Metadata:
       m_Items: []
+  - m_Id: 14528387149135872
+    m_Localized: Double bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14530379292540928
+    m_Localized: Blanket
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

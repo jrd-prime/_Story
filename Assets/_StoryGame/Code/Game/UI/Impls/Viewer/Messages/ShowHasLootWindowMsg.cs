@@ -9,12 +9,12 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Messages
     public record ShowHasLootWindowMsg(
         string ObjName,
         string Tip,
-        InspectableData InspectableData,
+        PreparedObjLootData PreparedObjLootData,
         UniTaskCompletionSource<EDialogResult> CompletionSource) : IUIViewerMsg
     {
         public string ObjName { get; } = ObjName;
         public string Tip { get; } = Tip;
-        public InspectableData InspectableData { get; } = InspectableData;
+        public PreparedObjLootData PreparedObjLootData { get; } = PreparedObjLootData;
         public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
         public EFloatingWindowType WindowType => EFloatingWindowType.HasLoot;
     }

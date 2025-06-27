@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
@@ -12,6 +14,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using VContainer;
 
 namespace _StoryGame.Game.Movement
@@ -163,8 +166,49 @@ namespace _StoryGame.Game.Movement
             !Input.GetMouseButtonDown(0) && Input.touchCount == 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsClickOverUI() =>
-            EventSystem.current && EventSystem.current.IsPointerOverGameObject();
+        private static bool IsClickOverUI()
+        {
+            if (!EventSystem.current || !EventSystem.current.IsPointerOverGameObject())
+            {
+                return false;
+            }
+
+            // Отладочная информация
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition
+            };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            if (results.Count > 0)
+            {
+                StringBuilder debugInfo = new StringBuilder("Клик по UI: ");
+                foreach (var result in results)
+                {
+                    debugInfo.AppendLine();
+                    debugInfo.Append(
+                        $"- {result.gameObject.name} (слой: {LayerMask.LayerToName(result.gameObject.layer)})");
+
+                    // Можно добавить больше информации, например:
+                    if (result.gameObject.transform.parent != null)
+                    {
+                        debugInfo.Append($", родитель: {result.gameObject.transform.parent.name}");
+                    }
+
+                    var selectable = result.gameObject.GetComponent<Selectable>();
+                    if (selectable != null)
+                    {
+                        debugInfo.Append($", компонент: {selectable.GetType().Name}");
+                    }
+                }
+
+                Debug.Log(debugInfo.ToString());
+            }
+
+            return true;
+        }
 
         #endregion
     }

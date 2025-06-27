@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using _StoryGame.Core.Animations.Messages;
+﻿using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact;
-using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Msg;
 using _StoryGame.Data.Animator;
 using _StoryGame.Data.Loot;
+using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
@@ -24,31 +22,43 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
         public string StrategyName => nameof(UnlockStrategy);
         private readonly InteractSystemDepFlyweight _dep;
         private readonly DialogResultHandler _dialogResultHandler;
-        private InspectableData inspdata;
-        private IConditional _interactable;
+        private PreparedObjLootData inspdata;
+        private IConditional _conditional;
+        private PreparedObjLootData objLootData;
 
         public UnlockStrategy(InteractSystemDepFlyweight dep)
         {
             _dep = dep;
             _dialogResultHandler = new DialogResultHandler(dep.Log);
+
+            _dialogResultHandler.AddCallback(EDialogResult.TakeAll, OnTakeAllAction);
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
+        }
+
+        private void OnTakeAllAction()
+        {
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
+            _conditional.CanInteract = false; // TODO подумать, мб не вырубать, а показывать хинт
+            _dep.Publisher.ForGameManager(new TakeRoomLootMsg(objLootData));
         }
 
         public async UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            _interactable = interactable;
+            _conditional = interactable;
             await ShowOpenProgress();
 
-            return await ShowLootDialog();
+            // Показываем окно с лутом
+            return await ShowLootTipAfterSearch();
         }
 
-        private async UniTask<bool> ShowLootDialog()
+        private async UniTask<bool> ShowLootTipAfterSearch()
         {
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
+
             var source = new UniTaskCompletionSource<EDialogResult>();
-            var lootData = new LootData(_interactable.Room.Id, _interactable.Id, null, _interactable.Loot);
-            var message = new DisplayArtefactInfoMsg(lootData, source);
-            var locName = _dep.LocalizationProvider.Localize(_interactable.LocalizationKey, ETable.Words);
-            inspdata = new InspectableData(locName, new List<LootData>() { lootData });
+
+            objLootData = _dep.LootGenerator.GenerateLootData(_conditional);
+            var message = new ShowLootWindowMsg(objLootData, source);
 
             try
             {
@@ -64,7 +74,6 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
                 source?.TrySetCanceled();
             }
 
-            _interactable.SetConditionalState(EConditionalState.Looted);
             return true;
         }
 

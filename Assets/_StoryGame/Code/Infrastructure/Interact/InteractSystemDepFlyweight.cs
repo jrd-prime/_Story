@@ -3,6 +3,7 @@ using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Interactables;
+using _StoryGame.Game.Interact.Systems.Inspect.Strategies;
 using VContainer;
 
 namespace _StoryGame.Infrastructure.Interact
@@ -21,6 +22,8 @@ namespace _StoryGame.Infrastructure.Interact
         public readonly IJLog Log;
         public readonly ILocalizationProvider LocalizationProvider;
         public readonly InteractableSystemTipData InteractableSystemTipData;
+        public readonly LootGenerator LootGenerator;
+
 
         public InteractSystemDepFlyweight(IObjectResolver resolver)
         {
@@ -30,6 +33,8 @@ namespace _StoryGame.Infrastructure.Interact
 
             var settingsProvider = resolver.Resolve<ISettingsProvider>();
             InteractableSystemTipData = settingsProvider.GetSettings<InteractableSystemTipData>();
+            
+            LootGenerator = resolver.Resolve<LootGenerator>();
         }
     }
 }

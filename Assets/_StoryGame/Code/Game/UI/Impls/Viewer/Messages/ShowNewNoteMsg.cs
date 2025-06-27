@@ -3,7 +3,7 @@ using _StoryGame.Data.Loot;
 
 namespace _StoryGame.Game.UI.Impls.Viewer.Messages
 {
-    public record ShowNewNoteMsg(LootData Loot, string Title, string Text) : IUIViewerMsg
+    public record ShowNewNoteMsg(PreparedLootVo PreparedLoot, string Title, string Text) : IUIViewerMsg
     {
     }
 }

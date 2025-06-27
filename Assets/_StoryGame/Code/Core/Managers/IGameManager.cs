@@ -54,7 +54,7 @@ namespace _StoryGame.Core.Managers
         /// </summary>
         void LoadGame();
 
-        bool IsPlayerHasItem(SpecialItemData itemData);
+        bool IsPlayerHasItem(string itemId);
         bool IsPlayerHasConditionalItems(ACurrencyData[] conditionalItems);
     }
 

@@ -23,7 +23,7 @@ namespace _StoryGame.Core.Character.Player.Interfaces
         void SetEnergy(int energy);
         void AddEnergy(int energy);
         void SpendEnergy(int energy);
-        void AddNote(LootData lootData);
+        void AddNote(PreparedLootVo preparedLootVo);
         void AddItemToWallet(ACurrencyData itemData, int amount);
     }
 }

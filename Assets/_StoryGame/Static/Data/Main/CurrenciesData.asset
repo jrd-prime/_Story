@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coreItems:
   - {fileID: 11400000, guid: a9020e71f09c2624ebc76375b685f57f, type: 2}
+  - {fileID: 11400000, guid: 90737c0c580c1ad42b51e419ef172792, type: 2}
   coreNotes:
   - {fileID: 11400000, guid: e95d0012242b98f4f90c992d7fea04aa, type: 2}
   notes:
@@ -21,5 +22,5 @@ MonoBehaviour:
   specialItems:
   - {fileID: 11400000, guid: c5bc78edb80293e44b91941250091cc2, type: 2}
   tips:
-  - {fileID: 11400000, guid: d8991eea93559384f8b93acb68bcfc71, type: 2}
+  - {fileID: 11400000, guid: 74e5eda9329dd284ebd2d00619109f77, type: 2}
   energy: {fileID: 11400000, guid: 4b14d049bfac91d45885888291345ee7, type: 2}

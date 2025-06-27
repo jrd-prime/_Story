@@ -12,9 +12,6 @@ namespace _StoryGame.Core.Room.Interfaces
         float Progress { get; }
         RoomLootVo Loot { get; }
         RoomInteractablesVo Interactables { get; }
-        bool HasLoot(string inspectableId);
-        InspectableLootVo GetLootData();
-        InspectableData GetLoot(string inspectableId);
         bool UpdateStateForConditionalObjects();
         Vector3 GetSpawnPosition();
     }

@@ -574,7 +574,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1845045222315785765
 Transform:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2181489622131776191}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a16d62277c4430a69be5978ed6055b, type: 3}
   m_Name: 
@@ -700,7 +700,7 @@ GameObject:
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3501092745993243206
 Transform:
   m_ObjectHideFlags: 0
@@ -710,7 +710,7 @@ Transform:
   m_GameObject: {fileID: 2592450465667964446}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.5000005, y: -3, z: 19.500008}
+  m_LocalPosition: {x: 25.000011, y: -3, z: 19.500004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2592450465667964446}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf18a19bed334b58b40c8237e7be7a9c, type: 3}
   m_Name: 
@@ -735,7 +735,10 @@ MonoBehaviour:
   interactionTipNameId: 
   localizationKey: wood_box
   _entrance: {fileID: 3071621674284139528}
-  loot: {fileID: 11400000, guid: c5bc78edb80293e44b91941250091cc2, type: 2}
+  loot:
+  - chance: 0
+    currency: {fileID: 11400000, guid: c5bc78edb80293e44b91941250091cc2, type: 2}
+    amount: 1
   conditionalItems:
   - {fileID: 11400000, guid: a9020e71f09c2624ebc76375b685f57f, type: 2}
   lockedStateThought: {fileID: 11400000, guid: 74e5eda9329dd284ebd2d00619109f77, type: 2}
@@ -1062,7 +1065,7 @@ GameObject:
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &463646546280406644
 Transform:
   m_ObjectHideFlags: 0
@@ -1072,7 +1075,7 @@ Transform:
   m_GameObject: {fileID: 2922880968812828765}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.9999995, y: -3, z: 22.000008}
+  m_LocalPosition: {x: 21.500011, y: -3, z: 22.000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1087,7 +1090,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2922880968812828765}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae896be9500c4df78c3453a51b0c4470, type: 3}
   m_Name: 
@@ -1097,11 +1100,10 @@ MonoBehaviour:
   interactionTipNameId: 
   localizationKey: conditioneer
   _entrance: {fileID: 1802803548757632519}
-  lootChance:
-    coreItemBaseChance: 20
-    noteBaseChance: 0
-    energyBaseChance: 5
-    emptyBaseChance: 75
+  loot:
+  - chance: 0
+    currency: {fileID: 0}
+    amount: 0
 --- !u!65 &7225085889612929364
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1487,7 +1489,7 @@ GameObject:
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3810497911707237937
 Transform:
   m_ObjectHideFlags: 0
@@ -1497,7 +1499,7 @@ Transform:
   m_GameObject: {fileID: 3671005539790562066}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.9999985, y: -3, z: 22.500004}
+  m_LocalPosition: {x: 27.500006, y: -3, z: 22.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1512,7 +1514,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3671005539790562066}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae896be9500c4df78c3453a51b0c4470, type: 3}
   m_Name: 
@@ -1522,11 +1524,10 @@ MonoBehaviour:
   interactionTipNameId: 
   localizationKey: electrobox
   _entrance: {fileID: 8608472651959406084}
-  lootChance:
-    coreItemBaseChance: 25
-    noteBaseChance: 10
-    energyBaseChance: 5
-    emptyBaseChance: 60
+  loot:
+  - chance: 0
+    currency: {fileID: 0}
+    amount: 0
 --- !u!65 &8075666636738739393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2157,7 +2158,7 @@ GameObject:
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4721061208260263053
 Transform:
   m_ObjectHideFlags: 0
@@ -2167,7 +2168,7 @@ Transform:
   m_GameObject: {fileID: 5926497875007722223}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.499999, y: -3, z: 19.500008}
+  m_LocalPosition: {x: 21.000011, y: -3, z: 19.500004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2182,7 +2183,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5926497875007722223}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae896be9500c4df78c3453a51b0c4470, type: 3}
   m_Name: 
@@ -2192,11 +2193,10 @@ MonoBehaviour:
   interactionTipNameId: 
   localizationKey: toolbox
   _entrance: {fileID: 1106977865145601657}
-  lootChance:
-    coreItemBaseChance: 70
-    noteBaseChance: 15
-    energyBaseChance: 5
-    emptyBaseChance: 10
+  loot:
+  - chance: 0
+    currency: {fileID: 0}
+    amount: 0
 --- !u!65 &4929210265338773578
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3500,7 +3500,7 @@ Transform:
   m_GameObject: {fileID: 8010526142547321656}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.0013943, y: -3, z: 18.501411}
+  m_LocalPosition: {x: 25.498617, y: -3, z: 18.501408}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3515,7 +3515,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8010526142547321656}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9de8c38901544669c9c6c04ecca0a5e, type: 3}
   m_Name: 
@@ -3899,7 +3899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &85453520017644380
 Transform:
   m_ObjectHideFlags: 0
