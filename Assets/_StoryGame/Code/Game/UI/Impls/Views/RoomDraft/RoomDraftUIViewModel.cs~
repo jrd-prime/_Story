@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Game.UI.Impls.Views.RoomDraft
+﻿namespace _StoryGame.Game.UI.Impls.Views.Menu
 {
     public sealed class RoomDraftUIViewModel : IRoomDraftUIViewModel
     {

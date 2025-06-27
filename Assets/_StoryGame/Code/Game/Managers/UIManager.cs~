@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.HSM;
 using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.Messaging.Interfaces;
@@ -47,8 +48,6 @@ namespace _StoryGame.Game.Managers
                 _viewsCache.Add(uiView.type, uiView.view);
             }
 
-            Debug.Log("UIManager publish InitializeViewerMsg");
-            _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
 
             _hsm.CurrentStateType
                 .Subscribe(OnStateChange)
@@ -58,6 +57,8 @@ namespace _StoryGame.Game.Managers
         private void Start()
         {
             _log.Debug("UIManager.Start");
+            Debug.Log("UIManager publish InitializeViewerMsg");
+            _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
         }
 
         private async void OnStateChange(EGameStateType state)

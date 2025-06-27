@@ -1,5 +1,5 @@
-﻿using _StoryGame.Core.HSM.Impls;
-using _StoryGame.Core.HSM.Impls.States;
+﻿using _StoryGame.Core.HSM;
+using _StoryGame.Core.HSM.Impls;
 using _StoryGame.Core.HSM.Interfaces;
 using _StoryGame.Core.HSM.Messages;
 using _StoryGame.Core.UI.Interfaces;

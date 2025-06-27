@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Core.HSM.Impls.States
+﻿namespace _StoryGame.Core.HSM
 {
     public enum EGameStateType
     {

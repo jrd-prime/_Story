@@ -7,12 +7,12 @@ using _StoryGame.Core.Providers.Assets;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Currency;
 using _StoryGame.Data.SO.Main;
-using _StoryGame.Data.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _StoryGame.Core.Currency.Impls
 {
+    //TODO ref
     public sealed class CurrencyRegistry : ICurrencyRegistry
     {
         public string Description => "Currency Registry";

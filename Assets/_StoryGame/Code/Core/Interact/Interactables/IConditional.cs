@@ -1,7 +1,7 @@
 ﻿using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Data.SO.Currency;
-using _StoryGame.Game.Interact.Systems.Inspect.Strategies;
+using _StoryGame.Game.Loot;
 
 namespace _StoryGame.Core.Interact.Interactables
 {

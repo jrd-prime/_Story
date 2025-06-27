@@ -3,7 +3,7 @@ using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Interactables;
-using _StoryGame.Game.Interact.Systems.Inspect.Strategies;
+using _StoryGame.Game.Loot;
 using VContainer;
 
 namespace _StoryGame.Infrastructure.Interact

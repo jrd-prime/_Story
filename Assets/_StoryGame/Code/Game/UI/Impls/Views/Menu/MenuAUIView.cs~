@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Core.HSM;
 using _StoryGame.Core.HSM.Impls;
+using _StoryGame.Core.HSM.Impls.States;
 using _StoryGame.Core.HSM.Interfaces;
 using _StoryGame.Core.HSM.Messages;
 using _StoryGame.Core.UI.Interfaces;
@@ -10,9 +11,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
-namespace _StoryGame.Game.UI.Impls.Views.RoomDraft
+namespace _StoryGame.Game.UI.Impls.Views.Menu
 {
-    public sealed class RoomDraftUIView : AUIView<IRoomDraftUIViewModel>
+    public sealed class MenuAUIView : AUIView<IMenuUIViewModel>
     {
         private VisualElement _visualelem;
         private HSM _hsm;
@@ -41,7 +42,7 @@ namespace _StoryGame.Game.UI.Impls.Views.RoomDraft
         }
     }
 
-    public interface IRoomDraftUIViewModel : IUIViewModel
+    public interface IMenuUIViewModel : IUIViewModel
     {
     }
 }

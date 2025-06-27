@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using _StoryGame.Core.HSM.Impls.States;
+using _StoryGame.Core.HSM;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.UI.Abstract;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
-using _StoryGame.Core.HSM.Impls.States;
+using _StoryGame.Core.HSM;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
