@@ -16,11 +16,11 @@ namespace _StoryGame.Game.UI.Impls.Views.RoomDraft
     {
         private VisualElement _visualelem;
         private HSM _hsm;
-        private IPublisher<IHSMMessage> hsmMessagePublisher;
+        private IPublisher<IHSMMsg> hsmMessagePublisher;
 
         protected override void ResolveDependencies(IObjectResolver resolver)
         {
-            hsmMessagePublisher = resolver.Resolve<IPublisher<IHSMMessage>>();
+            hsmMessagePublisher = resolver.Resolve<IPublisher<IHSMMsg>>();
         }
 
         protected override void InitElements()

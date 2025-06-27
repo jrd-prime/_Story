@@ -90,5 +90,14 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         private bool HasReachedDestination() =>
             !NavMeshAgent.pathPending && NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance;
+
+        public void SetPosition(Vector3 value)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(value, out hit, 1.0f, NavMesh.AllAreas))
+                NavMeshAgent.Warp(hit.position);
+            else
+                Debug.LogError("Целевая позиция не находится на NavMesh!");
+        }
     }
 }

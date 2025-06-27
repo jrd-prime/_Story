@@ -10,12 +10,14 @@ using _StoryGame.Core.Managers;
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
+using _StoryGame.Core.Room;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Managers.Interfaces;
+using _StoryGame.Game.Managers.Room.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -93,8 +95,8 @@ namespace _StoryGame.Game.Managers.Game
             );
 
             _gameManagerMsgSub.Subscribe(
-                OnRoomChooseRequestMsg,
-                msg => msg is ChooseNextRoomRequestMsg
+                OnTransitionToRoomRequestMsg,
+                msg => msg is TransitionToRoomRequestMsg
             );
         }
 
@@ -112,11 +114,11 @@ namespace _StoryGame.Game.Managers.Game
             return true;
         }
 
-        private void OnRoomChooseRequestMsg(IGameManagerMsg obj)
+        private void OnTransitionToRoomRequestMsg(IGameManagerMsg obj)
         {
             Debug.Log($"OnMessage: {obj.GetType().Name}");
-            var msg = obj as ChooseNextRoomRequestMsg ?? throw new ArgumentNullException(nameof(obj));
-            _publisher.ForHSM(new ChangeGameStateMessage(EGameStateType.RoomDraft));
+            var msg = obj as TransitionToRoomRequestMsg ?? throw new ArgumentNullException(nameof(obj));
+            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(msg.Room));
         }
 
         private void OnSpendEnergyMsg(IGameManagerMsg message)
@@ -180,6 +182,7 @@ namespace _StoryGame.Game.Managers.Game
         {
             _log.Info("App started!");
             _gameService.StartHSM();
+            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(ERoom.HabitationModule1));
         }
 
 

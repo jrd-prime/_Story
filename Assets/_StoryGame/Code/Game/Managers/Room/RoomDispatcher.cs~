@@ -1,0 +1,21 @@
+﻿using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Room.Interfaces;
+
+namespace _StoryGame.Game.Managers.RoomDispatcher
+{
+    public sealed class RoomDispatcher : IRoomDispatcher
+    {
+        private readonly IRoomsRegistry _roomsRegistry;
+        private readonly IJLog _log;
+
+        public RoomDispatcher(IRoomsRegistry roomsRegistry, IJLog log)
+        {
+            _roomsRegistry = roomsRegistry;
+            _log = log;
+        }
+    }
+
+    public interface IRoomDispatcher
+    {
+    }
+}

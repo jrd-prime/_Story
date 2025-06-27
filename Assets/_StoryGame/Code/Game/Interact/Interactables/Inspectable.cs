@@ -2,8 +2,6 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Core.Loot;
-using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Systems;

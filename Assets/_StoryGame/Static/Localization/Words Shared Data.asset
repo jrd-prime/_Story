@@ -83,6 +83,10 @@ MonoBehaviour:
     m_Key: blanket
     m_Metadata:
       m_Items: []
+  - m_Id: 14594555692122112
+    m_Key: entrance_habMod1
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

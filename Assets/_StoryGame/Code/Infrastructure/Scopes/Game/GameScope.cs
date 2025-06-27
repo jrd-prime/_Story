@@ -14,6 +14,7 @@ using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
 using _StoryGame.Game.Managers.Game;
 using _StoryGame.Game.Managers.Interfaces;
+using _StoryGame.Game.Managers.Room;
 using _StoryGame.Game.Movement;
 using _StoryGame.Game.UI.Impls.Viewer;
 using _StoryGame.Game.UI.Impls.Views.Gameplay;
@@ -88,6 +89,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
 
+
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<InspectStrategyProvider>(Lifetime.Singleton).AsSelf();
@@ -98,6 +100,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         private void RegisterRooms(IContainerBuilder builder)
         {
             builder.RegisterComponentInHierarchy<RoomsRegistry>().AsImplementedInterfaces();
+            builder.Register<RoomsDispatcher>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private void RegisterDialogSystems(IContainerBuilder builder)

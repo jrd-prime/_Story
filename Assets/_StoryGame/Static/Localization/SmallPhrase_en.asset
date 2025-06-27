@@ -117,6 +117,10 @@ MonoBehaviour:
     m_Localized: Go down to the -1st floor?
     m_Metadata:
       m_Items: []
+  - m_Id: 10484827387002882
+    m_Localized: Exit the habitation module?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

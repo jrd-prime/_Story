@@ -5,6 +5,7 @@ using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Providers.Settings;
+using _StoryGame.Core.Room;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.Room;
@@ -28,7 +29,7 @@ namespace _StoryGame.Game.Room.Abstract
         [SerializeField] private RoomInteractablesVo interactables;
         [SerializeField] private List<ExitDoor> doors;
         [SerializeField] private Transform spawnPoint;
-
+        [SerializeField] private ERoom type;
         [SerializeField] private RoomExitVo[] exit;
 
         public string Id => roomId;
@@ -36,6 +37,8 @@ namespace _StoryGame.Game.Room.Abstract
         public float Progress { get; }
         public RoomLootVo Loot => _roomData.Loot;
         public RoomInteractablesVo Interactables => interactables;
+
+        public ERoom Type => type;
 
         private RoomData _roomData;
         private IPublisher<RoomLootGeneratedMsg> _roomLootGeneratedMsgPub;
@@ -68,7 +71,7 @@ namespace _StoryGame.Game.Room.Abstract
 
         private void Awake()
         {
-            SayMyNameToObjects();
+            // SayMyNameToObjects();
 
             var conditionals =
                 FindObjectsByType<Conditional>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -127,6 +130,18 @@ namespace _StoryGame.Game.Room.Abstract
 
         public Vector3 GetSpawnPosition() => spawnPoint.position;
 
+        public void Hide()
+        {
+            _log.Debug("Hide " + name);
+            gameObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            _log.Debug("Show " + name);
+            gameObject.SetActive(true);
+        }
+
         private void SayMyNameToObjects()
         {
             interactables.core.SetRoom(this);
@@ -144,83 +159,5 @@ namespace _StoryGame.Game.Room.Abstract
     {
         public ERoom toRoom;
         [FormerlySerializedAs("exit")] public ExitDoor exitDoor;
-    }
-
-    public enum ERoom
-    {
-        /// <summary>
-        /// Exit from the bunker
-        /// </summary>
-        SurfaceAccessModule0,
-
-        /// <summary>
-        ///  Main corridor -1 floor
-        /// </summary>
-        CorridorMain1,
-
-        /// <summary>
-        /// Living quarters corridor -1 floor
-        /// </summary>
-        CorridorLivingQuarters1,
-
-        /// <summary>
-        /// Server room -1 floor
-        /// </summary>
-        ServerFacilityModule1,
-
-        /// <summary>
-        /// Hygiene module -1 floor
-        /// </summary>
-        HygieneModule1,
-
-        /// <summary>
-        /// Med module -1 floor
-        /// </summary>
-        MedModule1,
-
-        /// <summary>        
-        /// Relaxation module -1 floor
-        /// </summary>
-        RelaxationModule1,
-
-        /// <summary>
-        /// Nutrition module  -1 floor
-        /// </summary>
-        NutritionModule1,
-
-        /// <summary>
-        /// Habitation module -1 floor
-        /// </summary>
-        HabitationModule1,
-
-        /// <summary>        
-        /// Main corridor -2 floor
-        /// </summary>
-        CorridorMain2,
-
-        /// <summary>
-        /// Waste reclamation module -2 floor
-        /// </summary>
-        WasteReclamationModule2,
-
-        /// <summary>
-        /// Electro mechanical module -2 floor
-        /// </summary>  
-        ElectroMechanicalModule2,
-
-        /// <summary>
-        /// Climate control module -2 floor
-        /// </summary>
-        ClimateControlModule2,
-
-        /// <summary>
-        /// Vault -2 floor
-        /// </summary>
-        Vault2,
-
-        /// <summary>
-        /// Warehouse -2 floor
-        /// </summary>
-        Warehouse2
     }
 }

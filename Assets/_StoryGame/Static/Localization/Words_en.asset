@@ -86,6 +86,10 @@ MonoBehaviour:
     m_Localized: Blanket
     m_Metadata:
       m_Items: []
+  - m_Id: 14594555692122112
+    m_Localized: Habitation Module I
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

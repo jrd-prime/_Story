@@ -6,7 +6,7 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.Interact.Interactables;
 
-namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
+namespace _StoryGame.Game.Loot
 {
     public sealed class LootGenerator
     {

@@ -14,7 +14,8 @@ namespace _StoryGame.Game.Messaging
         private readonly IPublisher<IInputMsg> _inputPublisher;
         private readonly IPublisher<IPlayerAnimatorMsg> _playerAnimatorPublisher;
         private readonly IPublisher<IInteractProcessorMsg> _interactProcessorPublisher;
-        private readonly IPublisher<IHSMMessage> _hsmPublisher;
+        private readonly IPublisher<IHSMMsg> _hsmPublisher;
+        private readonly IPublisher<IRoomsDispatcherMsg> _roomsDispatcherPublisher;
 
         public JPublisher(
             IPublisher<IGameManagerMsg> gameManagerPublisher,
@@ -23,7 +24,8 @@ namespace _StoryGame.Game.Messaging
             IPublisher<IInputMsg> inputPublisher,
             IPublisher<IPlayerAnimatorMsg> playerAnimatorPublisher,
             IPublisher<IInteractProcessorMsg> interactProcessorPublisher,
-            IPublisher<IHSMMessage> hsmPublisher
+            IPublisher<IHSMMsg> hsmPublisher,
+            IPublisher<IRoomsDispatcherMsg> roomsDispatcherPublisher
         )
         {
             _gameManagerPublisher = gameManagerPublisher;
@@ -33,6 +35,7 @@ namespace _StoryGame.Game.Messaging
             _playerAnimatorPublisher = playerAnimatorPublisher;
             _interactProcessorPublisher = interactProcessorPublisher;
             _hsmPublisher = hsmPublisher;
+            _roomsDispatcherPublisher = roomsDispatcherPublisher;
         }
 
         public void ForUIViewer(IUIViewerMsg msg) => _uiViewerPublisher.Publish(msg);
@@ -41,6 +44,7 @@ namespace _StoryGame.Game.Messaging
         public void ForInput(IInputMsg msg) => _inputPublisher.Publish(msg);
         public void ForPlayerAnimator(IPlayerAnimatorMsg msg) => _playerAnimatorPublisher.Publish(msg);
         public void ForInteractProcessor(IInteractProcessorMsg msg) => _interactProcessorPublisher.Publish(msg);
-        public void ForHSM(IHSMMessage msg) => _hsmPublisher.Publish(msg);
+        public void ForHSM(IHSMMsg msg) => _hsmPublisher.Publish(msg);
+        public void ForRoomsDispatcher(IRoomsDispatcherMsg msg) => _roomsDispatcherPublisher.Publish(msg);
     }
 }

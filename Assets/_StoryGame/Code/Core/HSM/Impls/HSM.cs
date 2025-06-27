@@ -25,7 +25,7 @@ namespace _StoryGame.Core.HSM.Impls
         private readonly CompositeDisposable _disposables = new();
         private readonly IJLog _log;
 
-        public HSM(ISubscriber<IHSMMessage> hsmSubscriber, IJLog log)
+        public HSM(ISubscriber<IHSMMsg> hsmSubscriber, IJLog log)
         {
             _log = log;
             InitializeMainStates();
@@ -90,7 +90,7 @@ namespace _StoryGame.Core.HSM.Impls
         private void RegisterState<T>(IState state, EGameStateType stateType) where T : IState =>
             _states[stateType] = state;
 
-        private void HandleMessage(IHSMMessage msg)
+        private void HandleMessage(IHSMMsg msg)
         {
             switch (msg)
             {

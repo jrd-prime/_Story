@@ -169,6 +169,8 @@ namespace _StoryGame.Game.Character.Player.Impls
             _wallet.Add(itemData.Id, amount);
         }
 
+        public void SetPosition(Vector3 value) => _playerView.SetPosition(value);
+
         /// <summary>
         /// Check if energy is negative
         /// </summary>

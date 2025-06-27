@@ -25,5 +25,6 @@ namespace _StoryGame.Core.Character.Player.Interfaces
         void SpendEnergy(int energy);
         void AddNote(PreparedLootVo preparedLootVo);
         void AddItemToWallet(ACurrencyData itemData, int amount);
+        void SetPosition(Vector3 value);
     }
 }

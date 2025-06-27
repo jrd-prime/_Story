@@ -71,9 +71,9 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
         private void OnApplyAction()
         {
-            _usableExit.SetState(EUseState.Used);
+            // _usableExit.SetState(EUseState.Used); // TODO сбрасывать на активации комнат
             _dep.Publisher.ForGameManager(new SpendEnergyMsg(Price));
-            _dep.Publisher.ForGameManager(new ChooseNextRoomRequestMsg());
+            _dep.Publisher.ForGameManager(new TransitionToRoomRequestMsg(_usableExit.TransitionToRoom));
         }
     }
 }
