@@ -3904,7 +3904,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: New Lighting Settings
   serializedVersion: 9
-  m_EnableBakedLightmaps: 0
+  m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
   m_BounceScale: 1
@@ -3912,21 +3912,21 @@ LightingSettings:
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 1
   m_BakeBackend: 2
-  m_LightmapMaxSize: 1024
+  m_LightmapMaxSize: 4096
   m_LightmapSizeFixed: 0
   m_UseMipmapLimits: 1
-  m_BakeResolution: 40
-  m_Padding: 2
-  m_LightmapCompression: 3
-  m_AO: 0
-  m_AOMaxDistance: 1
+  m_BakeResolution: 80
+  m_Padding: 16
+  m_LightmapCompression: 0
+  m_AO: 1
+  m_AOMaxDistance: 0.13
   m_CompAOExponent: 1
-  m_CompAOExponentDirect: 0
+  m_CompAOExponentDirect: 1
   m_ExtractAO: 0
   m_MixedBakeMode: 2
   m_LightmapsBakeMode: 1
   m_FilterMode: 1
-  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightmapParameters: {fileID: 15200, guid: 0000000000000000f000000000000000, type: 0}
   m_ExportTrainingData: 0
   m_EnableWorkerProcessBaking: 1
   m_TrainingDataDestination: TrainingData
@@ -3935,7 +3935,7 @@ LightingSettings:
   m_ForceUpdates: 0
   m_PVRCulling: 1
   m_PVRSampling: 1
-  m_PVRDirectSampleCount: 32
+  m_PVRDirectSampleCount: 64
   m_PVRSampleCount: 512
   m_PVREnvironmentSampleCount: 256
   m_PVREnvironmentReferencePointCount: 2048
@@ -19943,7 +19943,7 @@ Transform:
   m_GameObject: {fileID: 2048250500}
   serializedVersion: 2
   m_LocalRotation: {x: 0.1464466, y: -0.8535535, z: 0.35355338, w: 0.35355338}
-  m_LocalPosition: {x: 17, y: 8, z: 74.5}
+  m_LocalPosition: {x: 13, y: 8, z: 64.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21560,6 +21560,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1410962687}
     m_Modifications:
+    - target: {fileID: 3958309606235420993, guid: efb75510085c0b14db549ac925edd7c3, type: 3}
+      propertyPath: m_LightmapParameters
+      value: 
+      objectReference: {fileID: 15200, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 6194788463576063446, guid: efb75510085c0b14db549ac925edd7c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6
@@ -21750,9 +21754,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 196405740}
     m_Modifications:
+    - target: {fileID: 1233513297930115102, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908442376928325244, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4143024153979281818, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4419265375081807270, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_Name
       value: M1_CorridorLivingQuarters
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419265375081807270, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589228411802824517, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6075635052900186363, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_LocalPosition.x

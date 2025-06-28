@@ -53,7 +53,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _XRMotionVectorsPass: 1
-    - _ao_str: 0
+    - _ao_str: 1
     - _met_str: 0
     - _normalStr: 1
     - _rogh_str: 0
