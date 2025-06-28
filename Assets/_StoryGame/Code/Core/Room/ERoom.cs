@@ -2,6 +2,7 @@
 {
     public enum ERoom
     {
+        NotSet = -1,
         /// <summary>
         /// Exit from the bunker
         /// </summary>

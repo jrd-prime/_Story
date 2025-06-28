@@ -29,15 +29,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _armTex:
-        m_Texture: {fileID: 2800000, guid: e1e7e195d85f44042bba78c763b6548a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _mainTex:
-        m_Texture: {fileID: 2800000, guid: e1e7e195d85f44042bba78c763b6548a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9226eea96437b324cb1184b2c271b2b2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _normalTex:
-        m_Texture: {fileID: 2800000, guid: 8e3272d1c44e15846aefa995fb702792, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6dd9b17878ff3194ab9f1c0254980e41, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _roughTex:
@@ -63,10 +63,10 @@ Material:
     - _XRMotionVectorsPass: 1
     - _aoStr: 2
     - _ao_str: 1
-    - _met_str: 1
+    - _met_str: 0
     - _met_str_1: 1
     - _normalStr: 1
-    - _rogh_str: 1
+    - _rogh_str: 0
     m_Colors:
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

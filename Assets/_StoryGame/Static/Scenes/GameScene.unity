@@ -3915,9 +3915,9 @@ LightingSettings:
   m_LightmapMaxSize: 4096
   m_LightmapSizeFixed: 0
   m_UseMipmapLimits: 1
-  m_BakeResolution: 80
-  m_Padding: 16
-  m_LightmapCompression: 0
+  m_BakeResolution: 40
+  m_Padding: 4
+  m_LightmapCompression: 3
   m_AO: 1
   m_AOMaxDistance: 0.13
   m_CompAOExponent: 1
@@ -13327,8 +13327,8 @@ MonoBehaviour:
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
   m_TileSize: 256
-  m_OverrideVoxelSize: 1
-  m_VoxelSize: 0.05
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 4
   m_NavMeshData: {fileID: 23800000, guid: 4fe4edb78f2c5b94283663b03cfbc7db, type: 2}
   m_BuildHeightMesh: 0
@@ -16829,7 +16829,7 @@ PrefabInstance:
       objectReference: {fileID: 2048250502}
     - target: {fileID: 2236491483808667946, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.5
+      value: 8.7
       objectReference: {fileID: 0}
     - target: {fileID: 2236491483808667946, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16837,7 +16837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2236491483808667946, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 60.800003
+      value: 62.100002
       objectReference: {fileID: 0}
     - target: {fileID: 2236491483808667946, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16870,14 +16870,6 @@ PrefabInstance:
     - target: {fileID: 3223118325343274262, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5345627215419780089, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 2048250502}
-    - target: {fileID: 9001431641652024951, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
-      propertyPath: m_Radius
-      value: 0.23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21560,10 +21552,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1410962687}
     m_Modifications:
-    - target: {fileID: 3958309606235420993, guid: efb75510085c0b14db549ac925edd7c3, type: 3}
-      propertyPath: m_LightmapParameters
-      value: 
-      objectReference: {fileID: 15200, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4157924288239431805, guid: efb75510085c0b14db549ac925edd7c3, type: 3}
+      propertyPath: roomType
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6194788463576063446, guid: efb75510085c0b14db549ac925edd7c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6
@@ -21754,29 +21746,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 196405740}
     m_Modifications:
-    - target: {fileID: 1233513297930115102, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
-      propertyPath: m_Lightmapping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908442376928325244, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
-      propertyPath: m_Lightmapping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4143024153979281818, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
-      propertyPath: m_Lightmapping
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4419265375081807270, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_Name
       value: M1_CorridorLivingQuarters
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419265375081807270, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5589228411802824517, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
-      propertyPath: m_Lightmapping
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6075635052900186363, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21788,7 +21760,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6075635052900186363, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 6075635052900186363, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_LocalRotation.w

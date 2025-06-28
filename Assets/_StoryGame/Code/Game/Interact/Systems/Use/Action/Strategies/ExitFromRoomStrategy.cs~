@@ -41,11 +41,15 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
             var source = new UniTaskCompletionSource<EDialogResult>();
 
-            var localizedName = _dep.LocalizationProvider.Localize(_usableExit.LocalizationKey, ETable.Words);
+            var exitLocalizedName = _dep.LocalizationProvider.Localize(_usableExit.LocalizationKey, ETable.Words);
             var localizedQuestion =
-                _dep.LocalizationProvider.Localize(_usableExit.ExitQuestionLocalizationKey, ETable.SmallPhrase);
+                _dep.LocalizationProvider.Localize(_usableExit.DoorAction.ToString(), ETable.Words);
+            var localizedTransition =
+                _dep.LocalizationProvider.Localize(_usableExit.RoomType.ToString(), ETable.Words);
 
-            IUIViewerMsg msg = new ShowExitRoomWindowMsg(localizedName, localizedQuestion, Price, source);
+            var lo = $"{localizedTransition}: {localizedQuestion}?";
+
+            IUIViewerMsg msg = new ShowExitRoomWindowMsg(exitLocalizedName, lo, Price, source);
 
             return await ProcessExitFromRoom(source, msg);
         }
@@ -71,7 +75,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
         private void OnApplyAction()
         {
-            _usableExit.SetState(EUseState.Used);
+            // _usableExit.SetState(EUseState.Used); // TODO сбрасывать на активации комнат
             _dep.Publisher.ForGameManager(new SpendEnergyMsg(Price));
             _dep.Publisher.ForGameManager(new TransitionToRoomRequestMsg(_usableExit.TransitionToRoom));
         }

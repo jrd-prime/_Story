@@ -165,12 +165,13 @@ namespace _StoryGame.Game.Movement
         private static bool HasNoInput() =>
             !Input.GetMouseButtonDown(0) && Input.touchCount == 0;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsClickOverUI()
         {
             if (!EventSystem.current || !EventSystem.current.IsPointerOverGameObject())
                 return false;
 
+            Debug.LogError(EventSystem.current);
             // Отладочная информация
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {

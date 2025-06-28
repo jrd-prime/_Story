@@ -90,6 +90,98 @@ MonoBehaviour:
     m_Localized: Habitation Module I
     m_Metadata:
       m_Items: []
+  - m_Id: 14967266423537664
+    m_Localized: Wooden Door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185854488576
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185892237312
+    m_Localized: Enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088512
+    m_Localized: Surface Access Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088513
+    m_Localized: Main Corridor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088514
+    m_Localized: Living Quarters Corridor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088515
+    m_Localized: Server Facility Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088516
+    m_Localized: Hygiene Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088517
+    m_Localized: Med Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088518
+    m_Localized: Relaxation Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088519
+    m_Localized: Nutrition Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088520
+    m_Localized: Habitation Module 01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088521
+    m_Localized: Habitation Module 02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088522
+    m_Localized: Habitation Module 03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088523
+    m_Localized: Habitation Module 04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088524
+    m_Localized: Habitation Module 05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088525
+    m_Localized: Habitation Module 06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088526
+    m_Localized: Main Corridor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088527
+    m_Localized: Waste Reclamation Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088528
+    m_Localized: Electro-Mechanical Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088529
+    m_Localized: Climate Control Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088530
+    m_Localized: The Vault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088531
+    m_Localized: Warehouse
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

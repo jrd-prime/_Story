@@ -296,6 +296,7 @@
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ANoteData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Room\RoomData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Room\RoomsDispatcher.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Core\Room\ERoom.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IJPublisher.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Uids\UidGenerator.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interact\Enums\EConditionalState.cs" />

@@ -87,6 +87,102 @@ MonoBehaviour:
     m_Key: entrance_habMod1
     m_Metadata:
       m_Items: []
+  - m_Id: 14967266423537664
+    m_Key: door_wooden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185854488576
+    m_Key: ExitQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185892237312
+    m_Key: EnterQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14974844423569408
+    m_Key: New Entry 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088512
+    m_Key: SurfaceAccessModule0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088513
+    m_Key: CorridorMain1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088514
+    m_Key: CorridorLivingQuarters1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088515
+    m_Key: ServerFacilityModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088516
+    m_Key: HygieneModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088517
+    m_Key: MedModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088518
+    m_Key: RelaxationModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088519
+    m_Key: NutritionModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088520
+    m_Key: HabitationModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088521
+    m_Key: HabitationModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088522
+    m_Key: HabitationModule3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088523
+    m_Key: HabitationModule4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088524
+    m_Key: HabitationModule5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088525
+    m_Key: HabitationModule6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088526
+    m_Key: CorridorMain2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088527
+    m_Key: WasteReclamationModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088528
+    m_Key: ElectroMechanicalModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088529
+    m_Key: ClimateControlModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088530
+    m_Key: Vault2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088531
+    m_Key: Warehouse2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

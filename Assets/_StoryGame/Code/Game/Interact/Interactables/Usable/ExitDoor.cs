@@ -4,26 +4,39 @@ using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Room;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Room.Abstract;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _StoryGame.Game.Interact.Interactables.Usable
 {
     public sealed class ExitDoor : AUsable, IUsableExit
     {
-        [SerializeField] private ERoom transitionToRoom;
+        [SerializeField] private ERoom roomType = ERoom.NotSet;
+        [SerializeField] private ERoom transitionToRoom = ERoom.NotSet;
         [SerializeField] private EDoorRotation doorRotation;
+
+        [SerializeField] private EDoorAction doorAction;
+
         public string ExitQuestionLocalizationKey => LocalizationKey + LocalizationConst.ExitQuestionPostfix;
-        public ERoom TransitionToRoom => transitionToRoom;
         
+        public ERoom RoomType => roomType;
+        public ERoom TransitionToRoom => transitionToRoom;
+        public EDoorAction DoorAction => doorAction;
+
 
         protected override void OnStart()
         {
             var collider = GetComponent<Collider>() ?? throw new Exception($"Door {name} has no collider");
 
             CheckDoorLayer();
+            
+            if (roomType == ERoom.NotSet || roomType == transitionToRoom)
+                throw new Exception($"Door {name} has invalid room type. Not set or equal to transition to room.");
+            
+            if (doorAction == EDoorAction.NotSet)
+                throw new Exception("DoorAction not set. " + name);
+
             SetUseAction(EUseAction.RoomExit);
         }
 
@@ -57,6 +70,14 @@ namespace _StoryGame.Game.Interact.Interactables.Usable
             //     new Vector3(rotation.eulerAngles.x, 0, rotation.eulerAngles.z), 2,
             //     RotateMode.Fast);
         }
+    }
+
+
+    public enum EDoorAction
+    {
+        NotSet = -1,
+        EnterQ,
+        ExitQ
     }
 
     public enum EDoorRotation

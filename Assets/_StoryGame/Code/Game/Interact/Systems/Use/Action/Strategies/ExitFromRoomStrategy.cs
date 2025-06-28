@@ -5,6 +5,7 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Interactables.Usable;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
@@ -41,11 +42,22 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
             var source = new UniTaskCompletionSource<EDialogResult>();
 
-            var localizedName = _dep.LocalizationProvider.Localize(_usableExit.LocalizationKey, ETable.Words);
+            var exitLocalizedName = _dep.LocalizationProvider.Localize(_usableExit.LocalizationKey, ETable.Words);
             var localizedQuestion =
-                _dep.LocalizationProvider.Localize(_usableExit.ExitQuestionLocalizationKey, ETable.SmallPhrase);
+                _dep.LocalizationProvider.Localize(_usableExit.DoorAction.ToString(), ETable.Words);
 
-            IUIViewerMsg msg = new ShowExitRoomWindowMsg(localizedName, localizedQuestion, Price, source);
+            var locTransKey = _usableExit.DoorAction switch
+            {
+                EDoorAction.EnterQ => _dep.LocalizationProvider.Localize(_usableExit.TransitionToRoom.ToString(),
+                    ETable.Words),
+                EDoorAction.ExitQ => _dep.LocalizationProvider.Localize(_usableExit.RoomType.ToString(), ETable.Words),
+                EDoorAction.NotSet => throw new ArgumentException($"{_usableExit.Name} DoorAction not set."),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            var lo = $"{locTransKey}: {localizedQuestion}?";
+
+            IUIViewerMsg msg = new ShowExitRoomWindowMsg(exitLocalizedName, lo, Price, source);
 
             return await ProcessExitFromRoom(source, msg);
         }

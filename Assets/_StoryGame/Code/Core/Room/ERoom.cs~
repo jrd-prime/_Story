@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Game.Room.Abstract
+﻿namespace _StoryGame.Core.Room
 {
     public enum ERoom
     {

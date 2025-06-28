@@ -48,7 +48,7 @@ MeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
@@ -211,7 +211,6 @@ GameObject:
   - component: {fileID: 4878256673187372684}
   - component: {fileID: 3867845503158998969}
   - component: {fileID: -944788757533338434}
-  - component: {fileID: 5345627215419780089}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -256,7 +255,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.23
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -317,27 +316,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5345627215419780089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223118325343274262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f948f32b1c413dbb4b364fae4a6259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 2236491483808667946}
-  mainCamera: {fileID: 0}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 1073741824
-  maxCheckDistance: 15
-  wallWidthMargin: 2
-  extraRays: 2
-  raySpread: 0.5
 --- !u!1 &8194621038657979148
 GameObject:
   m_ObjectHideFlags: 0
