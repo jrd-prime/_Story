@@ -19,7 +19,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     /// </summary>
     public sealed class UnlockStrategy : IConditionSystemStrategy
     {
-        public string StrategyName => nameof(UnlockStrategy);
+        public string Name => nameof(UnlockStrategy);
         private readonly InteractSystemDepFlyweight _dep;
         private readonly DialogResultHandler _dialogResultHandler;
         private PreparedObjLootData inspdata;

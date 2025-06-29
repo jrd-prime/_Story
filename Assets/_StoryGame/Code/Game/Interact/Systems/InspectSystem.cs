@@ -17,7 +17,7 @@ namespace _StoryGame.Game.Interact.Systems
         {
             var strategy = _strategyProvider.GetStrategy(Interactable.InspectState);
 
-            Dep.Publisher.ForUIViewer(new CurrentOperationMsg(strategy.StrategyName));
+            Dep.Publisher.ForUIViewer(new CurrentOperationMsg(strategy.Name));
 
             var result = await strategy.ExecuteAsync(Interactable);
 

@@ -7,7 +7,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Strategies
 {
     public class AlreadyUsedStrategy : IUseSystemStrategy
     {
-        public string StrategyName => nameof(AlreadyUsedStrategy);
+        public string Name => nameof(AlreadyUsedStrategy);
 
         private readonly InteractSystemDepFlyweight _dep;
 

@@ -19,7 +19,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
     /// </summary>
     public sealed class AlreadyInspectedStrategy : IInspectSystemStrategy
     {
-        public string StrategyName => nameof(AlreadyInspectedStrategy);
+        public string Name => nameof(AlreadyInspectedStrategy);
 
         private readonly InteractSystemDepFlyweight _dep;
         private IInspectable _inspectable;

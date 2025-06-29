@@ -1,0 +1,26 @@
+﻿using System;
+using _StoryGame.Core.Room;
+using _StoryGame.Data.Const;
+using _StoryGame.Data.SO.Abstract;
+using UnityEngine;
+
+namespace _StoryGame.Game.Interact.Interactables.Usable
+{
+    [CreateAssetMenu(
+        fileName = "DoorData",
+        menuName = SOPathConst.Interactables + nameof(DoorData),
+        order = 0
+    )]
+    public sealed class DoorData : ASettingsBase
+    {
+        public ERoom roomType = ERoom.NotSet;
+        public ERoom transitionToRoom = ERoom.NotSet;
+        public EDoorRotation doorRotation;
+        public EDoorAction doorAction;
+
+        private void OnValidate()
+        {
+            
+        }
+    }
+}

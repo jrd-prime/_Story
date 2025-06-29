@@ -7,7 +7,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 {
     public class PickUpStrategy : IUseActionStrategy
     {
-        public string StrategyName => nameof(PickUpStrategy);
+        public string Name => nameof(PickUpStrategy);
 
         public PickUpStrategy(InteractSystemDepFlyweight systemDep)
         {

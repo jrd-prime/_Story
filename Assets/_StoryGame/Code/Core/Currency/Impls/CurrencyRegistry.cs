@@ -47,7 +47,7 @@ namespace _StoryGame.Core.Currency.Impls
 
             foreach (var currency in currenciesData.GetAll())
             {
-                _log.Warn("Load icon for currency: " + currency.IconId + ". Currency id: " + currency.Id);
+                // _log.Warn("Load icon for currency: " + currency.IconId + ". Currency id: " + currency.Id);
 
                 if (currency is ThoughtData)
                     continue;

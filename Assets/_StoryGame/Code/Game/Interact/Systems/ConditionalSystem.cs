@@ -21,7 +21,7 @@ namespace _StoryGame.Game.Interact.Systems
         protected override async UniTask<bool> OnInteractAsync()
         {
             var strategy = _strategyProvider.GetStrategy(Interactable.ConditionalState);
-            Dep.Publisher.ForUIViewer(new CurrentOperationMsg(strategy.StrategyName));
+            Dep.Publisher.ForUIViewer(new CurrentOperationMsg(strategy.Name));
             return await strategy.ExecuteAsync(Interactable);
         }
     }

@@ -67,8 +67,8 @@ MonoBehaviour:
     m_Key: key_leave_room_question
     m_Metadata:
       m_Items: []
-  - m_Id: 10484827366031360
-    m_Key: New Entry
+  - m_Id: 11235941048844288
+    m_Key: New Entry 1
     m_Metadata:
       m_Items: []
   - m_Id: 7255776488783872
@@ -79,8 +79,8 @@ MonoBehaviour:
     m_Key: td_woodenbox_locked_text
     m_Metadata:
       m_Items: []
-  - m_Id: 10484827387002880
-    m_Key: New Entry 2
+  - m_Id: 11235941115953152
+    m_Key: New Entry 3
     m_Metadata:
       m_Items: []
   - m_Id: 8256410704871426
@@ -103,8 +103,8 @@ MonoBehaviour:
     m_Key: cond_sys_looted_05
     m_Metadata:
       m_Items: []
-  - m_Id: 10484827387002881
-    m_Key: New Entry 4
+  - m_Id: 11235941115953153
+    m_Key: New Entry 5
     m_Metadata:
       m_Items: []
   - m_Id: 8341090586263553
@@ -117,6 +117,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 10484827387002882
     m_Key: entrance_habMod1_ExitQuestion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11235941120147456
+    m_Key: New Entry 6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11235941120147457
+    m_Key: New Entry 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11235941120147458
+    m_Key: door_habitation_module_closed
     m_Metadata:
       m_Items: []
   m_Metadata:

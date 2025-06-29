@@ -12,7 +12,7 @@ using UnityEngine;
 namespace _StoryGame.Game.Interact.Interactables
 {
     /// <summary>
-    /// Объект, для которого необходимо выполнение каких-либо условий чтобы он стал активен.
+    /// Объект, для которого необходимо выполнение каких-либо УСЛОВИЙ чтобы он стал активен. (вклю)
     /// После выполнения условий он "меняет" поведение
     /// </summary>
     public sealed class Conditional : AInteractable<ConditionalSystem>, IConditional

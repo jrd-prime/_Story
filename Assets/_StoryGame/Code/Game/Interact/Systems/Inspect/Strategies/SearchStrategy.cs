@@ -17,7 +17,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
     public sealed class SearchStrategy : IInspectSystemStrategy
     {
         private const float SearchDuration = 2f;
-        public string StrategyName => nameof(SearchStrategy);
+        public string Name => nameof(SearchStrategy);
 
         private readonly InteractSystemDepFlyweight _dep;
         private IInspectable _inspectable;

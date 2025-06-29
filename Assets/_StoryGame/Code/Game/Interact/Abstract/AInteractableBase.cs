@@ -21,7 +21,6 @@ namespace _StoryGame.Game.Interact.Abstract
     {
         [SerializeField] private string id;
         [SerializeField] private string objName = "Not set";
-        [SerializeField] private string interactionTipNameId;
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform _entrance;
         public abstract EInteractableType InteractableType { get; }
@@ -29,7 +28,6 @@ namespace _StoryGame.Game.Interact.Abstract
         public IRoom Room { get; private set; }
 
         public bool CanInteract { get; set; } = true;
-        public string InteractionTipNameId => interactionTipNameId;
         public string LocalizationKey => localizationKey;
         public string Name => objName;
         public string Id => id;

@@ -11,7 +11,6 @@ namespace _StoryGame.Core.Interact.Interactables
         string Id { get; }
         EInteractableType InteractableType { get; }
         bool CanInteract { get; set; }
-        string InteractionTipNameId { get; }
         string LocalizationKey { get; }
         string Name { get; }
         UniTask InteractAsync(ICharacter character);

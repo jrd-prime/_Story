@@ -18,8 +18,10 @@ namespace _StoryGame.Game.Interact.Interactables.Usable
 
         [SerializeField] private EDoorAction doorAction;
 
+        [SerializeField] private DoorData doorData;
+
         public string ExitQuestionLocalizationKey => LocalizationKey + LocalizationConst.ExitQuestionPostfix;
-        
+
         public ERoom RoomType => roomType;
         public ERoom TransitionToRoom => transitionToRoom;
         public EDoorAction DoorAction => doorAction;
@@ -30,10 +32,10 @@ namespace _StoryGame.Game.Interact.Interactables.Usable
             var collider = GetComponent<Collider>() ?? throw new Exception($"Door {name} has no collider");
 
             CheckDoorLayer();
-            
+
             if (roomType == ERoom.NotSet || roomType == transitionToRoom)
                 throw new Exception($"Door {name} has invalid room type. Not set or equal to transition to room.");
-            
+
             if (doorAction == EDoorAction.NotSet)
                 throw new Exception("DoorAction not set. " + name);
 

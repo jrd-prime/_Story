@@ -2,6 +2,6 @@
 {
     public interface IStrategy
     {
-        string StrategyName { get; }
+        string Name { get; }
     }
 }

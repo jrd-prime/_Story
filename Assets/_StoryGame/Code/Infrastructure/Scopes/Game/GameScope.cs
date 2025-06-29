@@ -5,6 +5,7 @@ using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Interactables;
 using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Interact.Systems.Inspect;
@@ -89,11 +90,14 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
 
+            builder.Register<ConditionChecker>(Lifetime.Singleton).AsSelf();
+            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsSelf();
 
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<InspectStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<UseStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<UnlockableStrategyProvider>(Lifetime.Singleton).AsSelf();
         }
 
 
@@ -113,6 +117,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<UseSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<UnlockSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()

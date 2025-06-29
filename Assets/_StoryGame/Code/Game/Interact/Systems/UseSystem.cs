@@ -19,7 +19,7 @@ namespace _StoryGame.Game.Interact.Systems
         protected override async UniTask<bool> OnInteractAsync()
         {
             var strategy = _strategyProvider.GetStrategy(Interactable.UseState);
-            Dep.Publisher.ForUIViewer(new CurrentOperationMsg(strategy.StrategyName));
+            Dep.Publisher.ForUIViewer(new CurrentOperationMsg(strategy.Name));
             var result = await strategy.ExecuteAsync(Interactable);
 
             return result;

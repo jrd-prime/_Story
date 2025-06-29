@@ -74,8 +74,6 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
 
         protected override void Subscribe()
         {
-            Debug.Log("HUDLayerHandler.Subscribe");
-
             _tempWallet.OnCurrencyChanged
                 .Subscribe(_inventoryHUDController.OnCurrencyChanged)
                 .AddTo(Disposables);

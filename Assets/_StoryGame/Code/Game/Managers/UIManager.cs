@@ -55,8 +55,6 @@ namespace _StoryGame.Game.Managers
 
         private void Start()
         {
-            _log.Debug("UIManager.Start");
-            Debug.Log("UIManager publish InitializeViewerMsg");
             _publisher.ForUIViewer(new InitializeViewerMsg(_viewsCache));
         }
 

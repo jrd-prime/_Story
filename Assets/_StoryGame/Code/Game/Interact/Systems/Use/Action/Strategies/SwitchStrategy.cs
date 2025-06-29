@@ -7,7 +7,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 {
     public class SwitchStrategy : IUseActionStrategy
     {
-        public string StrategyName => nameof(SwitchStrategy);
+        public string Name => nameof(SwitchStrategy);
 
         public SwitchStrategy(InteractSystemDepFlyweight systemDep)
         {

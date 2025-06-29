@@ -31,7 +31,6 @@ namespace _StoryGame.Game.UI.Abstract
 
         private void Awake()
         {
-            Debug.Log("view awake " + name);
             Template = viewBaseDocument.Instantiate();
             Template.SetFullScreen();
             Template.pickingMode = PickingMode.Ignore;

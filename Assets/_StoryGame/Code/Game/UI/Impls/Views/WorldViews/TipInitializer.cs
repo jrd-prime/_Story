@@ -150,6 +150,7 @@ namespace _StoryGame.Game.UI.Impls.Views.WorldViews
             _meshRenderer.motionVectorGenerationMode = MotionVectorGenerationMode.ForceNoMotion;
             _meshRenderer.lightProbeUsage = LightProbeUsage.Off;
             _meshRenderer.reflectionProbeUsage = ReflectionProbeUsage.Off;
+            _meshRenderer.renderingLayerMask = 1 << 21;
         }
 
         private static Mesh GetQuadMesh()

@@ -7,6 +7,7 @@ using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
+using UnityEngine;
 
 namespace _StoryGame.Game.Interact
 {
@@ -33,7 +34,7 @@ namespace _StoryGame.Game.Interact
             _player = player;
             _log = log;
             _localizationProvider = localizationProvider;
-            
+
             movementProcessorMsgSub
                 .Subscribe(
                     msg => ProcessInteracting(msg as InteractRequestMsg).Forget(),

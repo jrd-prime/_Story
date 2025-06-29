@@ -9,7 +9,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Strategies
 {
     public class NotUsedStrategy : IUseSystemStrategy
     {
-        public string StrategyName => nameof(NotUsedStrategy);
+        public string Name => nameof(NotUsedStrategy);
 
         private IUsable _usable;
 
@@ -25,7 +25,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Strategies
 
         public async UniTask<bool> ExecuteAsync(IUsable interactable)
         {
-            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(StrategyName));
+            _dep.Publisher.ForUIViewer(new CurrentOperationMsg(Name));
 
             _usable = interactable;
 

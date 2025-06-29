@@ -13,7 +13,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     /// </summary>
     public sealed class AlreadyLootedStrategy : IConditionSystemStrategy
     {
-        public string StrategyName => nameof(AlreadyLootedStrategy);
+        public string Name => nameof(AlreadyLootedStrategy);
         private readonly InteractSystemDepFlyweight _dep;
 
         public AlreadyLootedStrategy(InteractSystemDepFlyweight dep) => _dep = dep;

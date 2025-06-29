@@ -121,6 +121,11 @@ MonoBehaviour:
     m_Localized: Exit the habitation module?
     m_Metadata:
       m_Items: []
+  - m_Id: 11235941120147458
+    m_Localized: "This habitation module is locked \u2014 fingerprint scan required.
+      No way I\u2019m getting inside."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

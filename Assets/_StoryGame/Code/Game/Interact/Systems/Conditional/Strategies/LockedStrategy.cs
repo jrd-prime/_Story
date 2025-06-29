@@ -12,7 +12,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
     /// </summary>
     public sealed class LockedStrategy : IConditionSystemStrategy
     {
-        public string StrategyName => nameof(LockedStrategy);
+        public string Name => nameof(LockedStrategy);
         private readonly InteractSystemDepFlyweight _dep;
         public LockedStrategy(InteractSystemDepFlyweight dep) => _dep = dep;
 

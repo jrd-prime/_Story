@@ -86,41 +86,41 @@ namespace _StoryGame.Game.Character.Player.Impls
             return interactable != null;
         }
 
-        private (string, string) GetInteractionTip(IInteractable interactable)
-        {
-            if (interactable == null)
-            {
-                Debug.LogWarning("Interact is null when getting interaction tip.", this);
-                return (string.Empty, string.Empty);
-            }
-
-            var note = string.Empty;
-            var action = string.Empty;
-            try
-            {
-                if (_localizationProvider == null)
-                    throw new NullReferenceException("Localization provider is null.");
-
-                var key = interactable.LocalizationKey;
-                var tip = interactable.InteractionTipNameId;
-
-                note = string.IsNullOrEmpty(key)
-                    ? "Not set"
-                    : _localizationProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
-
-                action = string.IsNullOrEmpty(tip)
-                    ? "Not set"
-                    : _localizationProvider.Localize(interactable.InteractionTipNameId, ETable.Words,
-                        ETextTransform.Upper);
-
-                return (note, action);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Failed to get interaction tip: {ex.Message}", this);
-                return (note, action);
-            }
-        }
+        // private (string, string) GetInteractionTip(IInteractable interactable)
+        // {
+        //     if (interactable == null)
+        //     {
+        //         Debug.LogWarning("Interact is null when getting interaction tip.", this);
+        //         return (string.Empty, string.Empty);
+        //     }
+        //
+        //     var note = string.Empty;
+        //     var action = string.Empty;
+        //     try
+        //     {
+        //         if (_localizationProvider == null)
+        //             throw new NullReferenceException("Localization provider is null.");
+        //
+        //         var key = interactable.LocalizationKey;
+        //         var tip = interactable.InteractionTipNameId;
+        //
+        //         note = string.IsNullOrEmpty(key)
+        //             ? "Not set"
+        //             : _localizationProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
+        //
+        //         action = string.IsNullOrEmpty(tip)
+        //             ? "Not set"
+        //             : _localizationProvider.Localize(interactable.InteractionTipNameId, ETable.Words,
+        //                 ETextTransform.Upper);
+        //
+        //         return (note, action);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Debug.LogError($"Failed to get interaction tip: {ex.Message}", this);
+        //         return (note, action);
+        //     }
+        // }
 
         #region Conditions
 

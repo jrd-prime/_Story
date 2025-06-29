@@ -15,7 +15,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 {
     public class ExitFromRoomStrategy : IUseActionStrategy
     {
-        public string StrategyName => nameof(ExitFromRoomStrategy);
+        public string Name => nameof(ExitFromRoomStrategy);
 
         private const int Price = 2;
         private IUsableExit _usableExit;

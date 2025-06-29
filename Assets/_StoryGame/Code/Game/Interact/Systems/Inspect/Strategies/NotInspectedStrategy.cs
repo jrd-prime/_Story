@@ -13,7 +13,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
 {
     public sealed class NotInspectedStrategy : IInspectSystemStrategy
     {
-        public string StrategyName => nameof(NotInspectedStrategy);
+        public string Name => nameof(NotInspectedStrategy);
 
         private const float InspectDuration = 2f;
         private readonly InteractSystemDepFlyweight _dep;
