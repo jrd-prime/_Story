@@ -18,6 +18,7 @@ using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Game.Managers.Room.Messages;
+using _StoryGame.Game.Room.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -50,7 +51,7 @@ namespace _StoryGame.Game.Managers.Game
         private readonly CompositeDisposable _disposables = new();
         private ISubscriber<IGameManagerMsg> _gameManagerMsgSub;
         private IJPublisher _publisher;
-        private ILocalizationProvider _localizationProvider;
+        private IL10nProvider _il10NProvider;
 
         [Inject]
         private void Construct(IObjectResolver resolver)
@@ -65,7 +66,7 @@ namespace _StoryGame.Game.Managers.Game
             _appStarter = resolver.Resolve<AppStartHandler>();
             _walletService = resolver.Resolve<IWalletService>();
             _gameManagerMsgSub = resolver.Resolve<ISubscriber<IGameManagerMsg>>();
-            _localizationProvider = resolver.Resolve<ILocalizationProvider>(); //TODO not here
+            _il10NProvider = resolver.Resolve<IL10nProvider>(); //TODO not here
         }
 
         public void Initialize()
@@ -96,7 +97,7 @@ namespace _StoryGame.Game.Managers.Game
 
             _gameManagerMsgSub.Subscribe(
                 OnTransitionToRoomRequestMsg,
-                msg => msg is TransitionToRoomRequestMsg
+                msg => msg is GoToRoomRequestMsg
             );
         }
 
@@ -117,8 +118,8 @@ namespace _StoryGame.Game.Managers.Game
         private void OnTransitionToRoomRequestMsg(IGameManagerMsg obj)
         {
             Debug.Log($"OnMessage: {obj.GetType().Name}");
-            var msg = obj as TransitionToRoomRequestMsg ?? throw new ArgumentNullException(nameof(obj));
-            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(msg.Room));
+            var msg = obj as GoToRoomRequestMsg ?? throw new ArgumentNullException(nameof(obj));
+            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(msg.ToExit, msg.FromRoom, msg.ToRoom));
         }
 
         private void OnSpendEnergyMsg(IGameManagerMsg message)
@@ -146,22 +147,23 @@ namespace _StoryGame.Game.Managers.Game
                     _player.AddEnergy(preparedLootVo.Currency.Amount);
                     break;
                 case ECurrencyType.CoreItem:
-                    TempWallet.Add(preparedLootVo.Currency.Id, preparedLootVo.Currency.Amount);
+                    // TempWallet.Add(preparedLootVo.Currency.Id, preparedLootVo.Currency.Amount);
+                    _player.Wallet.Add(preparedLootVo.Currency.Id, preparedLootVo.Currency.Amount);
                     break;
                 case ECurrencyType.Note:
                     _player.AddNote(preparedLootVo);
-                    var noteTitle = _localizationProvider.Localize(preparedLootVo.Currency.LocalizationKey,
+                    var noteTitle = _il10NProvider.Localize(preparedLootVo.Currency.LocalizationKey,
                         ETable.SimpleNote,
                         ETextTransform.Upper);
-                    var noteText = _localizationProvider.Localize(
+                    var noteText = _il10NProvider.Localize(
                         (preparedLootVo.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.SimpleNote);
                     _publisher.ForUIViewer(new ShowNewNoteMsg(preparedLootVo, noteTitle, noteText));
                     break;
                 case ECurrencyType.CoreNote:
                     _player.AddNote(preparedLootVo);
-                    var title = _localizationProvider.Localize(preparedLootVo.Currency.LocalizationKey, ETable.CoreNote,
+                    var title = _il10NProvider.Localize(preparedLootVo.Currency.LocalizationKey, ETable.CoreNote,
                         ETextTransform.Upper);
-                    var text = _localizationProvider.Localize(
+                    var text = _il10NProvider.Localize(
                         (preparedLootVo.Currency as ANoteData)?.GetTextLocalizationKey(), ETable.CoreNote);
                     _publisher.ForUIViewer(new ShowNewNoteMsg(preparedLootVo, title, text));
                     break;
@@ -182,7 +184,8 @@ namespace _StoryGame.Game.Managers.Game
         {
             _log.Info("App started!");
             _gameService.StartHSM();
-            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(ERoom.HabitationModule1));
+            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B1SurfaceAccess, ERoom.NotSet,
+                ERoom.SurfaceAccessModuleB1));
         }
 
 

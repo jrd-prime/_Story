@@ -1,10 +1,13 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
+using _StoryGame.Core.WalletNew.Messages;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
@@ -38,25 +41,30 @@ namespace _StoryGame.Game.Interact.Abstract
         private readonly ReactiveCommand _command = new();
         private readonly CompositeDisposable _disposables = new();
         private IInteractable _interactableImplementation;
-        private ILocalizationProvider _localizationProvider;
+        private IL10nProvider _il10NProvider;
 
         protected IObjectResolver Resolver;
 
         // protected InteractablesTipUI InteractablesTipUI;
         private ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
+        protected ISubscriber<ItemAmountChangedMsg> ItemLootedMsgSub;
+        protected IJLog _log;
 
         [Inject]
         private void Construct(
             IObjectResolver resolver,
             AppStartHandler appStartHandler,
-            ILocalizationProvider localizationProvider,
+            IL10nProvider il10NProvider,
             IPublisher<IUIViewerMsg> uiViewerMessagePublisher,
-            ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub)
+            ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub,
+            ISubscriber<ItemAmountChangedMsg> itemLootedMsgSub)
         {
             Resolver = resolver;
+            _log = resolver.Resolve<IJLog>();
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
-            _localizationProvider = localizationProvider;
+            _il10NProvider = il10NProvider;
             _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
+            ItemLootedMsgSub = itemLootedMsgSub;
 
             appStartHandler.IsAppStarted
                 .Subscribe(OnAppStarted)

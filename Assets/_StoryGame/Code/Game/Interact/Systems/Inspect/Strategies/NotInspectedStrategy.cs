@@ -59,9 +59,10 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             return true;
         }
 
-        private void OnCloseAction()
+        private async void OnCloseAction()
         {
             _inspectable.SetInspectState(EInspectState.Inspected);
+            await UniTask.Yield();
             _dep.Publisher.ForInteractProcessor(new InteractRequestMsg(_inspectable));
         }
     }

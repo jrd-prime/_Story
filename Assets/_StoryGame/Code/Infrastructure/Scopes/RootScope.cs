@@ -44,7 +44,7 @@ namespace _StoryGame.Infrastructure.Scopes
 
             builder.Register<SettingsProvider>(Lifetime.Singleton).As<ISettingsProvider>();
             builder.Register<AssetProvider>(Lifetime.Singleton).As<IAssetProvider>();
-            builder.Register<LocalizationProvider>(Lifetime.Singleton).As<ILocalizationProvider>();
+            builder.Register<L10NProvider>(Lifetime.Singleton).As<IL10nProvider>();
             builder.Register<CurrencyRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<FirstSceneProvider>(Lifetime.Singleton);
 

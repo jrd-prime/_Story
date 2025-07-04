@@ -17,7 +17,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect
         public InspectStrategyProvider(InteractSystemDepFlyweight systemDep)
         {
             _strategies.Add(EInspectState.NotInspected, new NotInspectedStrategy(systemDep));
-            _strategies.Add(EInspectState.Inspected, new AlreadyInspectedStrategy(systemDep));
+            _strategies.Add(EInspectState.Inspected, new InspectedStrategy(systemDep));
             _strategies.Add(EInspectState.Searched, new SearchStrategy(systemDep));
         }
 

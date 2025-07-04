@@ -20,7 +20,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
         public UniTask<bool> ExecuteAsync(IConditional interactable)
         {
             var lockedThoughtKey = interactable.LockedStateThought.LocalizationKey;
-            var lockedThought = _dep.LocalizationProvider.Localize(lockedThoughtKey, ETable.SmallPhrase);
+            var lockedThought = _dep.L10n.Localize(lockedThoughtKey, ETable.SmallPhrase);
 
             var thought = new ThoughtDataVo(lockedThought);
             _dep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));

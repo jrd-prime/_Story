@@ -6,6 +6,7 @@ using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Interact.Systems.Inspect;

@@ -20,7 +20,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
 
         public UniTask<bool> ExecuteAsync(IConditional interactable)
         {
-            var lootedThought = _dep.LocalizationProvider.Localize(
+            var lootedThought = _dep.L10n.Localize(
                 _dep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.CondLooted),
                 ETable.SmallPhrase);
 

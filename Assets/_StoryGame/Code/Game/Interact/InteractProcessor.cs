@@ -22,18 +22,18 @@ namespace _StoryGame.Game.Interact
 
         private readonly ReactiveProperty<string> _currentInteractable = new(DefaultInteractableValue);
         private readonly CompositeDisposable _disposables = new();
-        private readonly ILocalizationProvider _localizationProvider;
+        private readonly IL10nProvider _il10NProvider;
 
         public InteractProcessor(
             IPlayer player,
             IJLog log,
-            ILocalizationProvider localizationProvider,
+            IL10nProvider il10NProvider,
             ISubscriber<IInteractProcessorMsg> movementProcessorMsgSub
         )
         {
             _player = player;
             _log = log;
-            _localizationProvider = localizationProvider;
+            _il10NProvider = il10NProvider;
 
             movementProcessorMsgSub
                 .Subscribe(
@@ -55,10 +55,10 @@ namespace _StoryGame.Game.Interact
                 var interactable = message.Interactable;
 
                 var localizedText =
-                    _localizationProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
+                    _il10NProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
                 _currentInteractable.Value = localizedText ?? DefaultInteractableValue;
 
-                _log.Debug($"Interact Entrance Reached: {interactable}");
+                _log.Debug($"Interact Entrance Reached: {interactable.Name}");
 
                 if (!interactable.CanInteract)
                 {
@@ -68,7 +68,7 @@ namespace _StoryGame.Game.Interact
 
                 _player.OnStartInteract();
 
-                await interactable.InteractAsync(_player).SuppressCancellationThrow();
+                await interactable.InteractAsync(_player);
 
                 _player.OnEndInteract();
             }

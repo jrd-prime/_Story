@@ -1,4 +1,5 @@
 ﻿using _StoryGame.Data.Room;
+using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Room.Abstract;
 using UnityEngine;
 
@@ -12,9 +13,11 @@ namespace _StoryGame.Core.Room.Interfaces
         RoomLootVo Loot { get; }
         RoomInteractablesVo Interactables { get; }
         bool UpdateStateForConditionalObjects();
-        Vector3 GetSpawnPosition();
+        Vector3 GetRoomDefSpawnPosition();
         void Hide();
         void Show();
         ERoom Type { get; }
+        
+        UnlockableDoor GetExitPointFor(EExit type);
     }
 }

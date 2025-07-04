@@ -1,5 +1,13 @@
-﻿using _StoryGame.Core.Interact;
-using _StoryGame.Game.Interact.Interactables;
+﻿using System;
+using System.Text;
+using _StoryGame.Core.Interact;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI;
+using _StoryGame.Core.UI.Interfaces;
+using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Interact.Interactables.Use;
+using _StoryGame.Game.Managers.Game.Messages;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
@@ -7,15 +15,94 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
 {
     public sealed class UnlockedDoorStrategy : IUnlockSystemStrategy
     {
-        public UnlockedDoorStrategy(InteractSystemDepFlyweight dep)
+        public string Name => nameof(LockedDoorStrategy);
+
+        private UnlockableDoor _door;
+
+        private readonly InteractSystemDepFlyweight _dep;
+        private readonly DialogResultHandler _dialogResultHandler;
+        private readonly ConditionChecker _conditionChecker;
+
+        public UnlockedDoorStrategy(InteractSystemDepFlyweight dep, ConditionChecker conditionChecker)
+        {
+            _dep = dep;
+            _conditionChecker = conditionChecker;
+            _dialogResultHandler = new DialogResultHandler(_dep.Log);
+
+            _dialogResultHandler.AddCallback(EDialogResult.Apply, OnApplyAction);
+            _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
+        }
+
+        public async UniTask<bool> ExecuteAsync(IUnlockable interactable)
+        {
+            _door = interactable as UnlockableDoor ?? throw new ArgumentException("Interactable is not a door");
+
+            var source = new UniTaskCompletionSource<EDialogResult>();
+
+            var exitLocalizedName = _dep.L10n.Localize(_door.LocalizationKey, ETable.Words);
+            var localizedDoorAction = _dep.L10n.Localize(_door.DoorData.doorAction.ToString(), ETable.Words);
+
+            var localizedRoomName = _door.DoorData.doorAction switch
+            {
+                EDoorAction.EnterQ => _dep.L10n.Localize(_door.DoorData.toRoom.ToString(), ETable.Words),
+                EDoorAction.ExitQ => _dep.L10n.Localize(_door.DoorData.fromRoom.ToString(), ETable.Words),
+                EDoorAction.AscendQ => _dep.L10n.Localize(_door.DoorData.toRoom.ToString(), ETable.Words),
+                EDoorAction.DescendQ => _dep.L10n.Localize(_door.DoorData.toRoom.ToString(), ETable.Words),
+                EDoorAction.NotSet => throw new ArgumentException($"{_door.Name} DoorAction not set."),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            var question = GetQuestion(localizedRoomName, localizedDoorAction);
+
+            IUIViewerMsg msg = new ShowExitRoomWindowMsg(exitLocalizedName, question, _door.DoorData.usePrice, source);
+
+            return await ProcessExitFromRoom(source, msg);
+        }
+
+        private string GetQuestion(string localizedRoomName, string localizedDoorAction)
+        {
+            var itemConditions = _conditionChecker.GetItemConditionThought(_door.UnlockConditions.oneOfItem);
+            var questionBuilder = new StringBuilder();
+
+            if (itemConditions.Item1)
+                questionBuilder.AppendLine(_dep.L10n.Localize(itemConditions.Item2, ETable.SmallPhrase));
+
+            questionBuilder.AppendLine($"{localizedRoomName}: {localizedDoorAction}?");
+
+            return questionBuilder.ToString();
+        }
+
+        private async UniTask<bool> ProcessExitFromRoom(UniTaskCompletionSource<EDialogResult> source, IUIViewerMsg msg)
+        {
+            try
+            {
+                _dep.Publisher.ForUIViewer(msg);
+                var result = await source.Task;
+
+                _dialogResultHandler.HandleResult(result);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error in ProcessExitFromRoom", e);
+            }
+            finally
+            {
+                source?.TrySetCanceled();
+            }
+
+            return true;
+        }
+
+        private void OnCloseAction()
         {
         }
 
-        public string Name => nameof(LockedDoorStrategy);
-
-        public UniTask<bool> ExecuteAsync(IUnlockable interactable)
+        private void OnApplyAction()
         {
-            throw new System.NotImplementedException();
+            // _usableExit.SetState(EUseState.Used); // TODO сбрасывать на активации комнат
+            _dep.Publisher.ForGameManager(new SpendEnergyMsg(_door.DoorData.usePrice));
+            _dep.Publisher.ForGameManager(new GoToRoomRequestMsg(_door.DoorData.exit, _door.DoorData.fromRoom,
+                _door.DoorData.toRoom));
         }
     }
 }

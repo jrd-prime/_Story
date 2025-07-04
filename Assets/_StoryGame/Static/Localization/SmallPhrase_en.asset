@@ -126,6 +126,34 @@ MonoBehaviour:
       No way I\u2019m getting inside."
     m_Metadata:
       m_Items: []
+  - m_Id: 11495571113050116
+    m_Localized: Entry is not available.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11506092809846788
+    m_Localized: "Looks like the authorization panel is simply unpowered \u2014 no
+      visible damage."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11562307132784644
+    m_Localized: "Looks like the door is blocked from the inside. I\u2019ll have
+      to find another way down."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11924012106973188
+    m_Localized: "It's high. I'll need to find a ladder\u2026 or a rope, at the very
+      least."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489220
+    m_Localized: "I\u2019ve got a rope \u2014 better than nothing, but still not
+      the safest option."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489221
+    m_Localized: I have a stepladder. Descending will be much safer than with a rope.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

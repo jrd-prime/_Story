@@ -40,20 +40,24 @@ namespace _StoryGame.Game.Managers.Room
             switch (message)
             {
                 case ChangeRoomRequestMsg msg:
-                    ChangeRoomTo(msg.Room);
+                    ChangeRoomTo(msg);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
         }
 
-        private void ChangeRoomTo(ERoom roomType)
+        private void ChangeRoomTo(ChangeRoomRequestMsg msg)
         {
-            _log.Debug("Changing room to: " + roomType);
+            _log.Debug("Changing room to: " + msg.ToRoom);
             _currentRoom?.Hide();
-            _currentRoom = _roomsRegistry.GetRoomByType(roomType);
+            _currentRoom = _roomsRegistry.GetRoomByType(msg.ToRoom);
             _currentRoom.Show();
-            _player.SetPosition(_currentRoom.GetSpawnPosition());
+            
+            var exitSpawnPosition = _currentRoom.GetExitPointFor(msg.Exit).GetEntryPoint();
+            _log.Warn("Exit spawn position: " + exitSpawnPosition);
+            
+            _player.SetPosition(exitSpawnPosition);
         }
     }
 

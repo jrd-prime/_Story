@@ -1,9 +1,11 @@
 ﻿using System;
 using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Enums;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
-using _StoryGame.Data;
-using _StoryGame.Data.Interact;
+using _StoryGame.Data.Loot;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Movement;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -15,19 +17,19 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
     /// <summary>
     /// Объект исследован. Показываем подсказку есть ли лут
     /// </summary>
-    public sealed class InspectedStrategy : IInspectSystemStrategy
+    public sealed class AlreadyInspectedStrategy : IInspectSystemStrategy
     {
-        public string StrategyName => nameof(InspectedStrategy);
+        public string Name => nameof(AlreadyInspectedStrategy);
 
-        private readonly InteractSystemDepFlyweight _systemDep;
+        private readonly InteractSystemDepFlyweight _dep;
         private IInspectable _inspectable;
         private string _objLocalizedName;
         private readonly DialogResultHandler _dialogResultHandler;
 
-        public InspectedStrategy(InteractSystemDepFlyweight systemDep)
+        public AlreadyInspectedStrategy(InteractSystemDepFlyweight dep)
         {
-            _systemDep = systemDep;
-            _dialogResultHandler = new DialogResultHandler();
+            _dep = dep;
+            _dialogResultHandler = new DialogResultHandler(_dep.Log);
 
             _dialogResultHandler.AddCallback(EDialogResult.Search, OnSearchAction);
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
@@ -36,40 +38,37 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         public async UniTask<bool> ExecuteAsync(IInspectable inspectable)
         {
             _inspectable = inspectable;
-            _objLocalizedName =
-                _systemDep.LocalizationProvider.Localize(_inspectable.LocalizationKey, ETable.Words,
-                    ETextTransform.Upper);
+            _objLocalizedName = _dep.L10n.Localize(_inspectable.LocalizationKey, ETable.Words, ETextTransform.Upper);
 
-            await ShowLootTip();
-            return true;
+            return await ShowLootTip();
         }
 
-        private async UniTask ShowLootTip()
+        private async UniTask<bool> ShowLootTip()
         {
-            var lootData = _inspectable.Room.GetLoot(_inspectable.Id) ??
-                           throw new Exception("ShowLootTip - no loot data");
-
-            var hasLoot = _inspectable.Room.HasLoot(_inspectable.Id);
+            var loot = _inspectable.Loot ??
+                       throw new Exception("ShowLootTip - no loot data");
+            PreparedObjLootData objLootData = _dep.LootGenerator.GenerateLootData(_inspectable);
+            var hasLoot = _inspectable.HasLoot();
 
             var tipLocalizationId = hasLoot
-                ? _systemDep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.InspHasLoot)
-                : _systemDep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.InspNoLoot);
+                ? _dep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.InspHasLoot)
+                : _dep.InteractableSystemTipData.GetRandomTip(EInteractableSystemTip.InspNoLoot);
 
-            var tip = _systemDep.LocalizationProvider.Localize(tipLocalizationId, ETable.SmallPhrase);
+            var tip = _dep.L10n.Localize(tipLocalizationId, ETable.SmallPhrase);
 
             var source = new UniTaskCompletionSource<EDialogResult>();
 
             IUIViewerMsg msg = hasLoot
-                ? new ShowHasLootWindowMsg(_objLocalizedName, tip, lootData, source)
+                ? new ShowHasLootWindowMsg(_objLocalizedName, tip, objLootData, source)
                 : new ShowNoLootWindowMsg(_objLocalizedName.ToUpper(), tip, source);
 
             try
             {
-                _systemDep.Log.Debug(hasLoot
+                _dep.Log.Debug(hasLoot
                     ? "<color=green>Inspect - has loot</color>"
                     : "<color=red>Inspect - no loot</color>");
 
-                _systemDep.Publisher.ForUIViewer(msg);
+                _dep.Publisher.ForUIViewer(msg);
                 var result = await source.Task;
 
                 _dialogResultHandler.HandleResult(result);
@@ -78,17 +77,20 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             {
                 source?.TrySetCanceled();
             }
+
+            return true;
         }
 
         private void OnCloseAction()
         {
         }
 
-        private void OnSearchAction()
+        private async void OnSearchAction()
         {
-            _systemDep.Publisher.ForGameManager(new SpendEnergyMsg(1));
+            _dep.Publisher.ForGameManager(new SpendEnergyMsg(1));
             _inspectable.SetInspectState(EInspectState.Searched);
-            _systemDep.Publisher.ForInteractProcessor(new InteractRequestMsg(_inspectable));
+            await UniTask.Yield();
+            _dep.Publisher.ForInteractProcessor(new InteractRequestMsg(_inspectable));
         }
     }
 }

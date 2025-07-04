@@ -3,84 +3,27 @@
     public enum ERoom
     {
         NotSet = -1,
-        /// <summary>
-        /// Exit from the bunker
-        /// </summary>
-        SurfaceAccessModule0,
+        SurfaceAccessModuleB1 = 0,
+        CorridorMainB2 = 1,
+        CorridorLivingQuartersB2 = 2,
+        ServerFacilityModuleB2 = 3,
+        HygieneModuleB2 = 4,
+        MedModuleB2 = 5,
+        RelaxationModuleB2 = 6,
+        NutritionModuleB2 = 7,
+        HabitationModule1B2 = 8,
+        HabitationModule2B2 = 9,
+        HabitationModule3B2 = 10,
+        HabitationModule4B2 = 11,
+        HabitationModule5B2 = 12,
+        HabitationModule6B2 = 13,
+        CorridorMainB3 = 14,
+        WasteReclamationModuleB3 = 15,
+        ElectroMechanicalModuleB3 = 16,
+        ClimateControlModuleB3 = 17,
+        VaultB3 = 18,
+        WarehouseB3 = 19,
+        WaterSupplyModuleB3 = 20,
 
-        /// <summary>
-        ///  Main corridor -1 floor
-        /// </summary>
-        CorridorMain1,
-
-        /// <summary>
-        /// Living quarters corridor -1 floor
-        /// </summary>
-        CorridorLivingQuarters1,
-
-        /// <summary>
-        /// Server room -1 floor
-        /// </summary>
-        ServerFacilityModule1,
-
-        /// <summary>
-        /// Hygiene module -1 floor
-        /// </summary>
-        HygieneModule1,
-
-        /// <summary>
-        /// Med module -1 floor
-        /// </summary>
-        MedModule1,
-
-        /// <summary>        
-        /// Relaxation module -1 floor
-        /// </summary>
-        RelaxationModule1,
-
-        /// <summary>
-        /// Nutrition module  -1 floor
-        /// </summary>
-        NutritionModule1,
-
-        /// <summary>
-        /// Habitation module -1 floor
-        /// </summary>
-        HabitationModule1,
-        HabitationModule2,
-        HabitationModule3,
-        HabitationModule4,
-        HabitationModule5,
-        HabitationModule6,
-
-        /// <summary>        
-        /// Main corridor -2 floor
-        /// </summary>
-        CorridorMain2,
-
-        /// <summary>
-        /// Waste reclamation module -2 floor
-        /// </summary>
-        WasteReclamationModule2,
-
-        /// <summary>
-        /// Electro mechanical module -2 floor
-        /// </summary>  
-        ElectroMechanicalModule2,
-
-        /// <summary>
-        /// Climate control module -2 floor
-        /// </summary>
-        ClimateControlModule2,
-
-        /// <summary>
-        /// Vault -2 floor
-        /// </summary>
-        Vault2,
-
-        /// <summary>
-        /// Warehouse -2 floor
-        /// </summary>
-        Warehouse2
     }
 }

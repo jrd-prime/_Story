@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14972395793088513
-    m_Localized: Main Corridor
+    m_Localized: Main Corridor (-1)
     m_Metadata:
       m_Items: []
   - m_Id: 14972395793088514
@@ -159,7 +159,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14972395793088526
-    m_Localized: Main Corridor
+    m_Localized: Main Corridor (-2)
     m_Metadata:
       m_Items: []
   - m_Id: 14972395793088527
@@ -180,6 +180,26 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 14972395793088531
     m_Localized: Warehouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115333
+    m_Localized: Ascend?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115334
+    m_Localized: Descend?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16034721786953728
+    m_Localized: Rope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16034721807925248
+    m_Localized: Stepladder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610690
+    m_Localized: Emergency hatch
     m_Metadata:
       m_Items: []
   references:

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using _StoryGame.Core.WalletNew.Interfaces;
+using _StoryGame.Core.WalletNew.Messages;
+using MessagePipe;
 using R3;
 using UnityEngine;
 
@@ -15,7 +17,14 @@ namespace _StoryGame.Core.WalletNew.Impls
         private readonly Dictionary<string, long> _currencies = new();
         private readonly Subject<CurrencyChangedData> _onCurrencyChangedSubject = new();
 
-        public Wallet(string ownerId) => Id = ownerId;
+        private readonly IPublisher<ItemAmountChangedMsg>
+            _itemLootedMsgPub; // TODO ужасное решение, костыль, переделать
+
+        public Wallet(string ownerId, IPublisher<ItemAmountChangedMsg> itemLootedMsgPub)
+        {
+            Id = ownerId;
+            _itemLootedMsgPub = itemLootedMsgPub;
+        }
 
         public long Get(string currencyId) => _currencies.ContainsKey(currencyId) ? _currencies[currencyId] : 0;
 
@@ -29,8 +38,12 @@ namespace _StoryGame.Core.WalletNew.Impls
 
             _currencies[currencyId] = newAmount;
 
-            Debug.LogWarning("<color=green>"+Id + " / Add " + currencyId + " ... " + previousAmount + " -> " + newAmount + "</color>");
+            Debug.LogWarning("<color=green>" + Id + " / Add " + currencyId + " ... " + previousAmount + " -> " +
+                             newAmount + "</color>");
             _onCurrencyChangedSubject.OnNext(new CurrencyChangedData(currencyId, previousAmount, newAmount));
+
+            var currentAmount = Get(currencyId);
+            _itemLootedMsgPub.Publish(new ItemAmountChangedMsg(currencyId, currentAmount));
             return true;
         }
 
@@ -57,6 +70,9 @@ namespace _StoryGame.Core.WalletNew.Impls
 
                 _onCurrencyChangedSubject.OnNext(new CurrencyChangedData(currencyId, previousAmount, newAmount));
 
+                Debug.LogWarning("Sub " + currencyId + " ... " + amount);
+                var currentAmount = Get(currencyId);
+                _itemLootedMsgPub.Publish(new ItemAmountChangedMsg(currencyId, currentAmount));
                 return true;
             }
 

@@ -10,12 +10,12 @@ namespace _StoryGame.Game.Loot
 {
     public sealed class LootGenerator
     {
-        private readonly ILocalizationProvider _localizationProvider;
+        private readonly IL10nProvider _il10NProvider;
         private readonly ICurrencyRegistry _assetProvider;
 
-        public LootGenerator(ILocalizationProvider localizationProvider, ICurrencyRegistry assetProvider)
+        public LootGenerator(IL10nProvider il10NProvider, ICurrencyRegistry assetProvider)
         {
-            _localizationProvider = localizationProvider;
+            _il10NProvider = il10NProvider;
             _assetProvider = assetProvider;
         }
 
@@ -25,7 +25,7 @@ namespace _StoryGame.Game.Loot
                         throw new Exception("GenerateLootData - no loot data for " + inspectable.Name);
             var roomId = "ERR ROOM ID GenerateLootData";
             var inspectableId = inspectable.Id;
-            var localizedName = _localizationProvider.Localize(inspectable.LocalizationKey, ETable.Words);
+            var localizedName = _il10NProvider.Localize(inspectable.LocalizationKey, ETable.Words);
 
 
             List<PreparedLootVo> lootData = new();

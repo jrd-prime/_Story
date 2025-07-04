@@ -67,7 +67,7 @@ MonoBehaviour:
     m_Key: key_leave_room_question
     m_Metadata:
       m_Items: []
-  - m_Id: 11235941048844288
+  - m_Id: 12256729566740480
     m_Key: New Entry 1
     m_Metadata:
       m_Items: []
@@ -79,7 +79,7 @@ MonoBehaviour:
     m_Key: td_woodenbox_locked_text
     m_Metadata:
       m_Items: []
-  - m_Id: 11235941115953152
+  - m_Id: 12256729604489216
     m_Key: New Entry 3
     m_Metadata:
       m_Items: []
@@ -103,7 +103,7 @@ MonoBehaviour:
     m_Key: cond_sys_looted_05
     m_Metadata:
       m_Items: []
-  - m_Id: 11235941115953153
+  - m_Id: 12256729604489217
     m_Key: New Entry 5
     m_Metadata:
       m_Items: []
@@ -119,16 +119,40 @@ MonoBehaviour:
     m_Key: entrance_habMod1_ExitQuestion
     m_Metadata:
       m_Items: []
-  - m_Id: 11235941120147456
+  - m_Id: 12256729604489218
     m_Key: New Entry 6
     m_Metadata:
       m_Items: []
-  - m_Id: 11235941120147457
+  - m_Id: 12256729604489219
     m_Key: New Entry 7
     m_Metadata:
       m_Items: []
   - m_Id: 11235941120147458
     m_Key: door_habitation_module_closed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11495571113050116
+    m_Key: door_module_not_available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11506092809846788
+    m_Key: TH_serv_door_panel_not_work
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11562307132784644
+    m_Key: TH_ladder_to_M2_floor_not_work
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11924012106973188
+    m_Key: TH_hatch_toM2_req_descend_obj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489220
+    m_Key: TH_hatch_toM2_has_rope_for_descend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489221
+    m_Key: TH_hatch_toM2_has_stepladder_for_descend
     m_Metadata:
       m_Items: []
   m_Metadata:

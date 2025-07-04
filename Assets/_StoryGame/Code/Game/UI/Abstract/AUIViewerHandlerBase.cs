@@ -32,12 +32,12 @@ namespace _StoryGame.Game.UI.Abstract
             _layerRoot = layerRoot;
 
             GameManager = _resolver.Resolve<IGameManager>();
-            Loca = _resolver.Resolve<ILocalizationProvider>();
+            Loca = _resolver.Resolve<IL10nProvider>();
 
             Initialize();
         }
 
-        protected ILocalizationProvider Loca { get; private set; }
+        protected IL10nProvider Loca { get; private set; }
 
         private void Initialize()
         {

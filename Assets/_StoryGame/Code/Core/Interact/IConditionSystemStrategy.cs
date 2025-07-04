@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables.Unlock;
 
 namespace _StoryGame.Core.Interact
 {

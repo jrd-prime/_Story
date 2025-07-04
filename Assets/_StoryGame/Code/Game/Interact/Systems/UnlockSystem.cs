@@ -35,7 +35,7 @@ namespace _StoryGame.Game.Interact.Systems
             _strategiesByType.Add(typeof(UnlockableDoor), new Dictionary<Enum, IUnlockSystemStrategy>()
             {
                 { EDoorState.Locked, new LockedDoorStrategy(dep, conditionChecker) },
-                { EDoorState.Unlocked, new UnlockedDoorStrategy(dep) }
+                { EDoorState.Unlocked, new UnlockedDoorStrategy(dep, conditionChecker) }
             });
         }
 

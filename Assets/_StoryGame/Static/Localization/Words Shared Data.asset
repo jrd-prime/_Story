@@ -91,15 +91,15 @@ MonoBehaviour:
     m_Key: door_wooden
     m_Metadata:
       m_Items: []
-  - m_Id: 14969185854488576
-    m_Key: ExitQ
+  - m_Id: 16034721786953728
+    m_Key: rope
     m_Metadata:
       m_Items: []
-  - m_Id: 14969185892237312
-    m_Key: EnterQ
+  - m_Id: 16034721807925248
+    m_Key: stepladder
     m_Metadata:
       m_Items: []
-  - m_Id: 14974844423569408
+  - m_Id: 16369518937833472
     m_Key: New Entry 1
     m_Metadata:
       m_Items: []
@@ -181,6 +181,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 14972395793088531
     m_Key: Warehouse2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518937833473
+    m_Key: New Entry 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518937833474
+    m_Key: New Entry 6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610688
+    m_Key: New Entry 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185854488576
+    m_Key: ExitQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185892237312
+    m_Key: EnterQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115333
+    m_Key: AscendQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115334
+    m_Key: DescendQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610689
+    m_Key: New Entry 8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610690
+    m_Key: obj_emergency_hatch
     m_Metadata:
       m_Items: []
   m_Metadata:

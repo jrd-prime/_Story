@@ -43,7 +43,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
 
         protected override void PreInitialize()
         {
-            _tempWallet = GameManager.TempWallet;
+            // _tempWallet = GameManager.TempWallet;
+            _tempWallet = _player.Wallet;
             _invCellTemplate = UISettings.inventoryHUDCellTemplate;
         }
 
@@ -102,12 +103,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.HUD
         {
         }
 
-        private void ShowFps(float value)
-        {
-            UniTask.Post(
-                () => _fpsLab.text = value.ToString("F1")
-            );
-        }
+        private void ShowFps(float value) =>
+            UniTask.Post(() => _fpsLab.text = value.ToString("F1"));
 
         private void ShowState(ECharacterState state)
         {

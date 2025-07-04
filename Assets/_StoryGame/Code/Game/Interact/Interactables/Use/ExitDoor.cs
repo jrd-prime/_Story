@@ -6,9 +6,8 @@ using _StoryGame.Data.Const;
 using _StoryGame.Game.Interact.Abstract;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace _StoryGame.Game.Interact.Interactables.Usable
+namespace _StoryGame.Game.Interact.Interactables.Use
 {
     public sealed class ExitDoor : AUsable, IUsableExit
     {
@@ -78,16 +77,20 @@ namespace _StoryGame.Game.Interact.Interactables.Usable
     public enum EDoorAction
     {
         NotSet = -1,
-        EnterQ,
-        ExitQ
+        EnterQ = 0,
+        ExitQ = 1,
+        AscendQ = 2,
+        DescendQ = 3
     }
 
     public enum EDoorRotation
     {
         NotSet = -1,
-        RightIn,
-        RightOut,
-        LeftIn,
-        LeftOut
+        RightIn = 0,
+        RightOut = 1,
+        LeftIn = 2,
+        LeftOut = 3,
+        Up = 4,
+        Down = 5
     }
 }

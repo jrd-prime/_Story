@@ -43,7 +43,7 @@ namespace _StoryGame.Game.Managers
 
             foreach (var uiView in baseViews)
             {
-                _log.Debug($"Register view: {uiView.type}");
+                // _log.Debug($"Register view: {uiView.type}");
                 _viewsCache.Add(uiView.type, uiView.view);
             }
 

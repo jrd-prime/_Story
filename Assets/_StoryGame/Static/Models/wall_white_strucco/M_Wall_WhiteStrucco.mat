@@ -58,7 +58,8 @@ Material:
     - _normalStr: 1
     - _rogh_str: 0
     m_Colors:
-    - _Tiling: {r: 2, g: 2, b: 0, a: 0}
+    - _Offset: {r: 0.78, g: 1, b: 0, a: 0}
+    - _Tiling: {r: 3, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6178883718871063509

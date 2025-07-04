@@ -47,7 +47,7 @@ namespace _StoryGame.Infrastructure.AppStarter
         {
             // Bootable services
             var settingsProvider = _container.Resolve<ISettingsProvider>();
-            var localizationProvider = _container.Resolve<ILocalizationProvider>();
+            var localizationProvider = _container.Resolve<IL10nProvider>();
             var currencyRegistry = _container.Resolve<ICurrencyRegistry>();
 
             bootstrapLoader.EnqueueBootable(settingsProvider);

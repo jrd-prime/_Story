@@ -1,18 +1,27 @@
 using System.Collections.Generic;
 using _StoryGame.Core.WalletNew.Interfaces;
+using _StoryGame.Core.WalletNew.Messages;
+using MessagePipe;
+using UnityEngine;
 
 namespace _StoryGame.Core.WalletNew.Impls
 {
     public sealed class WalletService : IWalletService
     {
         private readonly Dictionary<string, IWallet> _wallets = new();
+        private readonly IPublisher<ItemAmountChangedMsg> _itemLootedMsgPub;
+
+        public WalletService(IPublisher<ItemAmountChangedMsg> itemLootedMsgPub)
+        {
+            _itemLootedMsgPub = itemLootedMsgPub;
+        }
 
         public IWallet GetOrCreate(string uid)
         {
             if (_wallets.TryGetValue(uid, out var wallet))
                 return wallet;
 
-            _wallets[uid] = new Wallet(uid);
+            _wallets[uid] = new Wallet(uid, _itemLootedMsgPub);
             return _wallets[uid];
         }
 
@@ -26,11 +35,18 @@ namespace _StoryGame.Core.WalletNew.Impls
         {
             var wallet = GetOrCreate(uid);
 
-            return wallet.Add(currencyId, amount);
+            if (!wallet.Add(currencyId, amount))
+                return false;
+            return true;
         }
 
         public bool Sub(string uid, string currencyId, long amount)
         {
+            var wallet = GetOrCreate(uid);
+
+            if (!wallet.Sub(currencyId, amount))
+                return false;
+
             return true;
         }
 

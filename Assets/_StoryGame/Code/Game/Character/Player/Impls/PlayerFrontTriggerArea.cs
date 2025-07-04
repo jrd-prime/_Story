@@ -18,7 +18,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         [Inject] private IObjectResolver _container;
 
-        private ILocalizationProvider _localizationProvider;
+        private IL10nProvider _il10NProvider;
         private IJLog _log;
         private IPublisher<IUIViewerMsg> _uiPublisher;
         private IInteractable _currentInteractable;
@@ -34,7 +34,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
             _log = _container.Resolve<IJLog>();
             _uiPublisher = _container.Resolve<IPublisher<IUIViewerMsg>>();
-            _localizationProvider = _container.Resolve<ILocalizationProvider>();
+            _il10NProvider = _container.Resolve<IL10nProvider>();
 
             _isInitialized = true;
         }
@@ -98,7 +98,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         //     var action = string.Empty;
         //     try
         //     {
-        //         if (_localizationProvider == null)
+        //         if (_il10NProvider == null)
         //             throw new NullReferenceException("Localization provider is null.");
         //
         //         var key = interactable.LocalizationKey;
@@ -106,11 +106,11 @@ namespace _StoryGame.Game.Character.Player.Impls
         //
         //         note = string.IsNullOrEmpty(key)
         //             ? "Not set"
-        //             : _localizationProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
+        //             : _il10NProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
         //
         //         action = string.IsNullOrEmpty(tip)
         //             ? "Not set"
-        //             : _localizationProvider.Localize(interactable.InteractionTipNameId, ETable.Words,
+        //             : _il10NProvider.Localize(interactable.InteractionTipNameId, ETable.Words,
         //                 ETextTransform.Upper);
         //
         //         return (note, action);

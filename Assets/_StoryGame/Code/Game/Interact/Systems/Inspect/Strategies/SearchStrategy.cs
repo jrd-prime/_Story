@@ -36,9 +36,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
         public async UniTask<bool> ExecuteAsync(IInspectable inspectable)
         {
             _inspectable = inspectable;
-            _objLocalizedName =
-                _dep.LocalizationProvider.Localize(_inspectable.LocalizationKey, ETable.Words,
-                    ETextTransform.Upper);
+            _objLocalizedName = _dep.L10n.Localize(_inspectable.LocalizationKey, ETable.Words, ETextTransform.Upper);
 
             return await SearchLoot();
         }
@@ -55,7 +53,11 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
 
             _inspectable.SetInspectState(EInspectState.Searched);
-            return await ShowLootTipAfterSearch();
+
+            await UniTask.Yield();
+            await ShowLootTipAfterSearch();
+
+            return true;
         }
 
         private async UniTask<bool> ShowLootTipAfterSearch()
@@ -72,7 +74,9 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             {
                 _dep.Publisher.ForUIViewer(message);
 
+                _dep.Log.Warn("pre await source.Task");
                 var result = await source.Task;
+                _dep.Log.Warn("post await source.Task");
                 source = null;
 
                 _dialogResultHandler.HandleResult(result);

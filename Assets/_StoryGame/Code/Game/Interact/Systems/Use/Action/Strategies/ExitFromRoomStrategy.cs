@@ -5,7 +5,7 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Interactables.Usable;
+using _StoryGame.Game.Interact.Interactables.Use;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
@@ -42,15 +42,15 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
             var source = new UniTaskCompletionSource<EDialogResult>();
 
-            var exitLocalizedName = _dep.LocalizationProvider.Localize(_usableExit.LocalizationKey, ETable.Words);
+            var exitLocalizedName = _dep.L10n.Localize(_usableExit.LocalizationKey, ETable.Words);
             var localizedQuestion =
-                _dep.LocalizationProvider.Localize(_usableExit.DoorAction.ToString(), ETable.Words);
+                _dep.L10n.Localize(_usableExit.DoorAction.ToString(), ETable.Words);
 
             var locTransKey = _usableExit.DoorAction switch
             {
-                EDoorAction.EnterQ => _dep.LocalizationProvider.Localize(_usableExit.TransitionToRoom.ToString(),
+                EDoorAction.EnterQ => _dep.L10n.Localize(_usableExit.TransitionToRoom.ToString(),
                     ETable.Words),
-                EDoorAction.ExitQ => _dep.LocalizationProvider.Localize(_usableExit.RoomType.ToString(), ETable.Words),
+                EDoorAction.ExitQ => _dep.L10n.Localize(_usableExit.RoomType.ToString(), ETable.Words),
                 EDoorAction.NotSet => throw new ArgumentException($"{_usableExit.Name} DoorAction not set."),
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -85,7 +85,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
         {
             // _usableExit.SetState(EUseState.Used); // TODO сбрасывать на активации комнат
             _dep.Publisher.ForGameManager(new SpendEnergyMsg(Price));
-            _dep.Publisher.ForGameManager(new TransitionToRoomRequestMsg(_usableExit.TransitionToRoom));
+            // _dep.Publisher.ForGameManager(new GoToRoomRequestMsg(_usableExit.TransitionToRoom));
         }
     }
 }
