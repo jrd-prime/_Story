@@ -3191,15 +3191,15 @@ PrefabInstance:
       objectReference: {fileID: 8427146588627785572}
     - target: {fileID: 1175500837449026176, guid: 087497e056f926f45bdb68d42299a74e, type: 3}
       propertyPath: exits.Array.data[0].exit
-      value: 21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1175500837449026176, guid: 087497e056f926f45bdb68d42299a74e, type: 3}
       propertyPath: exits.Array.data[1].door
       value: 
-      objectReference: {fileID: 8875042172105506647}
+      objectReference: {fileID: 7644662730415732850}
     - target: {fileID: 1175500837449026176, guid: 087497e056f926f45bdb68d42299a74e, type: 3}
       propertyPath: exits.Array.data[1].exit
-      value: 23
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1175500837449026176, guid: 087497e056f926f45bdb68d42299a74e, type: 3}
       propertyPath: exits.Array.data[2].door
@@ -3231,7 +3231,7 @@ PrefabInstance:
       objectReference: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2333561306109270411, guid: 087497e056f926f45bdb68d42299a74e, type: 3}
       propertyPath: m_Name
-      value: CLive
+      value: BetweenCorridors
       objectReference: {fileID: 0}
     - target: {fileID: 3852349172980064294, guid: 087497e056f926f45bdb68d42299a74e, type: 3}
       propertyPath: m_Icon
@@ -3303,7 +3303,7 @@ PrefabInstance:
       objectReference: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 7642441627847681233, guid: 087497e056f926f45bdb68d42299a74e, type: 3}
       propertyPath: m_Name
-      value: SurfB1
+      value: B1_B2_Ladder
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4228,7 +4228,7 @@ PrefabInstance:
       objectReference: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3276128439323321582, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_Name
-      value: CMain
+      value: BetweenCorridors
       objectReference: {fileID: 0}
     - target: {fileID: 3379816612346276351, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: m_Icon
@@ -4312,7 +4312,7 @@ PrefabInstance:
       objectReference: {fileID: 6225778154053556765}
     - target: {fileID: 7448753949041318144, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: exits.Array.data[0].exit
-      value: 200
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7448753949041318144, guid: 8a1b719568ea39f4d9fad6560769a046, type: 3}
       propertyPath: exits.Array.data[1].door

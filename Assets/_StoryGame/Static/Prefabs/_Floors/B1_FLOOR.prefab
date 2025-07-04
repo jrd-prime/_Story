@@ -253,11 +253,11 @@ PrefabInstance:
       objectReference: {fileID: 6723410330072479786}
     - target: {fileID: 2076771346924119373, guid: 9767d60e6333e7243b35e4d12453a941, type: 3}
       propertyPath: exits.Array.data[0].exit
-      value: 21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2181489622131776191, guid: 9767d60e6333e7243b35e4d12453a941, type: 3}
       propertyPath: m_Name
-      value: CMainB2
+      value: B1_B2_Ladder
       objectReference: {fileID: 0}
     - target: {fileID: 3699891049717556856, guid: 9767d60e6333e7243b35e4d12453a941, type: 3}
       propertyPath: m_Name

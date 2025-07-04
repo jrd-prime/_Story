@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bd3d3f1de14e109c0cc8e0d58dbe6d, type: 3}
   m_Name: B2_B2_cMain_to_cLive
   m_EditorClassIdentifier: 
-  exit: 201
+  exit: 2
   fromRoom: 1
   toRoom: 2
   doorRotation: 2
