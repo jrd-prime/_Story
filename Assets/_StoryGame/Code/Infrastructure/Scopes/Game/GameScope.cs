@@ -1,23 +1,28 @@
 ﻿using System;
-using _StoryGame.Core.Currency;
-using _StoryGame.Core.Currency.Impls;
 using _StoryGame.Core.HSM.Impls;
-using _StoryGame.Core.Managers.Game.Impls;
+using _StoryGame.Core.WalletNew.Impls;
+using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
-using _StoryGame.Game.Interactables;
-using _StoryGame.Game.Interactables.Abstract;
-using _StoryGame.Game.Interactables.Impls.Inspect;
+using _StoryGame.Game.Interact;
+using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Interact.Systems;
+using _StoryGame.Game.Interact.Systems.Conditional;
+using _StoryGame.Game.Interact.Systems.Inspect;
+using _StoryGame.Game.Interact.Systems.Use;
 using _StoryGame.Game.Loot;
-using _StoryGame.Game.Managers.Impls;
-using _StoryGame.Game.Managers.Impls._Game._Scripts.Framework.Manager.JCamera;
-using _StoryGame.Game.Managers.Inerfaces;
+using _StoryGame.Game.Managers;
+using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
+using _StoryGame.Game.Managers.Game;
+using _StoryGame.Game.Managers.Interfaces;
+using _StoryGame.Game.Managers.Room;
 using _StoryGame.Game.Movement;
-using _StoryGame.Game.Room.Impls;
-using _StoryGame.Game.UI.Impls;
-using _StoryGame.Game.UI.Impls.Gameplay;
-using _StoryGame.Game.UI.Impls.Menu;
 using _StoryGame.Game.UI.Impls.Viewer;
-using _StoryGame.Game.UI.Impls.WorldUI;
+using _StoryGame.Game.UI.Impls.Views.Gameplay;
+using _StoryGame.Game.UI.Impls.Views.Menu;
+using _StoryGame.Game.UI.Impls.Views.WorldViews;
+using _StoryGame.Infrastructure.Interact;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;
@@ -51,7 +56,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             // Регистрация сервисов
             builder.Register<GameService>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<CurrencyService>(Lifetime.Singleton).As<ICurrencyService>();
+            builder.Register<WalletService>(Lifetime.Singleton).As<IWalletService>();
             builder.Register<GameplayUIViewModel>(Lifetime.Singleton).As<IGameplayUIViewModel>();
             builder.Register<MenuUIViewModel>(Lifetime.Singleton).As<IMenuUIViewModel>();
 
@@ -71,10 +76,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<MovementProcessor>(Lifetime.Singleton).AsSelf();
             builder.RegisterBuildCallback(resolver => resolver.Resolve<MovementProcessor>());
 
-            builder.Register<InteractableProcessor>(Lifetime.Singleton).AsSelf();
-            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractableProcessor>());
-
-            RegisterLoot(builder);
+            builder.Register<InteractProcessor>(Lifetime.Singleton).AsSelf();
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<InteractProcessor>());
 
             RegisterInteractableSystems(builder);
 
@@ -85,11 +88,24 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             if (!interactablesTipUIPrefab)
                 throw new NullReferenceException("interactablesTipUIPrefab is null.");
             builder.RegisterComponentInNewPrefab<InteractablesTipUI>(interactablesTipUIPrefab, Lifetime.Transient);
+
+            builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
+
+            builder.Register<ConditionChecker>(Lifetime.Singleton).AsSelf();
+            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsSelf();
+
+            builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
+            builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<InspectStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<UseStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<UnlockableStrategyProvider>(Lifetime.Singleton).AsSelf();
         }
+
 
         private void RegisterRooms(IContainerBuilder builder)
         {
             builder.RegisterComponentInHierarchy<RoomsRegistry>().AsImplementedInterfaces();
+            builder.Register<RoomsDispatcher>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private void RegisterDialogSystems(IContainerBuilder builder)
@@ -97,14 +113,12 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             // builder.Register<InteractableDialogSystem>(Lifetime.Singleton).AsSelf();
         }
 
-        private void RegisterLoot(IContainerBuilder builder)
-        {
-            builder.Register<LootSystem>(Lifetime.Singleton).AsImplementedInterfaces();
-        }
-
-        private void RegisterInteractableSystems(IContainerBuilder builder)
+        private static void RegisterInteractableSystems(IContainerBuilder builder)
         {
             builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<UseSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<UnlockSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()
@@ -112,8 +126,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             base.Awake();
 
             var interactables =
-                FindObjectsByType<AInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            Debug.Log($"Interactables on scene: {interactables.Length}");
+                FindObjectsByType<AInteractableBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            Debug.Log($"Interact on scene: {interactables.Length}");
             foreach (var interactable in interactables)
                 Container.Inject(interactable);
         }

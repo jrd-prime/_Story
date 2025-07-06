@@ -1,0 +1,10 @@
+﻿namespace _StoryGame.Core.Messaging.Interfaces
+{
+    public interface IGameManagerMsg : IJMessage
+    {
+    }
+
+    public interface IWalletMsg : IJMessage
+    {
+    }
+}

@@ -9,7 +9,7 @@ namespace _StoryGame.Data.SO.Currency
         fileName = nameof(NoteData),
         menuName = SOPathConst.Currency + nameof(NoteData)
     )]
-    public class NoteData : ACurrencyData
+    public class NoteData : ANoteData
     {
         public override ECurrencyType Type { get; } = ECurrencyType.Note;
     }

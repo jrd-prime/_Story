@@ -1,4 +1,4 @@
-using _StoryGame.Core.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
 
 namespace _StoryGame.Game.Buffs
 {

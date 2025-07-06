@@ -1,0 +1,217 @@
+.loot-item-container {
+    flex-grow: 0;
+    width: 64px;
+    height: 64px;
+    background-color: rgba(0, 0, 0, 0);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(30, 30, 33);
+    border-right-color: rgb(30, 30, 33);
+    border-top-color: rgb(30, 30, 33);
+    border-bottom-color: rgb(30, 30, 33);
+    margin-right: 12px;
+    margin-left: 12px;
+}
+
+.pp-window-cont {
+    flex-grow: 0;
+    width: auto;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: rgba(30, 30, 33, 0.8);
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    align-items: center;
+    justify-content: flex-end;
+    align-self: center;
+    align-content: center;
+    -unity-font-definition: url("project://database/Assets/_StoryGame/Static/Font/Nunito/Nunito-Regular.ttf?fileID=12800000&guid=3a9957c37bcbacd4aa7d1e01faa1316c&type=3#Nunito-Regular");
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    color: rgb(184, 195, 198);
+    min-width: 500px;
+    max-width: 500px;
+    min-height: 200px;
+}
+
+.pp-head-cont {
+    flex-grow: 1;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    font-size: 22px;
+    -unity-font-definition: url("project://database/Assets/_StoryGame/Static/Font/Nunito/Nunito-Bold.ttf?fileID=12800000&guid=56d3555e78602b04f9c9d6f6a5a30607&type=3#Nunito-Bold");
+    min-height: 60px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: rgb(30, 30, 33);
+}
+
+.pp-btn-cont-base {
+    flex-grow: 0;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 1px;
+    border-right-width: 2px;
+    border-bottom-width: 4px;
+    border-left-width: 2px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-right: 6px;
+    margin-left: 6px;
+    width: 204px;
+    height: 55px;
+}
+
+.pp-desc-cont {
+    flex-grow: 1;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 22px;
+    padding-right: 0;
+    padding-left: 0;
+    background-color: rgb(208, 208, 207);
+    color: rgb(27, 27, 27);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    -unity-font-definition: url("project://database/Assets/_StoryGame/Static/Font/Nunito/Nunito-Bold.ttf?fileID=12800000&guid=56d3555e78602b04f9c9d6f6a5a30607&type=3#Nunito-Bold");
+    min-height: 80px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.loot-icon {
+    flex-grow: 1;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+}
+
+.pp-btn-cont {
+    flex-grow: 1;
+    width: 100%;
+    height: auto;
+    align-items: flex-end;
+    justify-content: center;
+    align-self: flex-end;
+    align-content: center;
+    padding-bottom: 12px;
+    padding-top: 12px;
+    padding-right: 6px;
+    padding-left: 6px;
+    margin-bottom: 0;
+    flex-direction: row;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+    min-height: auto;
+}
+
+.pp-btn-base {
+    font-size: 18px;
+    padding-right: 0;
+    padding-left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: rgb(180, 176, 153);
+    margin-right: 0;
+    margin-left: 0;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    color: rgb(18, 15, 28);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    left: 0;
+    bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.align-right {
+    justify-content: flex-end;
+    align-self: flex-end;
+    align-content: flex-end;
+    align-items: flex-end;
+}
+
+.pp-btn-accent {
+    background-color: rgb(76, 153, 197);
+    color: rgb(33, 33, 33);
+}
+
+.pp-btn-secondary {
+    background-color: rgb(30, 30, 33);
+    color: rgb(84, 84, 84);
+    border-left-color: rgb(19, 19, 19);
+    border-right-color: rgb(19, 19, 19);
+    border-top-color: rgb(19, 19, 19);
+    border-bottom-color: rgb(19, 19, 19);
+}
+
+.pp-btn-accent-with-icon {
+    background-color: rgb(76, 153, 197);
+    color: rgb(33, 33, 33);
+    flex-direction: row;
+}

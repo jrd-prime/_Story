@@ -17,7 +17,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         // [SerializeField] private float acceleration = 0f;
 
         public ReactiveProperty<Vector3> Position { get; } = new();
-        public object Animator { get; private set; }
+        public Animator Animator { get; private set; }
         public ECharacterState State { get; private set; } = ECharacterState.Idle;
         public NavMeshAgent NavMeshAgent { get; private set; }
         public string Description { get; set; }
@@ -74,7 +74,7 @@ namespace _StoryGame.Game.Character.Player.Impls
             {
                 await UniTask
                     .WaitUntil(HasReachedDestination)
-                    .Timeout(TimeSpan.FromSeconds(5));
+                    .Timeout(TimeSpan.FromSeconds(20));
 
                 // Debug.Log($"MoveToAsync: {destination} done");
 
@@ -90,5 +90,14 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         private bool HasReachedDestination() =>
             !NavMeshAgent.pathPending && NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance;
+
+        public void SetPosition(Vector3 value)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(value, out hit, 1.0f, NavMesh.AllAreas))
+                NavMeshAgent.Warp(hit.position);
+            else
+                Debug.LogError("Целевая позиция не находится на NavMesh!");
+        }
     }
 }

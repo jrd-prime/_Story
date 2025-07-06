@@ -27,7 +27,7 @@ namespace _StoryGame.Game.Extensions
         }
 
 
-        public static T GetVisualElement<T>(this VisualElement root, string id, string name) where T : VisualElement
+        public static T GetVElement<T>(this VisualElement root, string id, string name) where T : VisualElement
         {
             var element = root.Q<T>(id);
             if (element == null)

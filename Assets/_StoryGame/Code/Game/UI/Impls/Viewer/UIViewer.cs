@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using _StoryGame.Core.HSM.Impls.States;
-using _StoryGame.Core.Interfaces.UI;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.HSM;
+using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.Const;
-using _StoryGame.Data.UI;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.UI.Impls.Viewer.Layers;
-using _StoryGame.Game.UI.Messages;
-using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Game.Interact.Systems.Inspect;
+using _StoryGame.Game.UI.Abstract;
+using _StoryGame.Game.UI.Impls.Viewer.Layers.Back;
+using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
+using _StoryGame.Game.UI.Impls.Viewer.Layers.HUD;
+using _StoryGame.Game.UI.Impls.Viewer.Layers.Movement;
+using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using MessagePipe;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
+using IUIViewer = _StoryGame.Game.UI.Interfaces.IUIViewer;
 
 namespace _StoryGame.Game.UI.Impls.Viewer
 {
@@ -35,11 +40,11 @@ namespace _StoryGame.Game.UI.Impls.Viewer
         private bool _isInitialized;
         private VisualElement _mainContainer;
 
-        private readonly Dictionary<GameStateType, TemplateContainer> _viewsCache = new();
+        private readonly Dictionary<EGameStateType, TemplateContainer> _viewsCache = new();
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
-        private void Construct(IObjectResolver resolver, ISubscriber<IUIViewerMessage> subscriber)
+        private void Construct(IObjectResolver resolver, ISubscriber<IUIViewerMsg> subscriber)
         {
             _resolver = resolver;
             _log = resolver.Resolve<IJLog>();
@@ -49,14 +54,14 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                 .AddTo(_disposables);
         }
 
-        private void OnMessage(IUIViewerMessage message)
+        private void OnMessage(IUIViewerMsg message)
         {
             switch (message)
             {
-                case InitializeViewerMessage msg:
+                case InitializeViewerMsg msg:
                     Initialize(msg.Views);
                     break;
-                case SwitchBaseViewMessage msg:
+                case SwitchBaseViewMsg msg:
                     SwitchBaseViewTo(msg.StateType);
                     break;
                 case ShowHasLootWindowMsg msg:
@@ -67,6 +72,18 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                     break;
                 case ShowLootWindowMsg msg:
                     _floatingLayerHandler.ShowLootWindow(msg);
+                    break;
+                case ShowNewNoteMsg msg:
+                    _floatingLayerHandler.ShowNewNote(msg);
+                    break;
+                case ShowExitRoomWindowMsg msg:
+                    _floatingLayerHandler.ShowRoomChooseWindow(msg);
+                    break;
+                case CurrentOperationMsg msg:
+                    _hudLayerHandler.ShowCurrentOperation(msg.CurrentOperation);
+                    break;
+                case DisplayArtefactInfoMsg msg:
+                    _floatingLayerHandler.DisplayArtefactInfoWindow(msg);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }
@@ -84,7 +101,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             root.style.marginLeft = safeZoneOffset.x >= 16 ? safeZoneOffset.x : 16;
             root.style.marginTop = safeZoneOffset.y;
 
-            _mainContainer = root.GetVisualElement<VisualElement>(UIConst.MainContainer, name);
+            _mainContainer = root.GetVElement<VisualElement>(UIConst.MainContainer, name);
 
             if (_mainContainer == null)
                 throw new NullReferenceException($"VisualElement with ID '{UIConst.MainContainer}' not found. " +
@@ -96,31 +113,35 @@ namespace _StoryGame.Game.UI.Impls.Viewer
         private void InitializeLayers()
         {
             // Back Layer
-            var backLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerBackId, name);
+            var backLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerBackId, name);
             _backLayerHandler = new BackLayerHandler(_resolver, backLayerRoot);
 
             // Movement Layer
-            var movementLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerMovementId, name);
+            var movementLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerMovementId, name);
             _movementLayerHandler = new MovementLayerHandler(_resolver, movementLayerRoot);
 
             // HUD Layer
-            var hudLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerHudId, name);
+            var hudLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerHudId, name);
             _hudLayerHandler = new HUDLayerHandler(_resolver, hudLayerRoot);
 
             // Floating Layer
-            var floatingLayerRoot = _mainContainer.GetVisualElement<VisualElement>(LayerFloatingId, name);
+            var floatingLayerRoot = _mainContainer.GetVElement<VisualElement>(LayerFloatingId, name);
             _floatingLayerHandler = new FloatingLayerHandler(_resolver, floatingLayerRoot);
         }
 
-        private void Initialize(IDictionary<GameStateType, UIViewBase> viewsCache)
+        private void Initialize(IDictionary<EGameStateType, AUIViewBase> viewsCache)
         {
+            _log.Debug("Initialize UIViewer message");
             foreach (var view in viewsCache)
+            {
+                _resolver.Inject(view.Value);
                 _viewsCache.TryAdd(view.Key, view.Value.Template);
+            }
 
             _isInitialized = true;
         }
 
-        private void SwitchBaseViewTo(GameStateType state)
+        private void SwitchBaseViewTo(EGameStateType state)
         {
             if (!_isInitialized)
                 throw new NullReferenceException("UIViewer is not initialized. " + nameof(SwitchBaseViewTo));
@@ -138,9 +159,5 @@ namespace _StoryGame.Game.UI.Impls.Viewer
             _isInitialized = false;
             _viewsCache.Clear();
         }
-    }
-
-    public interface IUIViewer
-    {
     }
 }

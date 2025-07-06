@@ -2,10 +2,13 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player;
 using _StoryGame.Core.Character.Player.Interfaces;
-using _StoryGame.Core.Currency;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Messaging.Interfaces;
+using _StoryGame.Core.WalletNew.Interfaces;
+using _StoryGame.Data.Loot;
+using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Character.Player.Messages;
 using _StoryGame.Game.Movement;
-using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
@@ -17,53 +20,61 @@ namespace _StoryGame.Game.Character.Player.Impls
 {
     public sealed class PlayerInteractor : IPlayer, IInitializable
     {
-        public ReadOnlyReactiveProperty<Vector3> Position => _playerView.Position;
-        public ReadOnlyReactiveProperty<ECharacterState> State => _state;
-        public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint;
+        public ReadOnlyReactiveProperty<Vector3> Position => _playerView.Position.ToReadOnlyReactiveProperty();
+        public ReadOnlyReactiveProperty<ECharacterState> State => _state.ToReadOnlyReactiveProperty();
+        public ReadOnlyReactiveProperty<Vector3> DestinationPoint => _destinationPoint.ToReadOnlyReactiveProperty();
+        public ReadOnlyReactiveProperty<int> Energy => _energy.ToReadOnlyReactiveProperty();
+
         public string Id => _service.Id;
+        public IWallet Wallet => _wallet;
         public string Name => _playerView.name;
         public string Description => _playerView.Description;
         public object Animator => _playerView.Animator;
         public int Health { get; set; }
         public int MaxHealth { get; set; }
 
+        public ReadOnlyReactiveProperty<int> MaxEnergy => _maxEnergy.ToReadOnlyReactiveProperty();
         public NavMeshAgent NavMeshAgent => _playerView.NavMeshAgent;
 
+        private readonly ReactiveProperty<int> _energy = new(0);
         private readonly ReactiveProperty<ECharacterState> _state = new(ECharacterState.Idle);
         private readonly ReactiveProperty<Vector3> _destinationPoint = new();
+        private readonly ReactiveProperty<int> _maxEnergy = new(0);
 
         private readonly PlayerService _service;
         private readonly IWallet _wallet;
-        private readonly CompositeDisposable _disposables = new();
         private readonly PlayerView _playerView;
         private readonly IPublisher<IPlayerMsg> _selfMsgPub;
         private readonly IJLog _log;
+        private readonly PlayerMessageHandler _messageHandler;
 
         public PlayerInteractor(
             PlayerService service,
             PlayerView playerView,
             IJLog log,
-            ICurrencyService currencyService,
-            IPublisher<IPlayerMsg> selfMsgPub)
+            IWalletService walletService,
+            IPublisher<IPlayerMsg> selfMsgPub,
+            ISubscriber<IPlayerAnimatorMsg> playerAnimatorMsgSub)
         {
             _playerView = playerView;
             _service = service;
             _log = log;
+            _wallet = walletService.GetOrCreate(Id);
             _selfMsgPub = selfMsgPub;
-            _wallet = currencyService.CreateWallet("player_test_id");
-        }
 
+            _messageHandler = new PlayerMessageHandler(this, playerAnimatorMsgSub);
+        }
 
         public void Initialize()
         {
             SetState(ECharacterState.Idle);
+            _maxEnergy.Value = _service.MaxEnergy;
         }
 
         public void SetState(ECharacterState state)
         {
             _state.Value = state;
             PublishState(state);
-            Debug.LogWarning("<color=red>Player State</color> " + state);
         }
 
         private void PublishState(ECharacterState state) =>
@@ -71,7 +82,6 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         public async UniTask MoveToPointAsync(Vector3 position, EDestinationPoint destinationPointType)
         {
-            // Debug.Log($"SetDestination interactor {position}");
             _destinationPoint.Value = position;
 
             switch (destinationPointType)
@@ -88,22 +98,93 @@ namespace _StoryGame.Game.Character.Player.Impls
 
             await _playerView.MoveToAsync(position);
 
-            // _log.Debug($"MoveToPointAsync: {position} done");
-
             SetState(ECharacterState.Idle);
         }
 
         public void OnStartInteract()
         {
-            _log.Debug("OnStartInteract: Animate & set state to Interacting");
+            _log.Debug("On Start Interact");
 
             SetState(ECharacterState.Interacting);
         }
 
         public void OnEndInteract()
         {
-            _log.Debug("OnEndInteract: Animate & set state to Idle");
-            SetState(ECharacterState.Idle);   
+            _log.Debug("On End Interact");
+            SetState(ECharacterState.Idle);
+        }
+
+        public bool HasEnoughEnergy(int energy)
+        {
+            _selfMsgPub.Publish(new NotEnoughEnergyMsg());
+            return _energy.Value >= energy;
+        }
+
+        /// <summary>
+        /// Set directly energy 0+
+        /// </summary>
+        public void SetEnergy(int energy)
+        {
+            if (IsEnergyArgNegative(energy, "set"))
+                return;
+
+            _energy.Value = energy;
+        }
+
+        /// <summary>
+        /// Add energy 0+
+        /// </summary>
+        /// <param name="energy"></param>
+        public void AddEnergy(int energy)
+        {
+            if (IsEnergyArgNegative(energy, "add"))
+                return;
+
+            _energy.Value += energy;
+        }
+
+        /// <summary>
+        /// Spend energy 0+
+        /// </summary>
+        /// <param name="energy"></param>
+        public void SpendEnergy(int energy)
+        {
+            if (IsEnergyArgNegative(energy, "spend"))
+                return;
+
+            if (HasEnoughEnergy(energy))
+                _energy.Value -= energy;
+
+            if (_energy.CurrentValue == 0)
+                _selfMsgPub.Publish(new OutOfEnergyMsg());
+        }
+
+        public void AddNote(PreparedLootVo preparedLootVo)
+        {
+            _wallet.Add(preparedLootVo.Currency.Id, preparedLootVo.Currency.Amount);
+        }
+
+        public void AddItemToWallet(ACurrencyData itemData, int amount)
+        {
+            _wallet.Add(itemData.Id, amount);
+        }
+
+        public void SetPosition(Vector3 value) => _playerView.SetPosition(value);
+
+        /// <summary>
+        /// Check if energy is negative
+        /// </summary>
+        private bool IsEnergyArgNegative(int energy, string operation)
+        {
+            if (energy >= 0)
+                return false;
+
+            _log.Warn($"Try to {operation} negative energy!");
+            return true;
         }
     }
+
+    public record NotEnoughEnergyMsg : IPlayerMsg;
+
+    public record OutOfEnergyMsg : IPlayerMsg;
 }

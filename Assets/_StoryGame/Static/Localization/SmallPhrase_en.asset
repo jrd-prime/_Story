@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: SmallPhrase_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: b8ec6502dcc77d94a9ff2cda15bfad9d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 304773791744
+    m_Localized: Hm... looks like something's shining.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317696
+    m_Localized: Seems like there's something inside...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317697
+    m_Localized: "Not so simple \u2014 better take a closer look."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317698
+    m_Localized: I think I found something.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317699
+    m_Localized: Feels like it's more than just junk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317700
+    m_Localized: Interesting... what do we have here?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317701
+    m_Localized: Empty. Nothing interesting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317702
+    m_Localized: Hm... wasted my time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317703
+    m_Localized: Looks like there's nothing here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317704
+    m_Localized: Just got my hands dirty.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317705
+    m_Localized: Empty. Completely empty.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317706
+    m_Localized: No sign of life.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6905727615434752
+    m_Localized: Leave the room?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7255776488783872
+    m_Localized: "I don't think I can open it with my bare hands\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7255776488783873
+    m_Localized: Found a wooden crate. I need to figure out how to open it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871426
+    m_Localized: "There\u2019s nothing left here \u2014 I already took everything."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871427
+    m_Localized: "I\u2019ve already taken everything valuable from here."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871428
+    m_Localized: "Looks like there\u2019s nothing left to take."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871429
+    m_Localized: "I\u2019ve already searched this place top to bottom."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871430
+    m_Localized: "Expecting something new to show up here? That\u2019s a joke. I
+      already took it all."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8341090586263553
+    m_Localized: "This elegant owl figurine is more than just a decoration\u2014it\u2019s
+      a symbol that has traveled through the ages. Since ancient times, the owl has
+      been associated with wisdom, hidden knowledge, and intuition. In Greek mythology,
+      it was the companion of the goddess Athena, while in other cultures, it was
+      believed to ward off dark forces.\n\nPerhaps this figurine is crafted from
+      ceramic, wood, or even bronze\u2014each detail highlights the bird\u2019s mysterious
+      gaze, as if it knows far more than it lets on. Such statuettes were often given
+      as protective charms for the home, believed to bring luck and clarity of thought.\n\nDoes
+      this owl have its own story? Was it bought on a distant journey or passed down
+      through generations? Whatever its past, it now sits in quiet observation, reminding
+      you: wisdom often comes in silence."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10111868667363330
+    m_Localized: Go down to the -1st floor?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10484827387002882
+    m_Localized: Exit the habitation module?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11235941120147458
+    m_Localized: "This habitation module is locked \u2014 fingerprint scan required.
+      No way I\u2019m getting inside."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11495571113050116
+    m_Localized: Entry is not available.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11506092809846788
+    m_Localized: "Looks like the authorization panel is simply unpowered \u2014 no
+      visible damage."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11562307132784644
+    m_Localized: "Looks like the door is blocked from the inside. I\u2019ll have
+      to find another way down."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11924012106973188
+    m_Localized: "It's high. I'll need to find a ladder\u2026 or a rope, at the very
+      least."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489220
+    m_Localized: "I\u2019ve got a rope \u2014 better than nothing, but still not
+      the safest option."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489221
+    m_Localized: I have a stepladder. Descending will be much safer than with a rope.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

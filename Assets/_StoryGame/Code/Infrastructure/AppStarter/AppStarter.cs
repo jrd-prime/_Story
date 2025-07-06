@@ -1,9 +1,10 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Currency.Interfaces;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.Providers.Settings;
+using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Infrastructure.Bootstrap;
-using _StoryGame.Infrastructure.Bootstrap.Interfaces;
-using _StoryGame.Infrastructure.Localization;
-using _StoryGame.Infrastructure.Logging;
-using _StoryGame.Infrastructure.Settings;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.ResourceManagement.ResourceProviders;
@@ -37,7 +38,7 @@ namespace _StoryGame.Infrastructure.AppStarter
 
         public void Initialize()
         {
-            QualitySettings.vSyncCount = 0;
+            // QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = 30;
             InitializeAsync().Forget();
         }
@@ -46,15 +47,17 @@ namespace _StoryGame.Infrastructure.AppStarter
         {
             // Bootable services
             var settingsProvider = _container.Resolve<ISettingsProvider>();
-            var localizationProvider = _container.Resolve<ILocalizationProvider>();
+            var localizationProvider = _container.Resolve<IL10nProvider>();
+            var currencyRegistry = _container.Resolve<ICurrencyRegistry>();
 
             bootstrapLoader.EnqueueBootable(settingsProvider);
             bootstrapLoader.EnqueueBootable(localizationProvider);
+            bootstrapLoader.EnqueueBootable(currencyRegistry);
 
             _log.Info("<color=green><b>Starting Services initialization...</b></color>");
 
             await UniTask.WhenAll(
-                bootstrapLoader.StartServicesInitializationAsync(PseudoDelayMs),
+                bootstrapLoader.InitServicesAsync(PseudoDelayMs),
                 firstSceneProvider.LoadFirstSceneAsync()
             );
 

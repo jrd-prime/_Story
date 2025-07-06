@@ -1,0 +1,17 @@
+﻿using _StoryGame.Core.Interfaces.UI;
+using MessagePipe;
+
+namespace System.Runtime.CompilerServices.Game
+{
+    public sealed class JPublisher : IJPublisher
+    {
+        public IPublisher<IUIViewerMessage> UIViewer { get; }
+
+        public JPublisher(IPublisher<IUIViewerMessage> uiViewer) => UIViewer = uiViewer;
+    }
+
+    public interface IJPublisher
+    {
+        IPublisher<IUIViewerMessage> UIViewer { get; }
+    }
+}

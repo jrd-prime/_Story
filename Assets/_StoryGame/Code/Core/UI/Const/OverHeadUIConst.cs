@@ -1,0 +1,12 @@
+﻿namespace _StoryGame.Core.UI.Const
+{
+    public static class OverHeadUIConst
+    {
+        public const string MainCont = "main-cont";
+        public const string Progress = "progress";
+        public const string ProgressBarCont = "progress-bar-cont";
+        public const string ActionLab = "action-label";
+        public const string ThoughtBubbleCont = "thought-bubble-cont";
+        public const string ThoughtLab = "text-lab";
+    }
+}

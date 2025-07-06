@@ -1,0 +1,15 @@
+:root {
+}
+
+.note-window-cont {
+    width: 400px;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    background-color: rgba(33, 33, 33, 0.8);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}

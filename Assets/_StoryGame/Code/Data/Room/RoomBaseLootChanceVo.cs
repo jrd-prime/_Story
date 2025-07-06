@@ -1,7 +1,7 @@
 ﻿using System;
-using _StoryGame.Game.Loot;
+using _StoryGame.Core.Loot;
 
-namespace _StoryGame.Game.Interactables.Impls
+namespace _StoryGame.Data.Room
 {
     [Serializable]
     public struct RoomBaseLootChanceVo
@@ -11,13 +11,13 @@ namespace _StoryGame.Game.Interactables.Impls
         public int energyBaseChance;
         public int emptyBaseChance;
 
-        public int GetLootChance(LootType lootType)
+        public int GetLootChance(ELootType eLootType)
         {
-            return lootType switch
+            return eLootType switch
             {
-                LootType.Core => coreItemBaseChance,
-                LootType.Note => noteBaseChance,
-                LootType.Energy => energyBaseChance,
+                ELootType.Core => coreItemBaseChance,
+                ELootType.Note => noteBaseChance,
+                ELootType.Energy => energyBaseChance,
                 _ => emptyBaseChance
             };
         }
