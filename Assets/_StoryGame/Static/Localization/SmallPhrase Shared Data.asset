@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: SmallPhrase Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: SmallPhrase
+  m_TableCollectionNameGuidString: b8ec6502dcc77d94a9ff2cda15bfad9d
+  m_Entries:
+  - m_Id: 304773791744
+    m_Key: inspect_sys_has_loot_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317696
+    m_Key: inspect_sys_has_loot_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317697
+    m_Key: inspect_sys_has_loot_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317698
+    m_Key: inspect_sys_has_loot_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317699
+    m_Key: inspect_sys_has_loot_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317700
+    m_Key: inspect_sys_has_loot_06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317701
+    m_Key: inspect_sys_no_loot_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317702
+    m_Key: inspect_sys_no_loot_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317703
+    m_Key: inspect_sys_no_loot_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317704
+    m_Key: inspect_sys_no_loot_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317705
+    m_Key: inspect_sys_no_loot_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304828317706
+    m_Key: inspect_sys_no_loot_06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6905727615434752
+    m_Key: key_leave_room_question
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729566740480
+    m_Key: New Entry 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7255776488783872
+    m_Key: td_woodenbox_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7255776488783873
+    m_Key: td_woodenbox_locked_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489216
+    m_Key: New Entry 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871426
+    m_Key: cond_sys_looted_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871427
+    m_Key: cond_sys_looted_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871428
+    m_Key: cond_sys_looted_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871429
+    m_Key: cond_sys_looted_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8256410704871430
+    m_Key: cond_sys_looted_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489217
+    m_Key: New Entry 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8341090586263553
+    m_Key: special_art_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10111868667363330
+    m_Key: entrance_MinusOneFloor_ExitQuestion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10484827387002882
+    m_Key: entrance_habMod1_ExitQuestion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489218
+    m_Key: New Entry 6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489219
+    m_Key: New Entry 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11235941120147458
+    m_Key: door_habitation_module_closed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11495571113050116
+    m_Key: door_module_not_available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11506092809846788
+    m_Key: TH_serv_door_panel_not_work
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11562307132784644
+    m_Key: TH_ladder_to_M2_floor_not_work
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11924012106973188
+    m_Key: TH_hatch_toM2_req_descend_obj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489220
+    m_Key: TH_hatch_toM2_has_rope_for_descend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12256729604489221
+    m_Key: TH_hatch_toM2_has_stepladder_for_descend
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8113165029608521836
+  references:
+    version: 2
+    RefIds:
+    - rid: 8113165029608521836
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1748535721397

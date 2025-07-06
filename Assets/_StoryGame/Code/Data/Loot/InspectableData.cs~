@@ -1,0 +1,7 @@
+﻿using System.Collections.Generic;
+using _StoryGame.Data.SO.Abstract;
+
+namespace _StoryGame.Data.Loot
+{
+    public record InspectableData(string LocalizedName, List<LootData<ACurrencyData>> InspectablesLoot);
+}

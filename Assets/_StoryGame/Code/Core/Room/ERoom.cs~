@@ -1,0 +1,44 @@
+﻿namespace _StoryGame.Core.Room
+{
+    public enum ERoom
+    {
+        NotSet = -1,
+        SurfaceAccessModuleB1 = 0,
+        CorridorMainB2 = 1,
+        CorridorLivingQuartersB2 = 2,
+        ServerFacilityModuleB2 = 3,
+        HygieneModuleB2 = 4,
+        MedModuleB2 = 5,
+        RelaxationModuleB2 = 6,
+        NutritionModuleB2 = 7,
+        HabitationModule1B2 = 8,
+        HabitationModule2B2 = 9,
+        HabitationModule3B2 = 10,
+        HabitationModule4B2 = 11,
+        HabitationModule5B2 = 12,
+        HabitationModule6B2 = 13,
+        CorridorMainB3 = 14,
+        WasteReclamationModuleB3 = 15,
+        ElectroMechanicalModuleB3 = 16,
+        ClimateControlModuleB3 = 17,
+        VaultB3 = 18,
+        WarehouseB3 = 19,
+        WaterSupplyModuleB3 = 20,
+
+        // additional
+        /// <summary>
+        /// Люк на -3 этаж с -2
+        /// </summary>
+        HatchB2ToB3 = 30,
+
+        /// <summary>
+        /// Веревка с -3 на -2
+        /// </summary>
+        RopeB3ToB2 = 31,
+
+        /// <summary>
+        /// Лестница с -3 на -2
+        /// </summary>
+        LadderB3ToB2 = 32
+    }
+}

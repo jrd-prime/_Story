@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f207fbb7a46e0b04d491bf7c16fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewer: {fileID: 4913324357798021944}
   baseViews:
   - type: 1
     view: {fileID: 5003438754323005073}
@@ -146,17 +145,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dcc595217ba6ed49bad7a0b6ed46d79, type: 3}
---- !u!114 &4913324357798021944 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8690862940021355930, guid: 3dcc595217ba6ed49bad7a0b6ed46d79, type: 3}
-  m_PrefabInstance: {fileID: 4373988872674557602}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a8d00116df4fdd81cb2460e9d1fc0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7768591352465609991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6303934574085106597, guid: 3dcc595217ba6ed49bad7a0b6ed46d79, type: 3}
@@ -170,6 +158,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4696709601968370038}
     m_Modifications:
+    - target: {fileID: 1860305290657493160, guid: 705343ac58edadf4db97971d67d385c1, type: 3}
+      propertyPath: viewBaseDocument
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: a65d1910ec12ecf46a058830eb6388ee, type: 3}
     - target: {fileID: 3246321222287312305, guid: 705343ac58edadf4db97971d67d385c1, type: 3}
       propertyPath: m_Name
       value: MenuUIView

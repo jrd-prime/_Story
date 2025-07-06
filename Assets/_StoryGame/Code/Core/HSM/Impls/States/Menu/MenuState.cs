@@ -5,7 +5,7 @@ namespace _StoryGame.Core.HSM.Impls.States.Menu
 {
     public sealed class MenuState : BaseState
     {
-        public override GameStateType StateType => GameStateType.Menu;
+        public override EGameStateType StateType => EGameStateType.Menu;
 
         public MenuState(HSM hsm) : base(hsm)
         {

@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: UIViewerFloatingWindowsData
   m_EditorClassIdentifier: 
   FloatingWindowDataVo:
-  - floatingWindowType: 1
-    visualTreeAsset: {fileID: 9197481963319205126, guid: 8de0cf495f9c9c5468c81bcf6916862b, type: 3}
-  - floatingWindowType: 0
+  - eFloatingWindowType: 1
+    visualTreeAsset: {fileID: 9197481963319205126, guid: f24de6a1200098e4b8ff7a8b84dcd939, type: 3}
+  - eFloatingWindowType: 0
     visualTreeAsset: {fileID: 9197481963319205126, guid: 052b6cbb2bc247f418b0dbecad3f9be7, type: 3}
-  - floatingWindowType: 2
-    visualTreeAsset: {fileID: 9197481963319205126, guid: d9846febe37dd5345993591fcea72a43, type: 3}
+  - eFloatingWindowType: 2
+    visualTreeAsset: {fileID: 9197481963319205126, guid: c71c8411048c83745ad7248c644cf98b, type: 3}
+  - eFloatingWindowType: 3
+    visualTreeAsset: {fileID: 9197481963319205126, guid: 80beb9c31eeea224e993d694d9f1fb5a, type: 3}
+  - eFloatingWindowType: 4
+    visualTreeAsset: {fileID: 9197481963319205126, guid: d4d5c0d1a86d3e947af20e660d92c342, type: 3}
+  - eFloatingWindowType: 5
+    visualTreeAsset: {fileID: 9197481963319205126, guid: 0f7a2ae5fe66a264885ba2d97b5e7f80, type: 3}

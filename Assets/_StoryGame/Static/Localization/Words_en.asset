@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1565441502674945
-    m_Localized: wooden box
+    m_Localized: wooden crate
     m_Metadata:
       m_Items: []
   - m_Id: 3001573243289600
@@ -62,16 +62,144 @@ MonoBehaviour:
     m_Localized: crowbar
     m_Metadata:
       m_Items: []
-  - m_Id: 3001573343952899
-    m_Localized: simple note
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3001573343952900
-    m_Localized: r0 core note
-    m_Metadata:
-      m_Items: []
   - m_Id: 3001573343952901
     m_Localized: street news box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4366504857370624
+    m_Localized: ERROR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12447976218624000
+    m_Localized: 'Owl Figurine: A Little Guardian of Wisdom'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14222558420205568
+    m_Localized: -1 floor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14528387149135872
+    m_Localized: Double bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14530379292540928
+    m_Localized: Blanket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14594555692122112
+    m_Localized: Habitation Module I
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14967266423537664
+    m_Localized: Wooden Door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185854488576
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185892237312
+    m_Localized: Enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088512
+    m_Localized: Surface Access Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088513
+    m_Localized: Main Corridor (-1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088514
+    m_Localized: Living Quarters Corridor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088515
+    m_Localized: Server Facility Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088516
+    m_Localized: Hygiene Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088517
+    m_Localized: Med Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088518
+    m_Localized: Relaxation Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088519
+    m_Localized: Nutrition Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088520
+    m_Localized: Habitation Module 01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088521
+    m_Localized: Habitation Module 02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088522
+    m_Localized: Habitation Module 03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088523
+    m_Localized: Habitation Module 04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088524
+    m_Localized: Habitation Module 05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088525
+    m_Localized: Habitation Module 06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088526
+    m_Localized: Main Corridor (-2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088527
+    m_Localized: Waste Reclamation Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088528
+    m_Localized: Electro-Mechanical Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088529
+    m_Localized: Climate Control Module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088530
+    m_Localized: The Vault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088531
+    m_Localized: Warehouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115333
+    m_Localized: Ascend?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115334
+    m_Localized: Descend?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16034721786953728
+    m_Localized: Rope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16034721807925248
+    m_Localized: Stepladder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610690
+    m_Localized: Emergency hatch
     m_Metadata:
       m_Items: []
   references:

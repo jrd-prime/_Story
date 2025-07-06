@@ -1,0 +1,7 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="main-container" style="flex-grow: 1; position: absolute; top: 0; right: 0; left: 0; bottom: 0; display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; align-self: center; align-content: center; background-color: rgba(0, 0, 0, 0.49); -unity-font-definition: url(&quot;project://database/Assets/_StoryGame/Static/Font/Nunito/Nunito-Regular.ttf?fileID=12800000&amp;guid=3a9957c37bcbacd4aa7d1e01faa1316c&amp;type=3#Nunito-Regular&quot;); -unity-text-align: middle-center;">
+        <engine:VisualElement name="visualbtn" style="flex-grow: 0; position: absolute; bottom: 55px; width: 111px; height: 55px; background-color: rgba(0, 0, 0, 0.44); align-items: center; justify-content: center; align-self: center; align-content: center;">
+            <engine:Label text="START" picking-mode="Ignore" style="color: rgb(255, 255, 255);" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

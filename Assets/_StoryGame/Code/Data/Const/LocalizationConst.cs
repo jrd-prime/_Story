@@ -1,0 +1,9 @@
+﻿namespace _StoryGame.Data.Const
+{
+    public static class LocalizationConst
+    {
+        public const string ErrorKey = "ERROR";
+        
+        public const string ExitQuestionPostfix = "_ExitQuestion";
+    }
+}

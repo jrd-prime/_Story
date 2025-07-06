@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using _StoryGame.Infrastructure.Bootstrap.Interfaces;
-using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.UI.Interfaces;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Infrastructure.Bootstrap
@@ -26,7 +26,7 @@ namespace _StoryGame.Infrastructure.Bootstrap
             _loadingQueue.Enqueue(bootable);
         }
 
-        public async UniTask StartServicesInitializationAsync(int pseudoDelay = 0)
+        public async UniTask InitServicesAsync(int pseudoDelay = 0)
         {
             if (_loadingQueue.Count == 0)
                 return;
@@ -43,7 +43,7 @@ namespace _StoryGame.Infrastructure.Bootstrap
                     if (pseudoDelay > 0)
                         await UniTask.Delay(pseudoDelay);
 
-                    _log.Debug($"Service initialized successfully: {service.Description}...");
+                    // _log.Debug($"Service initialized successfully: {service.Description}...");
                 }
                 catch (Exception ex)
                 {

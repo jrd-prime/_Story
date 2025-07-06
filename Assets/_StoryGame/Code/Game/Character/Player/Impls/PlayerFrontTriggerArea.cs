@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _StoryGame.Core.Interfaces.UI;
-using _StoryGame.Game.Interactables.Interfaces;
-using _StoryGame.Infrastructure.Localization;
-using _StoryGame.Infrastructure.Logging;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.UI.Interfaces;
 using MessagePipe;
 using UnityEngine;
 using VContainer;
@@ -18,9 +18,9 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         [Inject] private IObjectResolver _container;
 
-        private ILocalizationProvider _localizationProvider;
+        private IL10nProvider _il10NProvider;
         private IJLog _log;
-        private IPublisher<IUIViewerMessage> _uiPublisher;
+        private IPublisher<IUIViewerMsg> _uiPublisher;
         private IInteractable _currentInteractable;
 
         private bool _isInitialized;
@@ -33,8 +33,8 @@ namespace _StoryGame.Game.Character.Player.Impls
                 throw new NullReferenceException($"Resolver is null. {nameof(PlayerFrontTriggerArea)}");
 
             _log = _container.Resolve<IJLog>();
-            _uiPublisher = _container.Resolve<IPublisher<IUIViewerMessage>>();
-            _localizationProvider = _container.Resolve<ILocalizationProvider>();
+            _uiPublisher = _container.Resolve<IPublisher<IUIViewerMsg>>();
+            _il10NProvider = _container.Resolve<IL10nProvider>();
 
             _isInitialized = true;
         }
@@ -45,12 +45,6 @@ namespace _StoryGame.Game.Character.Player.Impls
                 return;
 
             UpdateCurrentInteractable();
-
-            if (_currentInteractable == null)
-                return;
-
-            _log.Debug($"Interactable '{other.gameObject.name}' triggered.");
-            _currentInteractable.ShowInteractionTip(GetInteractionTip(_currentInteractable));
         }
 
         private bool IsInitialized()
@@ -80,7 +74,7 @@ namespace _StoryGame.Game.Character.Player.Impls
                 return;
 
             if (interactable != _currentInteractable)
-                _log.Warn($"Interactable {other.gameObject.name} not in trigger zone.");
+                _log.Warn($"Interact {other.gameObject.name} not in trigger zone.");
 
             _currentInteractable.HideInteractionTip();
             _interactablesInTrigger.Remove(interactable);
@@ -92,40 +86,41 @@ namespace _StoryGame.Game.Character.Player.Impls
             return interactable != null;
         }
 
-        private (string, string) GetInteractionTip(IInteractable interactable)
-        {
-            if (interactable == null)
-            {
-                Debug.LogWarning("Interactable is null when getting interaction tip.", this);
-                return (string.Empty, string.Empty);
-            }
-
-            var note = string.Empty;
-            var action = string.Empty;
-            try
-            {
-                if (_localizationProvider == null)
-                    throw new NullReferenceException("Localization provider is null.");
-
-                var key = interactable.LocalizationKey;
-                var tip = interactable.InteractionTipNameId;
-
-                note = string.IsNullOrEmpty(key)
-                    ? "Not set"
-                    : _localizationProvider.LocalizeWord(interactable.LocalizationKey, WordTransform.Upper);
-
-                action = string.IsNullOrEmpty(tip)
-                    ? "Not set"
-                    : _localizationProvider.LocalizeWord(interactable.InteractionTipNameId, WordTransform.Upper);
-
-                return (note, action);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Failed to get interaction tip: {ex.Message}", this);
-                return (note, action);
-            }
-        }
+        // private (string, string) GetInteractionTip(IInteractable interactable)
+        // {
+        //     if (interactable == null)
+        //     {
+        //         Debug.LogWarning("Interact is null when getting interaction tip.", this);
+        //         return (string.Empty, string.Empty);
+        //     }
+        //
+        //     var note = string.Empty;
+        //     var action = string.Empty;
+        //     try
+        //     {
+        //         if (_il10NProvider == null)
+        //             throw new NullReferenceException("Localization provider is null.");
+        //
+        //         var key = interactable.LocalizationKey;
+        //         var tip = interactable.InteractionTipNameId;
+        //
+        //         note = string.IsNullOrEmpty(key)
+        //             ? "Not set"
+        //             : _il10NProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
+        //
+        //         action = string.IsNullOrEmpty(tip)
+        //             ? "Not set"
+        //             : _il10NProvider.Localize(interactable.InteractionTipNameId, ETable.Words,
+        //                 ETextTransform.Upper);
+        //
+        //         return (note, action);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Debug.LogError($"Failed to get interaction tip: {ex.Message}", this);
+        //         return (note, action);
+        //     }
+        // }
 
         #region Conditions
 

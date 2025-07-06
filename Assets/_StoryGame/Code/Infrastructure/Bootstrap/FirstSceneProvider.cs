@@ -1,7 +1,6 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Data.SO.Main;
-using _StoryGame.Infrastructure.Bootstrap.Interfaces;
-using _StoryGame.Infrastructure.Logging;
 using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;

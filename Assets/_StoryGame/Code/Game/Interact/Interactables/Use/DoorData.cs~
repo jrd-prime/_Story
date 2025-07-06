@@ -1,0 +1,38 @@
+﻿using System;
+using _StoryGame.Core.Room;
+using _StoryGame.Data.Const;
+using _StoryGame.Data.SO.Abstract;
+using _StoryGame.Game.Room.Abstract;
+using UnityEngine;
+
+namespace _StoryGame.Game.Interact.Interactables.Use
+{
+    [CreateAssetMenu(
+        fileName = "DoorData",
+        menuName = SOPathConst.Interactables + nameof(DoorData),
+        order = 0
+    )]
+    public sealed class DoorData : ASettingsBase
+    {
+        public EExit exitType = EExit.NotSet;
+        public ERoom fromRoom = ERoom.NotSet;
+        public ERoom toRoom = ERoom.NotSet;
+        public EDoorRotation doorRotation = EDoorRotation.NotSet;
+        public EDoorAction doorAction = EDoorAction.NotSet;
+        public int usePrice = 2;
+
+        private void OnValidate()
+        {
+            if (exitType == EExit.NotSet)
+                throw new Exception("Exit type not set " + name);
+            if (fromRoom == ERoom.NotSet)
+                throw new Exception("From room not set " + name);
+            if (toRoom == ERoom.NotSet)
+                throw new Exception("To room not set " + name);
+            if (doorRotation == EDoorRotation.NotSet)
+                throw new Exception("Door rotation not set " + name);
+            if (doorAction == EDoorAction.NotSet)
+                throw new Exception("Door action not set " + name);
+        }
+    }
+}

@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Data
+﻿namespace _StoryGame.Data.Const
 {
     public static class ProjectConstant
     {

@@ -4,7 +4,7 @@ namespace _StoryGame.Core.HSM.Impls.States.Gameplay
 {
     public class GameplayState : BaseState
     {
-        public override GameStateType StateType => GameStateType.Gameplay;
+        public override EGameStateType StateType => EGameStateType.Gameplay;
 
         public GameplayState(HSM hsm) : base(hsm)
         {

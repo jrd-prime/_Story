@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72991505730b478b8749f01ba9c5ed5d, type: 3}
   m_Name: SpecialCurrencyData
   m_EditorClassIdentifier: 
-  id: 
+  id: sdfg
   localizationKey: 
-  description: 
+  descriptionKey: 
   iconId: 
   rarity: 0
   maxStackSize: 0
+  amount: 1

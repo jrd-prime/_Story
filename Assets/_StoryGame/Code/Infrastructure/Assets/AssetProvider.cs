@@ -1,7 +1,10 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using _StoryGame.Core.Providers.Assets;
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
@@ -30,5 +33,16 @@ namespace _StoryGame.Infrastructure.Assets
 
         public GameObject Instantiate(AssetReferenceGameObject assetId, Transform parent = null) =>
             Addressables.InstantiateAsync(assetId, parent).Result;
+
+        public T LoadAsset<T>(string id)
+        {
+            var handle = Addressables.LoadAssetAsync<T>(id);
+            var result = handle.WaitForCompletion(); //TODO Блокирует поток до завершения загрузки
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+                return result;
+
+            throw new Exception($"Failed to load asset with ID: {id}, Status: {handle.Status}");
+        }
     }
 }

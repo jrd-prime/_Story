@@ -23,4 +23,4 @@ MonoBehaviour:
         notes:
         - {fileID: 11400000, guid: 18ba3ec96300a934496b8efdd902c6e3, type: 2}
       energy:
-        energy: 2
+        energy: {fileID: 11400000, guid: 4b14d049bfac91d45885888291345ee7, type: 2}

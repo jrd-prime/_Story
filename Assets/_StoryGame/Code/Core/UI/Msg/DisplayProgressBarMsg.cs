@@ -1,0 +1,24 @@
+﻿using _StoryGame.Core.Messaging.Interfaces;
+using Cysharp.Threading.Tasks;
+
+namespace _StoryGame.Core.UI.Msg
+{
+    // TODO название хз
+    public record DisplayProgressBarMsg(
+        string ActionName,
+        float Duration,
+        UniTaskCompletionSource<EDialogResult> CompletionSource
+    ) : IPlayerOverHeadUIMsg
+    {
+        public string ActionName { get; } = ActionName;
+        public float Duration { get; } = Duration;
+        public UniTaskCompletionSource<EDialogResult> CompletionSource { get; } = CompletionSource;
+    }
+
+    public record DisplayThoughtBubbleMsg(ThoughtDataVo ThoughtDataVo, int DurationMs = 5000)
+        : IPlayerOverHeadUIMsg
+    {
+    }
+
+    public record ThoughtDataVo(string LocalizedThought);
+}

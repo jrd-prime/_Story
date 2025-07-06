@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85f5638bec7494b9851ace970badc90, type: 3}
   m_Name: CoreItemCurrencyData
   m_EditorClassIdentifier: 
-  id: 
+  id: sdf
   localizationKey: 
-  description: 
+  descriptionKey: 
   iconId: 
   rarity: 0
   maxStackSize: 0
+  amount: 1

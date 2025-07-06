@@ -1,5 +1,11 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Currency.Impls;
+using _StoryGame.Core.Providers.Assets;
+using _StoryGame.Core.Providers.Localization;
+using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Main;
+using _StoryGame.Game.Messaging;
 using _StoryGame.Infrastructure.AppStarter;
 using _StoryGame.Infrastructure.Assets;
 using _StoryGame.Infrastructure.Bootstrap;
@@ -31,14 +37,15 @@ namespace _StoryGame.Infrastructure.Scopes
 
             var bootstrapSettings = mainSettings.BootstrapSettings;
             builder.RegisterComponent(bootstrapSettings).AsSelf();
-            
+
             if (!mainSettings)
                 throw new NullReferenceException("MainSettings is null.");
             builder.RegisterInstance(mainSettings);
 
             builder.Register<SettingsProvider>(Lifetime.Singleton).As<ISettingsProvider>();
             builder.Register<AssetProvider>(Lifetime.Singleton).As<IAssetProvider>();
-            builder.Register<LocalizationProvider>(Lifetime.Singleton).As<ILocalizationProvider>();
+            builder.Register<L10NProvider>(Lifetime.Singleton).As<IL10nProvider>();
+            builder.Register<CurrencyRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<FirstSceneProvider>(Lifetime.Singleton);
 
             if (!eventSystem)
@@ -52,6 +59,8 @@ namespace _StoryGame.Infrastructure.Scopes
             builder.Register<FPSCounter>(Lifetime.Singleton).AsSelf().As<ITickable>();
 
             builder.Register<AppStartHandler>(Lifetime.Singleton).AsSelf();
+
+            builder.Register<JPublisher>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private void RegisterMessagePipe(IContainerBuilder builder)
@@ -64,7 +73,7 @@ namespace _StoryGame.Infrastructure.Scopes
             // RegisterMessageBroker: Register for IPublisher<T>/ISubscriber<T>, includes async and buffered.
             // builder.RegisterMessageBroker<ChangeGameStateSignalVo>(options);
             // builder.RegisterMessageBroker<IMovementHandlerMsg>(options);
-            // builder.RegisterMessageBroker<IMovementProcessorMsg>(options);
+            // builder.RegisterMessageBroker<IInteractProcessorMsg>(options);
         }
 
 #if UNITY_EDITOR

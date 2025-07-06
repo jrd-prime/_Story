@@ -1,0 +1,13 @@
+﻿using System;
+using _StoryGame.Core.HSM;
+using _StoryGame.Game.UI.Abstract;
+
+namespace _StoryGame.Data.UI
+{
+    [Serializable]
+    public struct UIViewData
+    {
+        public EGameStateType type;
+        public AUIViewBase view;
+    }
+}

@@ -26,6 +26,7 @@ TagManager:
   - 
   - 
   - 
+  - OverHeadUI
   - 
   - 
   - 
@@ -34,8 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Wall
   - Interactable
   m_SortingLayers:
   - name: Default

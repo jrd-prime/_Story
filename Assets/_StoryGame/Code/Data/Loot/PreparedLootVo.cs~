@@ -1,0 +1,18 @@
+﻿using _StoryGame.Core.Currency.Interfaces;
+using UnityEngine;
+
+namespace _StoryGame.Data.Loot
+{
+    public record PreparedLootData<TCurrency>(
+        TCurrency Currency,
+        int Amount,
+        Sprite Icon,
+        LootItemInfoData Info) where TCurrency : ICurrency
+    {
+        public string RoomId => Info.RoomId;
+        public string InteractableId => Info.InteractableId;
+        public string LocalizedName => Info.LocalizedName;
+    }
+
+    public record LootItemInfoData(string LocalizedName, string RoomId, string InteractableId);
+}

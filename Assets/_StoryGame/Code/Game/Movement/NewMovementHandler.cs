@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
+using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Game.Character.Player.Messages;
-using _StoryGame.Game.Interactables.Interfaces;
 using _StoryGame.Game.Movement.Messages;
-using _StoryGame.Infrastructure.Logging;
 using MessagePipe;
 using R3;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using VContainer;
 
 namespace _StoryGame.Game.Movement
@@ -41,7 +45,7 @@ namespace _StoryGame.Game.Movement
             IJLog log,
             IPublisher<IMovementHandlerMsg> selfMsgPub,
             ISubscriber<IPlayerMsg> playerMsgSub,
-            ISubscriber<IMovementProcessorMsg> movementProcessorMsgSub)
+            ISubscriber<IInteractProcessorMsg> movementProcessorMsgSub)
         {
             _log = log;
 
@@ -122,7 +126,7 @@ namespace _StoryGame.Game.Movement
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, interactableLayer))
             {
-                // _log.Debug($"Hit layer Interactable object: {hit.collider.gameObject.name}");
+                // _log.Debug($"Hit layer Interact object: {hit.collider.gameObject.name}");
 
                 var interactable = hit.collider.GetComponent<IInteractable>();
                 if (interactable != null)
@@ -151,7 +155,7 @@ namespace _StoryGame.Game.Movement
 
         private void ResetTouch()
         {
-            _log.Debug("ResetTouch");
+            // _log.Debug("ResetTouch");
             _isTouchActive = false;
         }
 
@@ -161,9 +165,44 @@ namespace _StoryGame.Game.Movement
         private static bool HasNoInput() =>
             !Input.GetMouseButtonDown(0) && Input.touchCount == 0;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsClickOverUI() =>
-            EventSystem.current && EventSystem.current.IsPointerOverGameObject();
+        // [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsClickOverUI()
+        {
+            if (!EventSystem.current || !EventSystem.current.IsPointerOverGameObject())
+                return false;
+
+            Debug.LogError(EventSystem.current);
+            // Отладочная информация
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition
+            };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            if (results.Count <= 0)
+                return true;
+
+            StringBuilder debugInfo = new StringBuilder("Клик по UI: ");
+            foreach (var result in results)
+            {
+                debugInfo.AppendLine();
+                debugInfo.Append(
+                    $"- {result.gameObject.name} (слой: {LayerMask.LayerToName(result.gameObject.layer)})");
+
+                if (result.gameObject.transform.parent != null)
+                    debugInfo.Append($", родитель: {result.gameObject.transform.parent.name}");
+
+                var selectable = result.gameObject.GetComponent<Selectable>();
+                if (selectable != null)
+                    debugInfo.Append($", компонент: {selectable.GetType().Name}");
+            }
+
+            Debug.Log(debugInfo.ToString());
+
+            return true;
+        }
 
         #endregion
     }

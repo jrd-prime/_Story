@@ -1,0 +1,33 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_StoryGame/Static/UI/USS/buttons.uss?fileID=7433441132597879392&amp;guid=6f00e414ece0c6740b4c39f8a7085f9a&amp;type=3#buttons" />
+    <Style src="project://database/Assets/_StoryGame/Static/UI/USS/popup.uss?fileID=7433441132597879392&amp;guid=00bf0efda7773cd459c51d094b705257&amp;type=3#popup" />
+    <engine:VisualElement name="cMain" class="pp-window-cont" style="width: auto;">
+        <engine:VisualElement name="cHead" class="pp-head-cont">
+            <engine:Label text="SOME TITLE (ЗАГОЛОВОК)" name="title-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 2px; padding-right: 0; padding-bottom: 2px; padding-left: 0;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="cContent" class="pp-desc-cont" style="flex-direction: row;">
+            <engine:VisualElement name="loot-item-container0" class="loot-item-container">
+                <engine:VisualElement name="icon" class="loot-icon" />
+            </engine:VisualElement>
+            <engine:VisualElement name="loot-item-container1" class="loot-item-container">
+                <engine:VisualElement name="icon" class="loot-icon" />
+            </engine:VisualElement>
+            <engine:VisualElement name="loot-item-container2" class="loot-item-container">
+                <engine:VisualElement name="icon" class="loot-icon" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="cBtn" class="pp-btn-cont align-right">
+            <engine:VisualElement name="left" class="left-cont" style="flex-grow: 1;">
+                <engine:VisualElement name="close-btn-cont" class="pp-btn-cont-base" style="position: relative;">
+                    <engine:Button text="CLOSE" name="close" class="pp-btn-base pp-btn-secondary" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="mid" class="mid-cont" style="flex-grow: 1;" />
+            <engine:VisualElement name="right" class="right-cont" style="flex-grow: 1;">
+                <engine:VisualElement name="take-all-btn-cont" class="pp-btn-cont-base" style="min-width: 204px; min-height: 55px; display: flex;">
+                    <engine:Button name="take-all" text="TAKE ALL" class="pp-btn-base pp-btn-accent" style="background-color: rgb(29, 106, 92); color: rgb(255, 255, 255); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

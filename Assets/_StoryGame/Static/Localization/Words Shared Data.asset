@@ -59,16 +59,164 @@ MonoBehaviour:
     m_Key: crowbar
     m_Metadata:
       m_Items: []
-  - m_Id: 3001573343952899
-    m_Key: r0_simple_note
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3001573343952900
-    m_Key: r0_core_note
-    m_Metadata:
-      m_Items: []
   - m_Id: 3001573343952901
     m_Key: street_news
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4366504857370624
+    m_Key: ERROR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12447976218624000
+    m_Key: special_art
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14222558420205568
+    m_Key: entrance_MinusOneFloor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14528387149135872
+    m_Key: double_bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14530379292540928
+    m_Key: blanket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14594555692122112
+    m_Key: entrance_habMod1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14967266423537664
+    m_Key: door_wooden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16034721786953728
+    m_Key: rope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16034721807925248
+    m_Key: stepladder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518937833472
+    m_Key: New Entry 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088512
+    m_Key: SurfaceAccessModule0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088513
+    m_Key: CorridorMain1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088514
+    m_Key: CorridorLivingQuarters1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088515
+    m_Key: ServerFacilityModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088516
+    m_Key: HygieneModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088517
+    m_Key: MedModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088518
+    m_Key: RelaxationModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088519
+    m_Key: NutritionModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088520
+    m_Key: HabitationModule1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088521
+    m_Key: HabitationModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088522
+    m_Key: HabitationModule3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088523
+    m_Key: HabitationModule4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088524
+    m_Key: HabitationModule5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088525
+    m_Key: HabitationModule6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088526
+    m_Key: CorridorMain2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088527
+    m_Key: WasteReclamationModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088528
+    m_Key: ElectroMechanicalModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088529
+    m_Key: ClimateControlModule2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088530
+    m_Key: Vault2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972395793088531
+    m_Key: Warehouse2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518937833473
+    m_Key: New Entry 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518937833474
+    m_Key: New Entry 6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610688
+    m_Key: New Entry 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185854488576
+    m_Key: ExitQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14969185892237312
+    m_Key: EnterQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115333
+    m_Key: AscendQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16027582662115334
+    m_Key: DescendQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610689
+    m_Key: New Entry 8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16369518954610690
+    m_Key: obj_emergency_hatch
     m_Metadata:
       m_Items: []
   m_Metadata:
