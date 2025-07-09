@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09bd3d3f1de14e109c0cc8e0d58dbe6d, type: 3}
-  m_Name: B3_B3_cMain_to_mech
+  m_Name: B3_B3_mech_to_cMain
   m_EditorClassIdentifier: 
   exit: 15
-  fromRoom: 14
-  toRoom: 16
+  fromRoom: 16
+  toRoom: 14
   doorRotation: 1
   doorAction: 0
   usePrice: 2
