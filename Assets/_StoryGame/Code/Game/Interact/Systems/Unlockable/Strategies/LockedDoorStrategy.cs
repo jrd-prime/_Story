@@ -14,7 +14,7 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
     /// <summary>
     /// Если условия не выполнены - показываем подсказку. Если выполнены - меняем состояние и вызываем реинтеракт
     /// </summary>
-    public sealed class LockedDoorStrategy : IUnlockSystemStrategy
+    public sealed class LockedDoorStrategy : IPassSystemStrategy
     {
         public string Name => nameof(LockedDoorStrategy);
 
@@ -26,10 +26,10 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
 
         public async UniTask<bool> ExecuteAsync(IUnlockable interactable)
         {
-            var door = interactable as UnlockableDoor
+            var door = interactable as Passable
                        ?? throw new ArgumentException("Interactable is not a door");
 
-            var result = _conditionChecker.GetKeysUnfulfilledConditions(door.UnlockConditions);
+            var result = _conditionChecker.GetKeysUnfulfilledConditions(door.ConditionsData);
 
             if (result.Success)
             {

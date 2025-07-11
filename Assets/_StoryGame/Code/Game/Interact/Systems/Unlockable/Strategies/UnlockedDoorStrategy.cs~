@@ -13,7 +13,7 @@ using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
 {
-    public sealed class UnlockedDoorStrategy : IPassSystemStrategy
+    public sealed class UnlockedDoorStrategy : IUnlockSystemStrategy
     {
         public string Name => nameof(LockedDoorStrategy);
 

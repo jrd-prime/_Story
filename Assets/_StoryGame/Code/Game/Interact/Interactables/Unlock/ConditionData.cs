@@ -1,9 +1,10 @@
 ﻿using System;
+using _StoryGame.Game.Interact.Abstract;
 
 namespace _StoryGame.Game.Interact.Interactables.Unlock
 {
     [Serializable]
-    public struct UnlockConditionData
+    public struct ConditionData
     {
         public InteractCondition[] conditions;
         public ItemCondition[] requiredItems;

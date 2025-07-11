@@ -7,7 +7,6 @@ using _StoryGame.Game.Movement;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
-using UnityEngine;
 
 namespace _StoryGame.Game.Interact
 {

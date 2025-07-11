@@ -8,6 +8,7 @@ using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
+using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
@@ -22,7 +23,6 @@ namespace _StoryGame.Game.Room.Abstract
     {
         [SerializeField] private string roomId;
         [SerializeField] private string roomName;
-        [SerializeField] private RoomInteractablesVo interactables;
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private ERoom type;
         [SerializeField] private RoomExitVo[] exits;
@@ -32,7 +32,6 @@ namespace _StoryGame.Game.Room.Abstract
         public string Name => roomName;
         public float Progress { get; }
         public RoomLootVo Loot => _roomData.Loot;
-        public RoomInteractablesVo Interactables => interactables;
 
         private RoomData _roomData;
         private IPublisher<RoomLootGeneratedMsg> _roomLootGeneratedMsgPub;
@@ -40,7 +39,7 @@ namespace _StoryGame.Game.Room.Abstract
         private IGameManager _gameManager;
 
         private readonly CompositeDisposable _disposables = new();
-        private readonly Dictionary<EExit, UnlockableDoor> _exitDoors = new(); // <exit, door>
+        private readonly Dictionary<EExit, Passable> _exitDoors = new(); // <exit, door>
         private readonly List<IUnlockable> _conditionalObjects = new();
 
         [Inject]
@@ -66,7 +65,7 @@ namespace _StoryGame.Game.Room.Abstract
 
         private void Awake()
         {
-            var conditionals = FindObjectsByType<UnlockableDoor>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var conditionals = FindObjectsByType<Passable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             _conditionalObjects.AddRange(conditionals);
 
@@ -90,7 +89,7 @@ namespace _StoryGame.Game.Room.Abstract
 
 #endif
 
-        public UnlockableDoor GetExitPointFor(EExit exitType)
+        public Passable GetExitPointFor(EExit exitType)
         {
             if (!_exitDoors.TryGetValue(exitType, out var exit))
                 throw new Exception($"Exit to {exitType} not found in room {Id} {Name}.");

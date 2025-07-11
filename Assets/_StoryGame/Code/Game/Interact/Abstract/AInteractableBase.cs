@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
@@ -45,10 +46,12 @@ namespace _StoryGame.Game.Interact.Abstract
 
         protected IObjectResolver Resolver;
 
+        protected IPlayer Player;
+
         // protected InteractablesTipUI InteractablesTipUI;
         private ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
         protected ISubscriber<ItemAmountChangedMsg> ItemLootedMsgSub;
-        protected IJLog _log;
+        protected IJLog LOG;
 
         [Inject]
         private void Construct(
@@ -57,14 +60,18 @@ namespace _StoryGame.Game.Interact.Abstract
             IL10nProvider il10NProvider,
             IPublisher<IUIViewerMsg> uiViewerMessagePublisher,
             ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub,
-            ISubscriber<ItemAmountChangedMsg> itemLootedMsgSub)
+            ISubscriber<ItemAmountChangedMsg> itemLootedMsgSub,
+            IPlayer player // TODO remove
+        )
         {
             Resolver = resolver;
-            _log = resolver.Resolve<IJLog>();
+            LOG = resolver.Resolve<IJLog>();
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
             _il10NProvider = il10NProvider;
             _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
             ItemLootedMsgSub = itemLootedMsgSub;
+
+            Player = player;
 
             appStartHandler.IsAppStarted
                 .Subscribe(OnAppStarted)
@@ -81,7 +88,11 @@ namespace _StoryGame.Game.Interact.Abstract
 
             if (string.IsNullOrEmpty(id))
                 id = "id_" + localizationKey;
+
+            OnAwake();
         }
+
+        protected abstract void OnAwake();
 
         private void OnAppStarted(Unit _)
         {

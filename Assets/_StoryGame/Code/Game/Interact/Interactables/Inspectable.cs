@@ -20,7 +20,12 @@ namespace _StoryGame.Game.Interact.Interactables
         public override EInteractableType InteractableType => EInteractableType.Inspect;
         public EInspectState InspectState { get; private set; } = EInspectState.NotInspected;
         public OjectLootVo[] Loot => loot;
-        public bool HasLoot() => loot.Length > 0; 
+        public bool HasLoot() => loot.Length > 0;
+
+        protected override void OnAwake()
+        {
+            
+        }
 
         public override async UniTask InteractAsync(ICharacter character)
         {

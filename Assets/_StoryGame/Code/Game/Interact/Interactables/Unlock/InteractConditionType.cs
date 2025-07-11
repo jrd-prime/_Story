@@ -5,6 +5,7 @@
         NotSet = -1,
         HasElectricity = 1000,
         ServModuleHasPower = 1,
-        ModulePersistentClosed = 2
+        ModulePersistentClosed = 2,
+        MechWaterSupplyOff = 3
     }
 }

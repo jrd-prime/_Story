@@ -63,6 +63,7 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Unlock\InteractConditionType.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIViewerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\NoteData.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Condition\Passable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Use\Action\Strategies\SwitchStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IWalletMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\UnlockSystem.cs" />
@@ -84,10 +85,10 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Interfaces\ICameraManager.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Animations\Messages\ResetTriggerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Abstract\AInteractableBase.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Unlock\UnlockConditionData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Interfaces\IState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Game\Messages\TakeRoomLootMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Input\Messages\EnableInputMsg.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Room\Abstract\RoomExitVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIViewer.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Currency\ECurrencyType.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\CurrenciesData.cs" />
@@ -131,7 +132,6 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestReward.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Interfaces\IUIViewer.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\Gameplay\GameplayUIViewModel.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Unlock\AUnlockable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\ICharacter.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\UI\UIViewerFloatingWindowsData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Game\Messages\GoToRoomRequestMsg.cs" />
@@ -142,7 +142,6 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Providers\Assets\IAssetProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Input\FullScreenMovementProcessor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Messages\ResetFloatingWindowMsg.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Conditional.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\UISettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IEquippable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Room\Abstract\ARoom.cs" />
@@ -222,13 +221,12 @@
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\ThoughtData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Managers\Game\GameService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Loot\PreparedLootVo.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Data\Room\RoomInteractablesVo.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Const\ProjectConstant.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Unlock\UnlockableDoor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Main\BootstrapSettings.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Room\EExit.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\CheckerExtension.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\CoreItemData.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Abstract\AConditional.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Room\Messages\RoomLootGeneratedMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Tools\FPSCounter.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestObjective.cs" />
@@ -261,8 +259,10 @@
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\RootScope.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\WalletNew\Impls\WalletService.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Localization\L10NProvider.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Use\OpenableObjData.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModulePhysics2D.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Room\RoomLootVo.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Condition\Toggleable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Inspect\Strategies\SearchStrategy.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\IMovable.cs" />
@@ -282,7 +282,6 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IGatherable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Character\Player\Impls\PlayerFrontTriggerArea.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Messages\DisplayArtefactInfoMsg.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Use\DoorData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Const\OverHeadUIConst.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Scopes\Game\PlayerInstaller.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\HUD\Components\EnergyBarHUDController.cs" />
@@ -318,6 +317,7 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Abstract\AUsable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Bootstrap\BootstrapLoader.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ACurrencyData.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Unlock\ConditionData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\WalletNew\Interfaces\IWalletOwner.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Inspect\CurrentOperationMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Character\Player\Impls\PlayerView.cs" />

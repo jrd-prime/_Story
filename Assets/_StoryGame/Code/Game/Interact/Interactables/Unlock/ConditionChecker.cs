@@ -18,7 +18,7 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
             _log = log;
         }
 
-        public ConditionsResult CheckConditions(UnlockConditionData conditions)
+        public ConditionsResult CheckConditions(ConditionData conditions)
         {
             List<string> thoughts = new();
 
@@ -73,7 +73,7 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
             return new ConditionsResult(result, thoughts.ToArray());
         }
 
-        public ConditionsResult GetKeysUnfulfilledConditions(UnlockConditionData conditions)
+        public ConditionsResult GetKeysUnfulfilledConditions(ConditionData conditions)
         {
             var thoughts = new List<string>();
             bool isFulfilled = true;

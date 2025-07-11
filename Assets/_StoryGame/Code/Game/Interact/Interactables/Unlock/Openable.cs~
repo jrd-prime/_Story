@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace _StoryGame.Game.Interact.Interactables.Unlock
 {
-    public sealed class UnlockableDoor : AUnlockable
+    public sealed class ConditionalDoor : AConditional
     {
         [SerializeField] private DoorData doorData;
 
@@ -27,16 +27,15 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
 
         protected override void Subscribe()
         {
-            _log.Warn("Subscribe AUnlockable in " + gameObject.name);
+            // _log.Warn("Subscribe AConditional in " + gameObject.name);
             ItemLootedMsgSub.Subscribe(OnItemLooted).AddTo(_disposables);
         }
 
         protected override void Unsubscribe() => _disposables.Dispose();
 
-
         private void OnItemLooted(ItemAmountChangedMsg msg)
         {
-            _log.Warn("OnItemLooted. New amount: " + msg.Amount + ". Item: " + msg.ItemId);
+            // _log.Warn("OnItemLooted. New amount: " + msg.Amount + ". Item: " + msg.ItemId);
             InitCurrentState();
         }
 
@@ -44,7 +43,7 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
         {
             var conditionsResult = CheckConditionsToUnlock();
             DoorState = conditionsResult.Success ? EDoorState.Unlocked : EDoorState.Locked;
-            _log.Warn("DoorState: " + DoorState + " / name = " + gameObject.name);
+            // _log.Warn("DoorState: " + DoorState + " / name = " + gameObject.name);
         }
 
         public override async UniTask InteractAsync(ICharacter character)
@@ -55,6 +54,6 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
             await System.Process(this);
         }
 
-        public void SetState(EDoorState state) => DoorState = state; 
+        public void SetState(EDoorState state) => DoorState = state;
     }
 }

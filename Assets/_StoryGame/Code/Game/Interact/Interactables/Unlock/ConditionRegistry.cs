@@ -11,6 +11,8 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
             _conditions.Add(InteractConditionType.ServModuleHasPower, false);
             _conditions.Add(InteractConditionType.HasElectricity, false);
             
+            _conditions.Add(InteractConditionType.MechWaterSupplyOff, false);
+            
             
             
             

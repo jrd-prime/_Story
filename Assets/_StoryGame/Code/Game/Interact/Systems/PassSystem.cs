@@ -11,11 +11,11 @@ using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.Systems
 {
-    public sealed class UnlockSystem : AInteractSystem<IUnlockable>
+    public sealed class PassSystem : AInteractSystem<IPassable>
     {
         private readonly UnlockableStrategyProvider _strategyProvider;
 
-        public UnlockSystem(InteractSystemDepFlyweight dep, UnlockableStrategyProvider strategyProvider) : base(dep) =>
+        public PassSystem(InteractSystemDepFlyweight dep, UnlockableStrategyProvider strategyProvider) : base(dep) =>
             _strategyProvider = strategyProvider;
 
         protected override UniTask<bool> OnInteractAsync()
@@ -28,29 +28,29 @@ namespace _StoryGame.Game.Interact.Systems
 
     public class UnlockableStrategyProvider
     {
-        private readonly Dictionary<Type, Dictionary<Enum, IUnlockSystemStrategy>> _strategiesByType = new();
+        private readonly Dictionary<Type, Dictionary<Enum, IPassSystemStrategy>> _strategiesByType = new();
 
         public UnlockableStrategyProvider(InteractSystemDepFlyweight dep, ConditionChecker conditionChecker)
         {
-            _strategiesByType.Add(typeof(UnlockableDoor), new Dictionary<Enum, IUnlockSystemStrategy>()
+            _strategiesByType.Add(typeof(Passable), new Dictionary<Enum, IPassSystemStrategy>()
             {
                 { EDoorState.Locked, new LockedDoorStrategy(dep, conditionChecker) },
                 { EDoorState.Unlocked, new UnlockedDoorStrategy(dep, conditionChecker) }
             });
         }
 
-        public IUnlockSystemStrategy GetStrategy(IUnlockable interactable)
+        public IPassSystemStrategy GetStrategy(IPassable interactable)
         {
             switch (interactable)
             {
-                case UnlockableDoor door:
+                case Passable door:
                     return GetDoorStrategy(door);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(interactable), interactable, null);
             }
         }
 
-        private IUnlockSystemStrategy GetDoorStrategy(UnlockableDoor door)
+        private IPassSystemStrategy GetDoorStrategy(Passable door)
         {
             if (!_strategiesByType.TryGetValue(door.GetType(), out var dictionary))
                 throw new ArgumentException($"Unknown door type: {door.GetType()}");

@@ -8,11 +8,11 @@ using UnityEngine;
 namespace _StoryGame.Game.Interact.Interactables.Use
 {
     [CreateAssetMenu(
-        fileName = "DoorData",
-        menuName = SOPathConst.Interactables + nameof(DoorData),
+        fileName = "OpenableObjData",
+        menuName = SOPathConst.Interactables + nameof(OpenableObjData),
         order = 0
     )]
-    public sealed class DoorData : ASettingsBase
+    public sealed class OpenableObjData : ASettingsBase
     {
         public EExit exit = EExit.NotSet;
         public ERoom fromRoom = ERoom.NotSet;

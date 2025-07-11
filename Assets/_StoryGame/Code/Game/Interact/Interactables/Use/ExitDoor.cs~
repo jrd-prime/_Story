@@ -18,8 +18,7 @@ namespace _StoryGame.Game.Interact.Interactables.Use
 
         [SerializeField] private EDoorAction doorAction;
 
-        [FormerlySerializedAs("doorData")] [SerializeField]
-        private OpenableObjData openableObjData;
+        [FormerlySerializedAs("doorData")] [SerializeField] private OpenableObjData openableObjData;
 
         public string ExitQuestionLocalizationKey => LocalizationKey + LocalizationConst.ExitQuestionPostfix;
 
@@ -57,10 +56,6 @@ namespace _StoryGame.Game.Interact.Interactables.Use
                     $"but is {gameObject.layer} ({currentLayerName})"
                 );
             }
-        }
-
-        protected override void OnAwake()
-        {
         }
 
         public override async UniTask InteractAsync(ICharacter character)

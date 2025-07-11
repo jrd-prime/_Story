@@ -4,7 +4,6 @@ using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
-using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Interactables.Use;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;

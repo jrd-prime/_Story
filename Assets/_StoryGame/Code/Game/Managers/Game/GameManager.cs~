@@ -99,9 +99,6 @@ namespace _StoryGame.Game.Managers.Game
                 OnTransitionToRoomRequestMsg,
                 msg => msg is GoToRoomRequestMsg
             );
-            
-            
-            _player.Wallet.Add("rope", 1);
         }
 
 

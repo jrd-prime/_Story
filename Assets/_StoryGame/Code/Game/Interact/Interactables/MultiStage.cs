@@ -10,13 +10,17 @@ namespace _StoryGame.Game.Interact.Interactables
     /// <summary>
     /// Объекты с несколькими стадиями взаимодействия
     /// </summary>
-    public sealed class MultiStage : AInteractable<InspectSystem>// TODO fake system
+    public sealed class MultiStage : AInteractable<InspectSystem> // TODO fake system
     {
         public override EInteractableType InteractableType => EInteractableType.MultiStage;
+
+        protected override void OnAwake()
+        {
+        }
+
         public override UniTask InteractAsync(ICharacter character)
         {
             throw new NotImplementedException();
         }
-
     }
 }

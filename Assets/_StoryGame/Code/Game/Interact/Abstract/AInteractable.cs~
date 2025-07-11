@@ -23,25 +23,8 @@ namespace _StoryGame.Game.Interact.Abstract
             OnStart();
         }
 
-        private void OnEnable()
-        {
-            Enable();
-            Subscribe();
-        }
-
-        protected virtual void Enable()
-        {
-        }
-
-        private void OnDisable()
-        {
-            Disable();
-            Unsubscribe();
-        }
-
-        protected virtual void Disable()
-        {
-        }
+        private void OnEnable() => Subscribe();
+        private void OnDisable() => Unsubscribe();
 
 
         protected virtual void Subscribe()
