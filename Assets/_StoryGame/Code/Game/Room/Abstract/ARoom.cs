@@ -26,6 +26,7 @@ namespace _StoryGame.Game.Room.Abstract
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private ERoom type;
         [SerializeField] private RoomExitVo[] exits;
+        [SerializeField] private Toggleable[] toggleables;
 
         public ERoom Type => type;
         public string Id => roomId;
@@ -78,6 +79,9 @@ namespace _StoryGame.Game.Room.Abstract
         private void OnAppStarted(Unit _)
         {
             _roomLootGeneratedMsgPub.Publish(new RoomLootGeneratedMsg(roomId));
+
+            foreach (var toggleable in toggleables)
+                toggleable.Initialize();
         }
 
 #if UNITY_EDITOR

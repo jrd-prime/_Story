@@ -1,21 +1,21 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
-using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.WalletNew.Messages;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Interactables.Use;
-using _StoryGame.Infrastructure.Interact;
+using _StoryGame.Game.Interact.Systems;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace _StoryGame.Game.Interact.Interactables.Unlock
+namespace _StoryGame.Game.Interact.Interactables.Condition
 {
     /// <summary>
-    /// Дверь, шкаф, ящик, выключатель
+    /// Проходимые
     /// </summary>
     public sealed class Passable : AConditional<PassSystem>, IPassable
     {
@@ -70,18 +70,6 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
         public void SetState(EDoorState state) => DoorState = state;
     }
 
-    public class PassSystem : AInteractSystem<IPassable>
-    {
-        public PassSystem(InteractSystemDepFlyweight dep) : base(dep)
-        {
-        }
-
-        protected override UniTask<bool> OnInteractAsync()
-        {
-            Dep.Log.Debug("Passable:  interact");
-            return UniTask.FromResult(true);
-        }
-    }
 
     public interface IPassable : IInteractable
     {

@@ -1,6 +1,5 @@
 ﻿using System;
 using _StoryGame.Core.Interact;
-using _StoryGame.Game.Interact.Interactables;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using VContainer;
 

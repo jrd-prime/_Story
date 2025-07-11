@@ -2,11 +2,8 @@
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Messaging.Interfaces;
-using _StoryGame.Core.Room;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Game.Managers.Room.Messages;
-using _StoryGame.Game.Room.Abstract;
-using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
 using VContainer.Unity;
 
@@ -53,10 +50,9 @@ namespace _StoryGame.Game.Managers.Room
             _currentRoom?.Hide();
             _currentRoom = _roomsRegistry.GetRoomByType(msg.ToRoom);
             _currentRoom.Show();
-            
+
             var exitSpawnPosition = _currentRoom.GetExitPointFor(msg.Exit).GetEntryPoint();
-            _log.Warn("Exit spawn position: " + exitSpawnPosition);
-            
+
             _player.SetPosition(exitSpawnPosition);
         }
     }

@@ -2,7 +2,6 @@
 using _StoryGame.Core.Room;
 using _StoryGame.Data.Const;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Game.Room.Abstract;
 using UnityEngine;
 
 namespace _StoryGame.Game.Interact.Interactables.Use

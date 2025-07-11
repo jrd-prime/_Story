@@ -2,6 +2,7 @@
 using System.Linq;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Game.Interact.Abstract;
 
 namespace _StoryGame.Game.Interact.Interactables.Unlock
 {

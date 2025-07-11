@@ -5,7 +5,7 @@ using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Conditional;
@@ -118,7 +118,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<UseSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<UnlockSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PassSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<ToggleSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             

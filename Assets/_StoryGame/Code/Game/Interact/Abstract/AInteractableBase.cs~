@@ -4,7 +4,6 @@ using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
@@ -52,7 +51,6 @@ namespace _StoryGame.Game.Interact.Abstract
         private ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
         protected ISubscriber<ItemAmountChangedMsg> ItemLootedMsgSub;
         protected IJLog LOG;
-        protected IJPublisher Publisher;
 
         [Inject]
         private void Construct(
@@ -62,8 +60,7 @@ namespace _StoryGame.Game.Interact.Abstract
             IPublisher<IUIViewerMsg> uiViewerMessagePublisher,
             ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub,
             ISubscriber<ItemAmountChangedMsg> itemLootedMsgSub,
-            IPlayer player, // TODO remove
-            IJPublisher publisher
+            IPlayer player // TODO remove
         )
         {
             Resolver = resolver;
@@ -72,7 +69,7 @@ namespace _StoryGame.Game.Interact.Abstract
             _il10NProvider = il10NProvider;
             _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
             ItemLootedMsgSub = itemLootedMsgSub;
-            Publisher = publisher;
+
             Player = player;
 
             appStartHandler.IsAppStarted

@@ -4,6 +4,7 @@ using _StoryGame.Core.Interact;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
+using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Interactables.Use;
 using _StoryGame.Game.Managers.Game.Messages;
@@ -33,7 +34,7 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
         }
 
-        public async UniTask<bool> ExecuteAsync(IUnlockable interactable)
+        public async UniTask<bool> ExecuteAsync(IPassable interactable)
         {
             _door = interactable as Passable ?? throw new ArgumentException("Interactable is not a door");
 

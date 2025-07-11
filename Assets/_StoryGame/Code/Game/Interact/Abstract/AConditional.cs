@@ -4,15 +4,13 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Data.SO.Abstract;
-using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Systems;
+using _StoryGame.Game.Interact.Interactables.Unlock;
 using Cysharp.Threading.Tasks;
 using R3;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace _StoryGame.Game.Interact.Interactables.Unlock
+namespace _StoryGame.Game.Interact.Abstract
 {
     /// <summary>
     /// Объект, который требует наличия какого-либо ПРЕДМЕТА или УСЛОВИЙ для открытия (деревянный ящик - лом, дверь - ключ/питание)

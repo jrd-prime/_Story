@@ -3,7 +3,7 @@ using System.Text;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.Interact;
@@ -24,7 +24,7 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
         public LockedDoorStrategy(InteractSystemDepFlyweight dep, ConditionChecker conditionChecker)
             => (_dep, _conditionChecker) = (dep, conditionChecker);
 
-        public async UniTask<bool> ExecuteAsync(IUnlockable interactable)
+        public async UniTask<bool> ExecuteAsync(IPassable interactable)
         {
             var door = interactable as Passable
                        ?? throw new ArgumentException("Interactable is not a door");

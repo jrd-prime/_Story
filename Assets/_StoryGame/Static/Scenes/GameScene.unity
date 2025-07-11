@@ -1725,6 +1725,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: B3_FLOOR
       objectReference: {fileID: 0}
+    - target: {fileID: 1225487522257765393, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: toggleables.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1225487522257765393, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: 'toggleables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2829916121749943202}
+    - target: {fileID: 2141572478802731833, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: defaultState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2141572478802731833, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
       propertyPath: localizationKey
       value: door_wooden
@@ -1773,11 +1785,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7569430237879840910, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: m_Name
+      value: Mech_water
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569430237879840910, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+--- !u!114 &2829916121749943202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2141572478802731833, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+  m_PrefabInstance: {fileID: 2829916121749943201}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db75e242840481880c42c2917ee514f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2829916121749943204 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1225487522257765393, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}

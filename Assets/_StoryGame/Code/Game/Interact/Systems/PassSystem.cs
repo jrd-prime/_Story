@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using _StoryGame.Core.Interact;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Interact.Systems.Unlockable.Strategies;

@@ -1,54 +1,127 @@
 ﻿using System;
+using _StoryGame.Core.Interact.Enums;
+using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Infrastructure.Interact;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 
-namespace _StoryGame.Game.Interact.Interactables.Unlock
+namespace _StoryGame.Game.Interact.Interactables.Condition
 {
     /// <summary>
     /// Вода которую можно откачать. Веревка, которая сбрасывается в люк. Т.е. есть аним
     /// </summary>
-    public sealed class Toggleable : AConditional
+    public sealed class Toggleable : AConditional<ToggleSystem>, IToggleable
     {
         [SerializeField] private EToggleableState defaultState = EToggleableState.NotSet;
 
         private EToggleableState _currentState = EToggleableState.NotSet; // будет сохраняться между сессиями
+        private EConditionResult _conditionResult = EConditionResult.NotSet;
+        private bool _isInitialized;
 
         protected override void OnAwake()
         {
             if (defaultState == EToggleableState.NotSet)
                 throw new Exception("ToggleableState not set. " + name);
 
+
             _currentState = defaultState; //TODO load state
+            // _currentState = EToggleableState.Off; // test
         }
 
-        protected override void Enable()
+        protected override void OnStart()
         {
-            if (_currentState == defaultState)
-            {
-                ConditionChecker = Resolver.Resolve<ConditionChecker>();
-                if (ConditionChecker == null)
-                {
-                    throw new Exception("ConditionChecker is null. " + gameObject.name);
-                }
+            ChangeToNewState(defaultState);
 
-                LOG.Debug(ConditionChecker.CheckConditions(ConditionsData).Success.ToString());
-                LOG.Debug("Toggleable: " + name + " Current == Default && condition == false");
+            if (ConditionChecker == null)
+                throw new Exception("ConditionChecker is null. " + gameObject.name);
+
+
+            var result = ConditionChecker.CheckConditions(ConditionsData).Success;
+
+            _conditionResult = result ? EConditionResult.Fulfilled : EConditionResult.NotFulfilled;
+
+            if (_conditionResult == EConditionResult.NotFulfilled)
+            {
+                LOG.Warn("Conditions not fulfilled > return");
                 return;
             }
 
+            // Conditions fulfilled
+            LOG.Warn("Conditions fulfilled");
+            if (_currentState == defaultState)
+            {
+                // default obj state
+                LOG.Debug("default obj state");
+                // conditions fulfilled > change state opposite default
+                LOG.Debug("conditions fulfilled > change state opposite default");
 
-            // тут надо типа проверить условия, обновить стейт, и в зависимости от стейта >>>
-            // например, если визибл
+                LOG.Warn("State was : " + _currentState);
+
+                _currentState = defaultState == EToggleableState.Off
+                    ? EToggleableState.On
+                    : EToggleableState.Off;
+
+                ChangeToNewState(_currentState);
+
+                return;
+            }
+            else
+            {
+                LOG.Warn("state was changed from default before");
+                return;
+            }
         }
+
+        private void ChangeToNewState(EToggleableState currentState)
+        {
+            LOG.Warn("ChangeToNewState to " + currentState);
+            _currentState = currentState;
+            var a = _currentState == EToggleableState.On;
+            gameObject.SetActive(a);
+            //TODO save state
+        }
+
+        public void Initialize()
+        {
+            ChangeToNewState(defaultState);
+
+            if (ConditionChecker == null)
+                throw new Exception("ConditionChecker is null. " + gameObject.name);
+            _isInitialized = true;
+        }
+    }
+
+    internal enum EConditionResult
+    {
+        NotSet = -1,
+        NotFulfilled = 0,
+        Fulfilled = 1
+    }
+
+    public sealed class ToggleSystem : AInteractSystem<IToggleable>
+    {
+        public ToggleSystem(InteractSystemDepFlyweight dep) : base(dep)
+        {
+        }
+
+        protected override UniTask<bool> OnInteractAsync()
+        {
+            Dep.Log.Debug("Toggleable:  interact");
+            return UniTask.FromResult(true);
+        }
+    }
+
+    public interface IToggleable : IInteractable
+    {
     }
 
     internal enum EToggleableState
     {
         NotSet = -1,
-        Hidden = 0,
-        Visible = 1,
-        Appearing = 2,
-        Disappearing = 3
+        Off = 0,
+        On = 1
     }
 }
