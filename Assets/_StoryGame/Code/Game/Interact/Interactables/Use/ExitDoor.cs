@@ -28,6 +28,10 @@ namespace _StoryGame.Game.Interact.Interactables.Use
         public EDoorAction DoorAction => doorAction;
 
 
+        protected override void Enable()
+        {
+        }
+
         protected override void OnStart()
         {
             var collider = GetComponent<Collider>() ?? throw new Exception($"Door {name} has no collider");

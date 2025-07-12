@@ -47,6 +47,7 @@
     <Analyzer Include="C:\Users\jrd\_unity_jrd_projects\_Story\Library\PackageCache\com.unity.project-auditor@94c6e4e98816\RoslynAnalyzers\Domain_Reload_Analyzer.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Condition\EToggleableState.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Interact\InteractSystemDepFlyweight.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Loot\LootItemInfoVo.cs" />
     <Compile Include="Assets\ToggleInspectorLock.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Condition\Passable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Use\Action\Strategies\SwitchStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IWalletMsg.cs" />
-    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\UnlockSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Conditional\Strategies\UnlockedStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Bootstrap\BootstrapUIView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IBootstrapUIController.cs" />
@@ -97,9 +97,11 @@
     <Compile Include="Assets\_StoryGame\Code\Core\HSM\Messages\ChangeGameStateMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Movement\NewMovementHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Quest\Interfaces\IQuestManager.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Abstract\ConditionsResult.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\EnergyData.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Animations\Messages\SetTriggerMsg.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Condition\ToggleSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Character\Common\Interfaces\ICharacterInteractor.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\Back\BackLayerHandler.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Assets\_StoryGame\Code\Data\Const\LocalizationConst.cs" />
     <Compile Include="Assets\Packages\Hierarchy Designer\Runtime\Scripts\HierarchyDesignerFolder.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Use\Action\UseActionStrategyProvider.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Condition\EConditionResult.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IDebuffable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\Gameplay\GameplayAuiView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Infrastructure\Settings\SettingsProvider.cs" />
@@ -174,6 +177,7 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Conditional\ConditionalStrategyProvider.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\WalletNew\Interfaces\IWallet.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interact\Interactables\IUsable.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Interactables\Condition\IToggleable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Views\Menu\MenuAUIView.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IJLog.cs" />
     <Compile Include="Assets\Packages\DOTween\Modules\DOTweenModuleUI.cs" />
@@ -243,6 +247,7 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IBootable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IMovementHandlerMsg.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\Interact\InteractableSystemTipVo.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Abstract\InteractCondition.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Interact\Interactables\IInspectable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\HUD\HUDLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Room\Interfaces\IRoomsRegistry.cs" />
@@ -278,6 +283,7 @@
     <Compile Include="Assets\_StoryGame\Code\Game\Anima\Data\Interactables\InteractableTriggerName.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IInteractProcessorMsg.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\PassSystem.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\UI\Impls\Viewer\Layers\Movement\MovementLayerHandler.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Common\Interfaces\IGatherable.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Character\Player\Impls\PlayerFrontTriggerArea.cs" />
@@ -302,6 +308,7 @@
     <Compile Include="Assets\_StoryGame\Code\Core\Extensions\ContainerExtensions.cs" />
     <Compile Include="Assets\_StoryGame\Code\Game\Interact\Systems\Unlockable\Strategies\UnlockedDoorStrategy.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\UI\Interfaces\IUIViewerLayerHandler.cs" />
+    <Compile Include="Assets\_StoryGame\Code\Game\Interact\Abstract\ItemCondition.cs" />
     <Compile Include="Assets\_StoryGame\Code\Core\Messaging\Interfaces\IJMessage.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Currency\CoreNoteData.cs" />
     <Compile Include="Assets\_StoryGame\Code\Data\SO\Abstract\ANoteData.cs" />

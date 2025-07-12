@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Data.Room;
 using _StoryGame.Game.Interact.Interactables.Condition;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _StoryGame.Core.Room.Interfaces
@@ -15,7 +16,7 @@ namespace _StoryGame.Core.Room.Interfaces
         void Hide();
         void Show();
         ERoom Type { get; }
-        
+
         Passable GetExitPointFor(EExit type);
     }
 }

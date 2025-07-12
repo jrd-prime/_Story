@@ -1726,24 +1726,16 @@ PrefabInstance:
       value: B3_FLOOR
       objectReference: {fileID: 0}
     - target: {fileID: 1225487522257765393, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      propertyPath: toggleables.Array.size
+      propertyPath: effectables.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1225487522257765393, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      propertyPath: 'toggleables.Array.data[0]'
+      propertyPath: 'effectables.Array.data[0]'
       value: 
-      objectReference: {fileID: 2829916121749943202}
-    - target: {fileID: 2141572478802731833, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      propertyPath: defaultState
+      objectReference: {fileID: 2829916121749943205}
+    - target: {fileID: 4023127554844869066, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: playOnAwake
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2141572478802731833, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      propertyPath: localizationKey
-      value: door_wooden
-      objectReference: {fileID: 0}
-    - target: {fileID: 2141572478802731833, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      propertyPath: conditionsData.conditions.Array.data[0].thoughtKey
-      value: TH_mech_water_under_electricbox
       objectReference: {fileID: 0}
     - target: {fileID: 4560523572652000053, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1785,30 +1777,59 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7569430237879840910, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      propertyPath: m_Name
-      value: Mech_water
+    - target: {fileID: 7081862168577960500, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7569430237879840910, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 7706561934673543319, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706561934673543319, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.173913
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045214149737285236, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3418656253692693377, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2829916121749943205}
+    - targetCorrespondingSourceObject: {fileID: 3418656253692693377, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2829916121749943203}
   m_SourcePrefab: {fileID: 100100000, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
---- !u!114 &2829916121749943202 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2141572478802731833, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+--- !u!1 &2829916121749943202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3418656253692693377, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
   m_PrefabInstance: {fileID: 2829916121749943201}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!65 &2829916121749943203
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2829916121749943202}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8db75e242840481880c42c2917ee514f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 1, y: 1, z: 0}
 --- !u!114 &2829916121749943204 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1225487522257765393, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
@@ -1820,6 +1841,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75a9230df78476d987d83d4af3a3ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2829916121749943205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2829916121749943202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf15a8178414bc296c3f0fb5a29c2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playIfConditionsMet: 0
+  conditionsData:
+    conditions:
+    - queueIndex: 1
+      thoughtKey: 
+      type: 3
+    requiredItems: []
+    oneOfItem:
+      thoughtKey: 
+      items: []
+  particleSystems:
+  - {fileID: 2829916121749943206}
+--- !u!198 &2829916121749943206 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9045214149737285236, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+  m_PrefabInstance: {fileID: 2829916121749943201}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3520618352379174922
 PrefabInstance:
   m_ObjectHideFlags: 0

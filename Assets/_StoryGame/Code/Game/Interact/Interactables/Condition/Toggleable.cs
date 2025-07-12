@@ -1,9 +1,6 @@
 ﻿using System;
-using _StoryGame.Core.Interact.Enums;
-using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Interactables.Unlock;
-using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
@@ -13,117 +10,128 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
     /// <summary>
     /// Вода которую можно откачать. Веревка, которая сбрасывается в люк. Т.е. есть аним
     /// </summary>
+    [RequireComponent(typeof(Animation))]
     public sealed class Toggleable : AConditional<ToggleSystem>, IToggleable
     {
         [SerializeField] private EToggleableState defaultState = EToggleableState.NotSet;
+        [SerializeField] private bool disableGameObjectWhenOff = true;
+        [SerializeField] private AnimationClip onStateClip;
+        [SerializeField] private AnimationClip offStateClip;
 
-        private EToggleableState _currentState = EToggleableState.NotSet; // будет сохраняться между сессиями
+        private EToggleableState _currentState = EToggleableState.NotSet;
         private EConditionResult _conditionResult = EConditionResult.NotSet;
         private bool _isInitialized;
+        private Animation _animation;
+        private string _onClipName;
+        private string _offClipName;
+
+        private const int SpeedMul = 20;
 
         protected override void OnAwake()
         {
+            Debug.LogError("Toggleable on awake " + gameObject.name);
             if (defaultState == EToggleableState.NotSet)
-                throw new Exception("ToggleableState not set. " + name);
+                throw new Exception(
+                    $"ToggleableState not set for {name}. Please set defaultState (e.g., On for the puddle).");
 
+            _animation = GetComponent<Animation>();
 
-            _currentState = defaultState; //TODO load state
-            // _currentState = EToggleableState.Off; // test
-        }
+            if (!_animation)
+                throw new Exception($"Animation component not found on {name}.");
+            if (!onStateClip)
+                throw new Exception($"ON State Animation Clip is not assigned for {name}.");
+            if (!offStateClip)
+                throw new Exception($"OFF State Animation Clip is not assigned for {name}.");
 
-        protected override void OnStart()
-        {
-            if (!_isInitialized)
-                throw new Exception("Toggleable not initialized. Must add to room. " + gameObject.name);
-            ChangeToNewState(defaultState);
+            _onClipName = onStateClip.name;
+            _offClipName = offStateClip.name;
 
-            if (ConditionChecker == null)
-                throw new Exception("ConditionChecker is null. " + gameObject.name);
+            if (_animation[onStateClip.name] == null)
+                _animation.AddClip(onStateClip, _onClipName);
 
+            if (_animation[offStateClip.name] == null)
+                _animation.AddClip(offStateClip, _offClipName);
 
-            var result = ConditionChecker.CheckConditions(ConditionsData).Success;
+            AnimToOffState().Forget();
 
-            _conditionResult = result ? EConditionResult.Fulfilled : EConditionResult.NotFulfilled;
-
-            if (_conditionResult == EConditionResult.NotFulfilled)
-            {
-                LOG.Warn("Conditions not fulfilled > return");
-                return;
-            }
-
-            // Conditions fulfilled
-            LOG.Warn("Conditions fulfilled");
-            if (_currentState == defaultState)
-            {
-                // default obj state
-                LOG.Debug("default obj state");
-                // conditions fulfilled > change state opposite default
-                LOG.Debug("conditions fulfilled > change state opposite default");
-
-                LOG.Warn("State was : " + _currentState);
-
-                _currentState = defaultState == EToggleableState.Off
-                    ? EToggleableState.On
-                    : EToggleableState.Off;
-
-                ChangeToNewState(_currentState);
-
-                return;
-            }
-            else
-            {
-                LOG.Warn("state was changed from default before");
-                return;
-            }
-        }
-
-        private void ChangeToNewState(EToggleableState currentState)
-        {
-            LOG.Warn("ChangeToNewState to " + currentState);
-            _currentState = currentState;
-            var a = _currentState == EToggleableState.On;
-            gameObject.SetActive(a);
-            //TODO save state
-        }
-
-        public void Initialize()
-        {
-            ChangeToNewState(defaultState);
-
-            if (ConditionChecker == null)
-                throw new Exception("ConditionChecker is null. " + gameObject.name);
             _isInitialized = true;
         }
-    }
 
-    internal enum EConditionResult
-    {
-        NotSet = -1,
-        NotFulfilled = 0,
-        Fulfilled = 1
-    }
-
-    public sealed class ToggleSystem : AInteractSystem<IToggleable>
-    {
-        public ToggleSystem(InteractSystemDepFlyweight dep) : base(dep)
+        private async UniTask AnimToOffState()
         {
+            LOG.Warn("AnimToOffState > OFF");
+            var defSpeed = _animation[_offClipName].speed;
+            _animation[_offClipName].speed = 1f * SpeedMul;
+            _animation.Play(_offClipName);
+            _currentState = EToggleableState.Off;
+
+            await UniTask.Delay((int)(offStateClip.length * 1000) / SpeedMul);
+
+            _animation[_offClipName].speed = defSpeed;
         }
 
-        protected override UniTask<bool> OnInteractAsync()
+        protected override void Enable()
         {
-            Dep.Log.Debug("Toggleable:  interact");
-            return UniTask.FromResult(true);
+            if (!_isInitialized)
+                throw new Exception("Toggleable is not initialized " + name);
+
+            ConditionChecker = Resolver.Resolve<ConditionChecker>();
+
+            if (ConditionChecker == null)
+                throw new Exception($"ConditionChecker is null for {gameObject.name}.");
+
+            var result = ConditionChecker.CheckConditions(ConditionsData).Success;
+            _conditionResult = result ? EConditionResult.Fulfilled : EConditionResult.NotFulfilled;
+
+            ToggleState(result);
         }
-    }
 
-    public interface IToggleable : IInteractable
-    {
-    }
+        private async void ToggleState(bool result)
+        {
+            var targetState = result ? GetOppositeState(defaultState) : defaultState;
 
-    internal enum EToggleableState
-    {
-        NotSet = -1,
-        Off = 0,
-        On = 1
+            if (_currentState == targetState)
+            {
+                LOG.Info($"Состояние уже корректно: default={defaultState}, current={_currentState}");
+                return;
+            }
+
+            LOG.Warn($"Меняем состояние: default={defaultState}, current={_currentState} -> target={targetState}");
+            try
+            {
+                await AnimStateTo(targetState);
+            }
+            catch (Exception ex)
+            {
+                LOG.Error($"Ошибка при смене состояния на {targetState}: {ex.Message}");
+            }
+        }
+
+        private static EToggleableState GetOppositeState(EToggleableState state) =>
+            state == EToggleableState.Off ? EToggleableState.On : EToggleableState.Off;
+
+        private async UniTask AnimStateTo(EToggleableState off)
+        {
+            AnimationClip clip;
+            _currentState = off;
+            switch (off)
+            {
+                case EToggleableState.On:
+                    clip = onStateClip;
+                    break;
+                case EToggleableState.Off:
+                    clip = offStateClip;
+                    break;
+                case EToggleableState.NotSet:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(off), off, null);
+            }
+
+            var clipLength = clip.length;
+            var delay = (int)(clipLength * 1000);
+            _animation.Play(clip.name);
+
+            await UniTask.Delay(delay);
+        }
     }
 }

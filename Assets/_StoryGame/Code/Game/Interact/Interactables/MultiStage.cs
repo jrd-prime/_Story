@@ -22,5 +22,9 @@ namespace _StoryGame.Game.Interact.Interactables
         {
             throw new NotImplementedException();
         }
+
+        protected override void Enable()
+        {
+        }
     }
 }

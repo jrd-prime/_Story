@@ -28,9 +28,7 @@ namespace _StoryGame.Game.Interact.Abstract
             Subscribe();
         }
 
-        protected virtual void Enable()
-        {
-        }
+        protected abstract void Enable();
 
         private void OnDisable()
         {

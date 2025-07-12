@@ -38,6 +38,10 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
             InitCurrentState();
         }
 
+        protected override void Enable()
+        {
+        }
+
         protected override void Subscribe()
         {
             // _log.Warn("Subscribe AConditional in " + gameObject.name);

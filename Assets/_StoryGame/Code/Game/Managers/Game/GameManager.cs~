@@ -184,8 +184,8 @@ namespace _StoryGame.Game.Managers.Game
         {
             _log.Info("App started!");
             _gameService.StartHSM();
-            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B2B3Ladder, ERoom.NotSet,
-                ERoom.CorridorMainB3));
+            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B1B2Ladder, ERoom.NotSet,
+                ERoom.SurfaceAccessModuleB1));
         }
 
 

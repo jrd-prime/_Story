@@ -77,9 +77,6 @@ namespace _StoryGame.Game.Room.Abstract
             foreach (var exit in exits)
                 _exitDoors.TryAdd(exit.exit, exit.door);
 
-            foreach (var effectable in effectables)
-                _resolver.Inject(effectable);
-
             // UpdateStateForConditionalObjects();
 
             // foreach (var toggleable in toggleables)
@@ -89,6 +86,11 @@ namespace _StoryGame.Game.Room.Abstract
         private void Start()
         {
             _log.Warn("Room started. " + gameObject.name);
+            var ConditionChecker = _resolver.Resolve<ConditionChecker>();
+            foreach (var effectable in effectables)
+            {
+                _resolver.Inject(effectable);
+            }
         }
 
         private async void OnAppStarted(Unit _)

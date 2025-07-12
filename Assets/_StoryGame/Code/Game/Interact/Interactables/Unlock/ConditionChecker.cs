@@ -40,7 +40,7 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
 
             if (!result)
             {
-                _log.Warn("return false after conditions");
+                _log.Info("return false after conditions");
                 return new ConditionsResult(false, thoughts.ToArray());
             }
 

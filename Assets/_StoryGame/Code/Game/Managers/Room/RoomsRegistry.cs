@@ -35,7 +35,7 @@ namespace _StoryGame.Game.Managers.Room
             if (rooms == null || rooms.Count == 0)
                 throw new NullReferenceException("Rooms not found.");
 
-            foreach (var room in rooms)
+            foreach (IRoom room in rooms)
             {
                 _resolver.Inject(room);
                 _rooms.Add(room.Type, room);

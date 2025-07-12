@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Enums;
-using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -54,22 +53,4 @@ namespace _StoryGame.Game.Interact.Abstract
             }
         }
     }
-
-    [Serializable]
-    public struct ItemCondition
-    {
-        public string thoughtKey;
-        public int amount;
-        public ACurrencyData currency;
-    }
-
-    [Serializable]
-    public struct InteractCondition
-    {
-        [Range(1, 100)] public int queueIndex;
-        public string thoughtKey;
-        public InteractConditionType type;
-    }
-
-    public record ConditionsResult(bool Success, string[] Toughts);
 }

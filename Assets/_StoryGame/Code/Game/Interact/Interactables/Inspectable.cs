@@ -45,6 +45,10 @@ namespace _StoryGame.Game.Interact.Interactables
                 throw new Exception("ObjLoot is null or empty. " + name);
         }
 #endif
+        protected override void Enable()
+        {
+            
+        }
     }
 
     [Serializable]

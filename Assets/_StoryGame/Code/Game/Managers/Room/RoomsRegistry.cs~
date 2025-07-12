@@ -32,13 +32,20 @@ namespace _StoryGame.Game.Managers.Room
 
         private void Awake()
         {
+        }
+
+        private async void Start()
+        {
             if (rooms == null || rooms.Count == 0)
                 throw new NullReferenceException("Rooms not found.");
 
-            foreach (var room in rooms)
+            foreach (IRoom room in rooms)
             {
+                _log.Warn("Room: " + room.Type);
                 _resolver.Inject(room);
                 _rooms.Add(room.Type, room);
+                await room.InitOnStart();
+                room.Hide();
             }
         }
 
