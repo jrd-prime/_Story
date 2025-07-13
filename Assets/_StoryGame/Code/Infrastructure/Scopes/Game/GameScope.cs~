@@ -7,7 +7,6 @@ using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.InteractableNew;
 using _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable;
-using _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable.Impl;
 using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems;
@@ -125,7 +124,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PassSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<ToggleSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<SimpleSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<SwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()

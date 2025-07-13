@@ -2,6 +2,7 @@
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.InteractableNew;
 using _StoryGame.Game.Interact.Systems;
 using Cysharp.Threading.Tasks;
 

@@ -3,7 +3,7 @@ using _StoryGame.Core.Interact;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using VContainer;
 
-namespace _StoryGame.Game.Interact.Abstract
+namespace _StoryGame.Game.Interact.InteractableNew
 {
     public abstract class AInteractable<TInteractableSystem> : AInteractableBase
         where TInteractableSystem : IInteractableSystem

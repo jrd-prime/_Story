@@ -1,7 +1,7 @@
 ﻿using System;
 using _StoryGame.Data.SO.Abstract;
 
-namespace _StoryGame.Game.Interact.Abstract
+namespace _StoryGame.Game.Interact.InteractableNew.Conditional
 {
     [Serializable]
     public struct ItemCondition

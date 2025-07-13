@@ -1,0 +1,35 @@
+﻿using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Infrastructure.Interact;
+using Cysharp.Threading.Tasks;
+
+namespace _StoryGame.Game.Interact.Interactables.Condition
+{
+    public sealed class Switchable : AConditional<SwitchSystem>, ISwitchable
+    {
+        protected override void OnAwake()
+        {
+        }
+
+        protected override void Enable()
+        {
+        }
+    }
+
+    public class SwitchSystem : AInteractSystem<ISwitchable>
+    {
+        public SwitchSystem(InteractSystemDepFlyweight dep) : base(dep)
+        {
+        }
+
+        protected override UniTask<bool> OnInteractAsync()
+        {
+            return UniTask.FromResult(true);
+        }
+    }
+
+    public interface ISwitchable : IInteractable
+    {
+    }
+}

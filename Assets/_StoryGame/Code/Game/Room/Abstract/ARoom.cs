@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Core.Room;
@@ -12,7 +13,6 @@ using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
-using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
 using UnityEngine;
@@ -43,7 +43,7 @@ namespace _StoryGame.Game.Room.Abstract
 
         private readonly CompositeDisposable _disposables = new();
         private readonly Dictionary<EExit, Passable> _exitDoors = new(); // <exit, door>
-        private readonly List<IUnlockable> _conditionalObjects = new();
+        private readonly List<IPassable> _conditionalObjects = new();
         private IObjectResolver _resolver;
 
         [Inject]
@@ -142,13 +142,13 @@ namespace _StoryGame.Game.Room.Abstract
 
         public void Hide()
         {
-            _log.Info("Hide " + name);
+            // _log.Info("Hide " + name);
             gameObject.SetActive(false);
         }
 
         public void Show()
         {
-            _log.Info("Show " + name);
+            // _log.Info("Show " + name);
             gameObject.SetActive(true);
         }
     }

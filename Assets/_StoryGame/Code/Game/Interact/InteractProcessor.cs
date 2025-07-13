@@ -53,6 +53,9 @@ namespace _StoryGame.Game.Interact
 
                 var interactable = message.Interactable;
 
+                if (interactable == null)
+                    throw new NullReferenceException("Interactable is null");
+
                 var localizedText =
                     _il10NProvider.Localize(interactable.LocalizationKey, ETable.Words, ETextTransform.Upper);
                 _currentInteractable.Value = localizedText ?? DefaultInteractableValue;
@@ -65,6 +68,9 @@ namespace _StoryGame.Game.Interact
                     return;
                 }
 
+                if (_player == null)
+                    throw new NullReferenceException("Player is null");
+                
                 _player.OnStartInteract();
 
                 await interactable.InteractAsync(_player);

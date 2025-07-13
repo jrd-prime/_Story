@@ -1,7 +1,11 @@
 ﻿using System;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.InteractableNew.Conditional;
 using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Interact.Systems.Toggle;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
@@ -13,24 +17,38 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
     [RequireComponent(typeof(Animation))]
     public sealed class Toggleable : AConditional<ToggleSystem>, IToggleable
     {
-        [SerializeField] private EToggleableState defaultState = EToggleableState.NotSet;
-        [SerializeField] private bool disableGameObjectWhenOff = true;
-        [SerializeField] private AnimationClip onStateClip;
+        [Title(nameof(Toggleable), "Main", titleAlignment: TitleAlignments.Centered)] [SerializeField]
+        private EToggleType toggleType = EToggleType.NotSet;
+
+        [SerializeField] private ESwitchState defaultState = ESwitchState.NotSet;
+
+        [ShowIf("@toggleType==EToggleType.Modifier")] [SerializeField]
+        private EInteractConditionType condition = EInteractConditionType.NotSet;
+
+        [Title(nameof(Toggleable), "Animation", titleAlignment: TitleAlignments.Centered)] [SerializeField]
+        private AnimationClip onStateClip;
+
         [SerializeField] private AnimationClip offStateClip;
 
-        private EToggleableState _currentState = EToggleableState.NotSet;
+        public EToggleType ToggleType => toggleType;
+        public ESwitchState SwitchState => _currentState;
+        public EInteractConditionType ImpactOnCondition => condition;
+
+        private ESwitchState _currentState = ESwitchState.NotSet;
         private EConditionResult _conditionResult = EConditionResult.NotSet;
         private bool _isInitialized;
         private Animation _animation;
         private string _onClipName;
         private string _offClipName;
+        private Collider[] _colliders;
 
         private const int SpeedMul = 20;
 
         protected override void OnAwake()
         {
-            Debug.LogError("Toggleable on awake " + gameObject.name);
-            if (defaultState == EToggleableState.NotSet)
+            if (toggleType == EToggleType.NotSet)
+                throw new Exception($"ToggleableType not set for {name}.");
+            if (defaultState == ESwitchState.NotSet)
                 throw new Exception(
                     $"ToggleableState not set for {name}. Please set defaultState (e.g., On for the puddle).");
 
@@ -54,6 +72,7 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
 
             AnimToOffState().Forget();
 
+            _colliders = gameObject.GetComponents<Collider>();
             _isInitialized = true;
         }
 
@@ -63,7 +82,7 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
             var defSpeed = _animation[_offClipName].speed;
             _animation[_offClipName].speed = 1f * SpeedMul;
             _animation.Play(_offClipName);
-            _currentState = EToggleableState.Off;
+            _currentState = ESwitchState.Off;
 
             await UniTask.Delay((int)(offStateClip.length * 1000) / SpeedMul);
 
@@ -83,10 +102,10 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
             var result = ConditionChecker.CheckConditions(ConditionsData).Success;
             _conditionResult = result ? EConditionResult.Fulfilled : EConditionResult.NotFulfilled;
 
-            ToggleState(result);
+            SwitchToggle(result);
         }
 
-        private async void ToggleState(bool result)
+        private async void SwitchToggle(bool result)
         {
             var targetState = result ? GetOppositeState(defaultState) : defaultState;
 
@@ -107,31 +126,34 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
             }
         }
 
-        private static EToggleableState GetOppositeState(EToggleableState state) =>
-            state == EToggleableState.Off ? EToggleableState.On : EToggleableState.Off;
+        private static ESwitchState GetOppositeState(ESwitchState state) =>
+            state == ESwitchState.Off ? ESwitchState.On : ESwitchState.Off;
 
-        private async UniTask AnimStateTo(EToggleableState off)
+        private async UniTask AnimStateTo(ESwitchState state)
         {
-            AnimationClip clip;
-            _currentState = off;
-            switch (off)
+            if (state == ESwitchState.On)
+                foreach (var coll in _colliders)
+                    coll.enabled = true;
+
+            _currentState = state;
+
+            var clip = state switch
             {
-                case EToggleableState.On:
-                    clip = onStateClip;
-                    break;
-                case EToggleableState.Off:
-                    clip = offStateClip;
-                    break;
-                case EToggleableState.NotSet:
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(off), off, null);
-            }
+                ESwitchState.On => onStateClip,
+                ESwitchState.Off => offStateClip,
+                ESwitchState.NotSet => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+                _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
+            };
 
             var clipLength = clip.length;
             var delay = (int)(clipLength * 1000);
             _animation.Play(clip.name);
 
             await UniTask.Delay(delay);
+
+            if (state == ESwitchState.Off)
+                foreach (var coll in _colliders)
+                    coll.enabled = false;
         }
     }
 }

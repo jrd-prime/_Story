@@ -3,6 +3,7 @@ using System.Linq;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.InteractableNew.Conditional;
 
 namespace _StoryGame.Game.Interact.Interactables.Unlock
 {
@@ -39,11 +40,7 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
             }
 
             if (!result)
-            {
-                _log.Info("return false after conditions");
                 return new ConditionsResult(false, thoughts.ToArray());
-            }
-
 
             foreach (var item in conditions.oneOfItem.items)
             {

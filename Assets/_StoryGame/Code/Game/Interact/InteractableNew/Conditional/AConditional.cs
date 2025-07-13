@@ -6,21 +6,23 @@ using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using Cysharp.Threading.Tasks;
 using R3;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace _StoryGame.Game.Interact.Abstract
+namespace _StoryGame.Game.Interact.InteractableNew.Conditional
 {
     /// <summary>
     /// Объект, который требует наличия какого-либо ПРЕДМЕТА или УСЛОВИЙ для открытия (деревянный ящик - лом, дверь - ключ/питание)
     /// </summary>
-    public abstract class AConditional<TInteractableSystem> : AInteractable<TInteractableSystem>, IUnlockable
+    public abstract class AConditional<TInteractableSystem> : AInteractable<TInteractableSystem>
         where TInteractableSystem : IInteractableSystem // TODO fake system
     {
-        [FormerlySerializedAs("unlockConditions")] [SerializeField]
+        [Title(nameof(AConditional<TInteractableSystem>), titleAlignment: TitleAlignments.Centered)]
+        [FormerlySerializedAs("unlockConditions")]
+        [SerializeField]
         private ConditionData conditionsData;
 
-        public EUnlockableState UnlockableState => EUnlockableState.NotSet;
         public ConditionData ConditionsData => conditionsData;
         public override EInteractableType InteractableType => EInteractableType.Unlockable;
 
@@ -28,6 +30,12 @@ namespace _StoryGame.Game.Interact.Abstract
 
         public override async UniTask InteractAsync(ICharacter character)
         {
+            if (character == null)
+                throw new NullReferenceException(nameof(character) + " is null.");
+
+            if (Equals(System, default(TInteractableSystem)))
+                throw new Exception("ConditionalSystem is null. " + gameObject.name);
+
             await System.Process(this);
         }
 

@@ -3,13 +3,11 @@
     public enum EDialogResult
     {
         None = -1,
-        Close,
-        TakeAll,
-        Search,
-        Apply,
-        V1,
-        V2,
-        V3
-        
+        Close = 0,
+        TakeAll = 1,
+        Search = 2,
+        Apply = 3,
+        Yes = 4,
+        No = 5
     }
 }

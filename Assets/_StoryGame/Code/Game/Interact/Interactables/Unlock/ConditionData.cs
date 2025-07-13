@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.InteractableNew.Conditional;
 
 namespace _StoryGame.Game.Interact.Interactables.Unlock
 {

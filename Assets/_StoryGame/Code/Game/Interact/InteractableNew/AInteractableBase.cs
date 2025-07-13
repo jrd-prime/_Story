@@ -15,15 +15,18 @@ using _StoryGame.Infrastructure.AppStarter;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
-namespace _StoryGame.Game.Interact.Abstract
+namespace _StoryGame.Game.Interact.InteractableNew
 {
     [RequireComponent(typeof(Collider))]
     public abstract class AInteractableBase : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string id;
+        [Title(nameof(AInteractableBase), titleAlignment: TitleAlignments.Centered)] [SerializeField]
+        private string id;
+
         [SerializeField] private string objName = "Not set";
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform _entrance;

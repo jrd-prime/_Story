@@ -15,6 +15,7 @@ using _StoryGame.Infrastructure.AppStarter;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
@@ -23,7 +24,9 @@ namespace _StoryGame.Game.Interact.Abstract
     [RequireComponent(typeof(Collider))]
     public abstract class AInteractableBase : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string id;
+        [Title(nameof(AInteractableBase))] [SerializeField]
+        private string id;
+
         [SerializeField] private string objName = "Not set";
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform _entrance;
@@ -82,7 +85,6 @@ namespace _StoryGame.Game.Interact.Abstract
 
         private void Awake()
         {
-            Debug.LogError("awake interactable");
             if (!_entrance)
                 throw new NullReferenceException($"{nameof(_entrance)} not found. {name}");
 

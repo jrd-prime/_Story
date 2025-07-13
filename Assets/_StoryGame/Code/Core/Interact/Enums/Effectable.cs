@@ -1,10 +1,9 @@
 ﻿using System;
-using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using UnityEngine;
 using VContainer;
 
-namespace _StoryGame.Game.Interact.Interactables.Condition
+namespace _StoryGame.Core.Interact.Enums
 {
     public sealed class Effectable : MonoBehaviour
     {

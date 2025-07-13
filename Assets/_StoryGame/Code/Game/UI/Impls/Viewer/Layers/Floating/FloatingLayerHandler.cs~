@@ -252,7 +252,8 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
 
             titleLab.text = msg.Title;
             descLab.text = msg.Question;
-            energyLab.text = msg.Cost.ToString();
+
+            energyLab.text = msg.Energy.ToString();
 
             var noBtnHandler =
                 new ClickCompletionHandler<EDialogResult>(noBtn, EDialogResult.No,

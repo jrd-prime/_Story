@@ -1,4 +1,4 @@
-﻿namespace _StoryGame.Game.Interact.Interactables.Condition
+﻿namespace _StoryGame.Core.Interact.Enums
 {
     internal enum EConditionResult
     {

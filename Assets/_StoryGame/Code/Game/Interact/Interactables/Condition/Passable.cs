@@ -3,6 +3,7 @@ using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.WalletNew.Messages;
 using _StoryGame.Game.Interact.Abstract;
+using _StoryGame.Game.Interact.InteractableNew.Conditional;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Interactables.Use;
 using _StoryGame.Game.Interact.Systems;

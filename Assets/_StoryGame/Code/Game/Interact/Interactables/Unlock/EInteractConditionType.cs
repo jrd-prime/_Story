@@ -1,6 +1,6 @@
 ﻿namespace _StoryGame.Game.Interact.Interactables.Unlock
 {
-    public enum InteractConditionType
+    public enum EInteractConditionType
     {
         NotSet = -1,
         HasElectricity = 1000,
