@@ -31,9 +31,7 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
         }
 
-        private void OnCloseAction()
-        {
-        }
+        private UniTask OnCloseAction() => UniTask.CompletedTask;
 
         public async UniTask<bool> ExecuteAsync(IUsable usable)
         {
@@ -63,28 +61,27 @@ namespace _StoryGame.Game.Interact.Systems.Use.Action.Strategies
 
         private async UniTask<bool> ProcessExitFromRoom(UniTaskCompletionSource<EDialogResult> source, IUIViewerMsg msg)
         {
-            bool success;
-
             try
             {
                 _dep.Publisher.ForUIViewer(msg);
                 var result = await source.Task;
 
-                success = _dialogResultHandler.HandleResult(result);
+                await _dialogResultHandler.HandleResultAsync(result);
             }
             finally
             {
                 source?.TrySetCanceled();
             }
 
-            return success;
+            return true;
         }
 
-        private void OnApplyAction()
+        private UniTask OnApplyAction()
         {
             // _usableExit.SetState(EUseState.Used); // TODO сбрасывать на активации комнат
-            _dep.Publisher.ForGameManager(new SpendEnergyMsg(Price));
+            _dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(Price));
             // _dep.Publisher.ForGameManager(new GoToRoomRequestMsg(_usableExit.TransitionToRoom));
+            return UniTask.CompletedTask;
         }
     }
 }

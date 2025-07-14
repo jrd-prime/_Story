@@ -10,7 +10,7 @@ namespace _StoryGame.Infrastructure.Scopes.Bootstrap
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log($"<color=cyan>{nameof(BootstrapScope)}</color>");
+            //  Debug.Log($"<color=cyan>{nameof(BootstrapScope)}</color>");
 
             BindBootstrap(builder);
 

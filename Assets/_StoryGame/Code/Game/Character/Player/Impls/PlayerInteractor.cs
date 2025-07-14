@@ -73,6 +73,7 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         public void SetState(ECharacterState state)
         {
+            _log.Warn("Player SetState > " + state);
             _state.Value = state;
             PublishState(state);
         }

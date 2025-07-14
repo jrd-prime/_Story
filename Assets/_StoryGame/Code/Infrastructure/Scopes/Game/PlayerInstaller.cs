@@ -18,7 +18,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
         public bool Install()
         {
-            Debug.Log($"<color=cyan>{nameof(PlayerInstaller)}</color>");
+            //  Debug.Log($"<color=cyan>{nameof(PlayerInstaller)}</color>");
 
             if (_builder == null
                 // || !_instance

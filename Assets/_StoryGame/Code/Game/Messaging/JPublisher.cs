@@ -16,6 +16,7 @@ namespace _StoryGame.Game.Messaging
         private readonly IPublisher<IInteractProcessorMsg> _interactProcessorPublisher;
         private readonly IPublisher<IHSMMsg> _hsmPublisher;
         private readonly IPublisher<IRoomsDispatcherMsg> _roomsDispatcherPublisher;
+        private readonly IPublisher<IConditionRegistryMsg> _conditionRegistryPublisher;
 
         public JPublisher(
             IPublisher<IGameManagerMsg> gameManagerPublisher,
@@ -25,8 +26,8 @@ namespace _StoryGame.Game.Messaging
             IPublisher<IPlayerAnimatorMsg> playerAnimatorPublisher,
             IPublisher<IInteractProcessorMsg> interactProcessorPublisher,
             IPublisher<IHSMMsg> hsmPublisher,
-            IPublisher<IRoomsDispatcherMsg> roomsDispatcherPublisher
-        )
+            IPublisher<IRoomsDispatcherMsg> roomsDispatcherPublisher,
+            IPublisher<IConditionRegistryMsg> conditionRegistryPublisher)
         {
             _gameManagerPublisher = gameManagerPublisher;
             _uiViewerPublisher = uiViewerPublisher;
@@ -36,6 +37,7 @@ namespace _StoryGame.Game.Messaging
             _interactProcessorPublisher = interactProcessorPublisher;
             _hsmPublisher = hsmPublisher;
             _roomsDispatcherPublisher = roomsDispatcherPublisher;
+            _conditionRegistryPublisher = conditionRegistryPublisher;
         }
 
         public void ForUIViewer(IUIViewerMsg msg) => _uiViewerPublisher.Publish(msg);
@@ -46,5 +48,6 @@ namespace _StoryGame.Game.Messaging
         public void ForInteractProcessor(IInteractProcessorMsg msg) => _interactProcessorPublisher.Publish(msg);
         public void ForHSM(IHSMMsg msg) => _hsmPublisher.Publish(msg);
         public void ForRoomsDispatcher(IRoomsDispatcherMsg msg) => _roomsDispatcherPublisher.Publish(msg);
+        public void ForConditionRegistry(IConditionRegistryMsg msg) => _conditionRegistryPublisher.Publish(msg);
     }
 }

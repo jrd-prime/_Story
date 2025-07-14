@@ -32,7 +32,7 @@ namespace _StoryGame.Infrastructure.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log($"<color=cyan>{nameof(RootScope)}</color>");
+            //  log.Debug($"<color=cyan>{nameof(RootScope)}</color>");
             RegisterMessagePipe(builder);
 
             var bootstrapSettings = mainSettings.BootstrapSettings;

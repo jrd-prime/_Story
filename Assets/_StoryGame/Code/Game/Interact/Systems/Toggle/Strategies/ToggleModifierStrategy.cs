@@ -4,11 +4,10 @@ using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems.Inspect;
-using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Systems.Toggle
+namespace _StoryGame.Game.Interact.Systems.Toggle.Strategies
 {
     public class ToggleModifierStrategy : IToggleSystemStrategy
     {
@@ -29,14 +28,18 @@ namespace _StoryGame.Game.Interact.Systems.Toggle
         }
 
 
-        private void OnYesAction()
+        private UniTask OnYesAction()
         {
-            _dep.Log.Warn("ToggleModifierStrategy.OnYesAction");
+            _dep.Log.Warn("ToggleModifierStrategy.OnYesActionAsync");
+
+            return UniTask.CompletedTask;
         }
 
-        private void OnNoAction()
+        private UniTask OnNoAction()
         {
-            _dep.Log.Warn("ToggleModifierStrategy.OnNoAction");
+            _dep.Log.Warn("ToggleModifierStrategy.OnNoActionAsync");
+
+            return UniTask.CompletedTask;
         }
 
         public async UniTask<bool> ExecuteAsync(IToggleable interactable)
@@ -61,7 +64,7 @@ namespace _StoryGame.Game.Interact.Systems.Toggle
                 _dep.Log.Warn("post await source.Task");
                 source = null;
 
-                _dialogResultHandler.HandleResult(result);
+                _dialogResultHandler.HandleResultAsync(result);
             }
             finally
             {

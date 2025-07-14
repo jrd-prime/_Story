@@ -30,9 +30,12 @@ namespace _StoryGame.Game.Interact.InteractableNew
         [SerializeField] private string objName = "Not set";
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform _entrance;
+        [SerializeField] private int interactEnergyCost;
         public abstract EInteractableType InteractableType { get; }
         public Vector3 GetEntryPoint() => _entrance.position;
         public IRoom Room { get; private set; }
+
+        public int InteractEnergyCost => interactEnergyCost;
 
         public bool CanInteract { get; set; } = true;
         public string LocalizationKey => localizationKey;

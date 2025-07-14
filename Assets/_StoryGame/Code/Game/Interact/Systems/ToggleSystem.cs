@@ -1,10 +1,11 @@
 ﻿using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Systems.Inspect;
+using _StoryGame.Game.Interact.Systems.Toggle;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Systems.Toggle
+namespace _StoryGame.Game.Interact.Systems
 {
     public sealed class ToggleSystem : AInteractSystem<IToggleable>
     {

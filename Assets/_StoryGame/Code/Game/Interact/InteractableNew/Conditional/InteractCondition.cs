@@ -9,6 +9,6 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional
     {
         [Range(1, 100)] public int queueIndex;
         public string thoughtKey;
-        public EInteractConditionType type;
+        public EGlobalInteractCondition type;
     }
 }

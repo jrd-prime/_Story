@@ -72,7 +72,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
                 _dep.Publisher.ForUIViewer(msg);
                 var result = await source.Task;
 
-                _dialogResultHandler.HandleResult(result);
+                _dialogResultHandler.HandleResultAsync(result);
             }
             finally
             {
@@ -82,13 +82,11 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             return true;
         }
 
-        private void OnCloseAction()
-        {
-        }
+        private UniTask OnCloseAction()  => UniTask.CompletedTask;
 
-        private async void OnSearchAction()
+        private async UniTask OnSearchAction()
         {
-            _dep.Publisher.ForGameManager(new SpendEnergyMsg(1));
+            _dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(1));
             _inspectable.SetInspectState(EInspectState.Searched);
             await UniTask.Yield();
             _dep.Publisher.ForInteractProcessor(new InteractRequestMsg(_inspectable));

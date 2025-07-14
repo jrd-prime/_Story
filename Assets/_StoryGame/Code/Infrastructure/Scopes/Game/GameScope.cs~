@@ -7,6 +7,7 @@ using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.InteractableNew;
 using _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable;
+using _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable.Impl;
 using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems;
@@ -47,7 +48,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
+            // Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
 
             RegisterStateMachine(builder);
 
@@ -95,7 +96,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
 
             builder.Register<ConditionChecker>(Lifetime.Singleton).AsSelf();
-            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsSelf();
+            builder.Register<IConditionRegistry,ConditionRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
@@ -124,7 +125,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PassSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<ToggleSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<SwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<SimpleSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()

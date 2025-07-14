@@ -18,5 +18,6 @@ namespace _StoryGame.Core.Interact.Interactables
         Vector3 GetEntryPoint();
         void SetRoom(IRoom room);
         IRoom Room { get; }
+        int InteractEnergyCost { get; }
     }
 }

@@ -5,7 +5,7 @@ using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data.Animator;
+using _StoryGame.Data.Anim;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -79,7 +79,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
                 _dep.Log.Warn("post await source.Task");
                 source = null;
 
-                _dialogResultHandler.HandleResult(result);
+                _dialogResultHandler.HandleResultAsync(result);
             }
             finally
             {
@@ -89,15 +89,14 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             return true;
         }
 
-        private void OnCloseAction()
-        {
-        }
+        private UniTask OnCloseAction() => UniTask.CompletedTask; 
 
-        private void OnTakeAllAction()
+        private UniTask OnTakeAllAction()
         {
             _dep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
             _inspectable.CanInteract = false; // TODO подумать, мб не вырубать, а показывать хинт
             _dep.Publisher.ForGameManager(new TakeRoomLootMsg(_objLootData));
+            return UniTask.CompletedTask;
         }
     }
 }

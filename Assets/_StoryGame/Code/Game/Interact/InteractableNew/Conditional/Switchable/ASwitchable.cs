@@ -1,11 +1,14 @@
 ﻿using System;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Data.Anim;
+using _StoryGame.Game.Anima;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Infrastructure.Interact;
+using _StoryGame.Game.Interact.Interactables.Unlock;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
 {
@@ -15,65 +18,79 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
         [Title(nameof(ASwitchable<TInteractSystem>), titleAlignment: TitleAlignments.Centered)] [SerializeField]
         private ESwitchState defaultState = ESwitchState.NotSet;
 
-        [SerializeField] private Animation _animation;
-        [SerializeField] private AnimationClip onStateClip;
-        [SerializeField] private AnimationClip offStateClip;
+        [SerializeField] private ESwitchInteractionType interactionType = ESwitchInteractionType.NotSet;
+        [SerializeField] private EGlobalInteractCondition impactCondition = EGlobalInteractCondition.NotSet;
 
-        private const int SpeedMul = 200;
+        [SerializeField] private Animator animator;
 
-        private string _onClipName;
-        private string _offClipName;
+        private const float SpeedMul = 5;
+
+        public EGlobalInteractCondition ImpactCondition => impactCondition;
         private Collider[] _colliders;
         private bool _isInitialized;
-        private ESwitchState _currentState;
+        protected ESwitchState CurrentState { get; private set; } = ESwitchState.Off;
 
         protected override void OnAwake()
         {
             if (defaultState == ESwitchState.NotSet)
                 throw new NullReferenceException("Default state is not set");
-            if (!_animation)
+            if (!animator)
                 throw new Exception($"Animation component not found on {name}.");
-            if (!onStateClip)
-                throw new Exception($"ON State Animation Clip is not assigned for {name}.");
-            if (!offStateClip)
-                throw new Exception($"OFF State Animation Clip is not assigned for {name}.");
 
-            _onClipName = onStateClip.name;
-            _offClipName = offStateClip.name;
-
-            if (_animation[_onClipName] == null)
-                _animation.AddClip(onStateClip, _onClipName);
-
-            if (_animation[_offClipName] == null)
-                _animation.AddClip(offStateClip, _offClipName);
-
-            if (defaultState == ESwitchState.On)
-                AnimToOffState().Forget();
-
+            if (impactCondition == EGlobalInteractCondition.NotSet)
+                throw new NullReferenceException("ImpactCondition is not set. " + name);
 
             _colliders = gameObject.GetComponents<Collider>();
+
+            animator.speed = SpeedMul;
+
             _isInitialized = true;
         }
 
-        private async UniTask AnimToOffState()
+        protected async UniTask SetCurrentStateAsync(ESwitchState state)
         {
-            LOG.Warn("AnimToOffState > OFF // " + _offClipName);
-            var defSpeed = _animation[_offClipName].speed;
-            _animation[_offClipName].speed = 1f * SpeedMul;
-            _animation.Play(_offClipName);
-            _currentState = ESwitchState.Off;
+            if (CurrentState == state)
+                return;
+            animator.speed = 1f;
+            var trigger = state == ESwitchState.On ? AnimatorConst.TurnOn : AnimatorConst.TurnOff;
+            var animState = state == ESwitchState.On ? AnimatorConst.OnStateName : AnimatorConst.OffStateName;
 
-            await UniTask.Delay((int)(offStateClip.length * 1000) / SpeedMul);
+            animator.SetTrigger(trigger);
 
-            _animation[_offClipName].speed = defSpeed;
+            LOG.Warn("SetCurrentStateAsync PRE > " + state + " > " + trigger + " > " + animState);
+            var waiter = new AnimatorStateWaiter(animator, animState);
+            await UniTask.WaitUntil(waiter.IsAnimationFinished);
+            LOG.Warn("SetCurrentStateAsync POST < " + state + " > " + trigger + " > " + animState);
+
+            CurrentState = state;
         }
 
         protected override void Enable()
         {
         }
+
+        private static ESwitchState GetOppositeState(ESwitchState state) =>
+            state == ESwitchState.Off ? ESwitchState.On : ESwitchState.Off;
+
+
+        public string GetSwitchInteractionQuestionKey()
+        {
+            return interactionType switch
+            {
+                ESwitchInteractionType.OpenClose => CurrentState == ESwitchState.On ? "q_close" : "q_open",
+                ESwitchInteractionType.TurnOnTurnOff => CurrentState == ESwitchState.On ? "q_turn_off" : "q_turn_on",
+                ESwitchInteractionType.NotSet => "NOT_SET",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        public void SwitchState() => SetCurrentStateAsync(GetOppositeState(CurrentState)).Forget();
     }
 
-    public interface ISwitchable : IInteractable
+    internal enum ESwitchInteractionType
     {
+        NotSet = -1,
+        OpenClose = 0,
+        TurnOnTurnOff = 1
     }
 }

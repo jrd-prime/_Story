@@ -1765,6 +1765,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7971337396996347241, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: impactCondition
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971337396996347241, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: interactionType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971337396996347241, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: localizationKey
+      value: pipe_line_j8_to_mech
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971337396996347241, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: interactEnergyCost
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

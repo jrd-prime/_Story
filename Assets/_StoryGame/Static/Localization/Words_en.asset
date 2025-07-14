@@ -202,6 +202,30 @@ MonoBehaviour:
     m_Localized: Emergency hatch
     m_Metadata:
       m_Items: []
+  - m_Id: 20736183469277188
+    m_Localized: Line J-08 (Electromechanical)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985482452998
+    m_Localized: NOT SET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647296
+    m_Localized: Open?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647297
+    m_Localized: Close?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647298
+    m_Localized: Turn on?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647299
+    m_Localized: Turn off?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

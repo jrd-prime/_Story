@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Key: stepladder
     m_Metadata:
       m_Items: []
-  - m_Id: 16369518937833472
+  - m_Id: 20738985444704256
     m_Key: New Entry 1
     m_Metadata:
       m_Items: []
@@ -183,15 +183,15 @@ MonoBehaviour:
     m_Key: Warehouse2
     m_Metadata:
       m_Items: []
-  - m_Id: 16369518937833473
+  - m_Id: 20738985482452992
     m_Key: New Entry 5
     m_Metadata:
       m_Items: []
-  - m_Id: 16369518937833474
+  - m_Id: 20738985482452993
     m_Key: New Entry 6
     m_Metadata:
       m_Items: []
-  - m_Id: 16369518954610688
+  - m_Id: 20738985482452994
     m_Key: New Entry 7
     m_Metadata:
       m_Items: []
@@ -211,12 +211,44 @@ MonoBehaviour:
     m_Key: DescendQ
     m_Metadata:
       m_Items: []
-  - m_Id: 16369518954610689
+  - m_Id: 20738985482452995
     m_Key: New Entry 8
     m_Metadata:
       m_Items: []
   - m_Id: 16369518954610690
     m_Key: obj_emergency_hatch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20736183469277188
+    m_Key: pipe_line_j8_to_mech
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985482452996
+    m_Key: New Entry 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985482452997
+    m_Key: New Entry 11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985482452998
+    m_Key: NOT_SET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647296
+    m_Key: q_open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647297
+    m_Key: q_close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647298
+    m_Key: q_turn_on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647299
+    m_Key: q_turn_off
     m_Metadata:
       m_Items: []
   m_Metadata:

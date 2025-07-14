@@ -7,6 +7,7 @@ using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Interact.Systems.Toggle;
+using _StoryGame.Game.Interact.Systems.Toggle.Strategies;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Back;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;

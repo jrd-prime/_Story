@@ -220,6 +220,30 @@ MonoBehaviour:
     m_Localized: "\u0410\u0432\u0430\u0440\u0438\u0439\u043D\u044B\u0439 \u043B\u044E\u043A"
     m_Metadata:
       m_Items: []
+  - m_Id: 20736183469277188
+    m_Localized: "\u041B\u0438\u043D\u0438\u044F J-08 (\u042D\u043B\u0435\u043A\u0442\u0440\u043E-\u043C\u0435\u0445\u0430\u043D\u0438\u0447\u0435\u0441\u043A\u0438\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985482452998
+    m_Localized: NOT SET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647296
+    m_Localized: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647297
+    m_Localized: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647298
+    m_Localized: "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20738985486647299
+    m_Localized: "\u0412\u044B\u043A\u043B\u044E\u0447\u0438\u0442\u044C?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

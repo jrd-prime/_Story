@@ -14,5 +14,6 @@ namespace _StoryGame.Core.Messaging.Interfaces
         void ForInteractProcessor(IInteractProcessorMsg msg);
         void ForHSM(IHSMMsg msg);
         void ForRoomsDispatcher(IRoomsDispatcherMsg msg);
+        void ForConditionRegistry(IConditionRegistryMsg msg);
     }
 }

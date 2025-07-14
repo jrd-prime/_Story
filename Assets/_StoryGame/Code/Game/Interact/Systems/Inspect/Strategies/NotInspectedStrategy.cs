@@ -4,7 +4,7 @@ using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data.Animator;
+using _StoryGame.Data.Anim;
 using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
@@ -49,7 +49,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
 
                 _dep.Publisher.ForPlayerAnimator(new SetBoolMsg(AnimatorConst.IsGatherHigh, false));
 
-                _dialogResultHandler.HandleResult(result);
+                _dialogResultHandler.HandleResultAsync(result);
             }
             finally
             {
@@ -59,7 +59,7 @@ namespace _StoryGame.Game.Interact.Systems.Inspect.Strategies
             return true;
         }
 
-        private async void OnCloseAction()
+        private async UniTask OnCloseAction()
         {
             _inspectable.SetInspectState(EInspectState.Inspected);
             await UniTask.Yield();

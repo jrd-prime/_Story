@@ -2,6 +2,7 @@
 using System.Linq;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.InteractableNew.Conditional;
 
@@ -9,11 +10,11 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
 {
     public sealed class ConditionChecker
     {
-        private readonly ConditionRegistry _conditionRegistry;
+        private readonly IConditionRegistry _conditionRegistry;
         private readonly IPlayer _player;
         private readonly IJLog _log;
 
-        public ConditionChecker(ConditionRegistry conditionRegistry, IPlayer player, IJLog log)
+        public ConditionChecker(IConditionRegistry conditionRegistry, IPlayer player, IJLog log)
         {
             _conditionRegistry = conditionRegistry;
             _player = player;
@@ -133,6 +134,13 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
                     return (true, item.thoughtKey);
 
             return (false, string.Empty);
+        }
+
+        public ESwitchState GetSwitchState(EGlobalInteractCondition impactOnCondition)
+        {
+            if (_conditionRegistry.IsCompleted(impactOnCondition))
+                return ESwitchState.On;
+            return ESwitchState.Off;
         }
     }
 }

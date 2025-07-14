@@ -8,7 +8,7 @@ using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Systems.Toggle
+namespace _StoryGame.Game.Interact.Systems.Toggle.Strategies
 {
     public class ToggleResponderStrategy : IToggleSystemStrategy
     {

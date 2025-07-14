@@ -3,7 +3,7 @@ using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data.Animator;
+using _StoryGame.Data.Anim;
 using _StoryGame.Data.Loot;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Managers.Game.Messages;
@@ -35,11 +35,12 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
             _dialogResultHandler.AddCallback(EDialogResult.Close, OnCloseAction);
         }
 
-        private void OnTakeAllAction()
+        private UniTask OnTakeAllAction()
         {
             _dep.Publisher.ForUIViewer(new CurrentOperationMsg("ShowLootTipAfterSearch"));
             _conditional.CanInteract = false; // TODO подумать, мб не вырубать, а показывать хинт
             _dep.Publisher.ForGameManager(new TakeRoomLootMsg(objLootData));
+            return UniTask.CompletedTask;
         }
 
         public async UniTask<bool> ExecuteAsync(IConditional interactable)
@@ -67,7 +68,7 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
                 var result = await source.Task;
                 source = null;
 
-                _dialogResultHandler.HandleResult(result);
+                await _dialogResultHandler.HandleResultAsync(result);
             }
             finally
             {
@@ -77,9 +78,10 @@ namespace _StoryGame.Game.Interact.Systems.Conditional.Strategies
             return true;
         }
 
-        private void OnCloseAction()
+        private UniTask OnCloseAction()
         {
             _dep.Publisher.ForGameManager(new TakeRoomLootMsg(inspdata));
+            return UniTask.CompletedTask;
         }
 
         /// <summary>

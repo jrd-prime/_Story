@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Interact.Systems.Toggle.Strategies;
 using _StoryGame.Infrastructure.Interact;
 
 namespace _StoryGame.Game.Interact.Systems.Toggle

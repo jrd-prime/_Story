@@ -3,6 +3,7 @@ using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.InteractableNew.Conditional;
 using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Toggle;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
@@ -23,7 +24,7 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
         [SerializeField] private ESwitchState defaultState = ESwitchState.NotSet;
 
         [ShowIf("@toggleType==EToggleType.Modifier")] [SerializeField]
-        private EInteractConditionType condition = EInteractConditionType.NotSet;
+        private EGlobalInteractCondition condition = EGlobalInteractCondition.NotSet;
 
         [Title(nameof(Toggleable), "Animation", titleAlignment: TitleAlignments.Centered)] [SerializeField]
         private AnimationClip onStateClip;
@@ -32,7 +33,7 @@ namespace _StoryGame.Game.Interact.Interactables.Condition
 
         public EToggleType ToggleType => toggleType;
         public ESwitchState SwitchState => _currentState;
-        public EInteractConditionType ImpactOnCondition => condition;
+        public EGlobalInteractCondition ImpactOnCondition => condition;
 
         private ESwitchState _currentState = ESwitchState.NotSet;
         private EConditionResult _conditionResult = EConditionResult.NotSet;

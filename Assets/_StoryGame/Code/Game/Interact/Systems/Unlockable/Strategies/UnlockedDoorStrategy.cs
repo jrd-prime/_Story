@@ -80,7 +80,7 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
                 _dep.Publisher.ForUIViewer(msg);
                 var result = await source.Task;
 
-                _dialogResultHandler.HandleResult(result);
+                _dialogResultHandler.HandleResultAsync(result);
             }
             catch (Exception e)
             {
@@ -94,16 +94,16 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
             return true;
         }
 
-        private void OnCloseAction()
-        {
-        }
+        private UniTask OnCloseAction() => UniTask.CompletedTask; 
 
-        private void OnApplyAction()
+        private UniTask OnApplyAction()
         {
             // _usableExit.SetState(EUseState.Used); // TODO сбрасывать на активации комнат
-            _dep.Publisher.ForGameManager(new SpendEnergyMsg(_door.OpenableObjData.usePrice));
+            _dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(_door.OpenableObjData.usePrice));
             _dep.Publisher.ForGameManager(new GoToRoomRequestMsg(_door.OpenableObjData.exit, _door.OpenableObjData.fromRoom,
                 _door.OpenableObjData.toRoom));
+
+            return UniTask.CompletedTask;
         }
     }
 }

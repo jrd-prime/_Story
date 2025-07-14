@@ -48,7 +48,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
+            // Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
 
             RegisterStateMachine(builder);
 
@@ -96,7 +96,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
 
             builder.Register<ConditionChecker>(Lifetime.Singleton).AsSelf();
-            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsSelf();
+            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();

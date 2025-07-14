@@ -84,7 +84,7 @@ namespace _StoryGame.Game.Managers.Game
 
             _gameManagerMsgSub.Subscribe(
                 OnSpendEnergyMsg,
-                msg => msg is SpendEnergyMsg
+                msg => msg is SpendEnergyRequestMsg
             );
 
             _gameManagerMsgSub.Subscribe(
@@ -96,8 +96,8 @@ namespace _StoryGame.Game.Managers.Game
                 OnTransitionToRoomRequestMsg,
                 msg => msg is GoToRoomRequestMsg
             );
-            
-            
+
+
             _player.Wallet.Add("rope", 1);
         }
 
@@ -125,7 +125,7 @@ namespace _StoryGame.Game.Managers.Game
         private void OnSpendEnergyMsg(IGameManagerMsg message)
         {
             Debug.Log($"OnMessage: {message.GetType().Name}");
-            var msg = message as SpendEnergyMsg ?? throw new ArgumentNullException(nameof(message));
+            var msg = message as SpendEnergyRequestMsg ?? throw new ArgumentNullException(nameof(message));
             _player.SpendEnergy(msg.Amount);
         }
 
@@ -187,8 +187,7 @@ namespace _StoryGame.Game.Managers.Game
             _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B2B3Ladder, ERoom.NotSet,
                 ERoom.CorridorMainB3));
         }
-
-
+        
         public void GameOver()
         {
             _log.Info("<color=red>GAME OVER</color>");
