@@ -96,7 +96,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
 
             builder.Register<ConditionChecker>(Lifetime.Singleton).AsSelf();
-            builder.Register<IConditionRegistry,ConditionRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();

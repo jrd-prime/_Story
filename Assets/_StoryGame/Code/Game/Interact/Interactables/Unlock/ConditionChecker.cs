@@ -80,6 +80,7 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
             // Уровень 1: Проверка последовательных условий (самое важное)
             var sortedConditions = conditions.conditions.OrderBy(c => c.queueIndex).ToArray();
             _log.Warn("checking conditions");
+            _log.Warn("Interact Conditions Count: " + sortedConditions.Length);
             foreach (var condition in sortedConditions)
             {
                 if (_conditionRegistry.IsCompleted(condition.type))
@@ -142,5 +143,8 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
                 return ESwitchState.On;
             return ESwitchState.Off;
         }
+
+        public bool GetConditionState(EGlobalInteractCondition condition) =>
+            _conditionRegistry.IsCompleted(condition);
     }
 }

@@ -12,13 +12,15 @@ using UnityEngine.Serialization;
 
 namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
 {
-    public abstract class ASwitchable<TInteractSystem> : AConditional<TInteractSystem>, ISwitchable
-        where TInteractSystem : AInteractSystem<ISwitchable>
+    public abstract class ASwitchable<TInteractSystem, TInteractable> : AConditional<TInteractSystem>, ISwitchable
+        where TInteractable : class, ISwitchable
+        where TInteractSystem : AInteractSystem<TInteractable>
     {
-        [Title(nameof(ASwitchable<TInteractSystem>), titleAlignment: TitleAlignments.Centered)] [SerializeField]
-        private ESwitchState defaultState = ESwitchState.NotSet;
+        [Title(nameof(ASwitchable<TInteractSystem, TInteractable>), titleAlignment: TitleAlignments.Centered)]
+        [SerializeField]
+        private ESwitchState initState = ESwitchState.NotSet;
 
-        [SerializeField] private ESwitchInteractionType interactionType = ESwitchInteractionType.NotSet;
+        [SerializeField] private ESwitchQuestion switchQuestion = ESwitchQuestion.NotSet;
         [SerializeField] private EGlobalInteractCondition impactCondition = EGlobalInteractCondition.NotSet;
 
         [SerializeField] private Animator animator;
@@ -26,13 +28,20 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
         private const float SpeedMul = 5;
 
         public EGlobalInteractCondition ImpactCondition => impactCondition;
-        private Collider[] _colliders;
+        protected Collider[] _colliders { get; private set; }
         private bool _isInitialized;
+        private AnimatorStateInfo animstate;
+        private float normalizedTime;
         protected ESwitchState CurrentState { get; private set; } = ESwitchState.Off;
 
         protected override void OnAwake()
         {
-            if (defaultState == ESwitchState.NotSet)
+            _colliders = gameObject.GetComponents<Collider>();
+        }
+
+        protected override void OnStart()
+        {
+            if (initState == ESwitchState.NotSet)
                 throw new NullReferenceException("Default state is not set");
             if (!animator)
                 throw new Exception($"Animation component not found on {name}.");
@@ -40,17 +49,41 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
             if (impactCondition == EGlobalInteractCondition.NotSet)
                 throw new NullReferenceException("ImpactCondition is not set. " + name);
 
-            _colliders = gameObject.GetComponents<Collider>();
-
             animator.speed = SpeedMul;
 
             _isInitialized = true;
         }
 
+        protected override void Enable()
+        {
+            LOG.Warn("Enable: CurrentState > " + CurrentState);
+            if (!_isInitialized)
+            {
+                LOG.Warn("Enable: _isInitialized == false");
+                return;
+            }
+
+            // restore animation state
+            animator.Play(animstate.shortNameHash, 0, normalizedTime);
+
+            var result = ConditionChecker.GetSwitchState(ImpactCondition);
+
+            LOG.Warn("ImpactCondition > " + ImpactCondition + " > result: " + result + " >  current: " +
+                     CurrentState);
+
+            if (result == CurrentState)
+                return;
+
+            SetCurrentStateAsync(result).Forget();
+        }
+
+        protected override void Disable()
+        {
+            LOG.Warn("Disable: CurrentState > " + CurrentState);
+        }
+
         protected async UniTask SetCurrentStateAsync(ESwitchState state)
         {
-            if (CurrentState == state)
-                return;
             animator.speed = 1f;
             var trigger = state == ESwitchState.On ? AnimatorConst.TurnOn : AnimatorConst.TurnOff;
             var animState = state == ESwitchState.On ? AnimatorConst.OnStateName : AnimatorConst.OffStateName;
@@ -63,11 +96,15 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
             LOG.Warn("SetCurrentStateAsync POST < " + state + " > " + trigger + " > " + animState);
 
             CurrentState = state;
+            
+            OnStateChanged(state);
+
+            // save animation state
+            animstate = animator.GetCurrentAnimatorStateInfo(0);
+            normalizedTime = animstate.normalizedTime;
         }
 
-        protected override void Enable()
-        {
-        }
+        protected virtual void OnStateChanged(ESwitchState state){}
 
         private static ESwitchState GetOppositeState(ESwitchState state) =>
             state == ESwitchState.Off ? ESwitchState.On : ESwitchState.Off;
@@ -75,11 +112,11 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
 
         public string GetSwitchInteractionQuestionKey()
         {
-            return interactionType switch
+            return switchQuestion switch
             {
-                ESwitchInteractionType.OpenClose => CurrentState == ESwitchState.On ? "q_close" : "q_open",
-                ESwitchInteractionType.TurnOnTurnOff => CurrentState == ESwitchState.On ? "q_turn_off" : "q_turn_on",
-                ESwitchInteractionType.NotSet => "NOT_SET",
+                ESwitchQuestion.OpenClose => CurrentState == ESwitchState.On ? "q_close" : "q_open",
+                ESwitchQuestion.TurnOnTurnOff => CurrentState == ESwitchState.On ? "q_turn_off" : "q_turn_on",
+                ESwitchQuestion.NotSet => "NOT_SET",
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -87,10 +124,11 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable
         public void SwitchState() => SetCurrentStateAsync(GetOppositeState(CurrentState)).Forget();
     }
 
-    internal enum ESwitchInteractionType
+    internal enum ESwitchQuestion
     {
         NotSet = -1,
-        OpenClose = 0,
-        TurnOnTurnOff = 1
+        NoQuestion = 0,
+        OpenClose = 1,
+        TurnOnTurnOff = 2
     }
 }

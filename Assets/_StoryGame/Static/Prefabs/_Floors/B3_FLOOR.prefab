@@ -6055,6 +6055,7 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 2367086906646368652}
+  interactEnergyCost: 0
   conditionsData:
     conditions: []
     requiredItems: []
@@ -6859,17 +6860,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   objName: Not set
-  localizationKey: door_wooden
+  localizationKey: pipe_line_j8_to_mech
   _entrance: {fileID: 8575813330436312942}
+  interactEnergyCost: 1
   conditionsData:
     conditions: []
     requiredItems: []
     oneOfItem:
       thoughtKey: 
       items: []
-  defaultState: 1
+  initState: 1
+  switchQuestion: 1
+  impactCondition: 3
   animator: {fileID: 7440633179842978189}
-  impactOnCondition: 3
 --- !u!65 &1090013883161532904
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7890,7 +7893,7 @@ MonoBehaviour:
   - exit: 15
     door: {fileID: 5402166406713625667}
   toggleables:
-  - {fileID: 2141572478802731833}
+  - {fileID: 0}
   effectables:
   - {fileID: 6448110027339248872}
 --- !u!1 &5871706979318368630
@@ -18810,7 +18813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf15a8178414bc296c3f0fb5a29c2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playIfConditionsMet: 0
+  playIfConditionsMet: 1
   conditionsData:
     conditions:
     - queueIndex: 1
@@ -19964,7 +19967,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9398eb556ad960c4f88064348fd14b99, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 2141572478802731833}
+      addedObject: {fileID: 4562496003196577655}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9398eb556ad960c4f88064348fd14b99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2702577649857087667}
@@ -19973,7 +19976,7 @@ PrefabInstance:
       addedObject: {fileID: 7197936522875437455}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9398eb556ad960c4f88064348fd14b99, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 87737213015082715}
+      addedObject: {fileID: 4646403267897505678}
   m_SourcePrefab: {fileID: 100100000, guid: 9398eb556ad960c4f88064348fd14b99, type: 3}
 --- !u!4 &7081862168577960500 stripped
 Transform:
@@ -19985,7 +19988,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9398eb556ad960c4f88064348fd14b99, type: 3}
   m_PrefabInstance: {fileID: 7335639642254904799}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2141572478802731833
+--- !u!114 &4562496003196577655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19994,27 +19997,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7569430237879840910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8db75e242840481880c42c2917ee514f, type: 3}
+  m_Script: {fileID: 11500000, guid: b717e0903bd6449ca271b0b4acb0a029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 7706561934673543319}
+  interactEnergyCost: 0
   conditionsData:
-    conditions:
-    - queueIndex: 1
-      thoughtKey: TH_mech_water_under_electricbox
-      type: 3
+    conditions: []
     requiredItems: []
     oneOfItem:
       thoughtKey: 
       items: []
-  toggleType: 0
-  defaultState: 1
-  condition: -1
-  onStateClip: {fileID: 7400000, guid: f0037ed688a9b4446b19eaa06dccf206, type: 2}
-  offStateClip: {fileID: 7400000, guid: 162ec37bfb14a6f48a740a10eae4ae19, type: 2}
+  initState: 1
+  switchQuestion: 0
+  impactCondition: 3
+  animator: {fileID: 4646403267897505678}
+  inverseConditionImpact: 1
+  notFulfilledThoughtKey: TH_mech_water_under_electricbox
 --- !u!65 &2702577649857087667
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20058,24 +20060,28 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: 9398eb556ad960c4f88064348fd14b99, type: 3}
---- !u!111 &87737213015082715
-Animation:
+--- !u!95 &4646403267897505678
+Animator:
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7569430237879840910}
   m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 162ec37bfb14a6f48a740a10eae4ae19, type: 2}
-  - {fileID: 7400000, guid: f0037ed688a9b4446b19eaa06dccf206, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: fd1d042ffaded884690cec893f006fb3, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
-  m_CullingType: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7388719110510368689
 PrefabInstance:
   m_ObjectHideFlags: 0

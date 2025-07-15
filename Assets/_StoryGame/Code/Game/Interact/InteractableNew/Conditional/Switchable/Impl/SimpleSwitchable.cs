@@ -1,20 +1,7 @@
 ﻿using System;
-using System.Text;
-using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Core.Messaging.Interfaces;
-using _StoryGame.Core.Providers.Localization;
-using _StoryGame.Core.UI;
-using _StoryGame.Core.UI.Msg;
-using _StoryGame.Data.Anim;
-using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Interactables.Unlock;
-using _StoryGame.Game.Interact.Systems.Inspect;
-using _StoryGame.Game.Interact.Systems.Toggle.Strategies;
-using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Movement;
-using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -26,16 +13,14 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable.Impl
     /// Может требовать выполнения каких-либо условий для взаимодействия.
     /// Меняет свое состояние и глобальное сценарное состояние
     /// </summary>
-    public sealed class SimpleSwitchable : ASwitchable<SimpleSwitchSystem>
+    public sealed class SimpleSwitchable : ASwitchable<SimpleSwitchSystem, ISimpleSwitchable>, ISimpleSwitchable
     {
-        [Title(nameof(SimpleSwitchable))]
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-        }
+        // [Title(nameof(SimpleSwitchable))]
 
         protected override void OnStart()
         {
+            base.OnStart();
+            LOG.Warn("OnStart current: " + CurrentState);
             if (ConditionChecker == null)
                 throw new Exception($"ConditionChecker is null for {gameObject.name}.");
 
@@ -51,91 +36,7 @@ namespace _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable.Impl
         }
     }
 
-    public class SimpleSwitchSystem : AInteractSystem<ISwitchable>
+    public interface ISimpleSwitchable : ISwitchable
     {
-        private readonly DialogResultHandler _dialogResultHandler;
-        private int cost;
-
-        public SimpleSwitchSystem(InteractSystemDepFlyweight dep) : base(dep)
-        {
-            _dialogResultHandler = new DialogResultHandler(dep.Log);
-            _dialogResultHandler.AddCallback(EDialogResult.Yes, OnYesActionAsync);
-            _dialogResultHandler.AddCallback(EDialogResult.No, OnNoActionAsync);
-        }
-
-        private UniTask OnNoActionAsync() => UniTask.CompletedTask;
-
-        private async UniTask OnYesActionAsync()
-        {
-            Dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(Interactable.InteractEnergyCost));
-
-            Interactable.SwitchState();
-
-            await AnimPlayerByBoolAsync(AnimatorConst.IsGatherHigh, 2000);
-
-            Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Interactable.ImpactCondition));
-
-
-            await UniTask.Yield();
-        }
-
-        private async UniTask AnimPlayerByBoolAsync(string animName, int duration)
-        {
-            Dep.Publisher.ForPlayerAnimator(new SetBoolMsg(animName, true));
-            await UniTask.Delay(duration);
-            Dep.Publisher.ForPlayerAnimator(new SetBoolMsg(animName, false));
-        }
-
-        protected override async UniTask<bool> OnInteractAsync()
-        {
-            Dep.Log.Warn("SimpleSwitchSystem.OnInteractAsync");
-
-            var conditionsResult = Dep.ConditionChecker.CheckConditions(Interactable.ConditionsData);
-
-            if (conditionsResult.Success)
-            {
-                // If conditions are fulfilled
-                Dep.Publisher.ForUIViewer(new CurrentOperationMsg("ToggleModifierStrategy"));
-
-                var source = new UniTaskCompletionSource<EDialogResult>();
-                var title = Dep.L10n.Localize(Interactable.LocalizationKey, ETable.Words);
-                var state = "state";
-                var question = Dep.L10n.Localize(Interactable.GetSwitchInteractionQuestionKey(), ETable.Words);
-
-                var message = new ShowDialogWindowMsg(title, state, question, Interactable.InteractEnergyCost, source);
-
-                try
-                {
-                    Dep.Publisher.ForUIViewer(message);
-
-                    var result = await source.Task;
-                    source = null;
-
-                    await _dialogResultHandler.HandleResultAsync(result);
-                }
-                finally
-                {
-                    source?.TrySetCanceled();
-                }
-
-                return true;
-            }
-            else
-            {
-                // If conditions are not fulfilled
-                var localizedThoughtsBuilder = new StringBuilder();
-
-                foreach (var thoughtKey in conditionsResult.Toughts)
-                    localizedThoughtsBuilder.AppendLine("Line / " + Dep.L10n.Localize(thoughtKey, ETable.SmallPhrase));
-
-                var thought = new ThoughtDataVo(localizedThoughtsBuilder.ToString());
-
-                Dep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
-            }
-
-            return true;
-        }
     }
-
-    internal record SwitchGlobalConditionMsg(EGlobalInteractCondition GlobalCondition) : IConditionRegistryMsg;
 }

@@ -126,6 +126,8 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<PassSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<ToggleSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<SimpleSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<DynamicOnConditionSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            
         }
 
         protected override void Awake()

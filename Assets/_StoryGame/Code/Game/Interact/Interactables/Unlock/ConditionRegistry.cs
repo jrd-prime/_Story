@@ -32,8 +32,9 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
 
             _conditions.Add(EGlobalInteractCondition.ServModuleHasPower, false);
             _conditions.Add(EGlobalInteractCondition.HasElectricity, false);
-            _conditions.Add(EGlobalInteractCondition.MechWaterSupply, false);
             _conditions.Add(EGlobalInteractCondition.ModulePersistentClosed, false);
+            // Водоснабжение для мех. модуля включено
+            _conditions.Add(EGlobalInteractCondition.MechWaterSupplySwitchedOn, true);
 
             if ((Enum.GetNames(typeof(EGlobalInteractCondition)).Length - 1) != _conditions.Count)
                 throw new Exception("Initialized conditions count mismatch!");

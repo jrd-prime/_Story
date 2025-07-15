@@ -32,7 +32,7 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
 
             _conditions.Add(EGlobalInteractCondition.ServModuleHasPower, false);
             _conditions.Add(EGlobalInteractCondition.HasElectricity, false);
-            _conditions.Add(EGlobalInteractCondition.MechWaterSupply, false);
+            _conditions.Add(EGlobalInteractCondition.MechWaterSupplySwitchedOn, false);
             _conditions.Add(EGlobalInteractCondition.ModulePersistentClosed, false);
 
             if ((Enum.GetNames(typeof(EGlobalInteractCondition)).Length - 1) != _conditions.Count)
@@ -44,10 +44,9 @@ namespace _StoryGame.Game.Interact.Interactables.Unlock
 
         private void SwitchGlobalConditionMsg(EGlobalInteractCondition type)
         {
-            if (!_conditions.ContainsKey(type))
+            if (!_conditions.TryGetValue(type, out var currentValue))
                 return;
 
-            var currentValue = _conditions[type];
             _conditions[type] = !currentValue;
             _selfPub.Publish(new GlobalConditionChangedMsg(type, _conditions[type]));
             _log.Debug("ConditionRegistry: " + type + " changed to " + _conditions[type]);

@@ -6,6 +6,10 @@
         HasElectricity = 1000,
         ServModuleHasPower = 1,
         ModulePersistentClosed = 2,
-        MechWaterSupply = 3
+
+        /// <summary>
+        /// Водоснабжение включено для мех. модуля
+        /// </summary>
+        MechWaterSupplySwitchedOn = 3
     }
 }
