@@ -122,7 +122,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         {
             builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<UseSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PassSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<ToggleSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<SimpleSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

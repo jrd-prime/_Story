@@ -53,6 +53,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  playerViewPrefab: {fileID: 4878256673187372684, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
+  playerViewPrefab: {fileID: 4457850876444999079, guid: 607418a8f65766e46a5ef61567048007, type: 3}
   spawnPoint: {fileID: 0}
   interactablesTipUIPrefab: {fileID: 774864937108512297, guid: d25c931468e46db4ea0138dd1932d4e6, type: 3}

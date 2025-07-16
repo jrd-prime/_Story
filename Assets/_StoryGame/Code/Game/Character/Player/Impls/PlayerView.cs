@@ -21,6 +21,7 @@ namespace _StoryGame.Game.Character.Player.Impls
         public ECharacterState State { get; private set; } = ECharacterState.Idle;
         public NavMeshAgent NavMeshAgent { get; private set; }
         public string Description { get; set; }
+        public bool IsApplyingRootMotion { get; set; }
 
         private IObjectResolver _resolver;
 

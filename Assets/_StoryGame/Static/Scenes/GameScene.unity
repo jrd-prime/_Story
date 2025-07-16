@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 2a0996269b9c9614bbef66e70f6ff6e3, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 02d3059d3d305de418bf3ccc426ed576, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 4a5a1708e9dcfb74391db4a9a83f0ad1, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1184,6 +1184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -944788757533338434, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
+      propertyPath: m_Acceleration
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 1075336431961072393, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
       propertyPath: mainCamera
       value: 
@@ -1237,6 +1241,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
+--- !u!114 &1709489104 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4878256673187372684, guid: df39ded3dfec18a408c07dd25e66e496, type: 3}
+  m_PrefabInstance: {fileID: 1709489103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3ba9b5656549fca453e0324e28bbfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1812661216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1843,6 +1858,10 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 7067505660813329913}
+    - target: {fileID: 1397279749972252550, guid: 01b32a71a2b6b7d46a6ef304b8a55371, type: 3}
+      propertyPath: playerViewPrefab
+      value: 
+      objectReference: {fileID: 1709489104}
     - target: {fileID: 1397279749972252550, guid: 01b32a71a2b6b7d46a6ef304b8a55371, type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[0]'
       value: 
