@@ -6,6 +6,7 @@ using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Interact.Systems.Unlockable.Strategies;
+using _StoryGame.Game.Managers.Condition;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 

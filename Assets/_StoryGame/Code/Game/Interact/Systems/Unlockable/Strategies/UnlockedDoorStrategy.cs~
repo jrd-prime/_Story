@@ -7,6 +7,7 @@ using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Interactables.Use;
+using _StoryGame.Game.Managers.Condition;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
@@ -99,7 +100,7 @@ namespace _StoryGame.Game.Interact.Systems.Unlockable.Strategies
         private UniTask OnApplyAction()
         {
             // _usableExit.SetState(EUseState.Used); // TODO сбрасывать на активации комнат
-            _dep.Publisher.ForGameManager(new SpendEnergyMsg(_door.OpenableObjData.usePrice));
+            _dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(_door.OpenableObjData.usePrice));
             _dep.Publisher.ForGameManager(new GoToRoomRequestMsg(_door.OpenableObjData.exit, _door.OpenableObjData.fromRoom,
                 _door.OpenableObjData.toRoom));
 

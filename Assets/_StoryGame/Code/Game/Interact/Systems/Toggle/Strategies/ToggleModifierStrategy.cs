@@ -2,8 +2,8 @@
 using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Game.Interact.Interactables.Condition;
-using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems.Inspect;
+using _StoryGame.Game.Managers.Condition;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 

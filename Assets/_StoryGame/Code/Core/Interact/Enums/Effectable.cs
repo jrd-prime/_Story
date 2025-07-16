@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Managers.Condition;
 using UnityEngine;
 using VContainer;
 

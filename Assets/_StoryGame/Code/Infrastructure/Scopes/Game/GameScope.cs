@@ -5,19 +5,16 @@ using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.InteractableNew;
-using _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable;
-using _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable.Impl;
-using _StoryGame.Game.Interact.Interactables.Condition;
-using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems;
 using _StoryGame.Game.Interact.Systems.Conditional;
 using _StoryGame.Game.Interact.Systems.Inspect;
 using _StoryGame.Game.Interact.Systems.Toggle;
 using _StoryGame.Game.Interact.Systems.Use;
+using _StoryGame.Game.Interact.SystemsNew.Switchable;
 using _StoryGame.Game.Loot;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
+using _StoryGame.Game.Managers.Condition;
 using _StoryGame.Game.Managers.Game;
 using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Game.Managers.Room;
@@ -136,7 +133,9 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             var interactables =
                 FindObjectsByType<AInteractableBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            Debug.Log($"Interact on scene: {interactables.Length}");
+            
+            // Debug.Log($"Interact on scene: {interactables.Length}");
+            
             foreach (var interactable in interactables)
                 Container.Inject(interactable);
         }

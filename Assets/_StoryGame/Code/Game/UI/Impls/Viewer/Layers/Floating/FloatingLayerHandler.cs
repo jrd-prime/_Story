@@ -4,7 +4,6 @@ using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Interact.Systems.Toggle;
 using _StoryGame.Game.Interact.Systems.Toggle.Strategies;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -38,7 +37,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             foreach (var windowData in floatingWindowsData.FloatingWindowDataVo)
                 _floatingWindowsAssets.Add(windowData.eFloatingWindowType, windowData.visualTreeAsset);
 
-            Log.Debug("FloatingLayerHandler initialized with " + _floatingWindowsAssets.Count + " windows.");
+            Log.Debug("Initialized with " + _floatingWindowsAssets.Count + " windows.");
         }
 
         protected override void InitElements()

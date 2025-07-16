@@ -5,6 +5,7 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI.Msg;
 using _StoryGame.Game.Interact.Interactables.Condition;
 using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Managers.Condition;
 using _StoryGame.Game.Movement;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;

@@ -1,10 +1,9 @@
 ﻿using System;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.InteractableNew.Conditional;
 using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Interact.Systems;
-using _StoryGame.Game.Interact.Systems.Toggle;
+using _StoryGame.Game.Managers.Condition;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;

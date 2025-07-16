@@ -10,7 +10,6 @@ using _StoryGame.Data.Interact;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interact.Interactables.Condition;
-using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;

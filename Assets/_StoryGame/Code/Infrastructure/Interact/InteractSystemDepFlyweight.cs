@@ -3,8 +3,8 @@ using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Interactables;
-using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Loot;
+using _StoryGame.Game.Managers.Condition;
 using VContainer;
 
 namespace _StoryGame.Infrastructure.Interact
