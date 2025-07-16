@@ -5,12 +5,15 @@ using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Systems;
-using _StoryGame.Game.Interact.Systems.Conditional;
-using _StoryGame.Game.Interact.Systems.Inspect;
-using _StoryGame.Game.Interact.Systems.Toggle;
-using _StoryGame.Game.Interact.Systems.Use;
-using _StoryGame.Game.Interact.SystemsNew.Switchable;
+using _StoryGame.Game.Interact.Inspectable.Providers;
+using _StoryGame.Game.Interact.Inspectable.Systems;
+using _StoryGame.Game.Interact.Passable.Providers;
+using _StoryGame.Game.Interact.Passable.Systems;
+using _StoryGame.Game.Interact.SortMbDelete;
+using _StoryGame.Game.Interact.SortMbDelete.Conditional;
+using _StoryGame.Game.Interact.SortMbDelete.Toggle;
+using _StoryGame.Game.Interact.SortMbDelete.Use;
+using _StoryGame.Game.Interact.Switchable.Systems;
 using _StoryGame.Game.Loot;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
@@ -99,7 +102,7 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<InspectStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<UseStrategyProvider>(Lifetime.Singleton).AsSelf();
-            builder.Register<UnlockableStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<PassableStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<ToggleStrategyProvider>(Lifetime.Singleton).AsSelf();
         }
 

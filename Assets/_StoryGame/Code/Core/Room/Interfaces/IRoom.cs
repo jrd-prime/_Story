@@ -1,5 +1,5 @@
 ﻿using _StoryGame.Data.Room;
-using _StoryGame.Game.Interact.Interactables.Condition;
+using _StoryGame.Game.Interact.Passable;
 using UnityEngine;
 
 namespace _StoryGame.Core.Room.Interfaces

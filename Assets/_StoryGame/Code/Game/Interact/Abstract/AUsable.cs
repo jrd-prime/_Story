@@ -1,7 +1,7 @@
 ﻿using System;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Game.Interact.Systems;
+using _StoryGame.Game.Interact.SortMbDelete;
 using UnityEngine;
 using UnityEngine.Serialization;
 

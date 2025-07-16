@@ -1,5 +1,5 @@
 ﻿using System;
-using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Core.Managers;
 using UnityEngine;
 
 namespace _StoryGame.Game.Managers.Condition

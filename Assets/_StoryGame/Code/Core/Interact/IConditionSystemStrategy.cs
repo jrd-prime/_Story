@@ -1,5 +1,4 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Game.Interact.Interactables.Condition;
 
 namespace _StoryGame.Core.Interact
 {

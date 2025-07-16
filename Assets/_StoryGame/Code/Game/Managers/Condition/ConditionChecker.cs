@@ -3,7 +3,7 @@ using System.Linq;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
-using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Core.Managers;
 
 namespace _StoryGame.Game.Managers.Condition
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Core.Room;
@@ -9,7 +10,8 @@ using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
-using _StoryGame.Game.Interact.Interactables.Condition;
+using _StoryGame.Game.Interact.Passable;
+using _StoryGame.Game.Interact.SortMbDelete.InteractablesSORT;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;

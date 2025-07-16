@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Messaging.Interfaces;
-using _StoryGame.Game.Interact.InteractableNew.Conditional.Switchable.Impl;
+using _StoryGame.Game.Interact.InteractablesSORT.Unlock;
+using _StoryGame.Game.Managers.Condition.Messages;
 using MessagePipe;
-using UnityEngine;
 using VContainer.Unity;
 
-namespace _StoryGame.Game.Interact.Interactables.Unlock
+namespace _StoryGame.Game.Managers.Condition
 {
     public sealed class ConditionRegistry : IConditionRegistry, IInitializable
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Room;
-using _StoryGame.Game.Interact.Interactables.Condition;
+using _StoryGame.Game.Interact.Passable;
 
 namespace _StoryGame.Game.Room.Abstract
 {

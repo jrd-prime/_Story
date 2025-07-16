@@ -1,0 +1,8 @@
+﻿using _StoryGame.Core.Interact.Interactables;
+
+namespace _StoryGame.Game.Interact.Interactables.Condition
+{
+    public interface IPassable : IInteractable
+    {
+    }
+}

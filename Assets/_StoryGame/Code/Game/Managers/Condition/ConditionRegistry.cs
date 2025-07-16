@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Managers;
 using _StoryGame.Core.Messaging.Interfaces;
-using _StoryGame.Game.Interact.Interactables.Unlock;
 using _StoryGame.Game.Managers.Condition.Messages;
 using MessagePipe;
 using VContainer.Unity;

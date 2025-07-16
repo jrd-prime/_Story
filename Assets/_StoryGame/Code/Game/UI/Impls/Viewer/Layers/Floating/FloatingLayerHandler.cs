@@ -4,7 +4,7 @@ using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Interact.Systems.Toggle.Strategies;
+using _StoryGame.Game.Interact.SortMbDelete.Toggle.Strategies;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using UnityEngine;

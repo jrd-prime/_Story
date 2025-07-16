@@ -1,5 +1,5 @@
-﻿using _StoryGame.Core.Messaging.Interfaces;
-using _StoryGame.Game.Interact.Interactables.Unlock;
+﻿using _StoryGame.Core.Managers;
+using _StoryGame.Core.Messaging.Interfaces;
 
 namespace _StoryGame.Game.Managers.Condition.Messages
 {
