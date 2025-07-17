@@ -21,7 +21,7 @@ namespace _StoryGame.Game.Interact.Switchable
             LOG.Warn("OnStart current: " + CurrentState);
             if (ConditionChecker == null)
                 throw new Exception($"ConditionChecker is null for {gameObject.name}.");
-
+            
             var result = ConditionChecker.GetSwitchState(ImpactCondition);
 
             LOG.Warn("ImpactCondition > " + ImpactCondition + " > result: " + result + " >  current: " +

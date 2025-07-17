@@ -52,7 +52,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             RegisterStateMachine(builder);
 
-
             // Поиск объекта --- MAIN
             _mainEmpty = GameObject.Find("--- MAIN");
             if (!_mainEmpty)
@@ -126,7 +125,6 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<ToggleSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<SimpleSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<DynamicOnConditionSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            
         }
 
         protected override void Awake()
@@ -135,9 +133,9 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             var interactables =
                 FindObjectsByType<AInteractableBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            
+
             // Debug.Log($"Interact on scene: {interactables.Length}");
-            
+
             foreach (var interactable in interactables)
                 Container.Inject(interactable);
         }

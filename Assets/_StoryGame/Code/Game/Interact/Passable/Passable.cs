@@ -6,6 +6,7 @@ using _StoryGame.Core.WalletNew.Messages;
 using _StoryGame.Data.Interact;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Passable.Systems;
+using _StoryGame.Game.UI.Impls.Views.WorldViews;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
@@ -22,19 +23,20 @@ namespace _StoryGame.Game.Interact.Passable
         [FormerlySerializedAs("openableObjData")] [FormerlySerializedAs("doorData")] [SerializeField]
         private PassableData passableData;
 
+
         public EPassableState PassableState { get; private set; } = EPassableState.NotSet;
 
         public PassableData PassableData => passableData;
 
         protected override void OnAwake()
         {
+
         }
 
         protected override void OnStart()
         {
             if (!passableData)
                 throw new Exception("PassableData is null. " + gameObject.name);
-
             InitCurrentState();
         }
 

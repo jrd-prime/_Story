@@ -136,14 +136,27 @@ namespace _StoryGame.Game.Managers.Condition
             return (false, string.Empty);
         }
 
-        public ESwitchState GetSwitchState(EGlobalInteractCondition impactOnCondition)
+        public ESwitchState GetSwitchState(EGlobalCondition impactOnCondition)
         {
             if (_conditionRegistry.IsCompleted(impactOnCondition))
                 return ESwitchState.On;
             return ESwitchState.Off;
         }
 
-        public bool GetConditionState(EGlobalInteractCondition condition) =>
+        public bool GetConditionState(EGlobalCondition condition) =>
             _conditionRegistry.IsCompleted(condition);
+
+        public bool IsBlockedToInteract(BlockingCondition[] blockingConditions)
+        {
+            var result = false;
+            foreach (var condition in blockingConditions)
+            {
+                if (_conditionRegistry.GetConditionState(condition.type) != condition.value)
+                    continue;
+
+                return true;
+            }
+
+            return result;
+        }
     }
-}

@@ -3,6 +3,6 @@ using _StoryGame.Core.Messaging.Interfaces;
 
 namespace _StoryGame.Game.Managers.Condition.Messages
 {
-    public record GlobalConditionChangedMsg(EGlobalInteractCondition GlobalCondition, bool NewValue)
+    public record GlobalConditionChangedMsg(EGlobalCondition GlobalCondition, bool NewValue)
         : IConditionRegistryMsg;
 }

@@ -22,7 +22,7 @@ namespace _StoryGame.Game.Interact.SortMbDelete.InteractablesSORT
         [SerializeField] private ESwitchState defaultState = ESwitchState.NotSet;
 
         [ShowIf("@toggleType==EToggleType.Modifier")] [SerializeField]
-        private EGlobalInteractCondition condition = EGlobalInteractCondition.NotSet;
+        private EGlobalCondition condition = EGlobalCondition.NotSet;
 
         [Title(nameof(Toggleable), "Animation", titleAlignment: TitleAlignments.Centered)] [SerializeField]
         private AnimationClip onStateClip;
@@ -31,7 +31,7 @@ namespace _StoryGame.Game.Interact.SortMbDelete.InteractablesSORT
 
         public EToggleType ToggleType => toggleType;
         public ESwitchState SwitchState => _currentState;
-        public EGlobalInteractCondition ImpactOnCondition => condition;
+        public EGlobalCondition ImpactOnCondition => condition;
 
         private ESwitchState _currentState = ESwitchState.NotSet;
         private EConditionResult _conditionResult = EConditionResult.NotSet;

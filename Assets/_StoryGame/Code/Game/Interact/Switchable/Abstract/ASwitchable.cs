@@ -20,11 +20,11 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
         private ESwitchState initState = ESwitchState.NotSet;
 
         [SerializeField] private ESwitchQuestion switchQuestion = ESwitchQuestion.NotSet;
-        [SerializeField] private EGlobalInteractCondition impactCondition = EGlobalInteractCondition.NotSet;
+        [SerializeField] private EGlobalCondition impactCondition = EGlobalCondition.NotSet;
         [SerializeField] private Animator animator;
         [SerializeField] private bool disableCollider;
 
-        public EGlobalInteractCondition ImpactCondition => impactCondition;
+        public EGlobalCondition ImpactCondition => impactCondition;
 
         protected ESwitchState CurrentState { get; private set; } = ESwitchState.Off;
 
@@ -45,7 +45,7 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
             if (!animator)
                 throw new Exception($"Animation component not found on {name}.");
 
-            if (impactCondition == EGlobalInteractCondition.NotSet)
+            if (impactCondition == EGlobalCondition.NotSet)
                 throw new NullReferenceException("ImpactCondition is not set. " + name);
 
             animator.speed = SpeedMul;
@@ -66,6 +66,8 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
 
         private void InitState()
         {
+            var res = ConditionChecker.IsBlockedToInteract(ConditionsData.blockingConditions);
+            
             var result = ConditionChecker.GetSwitchState(ImpactCondition);
 
             LOG.Warn("ImpactCondition > " + ImpactCondition + " > result: " + result + " >  current: " +

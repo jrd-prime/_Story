@@ -9,6 +9,6 @@ namespace _StoryGame.Game.Managers.Condition
     {
         [Range(1, 100)] public int queueIndex;
         public string thoughtKey;
-        public EGlobalInteractCondition type;
+        public EGlobalCondition type;
     }
 }

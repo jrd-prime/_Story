@@ -11,7 +11,7 @@ namespace _StoryGame.Game.Managers.Condition
 {
     public sealed class ConditionRegistry : IConditionRegistry, IInitializable
     {
-        private readonly Dictionary<EGlobalInteractCondition, bool> _conditions = new();
+        private readonly Dictionary<EGlobalCondition, bool> _conditions = new();
         private readonly IPublisher<IConditionRegistryMsg> _selfPub;
         private readonly IJLog _log;
 
@@ -28,20 +28,21 @@ namespace _StoryGame.Game.Managers.Condition
 
         public void Initialize()
         {
-            _conditions.Add(EGlobalInteractCondition.ServModuleHasPower, false);
-            _conditions.Add(EGlobalInteractCondition.HasElectricity, false);
-            _conditions.Add(EGlobalInteractCondition.ModulePersistentClosed, false);
+            _conditions.Add(EGlobalCondition.ServModuleHasPower, false);
+            _conditions.Add(EGlobalCondition.HasElectricity, false);
+            _conditions.Add(EGlobalCondition.ModulePersistentClosed, false);
             // Водоснабжение для мех. модуля включено
-            _conditions.Add(EGlobalInteractCondition.MechWaterSupplySwitchedOn, true);
+            _conditions.Add(EGlobalCondition.MechWaterSupplySwitchedOn, true); // TRUE
+            _conditions.Add(EGlobalCondition.ServerElectricitySwitchedOn, false); // FALSE
 
-            if ((Enum.GetNames(typeof(EGlobalInteractCondition)).Length - 1) != _conditions.Count)
+            if ((Enum.GetNames(typeof(EGlobalCondition)).Length - 1) != _conditions.Count)
                 throw new Exception("Initialized conditions count mismatch!");
         }
 
         private void OnSwitchGlobalConditionMsg(SwitchGlobalConditionMsg msg) =>
             SwitchGlobalConditionMsg(msg.GlobalCondition);
 
-        private void SwitchGlobalConditionMsg(EGlobalInteractCondition type)
+        private void SwitchGlobalConditionMsg(EGlobalCondition type)
         {
             if (!_conditions.TryGetValue(type, out var currentValue))
                 return;
@@ -51,12 +52,15 @@ namespace _StoryGame.Game.Managers.Condition
             _log.Debug("ConditionRegistry: " + type + " changed to " + _conditions[type]);
         }
 
-        public bool IsCompleted(EGlobalInteractCondition eGlobalInteractCondition) =>
-            _conditions[eGlobalInteractCondition];
+        public bool IsCompleted(EGlobalCondition type) =>
+            _conditions[type];
+
+        public bool GetConditionState(EGlobalCondition type) => _conditions[type];
     }
 
     public interface IConditionRegistry
     {
-        bool IsCompleted(EGlobalInteractCondition eGlobalInteractCondition);
+        bool IsCompleted(EGlobalCondition type);
+        bool GetConditionState(EGlobalCondition type);
     }
 }
