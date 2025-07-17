@@ -90,7 +90,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsBraking
     m_EventTreshold: 0
   - m_ConditionMode: 3
-    m_ConditionEvent: speed
+    m_ConditionEvent: _velocity
     m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1720713737818097082}
@@ -217,7 +217,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: speed
+  - m_Name: _velocity
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -306,7 +306,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsBraking
     m_EventTreshold: 0
   - m_ConditionMode: 4
-    m_ConditionEvent: speed
+    m_ConditionEvent: _velocity
     m_EventTreshold: 0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1720713737818097082}
@@ -427,7 +427,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: speed
+  m_BlendParameter: _velocity
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1

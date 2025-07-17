@@ -16,5 +16,10 @@ namespace _StoryGame.Data.Anim
         public static readonly int TurnOn = Animator.StringToHash("TurnOn");
         public const string OffStateName = "OFFState";
         public const string OnStateName = "ONState";
+        
+        // MC movement
+        public static readonly int IsBrakingParam = Animator.StringToHash("IsBraking");
+        public const string BrakingState = "Braking";
+        public const string VelocityParam = "_velocity";
     }
 }
