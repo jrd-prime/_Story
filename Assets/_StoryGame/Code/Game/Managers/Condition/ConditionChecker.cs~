@@ -136,8 +136,12 @@ namespace _StoryGame.Game.Managers.Condition
             return (false, string.Empty);
         }
 
-        public ESwitchState GetSwitchState(EGlobalCondition impactOnCondition) =>
-            _conditionRegistry.IsCompleted(impactOnCondition) ? ESwitchState.On : ESwitchState.Off;
+        public ESwitchState GetSwitchState(EGlobalCondition impactOnCondition)
+        {
+            if (_conditionRegistry.IsCompleted(impactOnCondition))
+                return ESwitchState.On;
+            return ESwitchState.Off;
+        }
 
         public bool GetConditionState(EGlobalCondition condition) =>
             _conditionRegistry.IsCompleted(condition);

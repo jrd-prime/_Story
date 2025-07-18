@@ -89,10 +89,10 @@ namespace _StoryGame.Game.Interact.Abstract
         private void Awake()
         {
             if (!_entrance)
-                throw new NullReferenceException($"{nameof(_entrance)} not found. {name}");
+                LOG.Error($"{nameof(_entrance)} not found. {name}");
 
             if (string.IsNullOrEmpty(localizationKey))
-                throw new NullReferenceException($"{nameof(localizationKey)} not found. {name}");
+                LOG.Error($"{nameof(localizationKey)} not found. {name}");
 
             if (string.IsNullOrEmpty(id))
                 id = "id_" + localizationKey;

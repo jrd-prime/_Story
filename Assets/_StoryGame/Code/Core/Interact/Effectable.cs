@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Game.Managers.Condition;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -18,8 +19,9 @@ namespace _StoryGame.Core.Interact.Enums
         [Inject] private ConditionChecker _conditionChecker;
 
         [Inject]
-        private void Construct(ConditionChecker conditionChecker)
+        private void Construct(ConditionChecker conditionChecker, IJLog log)
         {
+            _log = log;
             Debug.LogWarning("Construct Effectable");
             // _conditionChecker = conditionChecker;
         }
@@ -29,10 +31,11 @@ namespace _StoryGame.Core.Interact.Enums
             // if (particleSystems == null || particleSystems.Length == 0)
             //     throw new NullReferenceException("No one particle system not found.");
             if (visualEffects == null || visualEffects.Length == 0)
-                throw new NullReferenceException("No VisualEffect components found.");
+                _log.Error("No VisualEffect components found.");
         }
 
         private bool _isInitialized;
+        private IJLog _log;
 
         private void Start()
         {
@@ -53,7 +56,7 @@ namespace _StoryGame.Core.Interact.Enums
             // Проверяем условия
             bool conditionsMet = _conditionChecker.CheckConditions(conditionsData).Success;
 
-            Debug.LogWarning("conditionsMet: " + conditionsMet);
+            _log.Warn("conditionsMet: " + conditionsMet);
 
 
             // Если playIfConditionsMet = true, то проигрываем частицы, когда условия выполнены (conditionsMet = true)

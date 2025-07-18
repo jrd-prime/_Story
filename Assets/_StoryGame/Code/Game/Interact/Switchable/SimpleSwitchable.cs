@@ -15,22 +15,22 @@ namespace _StoryGame.Game.Interact.Switchable
     {
         // [Title(nameof(SimpleSwitchable))]
 
-        protected override void OnStart()
-        {
-            base.OnStart();
-            LOG.Warn("OnStart current: " + CurrentState);
-            if (ConditionChecker == null)
-                throw new Exception($"ConditionChecker is null for {gameObject.name}.");
-            
-            var result = ConditionChecker.GetSwitchState(ImpactCondition);
-
-            LOG.Warn("ImpactCondition > " + ImpactCondition + " > result: " + result + " >  current: " +
-                     CurrentState);
-
-            if (result == CurrentState)
-                return;
-
-            SetCurrentStateAsync(result).Forget();
-        }
+        // protected override void OnStart()
+        // {
+        //     base.OnStart();
+        //     LOG.Warn("OnStart current: " + CurrentState);
+        //     if (ConditionChecker == null)
+        //         throw new Exception($"ConditionChecker is null for {gameObject.name}.");
+        //     
+        //     var result = ConditionChecker.GetSwitchState(ImpactCondition);
+        //
+        //     LOG.Warn("ImpactCondition > " + ImpactCondition + " > result: " + result + " >  current: " +
+        //              CurrentState);
+        //
+        //     if (result == CurrentState)
+        //         return;
+        //
+        //     SetCurrentStateAsync(result).Forget();
+        // }
     }
 }

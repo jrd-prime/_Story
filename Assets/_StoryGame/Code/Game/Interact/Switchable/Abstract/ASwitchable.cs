@@ -40,13 +40,13 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
         protected override void OnStart()
         {
             if (initState == ESwitchState.NotSet)
-                throw new NullReferenceException("Default state is not set");
+                LOG.Error("Default state is not set");
 
             if (!animator)
-                throw new Exception($"Animation component not found on {name}.");
+                LOG.Error($"Animation component not found on {name}.");
 
             if (impactCondition == EGlobalCondition.NotSet)
-                throw new NullReferenceException("ImpactCondition is not set. " + name);
+                LOG.Error("ImpactCondition is not set. " + name);
 
             animator.speed = SpeedMul;
             InitState();
@@ -66,14 +66,13 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
 
         private void InitState()
         {
-            var res = ConditionChecker.IsBlockedToInteract(ConditionsData.blockingConditions);
+            WhatAboutColliders(CurrentState);
             
             var result = ConditionChecker.GetSwitchState(ImpactCondition);
 
             LOG.Warn("ImpactCondition > " + ImpactCondition + " > result: " + result + " >  current: " +
                      CurrentState);
 
-            WhatAboutColliders(CurrentState);
             if (result == CurrentState)
                 return;
 
@@ -83,6 +82,8 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
         protected async UniTask SetCurrentStateAsync(ESwitchState state)
         {
             WhatAboutColliders(state);
+
+
             var trigger = state == ESwitchState.On ? AnimatorConst.TurnOn : AnimatorConst.TurnOff;
             var animState = state == ESwitchState.On ? AnimatorConst.OnStateName : AnimatorConst.OffStateName;
 
@@ -104,20 +105,31 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
 
         private void WhatAboutColliders(ESwitchState state)
         {
-            if (state == ESwitchState.On)
+            var isBlocked = ConditionChecker.IsInteractBlocked(ConditionsData.blockingConditions);
+            LOG.Warn($"WhatAboutColliders: state={state}, disableCollider={disableCollider}, isBlocked={isBlocked}");
+
+            if (isBlocked)
             {
-                SetCollidersEnabled(true);
+                SetCollidersEnabled(false); // Блокировка отключает коллайдеры
                 return;
             }
 
-            if (state != ESwitchState.Off)
+            if (state == ESwitchState.On)
+            {
+                SetCollidersEnabled(true); // При On коллайдеры включены
                 return;
+            }
 
-            SetCollidersEnabled(!disableCollider);
+            if (state == ESwitchState.Off)
+            {
+                SetCollidersEnabled(!disableCollider); // При Off зависит от disableCollider
+                return;
+            }
         }
 
         private void SetCollidersEnabled(bool isEnabled)
         {
+            LOG.Warn("Colliders state to: " + isEnabled);
             foreach (var col in _colliders)
                 col.enabled = isEnabled;
         }
