@@ -26,7 +26,7 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
 
         public EGlobalCondition ImpactCondition => impactCondition;
 
-        protected ESwitchState CurrentState { get; private set; } = ESwitchState.Off;
+        protected ESwitchState CurrentSwitchState { get; private set; } = ESwitchState.Off;
 
         private const float SpeedMul = 5;
 
@@ -66,14 +66,14 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
 
         private void InitState()
         {
-            WhatAboutColliders(CurrentState);
-            
+            WhatAboutColliders(CurrentSwitchState);
+
             var result = ConditionChecker.GetSwitchState(ImpactCondition);
 
             LOG.Warn("ImpactCondition > " + ImpactCondition + " > result: " + result + " >  current: " +
-                     CurrentState);
+                     CurrentSwitchState);
 
-            if (result == CurrentState)
+            if (result == CurrentSwitchState)
                 return;
 
             SetCurrentStateAsync(result).Forget();
@@ -94,7 +94,7 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
 
             await UniTask.WaitUntil(waiter.IsAnimationFinished);
 
-            CurrentState = state;
+            CurrentSwitchState = state;
 
             OnStateChanged(state);
 
@@ -146,14 +146,14 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
         {
             return switchQuestion switch
             {
-                ESwitchQuestion.OpenClose => CurrentState == ESwitchState.On ? "q_close" : "q_open",
-                ESwitchQuestion.TurnOnTurnOff => CurrentState == ESwitchState.On ? "q_turn_off" : "q_turn_on",
+                ESwitchQuestion.OpenClose => CurrentSwitchState == ESwitchState.On ? "q_close" : "q_open",
+                ESwitchQuestion.TurnOnTurnOff => CurrentSwitchState == ESwitchState.On ? "q_turn_off" : "q_turn_on",
                 ESwitchQuestion.NotSet => "NOT_SET",
                 ESwitchQuestion.NoQuestion => "",
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        public void SwitchState() => SetCurrentStateAsync(GetOppositeState(CurrentState)).Forget();
+        public void SwitchState() => SetCurrentStateAsync(GetOppositeState(CurrentSwitchState)).Forget();
     }
 }

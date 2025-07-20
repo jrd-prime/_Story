@@ -9,6 +9,7 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Core.WalletNew.Messages;
+using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
@@ -36,6 +37,8 @@ namespace _StoryGame.Game.Interact.Abstract
         public IRoom Room { get; private set; }
 
         public int InteractEnergyCost => interactEnergyCost;
+        public EInteractableState CurrentState { get; private set; }
+        public void SetBlocked(bool value) => IsBlocked = value;
 
         public bool CanInteract { get; set; } = true;
         public string LocalizationKey => localizationKey;
@@ -59,6 +62,7 @@ namespace _StoryGame.Game.Interact.Abstract
         protected ISubscriber<ItemAmountChangedMsg> ItemLootedMsgSub;
         protected IJLog LOG;
         protected IJPublisher Publisher;
+        protected bool IsBlocked;
 
         [Inject]
         private void Construct(
@@ -100,7 +104,9 @@ namespace _StoryGame.Game.Interact.Abstract
             OnAwake();
         }
 
-        protected abstract void OnAwake();
+        protected virtual void OnAwake()
+        {
+        }
 
         private void OnAppStarted(Unit _)
         {
@@ -133,6 +139,17 @@ namespace _StoryGame.Game.Interact.Abstract
         private void OnCommand(Unit _)
         {
             HideInteractionTip();
+        }
+
+        protected void SetState(EInteractableState state)
+        {
+            CurrentState = state;
+            UpdateColliders();
+        }
+
+        protected virtual void UpdateColliders()
+        {
+            // Отключить коллайдеры, если isBlocked или (disableCollidersOnOff и CurrentState = Off)
         }
     }
 }

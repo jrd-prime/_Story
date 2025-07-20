@@ -171,7 +171,7 @@ namespace _StoryGame.Game.Managers.Game
                     _log.Warn("Show tip");
                     break;
                 case ECurrencyType.Special:
-                    _log.Warn("Process special loot");
+                    _log.Warn("ProcessActive special loot");
                     _player.Wallet.Add(preparedLootVo.Currency.Id, 1);
                     break;
                 default:

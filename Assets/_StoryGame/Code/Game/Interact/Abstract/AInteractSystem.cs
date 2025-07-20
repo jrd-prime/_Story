@@ -17,7 +17,7 @@ namespace _StoryGame.Game.Interact.Abstract
 
         public async UniTask<bool> Process(IInteractable interactable)
         {
-            Dep.Log.Warn("AInteractSystem.Process: " + interactable.Name);
+            Dep.Log.Warn("AInteractSystem.ProcessActive: " + interactable.Name);
             Interactable = interactable as TInteractable ??
                            throw new Exception($"Interact is null as {typeof(TInteractable)}.");
 
