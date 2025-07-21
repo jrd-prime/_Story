@@ -21,7 +21,9 @@ namespace _StoryGame.Core.Interact.Interactables
         IRoom Room { get; }
         int InteractEnergyCost { get; }
         EInteractableState CurrentState { get; }
+        ConditionEffectData ConditionEffectVo { get; }
         void SetBlocked(bool value);
+        void SetState(EInteractableState state);
         void SwitchState();
     }
 }

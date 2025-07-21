@@ -1,5 +1,4 @@
-﻿using System;
-using _StoryGame.Core.Character.Common.Interfaces;
+﻿using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
@@ -38,6 +37,7 @@ namespace _StoryGame.Game.Interact.Abstract
 
         public int InteractEnergyCost => interactEnergyCost;
         public EInteractableState CurrentState { get; private set; }
+        public ConditionEffectData ConditionEffectVo { get; }
         public void SetBlocked(bool value) => IsBlocked = value;
 
         public bool CanInteract { get; set; } = true;
@@ -119,8 +119,19 @@ namespace _StoryGame.Game.Interact.Abstract
 
         public abstract UniTask InteractAsync(ICharacter character);
 
-        public void SwitchState() =>
-            SetState(CurrentState == EInteractableState.On ? EInteractableState.Off : EInteractableState.On);
+        public virtual void UpdatePassiveState()
+        {
+        }
+
+        void IInteractable.SetState(EInteractableState state)
+        {
+            SetState(state);
+        }
+
+        public void SwitchState()
+        {
+        }
+        // TODO to abstract
 
         public void ShowInteractionTip((string, string) interactionTip)
         {
@@ -147,6 +158,7 @@ namespace _StoryGame.Game.Interact.Abstract
         protected void SetState(EInteractableState state)
         {
             CurrentState = state;
+            UpdatePassiveState();
             UpdateColliders();
         }
 

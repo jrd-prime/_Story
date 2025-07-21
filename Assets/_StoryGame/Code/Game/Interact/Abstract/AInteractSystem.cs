@@ -1,7 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 

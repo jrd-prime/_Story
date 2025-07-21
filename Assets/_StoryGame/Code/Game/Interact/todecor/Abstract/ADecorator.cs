@@ -1,8 +1,6 @@
-﻿using _StoryGame.Core.Interact;
-using UnityEngine;
-using VContainer;
+﻿using UnityEngine;
 
-namespace _StoryGame.Game.Interact.todecor
+namespace _StoryGame.Game.Interact.todecor.Abstract
 {
     public abstract class ADecorator : MonoBehaviour, IDecorator
     {

@@ -10,6 +10,8 @@ using _StoryGame.Data.Anim;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.SortMbDelete.Toggle.Strategies;
 using _StoryGame.Game.Interact.todecor;
+using _StoryGame.Game.Interact.todecor.Abstract;
+using _StoryGame.Game.Interact.todecor.Decorators.Active;
 using _StoryGame.Game.Managers.Condition.Messages;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -18,7 +20,7 @@ using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.Switchable.Systems
 {
-    public class SimpleSwitchSystem : AActiveDecoratorSystem<ActiveSwitcherDecorator>
+    public class SimpleSwitchSystem : AActiveDecoratorSystem<ASwitcherDecorator>
     {
         private readonly DialogResultHandler _dialogResultHandler;
 
@@ -34,13 +36,11 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
         private async UniTask OnYesActionAsync()
         {
             Dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(Interactable.InteractEnergyCost));
+            Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Decorator.ImpactOnCondition));
 
             Interactable.SwitchState();
 
             await AnimPlayerByBoolAsync(AnimatorConst.IsGatherHigh, 2000);
-
-            Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Decorator.ImpactOnCondition));
-
             await UniTask.Yield();
         }
 
@@ -51,7 +51,7 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
             Dep.Publisher.ForPlayerAnimator(new SetBoolMsg(animName, false));
         }
 
-        public string GetSwitchInteractionQuestionKey()
+        private string GetSwitchInteractionQuestionKey()
         {
             var state = Interactable.CurrentState;
             return Decorator.SwitchQuestion switch
@@ -92,7 +92,7 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
             }
 
             return true;
-           
+
             // {
             //     // If conditions are not fulfilled
             //     var localizedThoughtsBuilder = new StringBuilder();

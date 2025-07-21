@@ -5,7 +5,6 @@ using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Messaging.Interfaces;
 using _StoryGame.Core.WalletNew.Interfaces;
-using _StoryGame.Data.Anim;
 using _StoryGame.Data.Loot;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Character.Player.Messages;

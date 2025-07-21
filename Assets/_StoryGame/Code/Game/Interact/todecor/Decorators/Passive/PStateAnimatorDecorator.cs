@@ -1,15 +1,15 @@
-﻿using System;
-using _StoryGame.Core.Common.Interfaces;
+﻿using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Data.Anim;
 using _StoryGame.Game.Anima;
+using _StoryGame.Game.Interact.todecor.Abstract;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
-namespace _StoryGame.Game.Interact.todecor
+namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 {
-    public sealed class PassiveStateAnimatorDecorator : ADecorator, IPassiveDecorator
+    public sealed class PStateAnimatorDecorator : ADecorator, IPassiveDecorator
     {
         [SerializeField] private Animator animator;
         [SerializeField] private int speedForInit = 20;
@@ -59,23 +59,13 @@ namespace _StoryGame.Game.Interact.todecor
 
             animator.SetTrigger(trigger);
 
-            try
-            {
-                var waiter = new AnimatorStateWaiter(animator, animState, _log);
-                await UniTask.WaitUntil(waiter.IsAnimationFinished);
-            }
-            catch (Exception e)
-            {
-                _log.Error(e.ToString());
-                return false;
-            }
-            finally
-            {
-                StoreAnimatorState();
+            var waiter = new AnimatorStateWaiter(animator, animState, _log);
+            await UniTask.WaitUntil(waiter.IsAnimationFinished);
 
-                if (isSpeedChanged)
-                    SetAnimatorSpeed(_initialSpeed);
-            }
+            StoreAnimatorState();
+
+            if (isSpeedChanged)
+                SetAnimatorSpeed(_initialSpeed);
 
             return true;
         }
@@ -88,9 +78,6 @@ namespace _StoryGame.Game.Interact.todecor
 
         private void RestoreAnimatorState()
         {
-            if (_animStateInfo.shortNameHash == 0 || _normalizedTime == 0)
-                return;
-
             animator.Play(_animStateInfo.shortNameHash, 0, _normalizedTime);
         }
 

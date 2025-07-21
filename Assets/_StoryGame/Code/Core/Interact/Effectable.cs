@@ -1,11 +1,10 @@
-﻿using System;
-using _StoryGame.Core.Common.Interfaces;
+﻿using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Game.Managers.Condition;
 using UnityEngine;
 using UnityEngine.VFX;
 using VContainer;
 
-namespace _StoryGame.Core.Interact.Enums
+namespace _StoryGame.Core.Interact
 {
     /// <summary>
     /// ADD to room

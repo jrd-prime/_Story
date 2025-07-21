@@ -1,14 +1,14 @@
-﻿using _StoryGame.Core.Interact.Enums;
-using _StoryGame.Core.Interact.Interactables;
+﻿using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
+using _StoryGame.Game.Interact.todecor.Abstract;
 using _StoryGame.Game.Managers.Condition;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
-namespace _StoryGame.Game.Interact.todecor
+namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 {
-    public sealed class BlockablePassiveDecorator : ADecorator, IPassiveDecorator
+    public sealed class PBlockingDecorator : ADecorator, IPassiveDecorator
     {
         [SerializeField] private bool isEnabled = true;
         [SerializeField] private EGlobalCondition[] blockingConditions; // RocksBlocking или WaterSupply

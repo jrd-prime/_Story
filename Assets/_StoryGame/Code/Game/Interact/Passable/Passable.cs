@@ -6,7 +6,6 @@ using _StoryGame.Core.WalletNew.Messages;
 using _StoryGame.Data.Interact;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.Passable.Systems;
-using _StoryGame.Game.UI.Impls.Views.WorldViews;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;

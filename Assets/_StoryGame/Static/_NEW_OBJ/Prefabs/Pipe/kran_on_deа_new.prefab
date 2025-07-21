@@ -217,7 +217,7 @@ MonoBehaviour:
   _entrance: {fileID: 849976361402754312}
   interactEnergyCost: 0
   interactableType: 0
-  defaultState: 0
+  initialState: 0
   disableColliders: 0
   conditionEffectVo:
     condition: 3
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6651875098516400239}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a7ce0d5dc4347e4999a2aeb0f522c1e, type: 3}
   m_Name: 

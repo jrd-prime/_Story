@@ -1,7 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Interact;
 using _StoryGame.Game.Managers.Condition;
-using _StoryGame.Game.UI.Impls.Views.WorldViews;
 using VContainer;
 
 namespace _StoryGame.Game.Interact.Abstract

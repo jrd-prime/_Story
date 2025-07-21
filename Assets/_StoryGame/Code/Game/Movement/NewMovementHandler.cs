@@ -171,7 +171,7 @@ namespace _StoryGame.Game.Movement
             if (!EventSystem.current || !EventSystem.current.IsPointerOverGameObject())
                 return false;
 
-            Debug.LogError(EventSystem.current);
+            // Debug.LogError(EventSystem.current);
             // Отладочная информация
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {

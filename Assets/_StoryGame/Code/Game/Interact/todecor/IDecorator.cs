@@ -1,5 +1,4 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Core.Managers;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.todecor

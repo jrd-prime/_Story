@@ -3,13 +3,14 @@ using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
 using _StoryGame.Game.Interact.Switchable.Systems;
+using _StoryGame.Game.Interact.todecor.Abstract;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
-namespace _StoryGame.Game.Interact.todecor
+namespace _StoryGame.Game.Interact.todecor.Decorators.Active
 {
-    public sealed class ActiveSwitcherDecorator : ADecorator, IActiveDecorator
+    public sealed class ASwitcherDecorator : ADecorator, IActiveDecorator
     {
         [SerializeField] private EGlobalCondition impactOnCondition; // WaterSupply
         [SerializeField] private ESwitchQuestion switchQuestion; // q_turn_on

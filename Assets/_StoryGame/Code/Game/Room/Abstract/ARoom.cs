@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
-using _StoryGame.Core.Interact.Enums;
+using _StoryGame.Core.Interact;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Providers.Settings;
@@ -12,6 +12,7 @@ using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interact.Passable;
 using _StoryGame.Game.Interact.SortMbDelete.InteractablesSORT;
+using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -85,6 +86,11 @@ namespace _StoryGame.Game.Room.Abstract
 
             // foreach (var toggleable in toggleables)
             //     toggleable.InitOnRoomAwake();
+
+            var interactables =
+                FindObjectsByType<NewInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var interactable in interactables)
+                _resolver.Inject(interactable);
         }
 
         private void Start()
