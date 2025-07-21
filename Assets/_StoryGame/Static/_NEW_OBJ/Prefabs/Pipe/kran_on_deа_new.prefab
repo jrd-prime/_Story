@@ -219,6 +219,9 @@ MonoBehaviour:
   interactableType: 0
   defaultState: 0
   disableColliders: 0
+  conditionEffectVo:
+    condition: 3
+    isInverse: 0
 --- !u!114 &3325516634059533182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnabled: 1
   animator: {fileID: 3828706151177533233}
+  speedForInit: 20
 --- !u!1 &6829204266814552868
 GameObject:
   m_ObjectHideFlags: 0

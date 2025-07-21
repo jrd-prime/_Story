@@ -1,7 +1,8 @@
-﻿using _StoryGame.Core.Interact.Enums;
+﻿using System;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
-using _StoryGame.Game.Managers.Condition;
+using _StoryGame.Game.Interact.Switchable.Systems;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
@@ -15,24 +16,26 @@ namespace _StoryGame.Game.Interact.todecor
         [SerializeField] private string requiredItem; // "Crowbar" для вентиля
         [SerializeField] private string missingItemMessage; // "Нужен лом"
 
+        public EGlobalCondition ImpactOnCondition => impactOnCondition;
         public override int Priority => 60;
+        public ESwitchQuestion SwitchQuestion => switchQuestion;
+
+        private SimpleSwitchSystem _system;
 
         [Inject]
-        private void Construct(ConditionChecker conditionManager
-            // , SwitchSystem switchSystem, InventorySystem inventory
-        )
+        private void Construct(SimpleSwitchSystem system)
         {
-            // Сохранить SwitchSystem, ConditionManager, InventorySystem
+            _system = system;
         }
 
-        public UniTask<bool> ProcessActive(IInteractable interactable)
+        public async UniTask<bool> ProcessActive(IInteractable interactable)
         {
-            // Проверить наличие requiredItem в InventorySystem
-            // Если нет, вернуть false и missingItemMessage
-            // Если есть, показать диалог (switchQuestion), вызвать SwitchSystem для impactOnCondition
-            // Обновить CurrentState через interactable.SetState
-             
-            return UniTask.FromResult(true);
+            if (_system == null)
+                throw new Exception("System is null. " + gameObject.name);
+
+            await _system.Process(this, interactable);
+
+            return true;
         }
     }
 }

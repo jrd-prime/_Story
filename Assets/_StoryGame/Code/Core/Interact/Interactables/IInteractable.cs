@@ -22,5 +22,6 @@ namespace _StoryGame.Core.Interact.Interactables
         int InteractEnergyCost { get; }
         EInteractableState CurrentState { get; }
         void SetBlocked(bool value);
+        void SwitchState();
     }
 }

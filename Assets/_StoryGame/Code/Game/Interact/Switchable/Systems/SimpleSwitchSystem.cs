@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using _StoryGame.Core.Animations.Messages;
+using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
@@ -7,6 +9,7 @@ using _StoryGame.Core.UI.Msg;
 using _StoryGame.Data.Anim;
 using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.SortMbDelete.Toggle.Strategies;
+using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Managers.Condition.Messages;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
@@ -15,10 +18,9 @@ using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.Switchable.Systems
 {
-    public class SimpleSwitchSystem : AInteractSystem<ISimpleSwitchable>
+    public class SimpleSwitchSystem : AActiveDecoratorSystem<ActiveSwitcherDecorator>
     {
         private readonly DialogResultHandler _dialogResultHandler;
-        private int cost;
 
         public SimpleSwitchSystem(InteractSystemDepFlyweight dep) : base(dep)
         {
@@ -27,7 +29,7 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
             _dialogResultHandler.AddCallback(EDialogResult.No, OnNoActionAsync);
         }
 
-        private UniTask OnNoActionAsync() => UniTask.CompletedTask;
+        private static UniTask OnNoActionAsync() => UniTask.CompletedTask;
 
         private async UniTask OnYesActionAsync()
         {
@@ -37,8 +39,7 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
 
             await AnimPlayerByBoolAsync(AnimatorConst.IsGatherHigh, 2000);
 
-            Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Interactable.ImpactCondition));
-
+            Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Decorator.ImpactOnCondition));
 
             await UniTask.Yield();
         }
@@ -50,54 +51,61 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
             Dep.Publisher.ForPlayerAnimator(new SetBoolMsg(animName, false));
         }
 
+        public string GetSwitchInteractionQuestionKey()
+        {
+            var state = Interactable.CurrentState;
+            return Decorator.SwitchQuestion switch
+            {
+                ESwitchQuestion.OpenClose => state == EInteractableState.On ? "q_close" : "q_open",
+                ESwitchQuestion.TurnOnTurnOff => state == EInteractableState.On ? "q_turn_off" : "q_turn_on",
+                ESwitchQuestion.NotSet => "NOT_SET",
+                ESwitchQuestion.NoQuestion => "",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
         protected override async UniTask<bool> OnInteractAsync()
         {
             Dep.Log.Warn("SimpleSwitchSystem.OnInteractAsync");
 
-            var conditionsResult = Dep.ConditionChecker.CheckConditions(Interactable.ConditionsData);
+            Dep.Publisher.ForUIViewer(new CurrentOperationMsg("ToggleModifierStrategy"));
 
-            if (conditionsResult.Success)
+            var source = new UniTaskCompletionSource<EDialogResult>();
+            var title = Dep.L10n.Localize(Interactable.LocalizationKey, ETable.Words);
+            var state = "state";
+            var question = Dep.L10n.Localize(GetSwitchInteractionQuestionKey(), ETable.Words);
+
+            var message = new ShowDialogWindowMsg(title, state, question, Interactable.InteractEnergyCost, source);
+
+            try
             {
-                // If conditions are fulfilled
-                Dep.Publisher.ForUIViewer(new CurrentOperationMsg("ToggleModifierStrategy"));
+                Dep.Publisher.ForUIViewer(message);
 
-                var source = new UniTaskCompletionSource<EDialogResult>();
-                var title = Dep.L10n.Localize(Interactable.LocalizationKey, ETable.Words);
-                var state = "state";
-                var question = Dep.L10n.Localize(Interactable.GetSwitchInteractionQuestionKey(), ETable.Words);
+                var result = await source.Task;
+                source = null;
 
-                var message = new ShowDialogWindowMsg(title, state, question, Interactable.InteractEnergyCost, source);
-
-                try
-                {
-                    Dep.Publisher.ForUIViewer(message);
-
-                    var result = await source.Task;
-                    source = null;
-
-                    await _dialogResultHandler.HandleResultAsync(result);
-                }
-                finally
-                {
-                    source?.TrySetCanceled();
-                }
-
-                return true;
+                await _dialogResultHandler.HandleResultAsync(result);
             }
-            else
+            finally
             {
-                // If conditions are not fulfilled
-                var localizedThoughtsBuilder = new StringBuilder();
-
-                foreach (var thoughtKey in conditionsResult.Toughts)
-                    localizedThoughtsBuilder.AppendLine("Line / " + Dep.L10n.Localize(thoughtKey, ETable.SmallPhrase));
-
-                var thought = new ThoughtDataVo(localizedThoughtsBuilder.ToString());
-
-                Dep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
+                source?.TrySetCanceled();
             }
 
             return true;
+           
+            // {
+            //     // If conditions are not fulfilled
+            //     var localizedThoughtsBuilder = new StringBuilder();
+            //
+            //     foreach (var thoughtKey in conditionsResult.Toughts)
+            //         localizedThoughtsBuilder.AppendLine("Line / " + Dep.L10n.Localize(thoughtKey, ETable.SmallPhrase));
+            //
+            //     var thought = new ThoughtDataVo(localizedThoughtsBuilder.ToString());
+            //
+            //     Dep.Publisher.ForPlayerOverHeadUI(new DisplayThoughtBubbleMsg(thought));
+            // }
+            //
+            // return true;
         }
     }
 }

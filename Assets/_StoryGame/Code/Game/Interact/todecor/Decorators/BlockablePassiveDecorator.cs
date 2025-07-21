@@ -22,8 +22,9 @@ namespace _StoryGame.Game.Interact.todecor
             // Сохранить ConditionManager, подписаться на OnConditionChanged
         }
 
-        public void ProcessPassive(IInteractable interactable)
+        public UniTask<bool> ProcessPassive(IInteractable interactable)
         {
+            return UniTask.FromResult(true);
         }
 
         private void OnConditionChanged(EGlobalCondition condition, EInteractableState state)

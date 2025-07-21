@@ -1,11 +1,10 @@
 ﻿namespace _StoryGame.Core.Interact.Enums
 {
-    internal enum ESwitchQuestion
+    public enum ESwitchQuestion
     {
         NotSet = -1,
         NoQuestion = 0,
         OpenClose = 1,
-        TurnOnTurnOff = 2,
-        Repair = 3
+        TurnOnTurnOff = 2
     }
 }

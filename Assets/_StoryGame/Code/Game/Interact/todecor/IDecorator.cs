@@ -1,4 +1,5 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
+using _StoryGame.Core.Managers;
 using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Game.Interact.todecor
@@ -16,6 +17,6 @@ namespace _StoryGame.Game.Interact.todecor
 
     public interface IPassiveDecorator : IDecorator
     {
-        void ProcessPassive(IInteractable interactable);
+        UniTask<bool> ProcessPassive(IInteractable interactable);
     }
 }

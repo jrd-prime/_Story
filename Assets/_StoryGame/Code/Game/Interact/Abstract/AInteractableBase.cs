@@ -119,6 +119,9 @@ namespace _StoryGame.Game.Interact.Abstract
 
         public abstract UniTask InteractAsync(ICharacter character);
 
+        public void SwitchState() =>
+            SetState(CurrentState == EInteractableState.On ? EInteractableState.Off : EInteractableState.On);
+
         public void ShowInteractionTip((string, string) interactionTip)
         {
             Debug.LogWarning("ShowInteractionTip");

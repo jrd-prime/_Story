@@ -1,4 +1,5 @@
 ﻿using System;
+using _StoryGame.Core.Common.Interfaces;
 using UnityEngine;
 
 namespace _StoryGame.Game.Anima
@@ -7,17 +8,22 @@ namespace _StoryGame.Game.Anima
     {
         private readonly Animator _animator;
         private readonly string _stateName;
+        private readonly IJLog _log;
 
-        public AnimatorStateWaiter(Animator animator, string stateName)
+        public AnimatorStateWaiter(Animator animator, string stateName, IJLog log)
         {
             _animator = animator;
             _stateName = stateName;
+            _log = log;
         }
 
         public bool IsAnimationFinished()
         {
-            if (!_animator || !_animator.gameObject.activeInHierarchy)
-                throw new Exception("Animator or its GameObject is null or inactive.");
+            if (!_animator)
+                _log.Error("Animator is null.");
+
+            if (!_animator.gameObject.activeInHierarchy)
+                _log.Error("Animator GameObject is inactive.");
 
             var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             return stateInfo.IsName(_stateName) && stateInfo.normalizedTime >= 1.0f && !_animator.IsInTransition(0);

@@ -90,7 +90,7 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
             animator.speed = 1f;
             animator.SetTrigger(trigger);
 
-            var waiter = new AnimatorStateWaiter(animator, animState);
+            var waiter = new AnimatorStateWaiter(animator, animState, LOG);
 
             await UniTask.WaitUntil(waiter.IsAnimationFinished);
 
