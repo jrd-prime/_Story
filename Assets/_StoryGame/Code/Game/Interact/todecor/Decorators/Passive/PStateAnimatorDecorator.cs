@@ -12,25 +12,21 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
     public sealed class PStateAnimatorDecorator : ADecorator, IPassiveDecorator
     {
         [SerializeField] private Animator animator;
-        [SerializeField] private int speedForInit = 20;
 
         public override int Priority => 10;
 
         [Inject] private IJLog _log;
         private AnimatorStateInfo _animStateInfo;
         private float _normalizedTime;
-        private float _initialSpeed = 1f;
+        private string animState;
 
         private void Awake()
         {
-            if (!animator)
-            {
-                _log.Error($"Animator not found on {name}");
-                enabled = false;
+            if (animator)
                 return;
-            }
 
-            _initialSpeed = animator.speed;
+            _log.Error($"Animator not found on {name}");
+            enabled = false;
         }
 
         private void OnEnable()
@@ -41,22 +37,26 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
             RestoreAnimatorState();
         }
 
-        private void Start() => IsInitialized = true;
-
         public async UniTask<bool> ProcessPassive(IInteractable interactable)
         {
-            var isSpeedChanged = false;
+            Debug.LogWarning($"ProcessPassive for ANIM {IsInitialized} ");
+            var isFirstInitialization = !IsInitialized;
+            var state = interactable.CurrentState;
 
-            if (!IsInitialized)
+            animState = state == EInteractableState.On ? AnimatorConst.OnStateName : AnimatorConst.OffStateName;
+
+            if (isFirstInitialization) // Используем сохраненное значение
             {
-                SetAnimatorSpeed(speedForInit);
-                isSpeedChanged = true;
+                // Мгновенно переключаемся в нужное состояние, в конец анимации
+                animator.Play(animState, 0, 1.0f);
+                StoreAnimatorState(); // Сохраняем это состояние
+                IsInitialized = true; // !!! ВАЖНО: Установить IsInitialized в true после первой инициализации
+                return true; // Завершаем ProcessPassive
             }
 
-            var state = interactable.CurrentState;
             var trigger = state == EInteractableState.On ? AnimatorConst.TurnOn : AnimatorConst.TurnOff;
-            var animState = state == EInteractableState.On ? AnimatorConst.OnStateName : AnimatorConst.OffStateName;
 
+            Debug.LogWarning($"ProcessPassive for ANIM  {state} / {trigger} / {animState}");
             animator.SetTrigger(trigger);
 
             var waiter = new AnimatorStateWaiter(animator, animState, _log);
@@ -64,8 +64,6 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 
             StoreAnimatorState();
 
-            if (isSpeedChanged)
-                SetAnimatorSpeed(_initialSpeed);
 
             return true;
         }
@@ -74,10 +72,14 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
         {
             _animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
             _normalizedTime = _animStateInfo.normalizedTime;
+            Debug.LogWarning($"StoreAnimatorState: " +
+                             $"shortNameHash={_animStateInfo.shortNameHash} / normalizedTime={_normalizedTime}");
         }
 
         private void RestoreAnimatorState()
         {
+            Debug.LogWarning($"RestoreAnimatorState: " +
+                             $"shortNameHash={_animStateInfo.shortNameHash} / normalizedTime={_normalizedTime}");
             animator.Play(_animStateInfo.shortNameHash, 0, _normalizedTime);
         }
 

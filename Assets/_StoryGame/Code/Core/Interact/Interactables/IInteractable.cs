@@ -25,5 +25,6 @@ namespace _StoryGame.Core.Interact.Interactables
         void SetBlocked(bool value);
         void SetState(EInteractableState state);
         void SwitchState();
+        void UpdatePassiveState();
     }
 }

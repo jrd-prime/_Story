@@ -90,17 +90,18 @@ namespace _StoryGame.Game.Interact.Switchable.Abstract
             animator.speed = 1f;
             animator.SetTrigger(trigger);
 
+            // save animation state
+            _animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            _normalizedTime = _animStateInfo.normalizedTime;
+
+            CurrentSwitchState = state;
+
             var waiter = new AnimatorStateWaiter(animator, animState, LOG);
 
             await UniTask.WaitUntil(waiter.IsAnimationFinished);
 
-            CurrentSwitchState = state;
 
             OnStateChanged(state);
-
-            // save animation state
-            _animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            _normalizedTime = _animStateInfo.normalizedTime;
         }
 
         private void WhatAboutColliders(ESwitchState state)

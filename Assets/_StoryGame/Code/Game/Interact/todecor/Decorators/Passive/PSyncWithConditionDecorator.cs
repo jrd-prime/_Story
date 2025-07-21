@@ -3,7 +3,6 @@ using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Game.Interact.todecor.Abstract;
 using _StoryGame.Game.Managers.Condition;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using VContainer;
 
 namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
@@ -21,8 +20,6 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 
             var conditionEffectVo = interactable.ConditionEffectVo;
             var state = _conditionChecker.GetConditionState(conditionEffectVo.condition);
-
-            Debug.Log($"Condition {conditionEffectVo.condition} is {state} for {interactable.LocalizationKey}.");
 
             if (conditionEffectVo.isInverse)
                 state = !state;

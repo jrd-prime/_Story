@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Text;
 using _StoryGame.Core.Animations.Messages;
 using _StoryGame.Core.Interact.Enums;
-using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
-using _StoryGame.Core.UI.Msg;
 using _StoryGame.Data.Anim;
-using _StoryGame.Game.Interact.Abstract;
 using _StoryGame.Game.Interact.SortMbDelete.Toggle.Strategies;
 using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Interact.todecor.Abstract;
@@ -37,8 +33,9 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
         {
             Dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(Interactable.InteractEnergyCost));
             Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Decorator.ImpactOnCondition));
+            await UniTask.Yield();
 
-            Interactable.SwitchState();
+            Interactable.UpdatePassiveState();
 
             await AnimPlayerByBoolAsync(AnimatorConst.IsGatherHigh, 2000);
             await UniTask.Yield();

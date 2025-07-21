@@ -17,6 +17,7 @@ using _StoryGame.Infrastructure.AppStarter;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
@@ -44,13 +45,13 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
         public string Id => id;
         public EInteractableType InteractableType { get; }
-        public bool CanInteract { get; set; }
+        public bool CanInteract { get; set; } = true;
         public string LocalizationKey => localizationKey;
         public string Name => objName;
         public bool IsBlocked { get; private set; }
         public IRoom Room { get; }
         public int InteractEnergyCost => interactEnergyCost;
-        public EInteractableState CurrentState { get; private set; }
+        [ShowInInspector] [ReadOnly] public EInteractableState CurrentState { get; private set; }
 
         public ConditionEffectData ConditionEffectVo => conditionEffectVo;
 
@@ -131,7 +132,7 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
             _isInitialized = true;
         }
 
-        private void UpdatePassiveState()
+        public void UpdatePassiveState()
         {
             _log.Warn("--- UpdatePassiveState called for " + gameObject.name);
 
