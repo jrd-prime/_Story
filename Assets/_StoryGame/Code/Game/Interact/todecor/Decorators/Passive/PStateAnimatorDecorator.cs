@@ -54,16 +54,31 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
                 return true; // Завершаем ProcessPassive
             }
 
-            var trigger = state == EInteractableState.On ? AnimatorConst.TurnOn : AnimatorConst.TurnOff;
+            // Проверяем, изменилось ли состояние интерактабла
+            var currentAnimState = animator.GetCurrentAnimatorStateInfo(0).IsName(animState)
+                ? interactable.CurrentState
+                : (interactable.CurrentState == EInteractableState.On ? EInteractableState.Off : EInteractableState.On);
 
-            Debug.LogWarning($"ProcessPassive for ANIM  {state} / {trigger} / {animState}");
-            animator.SetTrigger(trigger);
+            if (currentAnimState != state)
+            {
+                // Проигрываем анимацию перехода, если состояние изменилось
+                var trigger = state == EInteractableState.On ? AnimatorConst.TurnOn : AnimatorConst.TurnOff;
+                Debug.LogWarning($"ProcessPassive for ANIM {state} / {trigger} / {animState}");
+                animator.SetTrigger(trigger);
 
-            var waiter = new AnimatorStateWaiter(animator, animState, _log);
-            await UniTask.WaitUntil(waiter.IsAnimationFinished);
+                var waiter = new AnimatorStateWaiter(animator, animState, _log);
+                await UniTask.WaitUntil(() => waiter.IsAnimationFinished());
 
-            StoreAnimatorState();
-
+                StoreAnimatorState();
+                Debug.LogWarning($"PStateAnimatorDecorator: Animation completed, state saved for {name}");
+            }
+            else
+            {
+                // Если состояние не изменилось, просто восстанавливаем текущее
+                animator.Play(animState, 0, 1.0f);
+                StoreAnimatorState();
+                Debug.LogWarning($"PStateAnimatorDecorator: State unchanged, restored {animState} for {name}");
+            }
 
             return true;
         }

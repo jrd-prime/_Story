@@ -129,20 +129,21 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
             Debug.LogWarning("Start called for " + gameObject.name);
             CollectAndInjectDecorators();
             SetState(initialState);
+            UpdatePassiveState();
             _isInitialized = true;
         }
 
-        public void UpdatePassiveState()
+        public async void UpdatePassiveState()
         {
             _log.Warn("--- UpdatePassiveState called for " + gameObject.name);
 
             IsBlocked = false;
 
-            ProcessPassiveDecorators();
+            await ProcessPassiveDecorators();
             UpdateColliders();
         }
 
-        protected abstract void ProcessPassiveDecorators();
+        protected abstract UniTask ProcessPassiveDecorators();
         protected abstract UniTask ProcessActiveDecorators();
 
 
@@ -170,9 +171,9 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
         public void SetState(EInteractableState state)
         {
-            Debug.LogWarning("<b><color=red>SetState</color></b> to " + state + " called for " + gameObject.name);
+            Debug.LogWarning("<b><color=yellow>SetState</color></b> from " + CurrentState + " to " + state +
+                             " called for " + gameObject.name);
             CurrentState = state;
-            UpdatePassiveState();
         }
 
         public void SwitchState() =>

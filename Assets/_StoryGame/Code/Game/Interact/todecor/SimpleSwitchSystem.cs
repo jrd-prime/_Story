@@ -34,8 +34,8 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
             Dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(Interactable.InteractEnergyCost));
             Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Decorator.ImpactOnCondition));
             await UniTask.Yield();
-
-            Interactable.UpdatePassiveState();
+            
+            Interactable.SwitchState();
 
             await AnimPlayerByBoolAsync(AnimatorConst.IsGatherHigh, 2000);
             await UniTask.Yield();
