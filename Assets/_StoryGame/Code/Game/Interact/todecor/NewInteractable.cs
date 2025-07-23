@@ -6,7 +6,7 @@ namespace _StoryGame.Game.Interact.todecor
 {
     public sealed class NewInteractable : ANewInteractable
     {
-        protected async override UniTask ProcessPassiveDecorators()
+        protected override async UniTask ProcessPassiveDecorators()
         {
             _log.Warn("<color=yellow>Start Passive Decorators</color>");
 
@@ -24,7 +24,7 @@ namespace _StoryGame.Game.Interact.todecor
             {
                 _log.Warn(
                     $"<color=cyan>Кто-то изменил состояние с {prevState} на {CurrentState}. Перезапустить процесс пассивных декораторов</color>");
-                ProcessPassiveDecorators();
+                await ProcessPassiveDecorators();
             }
 
             _log.Warn("<color=yellow>End Passive Decorators</color>");
@@ -55,7 +55,7 @@ namespace _StoryGame.Game.Interact.todecor
             {
                 _log.Warn(
                     $"<color=cyan>Кто-то изменил состояние с {prevState} на {CurrentState}. Перезапустить процесс пассивных декораторов</color>");
-                ProcessPassiveDecorators();
+                await ProcessPassiveDecorators();
             }
 
             _log.Warn("<color=green>End Active Decorators</color>");

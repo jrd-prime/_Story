@@ -34,10 +34,10 @@ namespace _StoryGame.Game.Interact.Switchable.Systems
             Dep.Publisher.ForGameManager(new SpendEnergyRequestMsg(Interactable.InteractEnergyCost));
             Dep.Publisher.ForConditionRegistry(new SwitchGlobalConditionMsg(Decorator.ImpactOnCondition));
             await UniTask.Yield();
-            
+
             Interactable.SwitchState();
 
-            await AnimPlayerByBoolAsync(AnimatorConst.IsGatherHigh, 2000);
+            AnimPlayerByBoolAsync(AnimatorConst.IsGatherHigh, 2000).Forget();
             await UniTask.Yield();
         }
 

@@ -10238,6 +10238,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2760443362776328825, guid: 8fabe200a0b659743bb1daa79dfe8441, type: 3}
   m_PrefabInstance: {fileID: 1603761731848147373}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1878173038176200167
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8792308427745376412}
+    m_Modifications:
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.7221184
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.33601
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874931547240575373, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+      propertyPath: m_Name
+      value: Switcher_MechWaterSupplyValve
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+--- !u!4 &6716688068983793737 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5127036305533259182, guid: a8a930edca249e14c9426d13ecedcd55, type: 3}
+  m_PrefabInstance: {fileID: 1878173038176200167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1910855258242199688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12565,105 +12627,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2839223447413361740, guid: f51a3f0b0d1aeb745af396e297cb2668, type: 3}
   m_PrefabInstance: {fileID: 5306609406837438037}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &5474019959259828110
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8792308427745376412}
-    m_Modifications:
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -18.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2924676806196088532, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: isEnabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2924676806196088532, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3325516634059533182, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: isEnabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3325516634059533182, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      propertyPath: m_Name
-      value: MechWaterSupplySwitcher_valve
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 1313715818998516060}
-  m_SourcePrefab: {fileID: 100100000, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
---- !u!1 &1704494874772023265 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-  m_PrefabInstance: {fileID: 5474019959259828110}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1313715818998516060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1704494874772023265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f96e4f26dff94b13bce81512747ea382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isEnabled: 1
---- !u!4 &6769302094887390843 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
-  m_PrefabInstance: {fileID: 5474019959259828110}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5491135392888967669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14779,11 +14742,12 @@ PrefabInstance:
       value: -3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7710305982478450307, guid: bd022b87ac00df04c90cc7e6bdc31f97, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 478395928833647102, guid: bd022b87ac00df04c90cc7e6bdc31f97, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6769302094887390843}
+      addedObject: {fileID: 6716688068983793737}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7845493122615821120, guid: bd022b87ac00df04c90cc7e6bdc31f97, type: 3}
       insertIndex: -1

@@ -12,7 +12,8 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Active
 {
     public sealed class ASwitcherDecorator : ADecorator, IActiveDecorator
     {
-        [SerializeField] private EGlobalCondition impactOnCondition; // WaterSupply
+        [Space(10)] [SerializeField] private EGlobalCondition impactOnCondition; // WaterSupply
+
         [SerializeField] private ESwitchQuestion switchQuestion; // q_turn_on
         [SerializeField] private string requiredItem; // "Crowbar" для вентиля
         [SerializeField] private string missingItemMessage; // "Нужен лом"

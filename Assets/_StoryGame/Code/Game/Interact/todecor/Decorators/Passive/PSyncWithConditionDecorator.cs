@@ -29,15 +29,11 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 
             var newState = state ? EInteractableState.On : EInteractableState.Off;
 
-            if (newState != interactable.CurrentState)
-            {
-                Debug.LogWarning($"PSyncWithConditionDecorator: Updating state to {newState} for {interactable.Name}");
-                interactable.SetState(newState);
-            }
-            else
-            {
-                Debug.LogWarning($"PSyncWithConditionDecorator: State unchanged ({newState}) for {interactable.Name}");
-            }
+            if (newState == interactable.CurrentState)
+                return UniTask.FromResult(true);
+
+            interactable.SetState(newState);
+            Debug.LogWarning($"STATE CHANGED to {newState} for {interactable.Name}");
 
             return UniTask.FromResult(true);
         }

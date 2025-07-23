@@ -1466,7 +1466,9 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 146551115193113731}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions:
     - queueIndex: 1
       thoughtKey: door_module_not_available
@@ -1475,7 +1477,7 @@ MonoBehaviour:
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 11400000, guid: b85f6b7429f03104b928b852ce6ffc24, type: 2}
+  passableData: {fileID: 11400000, guid: b85f6b7429f03104b928b852ce6ffc24, type: 2}
 --- !u!1 &2667958543132785639
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,6 +2700,7 @@ Transform:
   - {fileID: 9109434390884245099}
   - {fileID: 7401215787834008378}
   - {fileID: 2110578307692541655}
+  - {fileID: 2402234022599251737}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4816294509827261535
@@ -2714,21 +2717,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomId: room_prototype
   roomName: room_prototype
-  interactables:
-    core: {fileID: 0}
-    hidden: []
-    inspectables: []
-  doors: []
   spawnPoint: {fileID: 7401215787834008378}
   type: 14
   exits:
-  - {fileID: 4780271987400367711}
-  - {fileID: 8421979074574158597}
-  - {fileID: 1224649315386154554}
-  - {fileID: 9209356899280238368}
-  - {fileID: 5683342705485090418}
-  - {fileID: 8260089441213940972}
-  - {fileID: 3967547693602052954}
+  - exit: 0
+    door: {fileID: 0}
+  - exit: 0
+    door: {fileID: 0}
+  - exit: 0
+    door: {fileID: 0}
+  - exit: 0
+    door: {fileID: 0}
+  - exit: 0
+    door: {fileID: 0}
+  - exit: 0
+    door: {fileID: 0}
+  - exit: 0
+    door: {fileID: 0}
+  toggleables: []
+  effectables: []
 --- !u!1 &4301386579240827279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3217,7 +3224,9 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 4966997373594340282}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions:
     - queueIndex: 1
       thoughtKey: door_module_not_available
@@ -3226,7 +3235,7 @@ MonoBehaviour:
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 11400000, guid: 08f3f4cb3cbbeae40a138a738112cc93, type: 2}
+  passableData: {fileID: 11400000, guid: 08f3f4cb3cbbeae40a138a738112cc93, type: 2}
 --- !u!1 &5089531654887306236
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,13 +4005,15 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 1813446164623291392}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions: []
     requiredItems: []
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 11400000, guid: e2884a0f9cc607c40863d3d265ed4efe, type: 2}
+  passableData: {fileID: 11400000, guid: e2884a0f9cc607c40863d3d265ed4efe, type: 2}
 --- !u!1 &5917856932869218094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4360,13 +4371,15 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 2074293431192772330}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions: []
     requiredItems: []
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 11400000, guid: e13ff94915a8de141a273deedb94c156, type: 2}
+  passableData: {fileID: 11400000, guid: e13ff94915a8de141a273deedb94c156, type: 2}
 --- !u!1 &6014795278942566258
 GameObject:
   m_ObjectHideFlags: 0
@@ -4723,7 +4736,9 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 5245427412049097598}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions:
     - queueIndex: 1
       thoughtKey: door_module_not_available
@@ -4732,7 +4747,7 @@ MonoBehaviour:
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 11400000, guid: 80a71ff0a0d660b4cb09f2ffb67c01d2, type: 2}
+  passableData: {fileID: 11400000, guid: 80a71ff0a0d660b4cb09f2ffb67c01d2, type: 2}
 --- !u!1 &6317687480719337639
 GameObject:
   m_ObjectHideFlags: 0
@@ -6169,13 +6184,15 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 4101048792121386561}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions: []
     requiredItems: []
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 11400000, guid: e2c5554bc9239ef45aa388b02ba21d1f, type: 2}
+  passableData: {fileID: 11400000, guid: e2c5554bc9239ef45aa388b02ba21d1f, type: 2}
 --- !u!1 &7856450293345235866
 GameObject:
   m_ObjectHideFlags: 0
@@ -7089,13 +7106,15 @@ MonoBehaviour:
   objName: Not set
   localizationKey: door_wooden
   _entrance: {fileID: 125407542733190767}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions: []
     requiredItems: []
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 11400000, guid: bb0e9753308665647a3815bbb13c26e9, type: 2}
+  passableData: {fileID: 11400000, guid: bb0e9753308665647a3815bbb13c26e9, type: 2}
 --- !u!1 &8987188678081683121
 GameObject:
   m_ObjectHideFlags: 0
@@ -7425,6 +7444,148 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.100000106, y: 1, z: 2}
   m_Center: {x: 0.04999994, y: 0.5, z: 1}
+--- !u!1001 &3985887259250677484
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 478395928833647102}
+    m_Modifications:
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924676806196088532, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: isEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924676806196088532, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325516634059533182, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: isEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3325516634059533182, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283530268303474502, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: disableColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      propertyPath: m_Name
+      value: MechWaterSupplySwitcher_valve
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 7970341019940491326}
+    - targetCorrespondingSourceObject: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2321960844024767663}
+    - targetCorrespondingSourceObject: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 970505990595560904}
+  m_SourcePrefab: {fileID: 100100000, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+--- !u!95 &176481157799371229 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3828706151177533233, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+  m_PrefabInstance: {fileID: 3985887259250677484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2402234022599251737 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1587171722179019253, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+  m_PrefabInstance: {fileID: 3985887259250677484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7710305982478450307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6651875098516400239, guid: cd431ce09af0cf34895142520c47e9f5, type: 3}
+  m_PrefabInstance: {fileID: 3985887259250677484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7970341019940491326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710305982478450307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f96e4f26dff94b13bce81512747ea382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+--- !u!114 &2321960844024767663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710305982478450307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e71c3dd0eb245e6a18b187ef235dc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  animator: {fileID: 176481157799371229}
+--- !u!114 &970505990595560904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710305982478450307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e71c3dd0eb245e6a18b187ef235dc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  animator: {fileID: 176481157799371229}
 --- !u!1001 &5775236709712504503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7544,10 +7705,12 @@ MonoBehaviour:
   objName: Not set
   localizationKey: rope
   _entrance: {fileID: 1018472286501784168}
-  unlockConditions:
+  interactEnergyCost: 0
+  conditionsData:
+    blockingConditions: []
     conditions: []
     requiredItems: []
     oneOfItem:
       thoughtKey: 
       items: []
-  doorData: {fileID: 0}
+  passableData: {fileID: 0}

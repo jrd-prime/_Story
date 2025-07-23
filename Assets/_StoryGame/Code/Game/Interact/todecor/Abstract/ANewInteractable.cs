@@ -30,29 +30,31 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         #region SerializeField
 
         [SerializeField] private string id;
+
         [SerializeField] private string objName = "Not set";
         [SerializeField] private string localizationKey;
-        [SerializeField] private int interactEnergyCost;
+        [SerializeField] private Transform entrancePoint;
+        [Space(10)] [SerializeField] private int interactEnergyCost;
 
         [SerializeField] private EMainInteractableType interactableType;
         [SerializeField] private EInteractableState initialState = EInteractableState.NotSet;
-        [SerializeField] private bool disableColliders;
-        [SerializeField] private ConditionEffectData conditionEffectVo;
+        [Space(10)] [SerializeField] private bool disableColliders;
+        [Space(10)] [SerializeField] private ConditionEffectData conditionEffectVo;
 
         #endregion
 
         #region Public
 
+        public bool CanInteract { get; set; } = true;
+        public bool IsBlocked { get; private set; }
+        public EInteractableState CurrentState { get; private set; }
         public string Id => id;
         public EInteractableType InteractableType { get; }
-        public bool CanInteract { get; set; } = true;
+        public Transform EntrancePoint => entrancePoint;
         public string LocalizationKey => localizationKey;
         public string Name => objName;
-        public bool IsBlocked { get; private set; }
         public IRoom Room { get; }
         public int InteractEnergyCost => interactEnergyCost;
-        [ShowInInspector] [ReadOnly] public EInteractableState CurrentState { get; private set; }
-
         public ConditionEffectData ConditionEffectVo => conditionEffectVo;
 
         #endregion
@@ -153,6 +155,7 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
                 return;
 
             await ProcessActiveDecorators();
+            UpdateColliders();
         }
 
 
@@ -183,6 +186,7 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         {
             var result = !IsBlocked && (!disableColliders || CurrentState != EInteractableState.Off);
 
+            Debug.Log("UpdateColliders " + result);
             foreach (var col in _colliders)
                 col.enabled = result;
         }
@@ -239,6 +243,13 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
             if (string.IsNullOrEmpty(id))
                 id = "id_" + localizationKey;
+
+            if (!entrancePoint)
+            {
+                _log.Error($"{nameof(entrancePoint)} not found. {name}");
+                enabled = false;
+                return;
+            }
 
             if (Equals(conditionEffectVo, default(ConditionEffectData)))
             {
