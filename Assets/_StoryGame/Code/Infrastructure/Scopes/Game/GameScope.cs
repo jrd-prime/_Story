@@ -14,6 +14,7 @@ using _StoryGame.Game.Interact.SortMbDelete.Conditional;
 using _StoryGame.Game.Interact.SortMbDelete.Toggle;
 using _StoryGame.Game.Interact.SortMbDelete.Use;
 using _StoryGame.Game.Interact.Switchable.Systems;
+using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Loot;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;

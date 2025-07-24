@@ -6,7 +6,7 @@ using _StoryGame.Game.Interact.todecor.Abstract;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _StoryGame.Game.Interact.todecor.Decorators.Active.Active
+namespace _StoryGame.Game.Interact.todecor.Decorators.Active
 {
     public sealed class AThoughtPopupDecorator : ADecorator, IActiveDecorator
     {

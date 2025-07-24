@@ -4,7 +4,7 @@ using _StoryGame.Core.Managers;
 namespace _StoryGame.Game.Interact.todecor
 {
     [Serializable]
-    public struct ConditionEffectData
+    public struct GlobalConditionEffectData
     {
         public EGlobalCondition condition;
         public bool isInverse;

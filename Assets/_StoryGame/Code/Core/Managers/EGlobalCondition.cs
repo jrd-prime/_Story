@@ -2,7 +2,7 @@
 {
     public enum EGlobalCondition
     {
-        NotSet = -1,
+        NotSet = 0,
         HasElectricity = 1000,
         ServModuleHasPower = 1,
         ModulePersistentClosed = 2,

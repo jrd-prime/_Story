@@ -1,6 +1,4 @@
-﻿using System;
-using _StoryGame.Core.Common.Interfaces;
-using _StoryGame.Core.Interact.Interactables;
+﻿using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;

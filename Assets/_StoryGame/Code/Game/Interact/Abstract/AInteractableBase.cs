@@ -37,7 +37,7 @@ namespace _StoryGame.Game.Interact.Abstract
 
         public int InteractEnergyCost => interactEnergyCost;
         public EInteractableState CurrentState { get; private set; }
-        public ConditionEffectData ConditionEffectVo { get; }
+        public GlobalConditionEffectData GlobalConditionEffectVo { get; }
         public void SetBlocked(bool value) => IsBlocked = value;
 
         public bool CanInteract { get; set; } = true;

@@ -1,10 +1,8 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
 using _StoryGame.Game.Interact.todecor.Abstract;
-using _StoryGame.Game.Managers.Condition;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using VContainer;
 
 namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 {

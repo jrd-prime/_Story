@@ -40,11 +40,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8663775858251726459}
+  - component: {fileID: 150203990913262484}
+  - component: {fileID: 3369127023640313969}
   - component: {fileID: 7412221455665414117}
   - component: {fileID: 5384715762258683006}
   - component: {fileID: 6608542923798271554}
-  - component: {fileID: 1701045854892740968}
-  - component: {fileID: 3369127023640313969}
   m_Layer: 31
   m_Name: ToMech
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5554330474759934472}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 3.95, y: 0, z: -16.400002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -68,6 +68,42 @@ Transform:
   - {fileID: 2092908717975492923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &150203990913262484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554330474759934472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459e4629d5194aa0b69e5865fc6cd378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+  objName: Not set
+  localizationKey: door_wooden
+  entrancePoint: {fileID: 8663775858251726459}
+  interactEnergyCost: 0
+  initialState: 1
+  disableColliders: 0
+  globalConditionEffectVo:
+    condition: 0
+    isInverse: 0
+--- !u!114 &3369127023640313969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554330474759934472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 494e63cea9824c119b45101319092011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  passableData: {fileID: 11400000, guid: e13ff94915a8de141a273deedb94c156, type: 2}
 --- !u!33 &7412221455665414117
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -142,40 +178,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.031150043, y: 2.25, z: 1.2000003}
   m_Center: {x: -0.00000003352762, y: 1.125, z: 0.60000205}
---- !u!114 &1701045854892740968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5554330474759934472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed44e5a397643b0ad7029621c4a88e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 
-  objName: Not set
-  localizationKey: door_wooden
-  entrancePoint: {fileID: 2092908717975492923}
-  interactEnergyCost: 2
-  interactableType: 2
-  initialState: 0
-  disableColliders: 0
-  conditionEffectVo:
-    condition: -1
-    isInverse: 0
---- !u!114 &3369127023640313969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5554330474759934472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 494e63cea9824c119b45101319092011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isEnabled: 1
-  passableData: {fileID: 11400000, guid: e13ff94915a8de141a273deedb94c156, type: 2}

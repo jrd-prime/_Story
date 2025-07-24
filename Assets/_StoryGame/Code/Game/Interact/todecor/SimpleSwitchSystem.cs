@@ -5,16 +5,15 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
 using _StoryGame.Data.Anim;
 using _StoryGame.Game.Interact.SortMbDelete.Toggle.Strategies;
-using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Interact.todecor.Abstract;
-using _StoryGame.Game.Interact.todecor.Decorators.Active;
+using _StoryGame.Game.Interact.todecor.Decorators;
 using _StoryGame.Game.Managers.Condition.Messages;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 
-namespace _StoryGame.Game.Interact.Switchable.Systems
+namespace _StoryGame.Game.Interact.todecor
 {
     public class SimpleSwitchSystem : AActiveDecoratorSystem<ASwitcherDecorator>
     {

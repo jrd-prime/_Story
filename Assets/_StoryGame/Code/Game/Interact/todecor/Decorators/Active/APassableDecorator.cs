@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.UI;
@@ -7,13 +6,12 @@ using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.Interact;
 using _StoryGame.Game.Interact.SortMbDelete.InteractablesSORT;
 using _StoryGame.Game.Interact.todecor.Abstract;
-using _StoryGame.Game.Managers.Condition;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _StoryGame.Game.Interact.todecor.Decorators.Active.Active
+namespace _StoryGame.Game.Interact.todecor.Decorators.Active
 {
     public sealed class APassableDecorator : ADecorator, IActiveDecorator
     {

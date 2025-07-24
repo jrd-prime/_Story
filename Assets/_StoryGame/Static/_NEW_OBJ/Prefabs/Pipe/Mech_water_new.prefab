@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 194667335429072376}
   - component: {fileID: 6954070953297977752}
   - component: {fileID: 926202101541028705}
-  - component: {fileID: -6555840677614669547}
+  - component: {fileID: 1281930668703300349}
   - component: {fileID: 7349187842229654854}
   - component: {fileID: 7937385305785173477}
   - component: {fileID: 3554477891221333443}
@@ -113,8 +113,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9461899, y: 2.357548, z: 0.73129475}
-  m_Center: {x: 1.3585644, y: 1.1775674, z: 0.3660793}
+  m_Size: {x: 2.4461899, y: 2.357548, z: 1.4559331}
+  m_Center: {x: 1.1085644, y: 1.1775674, z: 0.7283978}
 --- !u!64 &6954070953297977752
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -159,7 +159,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-6555840677614669547
+--- !u!114 &1281930668703300349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 541593327277789355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed44e5a397643b0ad7029621c4a88e2, type: 3}
+  m_Script: {fileID: 11500000, guid: d9859c5b27f8408d9497d41c58410bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
@@ -176,10 +176,9 @@ MonoBehaviour:
   localizationKey: door_wooden
   entrancePoint: {fileID: 5907067143816562384}
   interactEnergyCost: 0
-  interactableType: 1
   initialState: 0
   disableColliders: 1
-  conditionEffectVo:
+  globalConditionEffectVo:
     condition: 3
     isInverse: 0
 --- !u!114 &7349187842229654854
@@ -223,6 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnabled: 1
   thoughtLocalizationKey: TH_mech_water_under_electricbox
+  suspendFurtherExecution: 0
 --- !u!1 &1938952547016856885
 GameObject:
   m_ObjectHideFlags: 0

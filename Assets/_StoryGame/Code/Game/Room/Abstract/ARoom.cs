@@ -11,8 +11,7 @@ using _StoryGame.Data.Interact;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interact.Passable;
-using _StoryGame.Game.Interact.SortMbDelete.InteractablesSORT;
-using _StoryGame.Game.Interact.todecor;
+using _StoryGame.Game.Interact.todecor.Abstract;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -29,7 +28,6 @@ namespace _StoryGame.Game.Room.Abstract
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private ERoom type;
         [SerializeField] private RoomExitVo[] exits;
-        [SerializeField] private Toggleable[] toggleables;
         [SerializeField] private Effectable[] effectables;
 
         public ERoom Type => type;
@@ -82,13 +80,8 @@ namespace _StoryGame.Game.Room.Abstract
             foreach (var effectable in effectables)
                 _resolver.Inject(effectable);
 
-            // UpdateStateForConditionalObjects();
-
-            // foreach (var toggleable in toggleables)
-            //     toggleable.InitOnRoomAwake();
-
             var interactables =
-                FindObjectsByType<Switchable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                FindObjectsByType<ANewInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var interactable in interactables)
                 _resolver.Inject(interactable);
         }

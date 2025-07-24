@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
@@ -27,24 +28,26 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
     [RequireComponent(typeof(Collider))]
     public abstract class ANewInteractable : MonoBehaviour, IInteractable
     {
+        [Title("Interactable Base Settings", titleAlignment: TitleAlignments.Centered)]
+
         #region SerializeField
 
-        [SerializeField] private string id;
+        [SerializeField]
+        private string id;
 
         [SerializeField] private string objName = "Not set";
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform entrancePoint;
         [Space(10)] [SerializeField] private int interactEnergyCost;
 
-        [SerializeField] private EMainInteractableType interactableType;
         [SerializeField] private EInteractableState initialState = EInteractableState.NotSet;
         [Space(10)] [SerializeField] private bool disableColliders;
-        [Space(10)] [SerializeField] private ConditionEffectData conditionEffectVo;
 
         #endregion
 
         #region Public
 
+        [ShowInInspector] [ReadOnly] public abstract EMainInteractableType interactableType { get; }
         public bool CanInteract { get; set; } = true;
         public bool IsBlocked { get; private set; }
         public EInteractableState CurrentState { get; private set; }
@@ -55,7 +58,6 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         public string Name => objName;
         public IRoom Room { get; }
         public int InteractEnergyCost => interactEnergyCost;
-        public ConditionEffectData ConditionEffectVo => conditionEffectVo;
 
         #endregion
 
@@ -129,7 +131,14 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         private void Start()
         {
             Debug.LogWarning("Start called for " + gameObject.name);
+            
+            if(_resolver == null)
+                throw new NullReferenceException("Resolver is null. " + gameObject.name);
+            
             CollectAndInjectDecorators();
+            
+            
+            
             SetState(initialState);
             UpdatePassiveState();
             _isInitialized = true;
@@ -315,13 +324,6 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
             if (!entrancePoint)
             {
                 _log.Error($"{nameof(entrancePoint)} not found. {name}");
-                enabled = false;
-                return;
-            }
-
-            if (Equals(conditionEffectVo, default(ConditionEffectData)))
-            {
-                _log.Error("ConditionEffectData is null on " + gameObject.name);
                 enabled = false;
                 return;
             }

@@ -1,10 +1,10 @@
 ﻿namespace _StoryGame.Game.Interact.todecor
 {
-    internal enum EMainInteractableType
+    public enum EMainInteractableType
     {
         NotSet = -1,
         Switcher = 0,
         Dependent = 1,
-        Passable = 2
+        Passage = 2,
     }
 }

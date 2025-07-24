@@ -11,7 +11,7 @@ namespace _StoryGame.Data.Anim
         public const string GatherLowTrigger = "gather_low_trigger";
         public const string IsGatherHigh = "is_gather_high";
 
-        // Switchable trigger
+        // Switcher trigger
         public static readonly int TurnOff = Animator.StringToHash("TurnOff");
         public static readonly int TurnOn = Animator.StringToHash("TurnOn");
         public const string OffStateName = "OFFState";

@@ -1761,22 +1761,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2829916121749943203}
     m_Modifications:
-    - target: {fileID: 194667335429072376, guid: 19fd62fd46fee304e8a8316d001eb31e, type: 3}
-      propertyPath: m_Size.x
-      value: 2.4461899
-      objectReference: {fileID: 0}
-    - target: {fileID: 194667335429072376, guid: 19fd62fd46fee304e8a8316d001eb31e, type: 3}
-      propertyPath: m_Size.z
-      value: 1.4559331
-      objectReference: {fileID: 0}
-    - target: {fileID: 194667335429072376, guid: 19fd62fd46fee304e8a8316d001eb31e, type: 3}
-      propertyPath: m_Center.x
-      value: 1.1085644
-      objectReference: {fileID: 0}
-    - target: {fileID: 194667335429072376, guid: 19fd62fd46fee304e8a8316d001eb31e, type: 3}
-      propertyPath: m_Center.z
-      value: 0.7283978
-      objectReference: {fileID: 0}
     - target: {fileID: 541593327277789355, guid: 19fd62fd46fee304e8a8316d001eb31e, type: 3}
       propertyPath: m_Name
       value: Mech_water_new
@@ -1986,11 +1970,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8135995744730529344, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
+      propertyPath: globalConditionEffectVo.condition
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3433023207493630556, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 201572568704026377, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
-      insertIndex: 7
+      insertIndex: 6
       addedObject: {fileID: 1858952646}
     - targetCorrespondingSourceObject: {fileID: 5106005416657940826, guid: b0388bf724bd5dd47ab06500d9c81260, type: 3}
       insertIndex: 10
@@ -2126,6 +2115,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2829916121749943205}
     m_Modifications:
+    - target: {fileID: 150203990913262484, guid: bfa40e8f5e2d99b44b068ee8eff1fae2, type: 3}
+      propertyPath: initialState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5554330474759934472, guid: bfa40e8f5e2d99b44b068ee8eff1fae2, type: 3}
       propertyPath: m_Name
       value: ToMech
