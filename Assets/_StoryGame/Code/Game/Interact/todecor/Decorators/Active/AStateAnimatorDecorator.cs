@@ -13,16 +13,16 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Active.Active
 
         public override int Priority => 1;
 
-        private void Awake()
+        protected override void InitializeInternal()
         {
             if (animator)
                 return;
 
-            LOG.Error($"Animator not found on {name}");
+            Dep.Log.Error($"Animator not found on {name}");
             enabled = false;
         }
 
-        public async UniTask<bool> ProcessActive(IInteractable interactable)
+        protected override async UniTask<EDecoratorResult> ProcessInternal(IInteractable interactable)
         {
             var animState = interactable.CurrentState == EInteractableState.On
                 ? AnimatorConst.OnStateName
@@ -33,13 +33,13 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Active.Active
                 var trigger = interactable.CurrentState == EInteractableState.On
                     ? AnimatorConst.TurnOn
                     : AnimatorConst.TurnOff;
-                LOG.Warn($"Animator is NOT in {animState} state. Animate. {name}");
+                Dep.Log.Warn($"Animator is NOT in {animState} state. Animate. {name}");
                 animator.SetTrigger(trigger);
-                var stateWaiter = new AnimatorStateWaiter(animator, animState, LOG);
+                var stateWaiter = new AnimatorStateWaiter(animator, animState, Dep.Log);
                 await UniTask.WaitUntil(stateWaiter.IsAnimationFinished);
             }
 
-            return true;
+            return EDecoratorResult.Success;
         }
     }
 }

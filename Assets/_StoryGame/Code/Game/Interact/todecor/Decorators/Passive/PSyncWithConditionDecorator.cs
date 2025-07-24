@@ -12,15 +12,17 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
     {
         public override int Priority => 100;
 
-        [Inject] private ConditionChecker _conditionChecker;
-
-        public UniTask<bool> ProcessPassive(IInteractable interactable)
+        protected override void InitializeInternal()
         {
-            if (_conditionChecker == null)
+        }
+
+        protected override  UniTask<EDecoratorResult> ProcessInternal(IInteractable interactable)
+        {
+            if (Dep.ConditionChecker == null)
                 throw new Exception($"ConditionChecker is null for {interactable.Name}.");
 
             var conditionEffectVo = interactable.ConditionEffectVo;
-            var state = _conditionChecker.GetConditionState(conditionEffectVo.condition);
+            var state = Dep.ConditionChecker.GetConditionState(conditionEffectVo.condition);
 
             Debug.LogWarning($"{conditionEffectVo.condition} = {state}");
 
@@ -30,12 +32,11 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
             var newState = state ? EInteractableState.On : EInteractableState.Off;
 
             if (newState == interactable.CurrentState)
-                return UniTask.FromResult(true);
+                return UniTask.FromResult(EDecoratorResult.Success);
 
             interactable.SetState(newState);
             Debug.LogWarning($"STATE CHANGED to {newState} for {interactable.Name}");
-
-            return UniTask.FromResult(true);
+            return UniTask.FromResult(EDecoratorResult.Success);
         }
     }
 }

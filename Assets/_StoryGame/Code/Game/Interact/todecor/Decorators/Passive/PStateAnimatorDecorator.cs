@@ -12,25 +12,25 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 
         public override int Priority => 10;
 
-        private void Awake()
+        protected override void InitializeInternal()
         {
             if (animator)
                 return;
 
-            LOG.Error($"Animator not found on {name}");
+            Dep.Log.Error($"Animator not found on {name}");
             enabled = false;
         }
 
-        public UniTask<bool> ProcessPassive(IInteractable interactable)
+        protected override  UniTask<EDecoratorResult> ProcessInternal(IInteractable interactable)
         {
             var animationStateName = interactable.CurrentState == EInteractableState.On
                 ? AnimatorConst.OnStateName
                 : AnimatorConst.OffStateName;
 
-            LOG.Debug($"Setting animator to {animationStateName} state. Fast. {name}");
+            Dep.Log.Debug($"Setting animator to {animationStateName} state. Fast. {name}");
             animator.Play(animationStateName, 0, 1f);
 
-            return UniTask.FromResult(true);
+            return UniTask.FromResult(EDecoratorResult.Success);
         }
     }
 }

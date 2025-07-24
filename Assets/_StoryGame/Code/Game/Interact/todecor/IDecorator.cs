@@ -7,15 +7,23 @@ namespace _StoryGame.Game.Interact.todecor
     {
         int Priority { get; }
         bool IsEnabled { get; }
+        void Initialize();
+        UniTask<EDecoratorResult> Process(IInteractable interactable);
     }
 
     public interface IActiveDecorator : IDecorator
     {
-        UniTask<bool> ProcessActive(IInteractable interactable);
     }
 
     public interface IPassiveDecorator : IDecorator
     {
-        UniTask<bool> ProcessPassive(IInteractable interactable);
+    }
+
+    public enum EDecoratorResult
+    {
+        Ignore = -1,
+        Error = 0,
+        Success = 1,
+        Suspend = 13
     }
 }

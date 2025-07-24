@@ -16,20 +16,13 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Passive
 
         public override int Priority => 100;
 
-        [Inject]
-        private void Construct(ConditionChecker conditionManager)
+        protected override void InitializeInternal()
         {
-            // Сохранить ConditionManager, подписаться на OnConditionChanged
         }
 
-        public UniTask<bool> ProcessPassive(IInteractable interactable)
+        protected override  UniTask<EDecoratorResult> ProcessInternal(IInteractable interactable)
         {
-            return UniTask.FromResult(true);
-        }
-
-        private void OnConditionChanged(EGlobalCondition condition, EInteractableState state)
-        {
-            // Если condition в blockingConditions, вызвать ProcessPassive
+            return UniTask.FromResult(EDecoratorResult.Success);
         }
     }
 }

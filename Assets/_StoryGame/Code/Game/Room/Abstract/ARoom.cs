@@ -88,7 +88,7 @@ namespace _StoryGame.Game.Room.Abstract
             //     toggleable.InitOnRoomAwake();
 
             var interactables =
-                FindObjectsByType<NewInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                FindObjectsByType<Switchable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var interactable in interactables)
                 _resolver.Inject(interactable);
         }

@@ -4,6 +4,7 @@
     {
         NotSet = -1,
         Switcher = 0,
-        Dependent = 1
+        Dependent = 1,
+        Passable = 2
     }
 }

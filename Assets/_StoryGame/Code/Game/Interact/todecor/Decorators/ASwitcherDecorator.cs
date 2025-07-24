@@ -21,7 +21,6 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Active
         public EGlobalCondition ImpactOnCondition => impactOnCondition;
         public override int Priority => 60;
         public ESwitchQuestion SwitchQuestion => switchQuestion;
-
         private SimpleSwitchSystem _system;
 
         [Inject]
@@ -30,14 +29,17 @@ namespace _StoryGame.Game.Interact.todecor.Decorators.Active
             _system = system;
         }
 
-        public async UniTask<bool> ProcessActive(IInteractable interactable)
+        protected override void InitializeInternal()
+        {
+        }
+
+        protected override async UniTask<EDecoratorResult> ProcessInternal(IInteractable interactable)
         {
             if (_system == null)
                 throw new Exception("System is null. " + gameObject.name);
 
             await _system.Process(this, interactable);
-
-            return true;
+            return EDecoratorResult.Success;
         }
     }
 }

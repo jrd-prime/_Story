@@ -126,7 +126,7 @@ namespace _StoryGame.Game.Movement
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, interactableLayer))
             {
-                // _log.Debug($"Hit layer Interact object: {hit.collider.gameObject.name}");
+                _log.Debug($"Hit layer Interact object: {hit.collider.gameObject.name}");
 
                 var interactable = hit.collider.GetComponent<IInteractable>();
                 if (interactable != null)

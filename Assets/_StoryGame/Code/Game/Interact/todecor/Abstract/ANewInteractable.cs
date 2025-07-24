@@ -145,8 +145,70 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
             UpdateColliders();
         }
 
-        protected abstract UniTask ProcessPassiveDecorators();
-        protected abstract UniTask ProcessActiveDecorators();
+        private async UniTask ProcessPassiveDecorators()
+        {
+            _log.Warn("<color=yellow>Start Passive Decorators</color>");
+
+            var prevState = CurrentState;
+            foreach (var decorator in _passiveDecorators)
+            {
+                if (!decorator.IsEnabled)
+                    continue;
+
+                _log.Warn($"{decorator.GetType().Name} / {decorator.Priority}");
+                var result = await decorator.Process(this);
+                if (result == EDecoratorResult.Suspend)
+                {
+                    _log.Warn($"Suspend result from {decorator.GetType().Name} / {decorator.Priority}");
+                }
+            }
+
+            if (prevState != CurrentState)
+            {
+                _log.Warn(
+                    $"<color=cyan>Кто-то изменил состояние с {prevState} на {CurrentState}. Перезапустить процесс пассивных декораторов</color>");
+                await ProcessPassiveDecorators();
+            }
+
+            _log.Warn("<color=yellow>End Passive Decorators</color>");
+        }
+
+        private async UniTask ProcessActiveDecorators()
+        {
+            _log.Warn("<color=green>Start Active Decorators</color>");
+            var prevState = CurrentState;
+
+            _log.Warn("ProcessActiveDecorators previous state: " + prevState + " / current state: " + CurrentState);
+            foreach (var decorator in _activeDecorators)
+            {
+                if (!decorator.IsEnabled)
+                    continue;
+
+                _log.Warn($"{decorator.GetType().Name} / {decorator.Priority}");
+                var result = await decorator.Process(this);
+
+                if (result == EDecoratorResult.Suspend)
+                {
+                    _log.Warn($"Suspend result from {decorator.GetType().Name} / {decorator.Priority}");
+                }
+
+                // if (!result)
+                // {
+                //     // Показать сообщение (например, "Нужен лом"), остановить
+                //     return;
+                // }
+            }
+
+            _log.Warn("ProcessActiveDecorators previous state: " + prevState + " / current state: " + CurrentState);
+            if (prevState != CurrentState)
+            {
+                _log.Warn(
+                    $"<color=cyan>Кто-то изменил состояние с {prevState} на {CurrentState}. Перезапустить процесс пассивных декораторов</color>");
+                await ProcessPassiveDecorators();
+            }
+
+            _log.Warn("<color=green>End Active Decorators</color>");
+        }
 
 
         public async UniTask InteractAsync(ICharacter character)
@@ -159,7 +221,7 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         }
 
 
-        public Vector3 GetEntryPoint() => transform.position;
+        public Vector3 GetEntryPoint() => entrancePoint.position;
 
 
         public void SetRoom(IRoom room)
@@ -202,10 +264,16 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
                 .ToList();
 
             foreach (var passive in _passiveDecorators)
+            {
                 _resolver.Inject(passive);
+                passive.Initialize();
+            }
 
             foreach (var active in _activeDecorators)
+            {
                 _resolver.Inject(active);
+                active.Initialize();
+            }
         }
 
         protected virtual void OnAwake()
