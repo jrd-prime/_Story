@@ -4,6 +4,7 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Data.SO.Interactables;
 using _StoryGame.Game.Loot;
+using _StoryGame.Game.Managers.Condition;
 using VContainer;
 
 namespace _StoryGame.Infrastructure.Interact
@@ -21,6 +22,7 @@ namespace _StoryGame.Infrastructure.Interact
         public readonly IJPublisher Publisher;
         public readonly IJLog Log;
         public readonly IL10nProvider L10n;
+        public readonly ConditionChecker ConditionChecker;
         public readonly InteractableSystemTipData InteractableSystemTipData;
         public readonly LootGenerator LootGenerator;
 
@@ -30,6 +32,7 @@ namespace _StoryGame.Infrastructure.Interact
             Publisher = resolver.Resolve<IJPublisher>();
             Log = resolver.Resolve<IJLog>();
             L10n = resolver.Resolve<IL10nProvider>();
+            ConditionChecker = resolver.Resolve<ConditionChecker>();
 
             var settingsProvider = resolver.Resolve<ISettingsProvider>();
             InteractableSystemTipData = settingsProvider.GetSettings<InteractableSystemTipData>();

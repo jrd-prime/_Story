@@ -11,7 +11,6 @@ using _StoryGame.Game.UI.Impls.Viewer.Layers.HUD.Components;
 using _StoryGame.Infrastructure.Tools;
 using Cysharp.Threading.Tasks;
 using R3;
-using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 

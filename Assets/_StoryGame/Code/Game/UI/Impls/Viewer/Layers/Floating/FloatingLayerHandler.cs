@@ -4,6 +4,7 @@ using _StoryGame.Core.UI;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Extensions;
+using _StoryGame.Game.Interact.SortMbDelete.Toggle.Strategies;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             foreach (var windowData in floatingWindowsData.FloatingWindowDataVo)
                 _floatingWindowsAssets.Add(windowData.eFloatingWindowType, windowData.visualTreeAsset);
 
-            Log.Debug("FloatingLayerHandler initialized with " + _floatingWindowsAssets.Count + " windows.");
+            Log.Debug("Initialized with " + _floatingWindowsAssets.Count + " windows.");
         }
 
         protected override void InitElements()
@@ -234,6 +235,37 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
             _center.style.alignItems = Align.Center;
             _center.Add(window);
         }
+
+        public void ShowDialogWindow(ShowDialogWindowMsg msg)
+        {
+            _center.Clear();
+
+            var window = _windows[EFloatingWindowType.DialogWithEnergy];
+
+            var titleLab = window.GetVElement<Label>("title-l", window.name);
+            var descLab = window.GetVElement<Label>("desc-l", window.name);
+            var energyLab = window.GetVElement<Label>("energy-l", window.name);
+
+
+            var noBtn = window.GetVElement<Button>("no-btn", window.name);
+            var yesBtn = window.GetVElement<Button>("yes-btn", window.name);
+
+            titleLab.text = msg.Title;
+            descLab.text = msg.Question;
+            energyLab.text = msg.Cost.ToString();
+
+            var noBtnHandler =
+                new ClickCompletionHandler<EDialogResult>(noBtn, EDialogResult.No,
+                    msg.CompletionSource, _center);
+            var yesBtnHandler =
+                new ClickCompletionHandler<EDialogResult>(yesBtn, EDialogResult.Yes,
+                    msg.CompletionSource, _center);
+
+            noBtnHandler.Register();
+            yesBtnHandler.Register();
+
+            _center.Add(window);
+        }
     }
 
     public enum PositionType
@@ -250,6 +282,7 @@ namespace _StoryGame.Game.UI.Impls.Viewer.Layers.Floating
         Loot,
         Note,
         LeaveRoom,
-        ArtefactInfo
+        ArtefactInfo,
+        DialogWithEnergy
     }
 }

@@ -2,9 +2,7 @@
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Currency;
-using _StoryGame.Core.HSM;
 using _StoryGame.Core.HSM.Impls;
-using _StoryGame.Core.HSM.Messages;
 using _StoryGame.Core.Input.Messages;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Messaging.Interfaces;
@@ -18,7 +16,6 @@ using _StoryGame.Data.SO.Abstract;
 using _StoryGame.Game.Managers.Game.Messages;
 using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Game.Managers.Room.Messages;
-using _StoryGame.Game.Room.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -87,7 +84,7 @@ namespace _StoryGame.Game.Managers.Game
 
             _gameManagerMsgSub.Subscribe(
                 OnSpendEnergyMsg,
-                msg => msg is SpendEnergyMsg
+                msg => msg is SpendEnergyRequestMsg
             );
 
             _gameManagerMsgSub.Subscribe(
@@ -99,6 +96,9 @@ namespace _StoryGame.Game.Managers.Game
                 OnTransitionToRoomRequestMsg,
                 msg => msg is GoToRoomRequestMsg
             );
+
+
+            _player.Wallet.Add("rope", 1);
         }
 
 
@@ -125,7 +125,7 @@ namespace _StoryGame.Game.Managers.Game
         private void OnSpendEnergyMsg(IGameManagerMsg message)
         {
             Debug.Log($"OnMessage: {message.GetType().Name}");
-            var msg = message as SpendEnergyMsg ?? throw new ArgumentNullException(nameof(message));
+            var msg = message as SpendEnergyRequestMsg ?? throw new ArgumentNullException(nameof(message));
             _player.SpendEnergy(msg.Amount);
         }
 
@@ -171,7 +171,7 @@ namespace _StoryGame.Game.Managers.Game
                     _log.Warn("Show tip");
                     break;
                 case ECurrencyType.Special:
-                    _log.Warn("Process special loot");
+                    _log.Warn("ProcessActive special loot");
                     _player.Wallet.Add(preparedLootVo.Currency.Id, 1);
                     break;
                 default:
@@ -184,11 +184,10 @@ namespace _StoryGame.Game.Managers.Game
         {
             _log.Info("App started!");
             _gameService.StartHSM();
-            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B1B2Ladder, ERoom.NotSet,
-                ERoom.SurfaceAccessModuleB1));
+            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B2B3Ladder, ERoom.NotSet,
+                ERoom.CorridorMainB3));
         }
-
-
+        
         public void GameOver()
         {
             _log.Info("<color=red>GAME OVER</color>");

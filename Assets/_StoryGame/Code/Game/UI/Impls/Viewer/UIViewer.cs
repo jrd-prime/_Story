@@ -5,7 +5,7 @@ using _StoryGame.Core.HSM;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Data.Const;
 using _StoryGame.Game.Extensions;
-using _StoryGame.Game.Interact.Systems.Inspect;
+using _StoryGame.Game.Interact.SortMbDelete.Toggle.Strategies;
 using _StoryGame.Game.UI.Abstract;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Back;
 using _StoryGame.Game.UI.Impls.Viewer.Layers.Floating;
@@ -84,6 +84,9 @@ namespace _StoryGame.Game.UI.Impls.Viewer
                     break;
                 case DisplayArtefactInfoMsg msg:
                     _floatingLayerHandler.DisplayArtefactInfoWindow(msg);
+                    break;
+                case ShowDialogWindowMsg msg:
+                    _floatingLayerHandler.ShowDialogWindow(msg);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(message), message, null);
             }

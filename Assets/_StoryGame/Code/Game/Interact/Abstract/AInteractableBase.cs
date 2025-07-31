@@ -1,5 +1,5 @@
-﻿using System;
-using _StoryGame.Core.Character.Common.Interfaces;
+﻿using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Common.Interfaces;
 using _StoryGame.Core.Interact.Enums;
 using _StoryGame.Core.Interact.Interactables;
@@ -8,12 +8,14 @@ using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
 using _StoryGame.Core.WalletNew.Messages;
+using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Game.UI.Impls.Viewer.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using Cysharp.Threading.Tasks;
 using MessagePipe;
 using R3;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
@@ -22,13 +24,21 @@ namespace _StoryGame.Game.Interact.Abstract
     [RequireComponent(typeof(Collider))]
     public abstract class AInteractableBase : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string id;
+        [Title(nameof(AInteractableBase), titleAlignment: TitleAlignments.Centered)] [SerializeField]
+        private string id;
+
         [SerializeField] private string objName = "Not set";
         [SerializeField] private string localizationKey;
         [SerializeField] private Transform _entrance;
+        [SerializeField] private int interactEnergyCost;
         public abstract EInteractableType InteractableType { get; }
         public Vector3 GetEntryPoint() => _entrance.position;
         public IRoom Room { get; private set; }
+
+        public int InteractEnergyCost => interactEnergyCost;
+        public EInteractableState CurrentState { get; private set; }
+        public GlobalConditionEffectData GlobalConditionEffectVo { get; }
+        public void SetBlocked(bool value) => IsBlocked = value;
 
         public bool CanInteract { get; set; } = true;
         public string LocalizationKey => localizationKey;
@@ -45,10 +55,14 @@ namespace _StoryGame.Game.Interact.Abstract
 
         protected IObjectResolver Resolver;
 
+        protected IPlayer Player;
+
         // protected InteractablesTipUI InteractablesTipUI;
         private ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
         protected ISubscriber<ItemAmountChangedMsg> ItemLootedMsgSub;
-        protected IJLog _log;
+        protected IJLog LOG;
+        protected IJPublisher Publisher;
+        protected bool IsBlocked;
 
         [Inject]
         private void Construct(
@@ -57,14 +71,19 @@ namespace _StoryGame.Game.Interact.Abstract
             IL10nProvider il10NProvider,
             IPublisher<IUIViewerMsg> uiViewerMessagePublisher,
             ISubscriber<RoomLootGeneratedMsg> roomLootGeneratedMsgSub,
-            ISubscriber<ItemAmountChangedMsg> itemLootedMsgSub)
+            ISubscriber<ItemAmountChangedMsg> itemLootedMsgSub,
+            IPlayer player, // TODO remove
+            IJPublisher publisher
+        )
         {
             Resolver = resolver;
-            _log = resolver.Resolve<IJLog>();
+            LOG = resolver.Resolve<IJLog>();
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
             _il10NProvider = il10NProvider;
             _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
             ItemLootedMsgSub = itemLootedMsgSub;
+            Publisher = publisher;
+            Player = player;
 
             appStartHandler.IsAppStarted
                 .Subscribe(OnAppStarted)
@@ -74,13 +93,19 @@ namespace _StoryGame.Game.Interact.Abstract
         private void Awake()
         {
             if (!_entrance)
-                throw new NullReferenceException($"{nameof(_entrance)} not found. {name}");
+                LOG.Error($"{nameof(_entrance)} not found. {name}");
 
             if (string.IsNullOrEmpty(localizationKey))
-                throw new NullReferenceException($"{nameof(localizationKey)} not found. {name}");
+                LOG.Error($"{nameof(localizationKey)} not found. {name}");
 
             if (string.IsNullOrEmpty(id))
                 id = "id_" + localizationKey;
+
+            OnAwake();
+        }
+
+        protected virtual void OnAwake()
+        {
         }
 
         private void OnAppStarted(Unit _)
@@ -93,6 +118,20 @@ namespace _StoryGame.Game.Interact.Abstract
         }
 
         public abstract UniTask InteractAsync(ICharacter character);
+
+        public virtual void UpdatePassiveState()
+        {
+        }
+
+        void IInteractable.SetState(EInteractableState state)
+        {
+            SetState(state);
+        }
+
+        public void SwitchState()
+        {
+        }
+        // TODO to abstract
 
         public void ShowInteractionTip((string, string) interactionTip)
         {
@@ -114,6 +153,18 @@ namespace _StoryGame.Game.Interact.Abstract
         private void OnCommand(Unit _)
         {
             HideInteractionTip();
+        }
+
+        protected void SetState(EInteractableState state)
+        {
+            CurrentState = state;
+            UpdatePassiveState();
+            UpdateColliders();
+        }
+
+        protected virtual void UpdateColliders()
+        {
+            // Отключить коллайдеры, если isBlocked или (disableCollidersOnOff и CurrentState = Off)
         }
     }
 }

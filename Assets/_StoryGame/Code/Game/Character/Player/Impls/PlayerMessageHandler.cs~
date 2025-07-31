@@ -1,7 +1,0 @@
-﻿namespace _StoryGame.Game.Character.Player.Impls
-{
-    public class PlayerMessageHandler
-    {
-        
-    }
-}

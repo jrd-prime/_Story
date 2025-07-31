@@ -57,7 +57,7 @@ namespace _StoryGame.Core.Currency.Impls
                 _currencyData.TryAdd(currency.Id, currency);
             }
 
-            _log.Info("CurrencyRegistry initialized with " + _currencyData.Count + " currencies.");
+            _log.Info("Initialized with " + _currencyData.Count + " currencies.");
 
 
             IsInitialized = true;

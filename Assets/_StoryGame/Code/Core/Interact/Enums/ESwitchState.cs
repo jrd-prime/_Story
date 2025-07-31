@@ -1,0 +1,9 @@
+﻿namespace _StoryGame.Core.Interact.Enums
+{
+    public enum ESwitchState
+    {
+        NotSet = -1,
+        Off = 0,
+        On = 1
+    }
+}

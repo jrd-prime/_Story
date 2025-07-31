@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
+using Cysharp.Threading.Tasks;
 
 namespace _StoryGame.Core.UI
 {
@@ -9,26 +10,36 @@ namespace _StoryGame.Core.UI
     /// </summary>
     public sealed class DialogResultHandler
     {
-        private readonly Dictionary<EDialogResult, Action> _resultHandlers = new();
+        private readonly Dictionary<EDialogResult, Func<UniTask>> _resultHandlers = new();
         private readonly IJLog _log;
 
         public DialogResultHandler(IJLog log) => _log = log;
 
-        public void AddCallback(EDialogResult dialogResult, Action callback) =>
-            _resultHandlers.Add(dialogResult, callback);
-
-        public bool HandleResult(EDialogResult result)
+        /// <summary>
+        /// Добавляет асинхронный коллбэк для определенного результата диалога.
+        /// </summary>
+        public void AddCallback(EDialogResult dialogResult, Func<UniTask> callback)
         {
-            var action = _resultHandlers[result];
+            if (_resultHandlers.TryAdd(dialogResult, callback))
+                return;
 
-            if (action != null)
+            _log.Warn($"Callback for dialog result {dialogResult} already exists. Overwriting.");
+            _resultHandlers[dialogResult] = callback;
+        }
+
+        /// <summary>
+        /// Обрабатывает результат диалога, выполняя соответствующий асинхронный коллбэк.
+        /// </summary>
+        public async UniTask HandleResultAsync(EDialogResult result)
+        {
+            if (_resultHandlers.TryGetValue(result, out var action) && action != null)
             {
-                action.Invoke();
-                return true;
+                await action.Invoke();
+                return;
             }
 
-            _log.Error("No action for result: " + result);
-            return false;
+            _log.Error("No action found for result: " + result);
+            await UniTask.CompletedTask;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using _StoryGame.Game.Room.Abstract;
-
-namespace _StoryGame.Core.Room.Interfaces
+﻿namespace _StoryGame.Core.Room.Interfaces
 {
     public interface IRoomsRegistry
     {

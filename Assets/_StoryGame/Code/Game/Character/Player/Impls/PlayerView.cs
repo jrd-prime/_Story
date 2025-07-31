@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Character.Common.Interfaces;
+using _StoryGame.Data.Anim;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
@@ -18,9 +19,10 @@ namespace _StoryGame.Game.Character.Player.Impls
 
         public ReactiveProperty<Vector3> Position { get; } = new();
         public Animator Animator { get; private set; }
-        public ECharacterState State { get; private set; } = ECharacterState.Idle;
+        public ReactiveProperty<ECharacterState> State { get; private set; } = new(ECharacterState.Idle);
         public NavMeshAgent NavMeshAgent { get; private set; }
         public string Description { get; set; }
+        public bool IsApplyingRootMotion { get; set; }
 
         private IObjectResolver _resolver;
 
@@ -59,6 +61,143 @@ namespace _StoryGame.Game.Character.Player.Impls
             _previousPosition = position;
             Position.Value = position;
         }
+
+        // Новые константы для управления замедлением и анимацией
+        // Расстояние до цели, на котором начинаем задумываться о торможении
+        public float BrakeAnimationStartDistance = 1.5f; // Настройте это! 1.0-1.5 метра обычно хорошо
+
+        // Порог скорости, ниже которого считаем, что агент остановился для анимации
+        public float AnimatorStopSpeedThreshold = 0.05f;
+
+// Новое поле для отслеживания состояния Root Motion
+        public bool _isApplyingRootMotion = true;
+
+        // Время сглаживания для параметра speed в аниматоре
+        public float AnimatorDampTime = 0.1f; // Настройте для плавности
+
+        // Новое поле для отслеживания предыдущей скорости
+        public float _previousPhysicalSpeed = 0f;
+        public float _originalNavMeshAgentSpeed = 5f;
+
+        private void FixedUpdate()
+        {
+            if (NavMeshAgent == null || !NavMeshAgent.enabled || Animator == null)
+                return;
+
+            var currentPhysicalSpeed = NavMeshAgent.velocity.magnitude;
+            var distanceToTarget = NavMeshAgent.hasPath ? NavMeshAgent.remainingDistance : 0f;
+
+            // --- Логика замедления NavMeshAgent ---
+            if (NavMeshAgent.hasPath && NavMeshAgent.remainingDistance > NavMeshAgent.stoppingDistance)
+            {
+                if (distanceToTarget <= BrakeAnimationStartDistance)
+                {
+                    var normalizedDistance = distanceToTarget / BrakeAnimationStartDistance;
+                    var targetNavMeshAgentSpeed = Mathf.Lerp(0.5f, _originalNavMeshAgentSpeed, normalizedDistance);
+                    NavMeshAgent.speed = Mathf.Max(targetNavMeshAgentSpeed, 0.1f);
+                }
+                else NavMeshAgent.speed = _originalNavMeshAgentSpeed;
+            }
+            else NavMeshAgent.speed = _originalNavMeshAgentSpeed;
+
+
+            // --- Управление анимацией с нормализацией ---
+            var animatorSpeed = currentPhysicalSpeed / _originalNavMeshAgentSpeed; // Нормализация: 0 до 1
+            Animator.SetFloat(AnimatorConst.VelocityParam, animatorSpeed, AnimatorDampTime,
+                Time.fixedDeltaTime);
+
+            // --- Логика состояния Root Motion и анимации торможения ---
+            if (IsApplyingRootMotion)
+            {
+                var shouldExitBraking = false;
+
+                // Проверяем, остановился ли агент или анимация торможения завершена
+                if (currentPhysicalSpeed < AnimatorStopSpeedThreshold || NavMeshAgent.isStopped)
+                {
+                    shouldExitBraking = true;
+                }
+                // Проверяем, начал ли агент новое движение с высокой скоростью
+                else if (!Animator.GetCurrentAnimatorStateInfo(0).IsName(AnimatorConst.BrakingState) &&
+                         currentPhysicalSpeed > AnimatorStopSpeedThreshold * 2)
+                {
+                    shouldExitBraking = true;
+                }
+
+                if (shouldExitBraking)
+                {
+                    Animator.SetBool(AnimatorConst.IsBrakingParam, false);
+                    NavMeshAgent.updatePosition = true;
+                    NavMeshAgent.nextPosition = transform.position;
+                    IsApplyingRootMotion = false;
+                    State.Value = currentPhysicalSpeed < AnimatorStopSpeedThreshold
+                        ? ECharacterState.Idle
+                        : ECharacterState.MovingToPoint;
+                    Debug.Log("Ended Braking Animation & Root Motion. Syncing NavMeshAgent.");
+                }
+                else
+                {
+                    Animator.SetFloat(AnimatorConst.VelocityParam, animatorSpeed, AnimatorDampTime,
+                        Time.fixedDeltaTime);
+                }
+            }
+            else
+            {
+                var shouldEnterBraking = false;
+
+                // Условия для входа в торможение с гистерезисом
+                if (NavMeshAgent.hasPath &&
+                    distanceToTarget <= BrakeAnimationStartDistance &&
+                    currentPhysicalSpeed > AnimatorStopSpeedThreshold &&
+                    currentPhysicalSpeed < _previousPhysicalSpeed - 0.5f && // Увеличен порог для стабильности
+                    !Animator.GetCurrentAnimatorStateInfo(0).IsName(AnimatorConst.BrakingState))
+                {
+                    shouldEnterBraking = true;
+                }
+                else if (!NavMeshAgent.hasPath &&
+                         currentPhysicalSpeed > AnimatorStopSpeedThreshold &&
+                         currentPhysicalSpeed < _previousPhysicalSpeed - 0.5f &&
+                         !Animator.GetCurrentAnimatorStateInfo(0).IsName(AnimatorConst.BrakingState))
+                {
+                    shouldEnterBraking = true;
+                }
+
+                if (shouldEnterBraking && !IsApplyingRootMotion) // Проверяем, что не в процессе торможения
+                {
+                    Animator.SetBool(AnimatorConst.IsBrakingParam, true);
+                    NavMeshAgent.updatePosition = false;
+                    IsApplyingRootMotion = true;
+                    State.Value = ECharacterState.Interacting;
+                    Debug.Log("Started Braking Animation & Root Motion");
+                }
+                else
+                {
+                    Animator.SetBool(AnimatorConst.IsBrakingParam, false);
+                    if (currentPhysicalSpeed < AnimatorStopSpeedThreshold)
+                    {
+                        Animator.SetFloat(AnimatorConst.VelocityParam, 0f);
+                        State.Value = ECharacterState.Idle;
+                    }
+                    else State.Value = ECharacterState.MovingToPoint;
+                }
+            }
+
+            _previousPhysicalSpeed = currentPhysicalSpeed;
+        }
+
+        public void OnAnimatorMove()
+        {
+            if (!_isApplyingRootMotion || NavMeshAgent)
+                return;
+
+            // Применяем смещение из Root Motion к NavMeshAgent
+            var rootMovement = Animator.deltaPosition;
+
+            // Это для того, чтобы агент "почувствовал" движение
+            // Или если хотите, чтобы трансформ NavMeshAgent напрямую следовал аниматору:
+            // NavMeshAgent.transform.position = Animator.rootPosition;
+            NavMeshAgent.velocity = rootMovement / Time.deltaTime;
+        }
+
 
         public async UniTask<bool> MoveToAsync(Vector3 destination)
         {
