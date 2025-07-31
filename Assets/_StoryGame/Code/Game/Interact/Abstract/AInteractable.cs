@@ -1,7 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Interact;
-using _StoryGame.Game.Interact.Interactables;
-using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Managers.Condition;
 using VContainer;
 
 namespace _StoryGame.Game.Interact.Abstract
@@ -23,8 +22,23 @@ namespace _StoryGame.Game.Interact.Abstract
             OnStart();
         }
 
-        private void OnEnable() => Subscribe();
-        private void OnDisable() => Unsubscribe();
+        private void OnEnable()
+        {
+            Enable();
+            Subscribe();
+        }
+
+        protected virtual void Enable(){}
+
+        private void OnDisable()
+        {
+            Disable();
+            Unsubscribe();
+        }
+
+        protected virtual void Disable()
+        {
+        }
 
 
         protected virtual void Subscribe()

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using _StoryGame.Core.Common.Interfaces;
+using _StoryGame.Core.Interact;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Managers;
 using _StoryGame.Core.Providers.Settings;
 using _StoryGame.Core.Room;
@@ -8,7 +10,8 @@ using _StoryGame.Core.Room.Interfaces;
 using _StoryGame.Data.Interact;
 using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
-using _StoryGame.Game.Interact.Interactables.Unlock;
+using _StoryGame.Game.Interact.Passable;
+using _StoryGame.Game.Interact.todecor.Abstract;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -22,17 +25,16 @@ namespace _StoryGame.Game.Room.Abstract
     {
         [SerializeField] private string roomId;
         [SerializeField] private string roomName;
-        [SerializeField] private RoomInteractablesVo interactables;
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private ERoom type;
         [SerializeField] private RoomExitVo[] exits;
+        [SerializeField] private Effectable[] effectables;
 
         public ERoom Type => type;
         public string Id => roomId;
         public string Name => roomName;
         public float Progress { get; }
         public RoomLootVo Loot => _roomData.Loot;
-        public RoomInteractablesVo Interactables => interactables;
 
         private RoomData _roomData;
         private IPublisher<RoomLootGeneratedMsg> _roomLootGeneratedMsgPub;
@@ -40,15 +42,17 @@ namespace _StoryGame.Game.Room.Abstract
         private IGameManager _gameManager;
 
         private readonly CompositeDisposable _disposables = new();
-        private readonly Dictionary<EExit, UnlockableDoor> _exitDoors = new(); // <exit, door>
-        private readonly List<IUnlockable> _conditionalObjects = new();
+        private readonly Dictionary<EExit, Passable> _exitDoors = new(); // <exit, door>
+        private readonly List<IPassable> _conditionalObjects = new();
+        private IObjectResolver _resolver;
 
         [Inject]
         private void Construct(IJLog log, ISettingsProvider settingsProvider,
             IPublisher<RoomLootGeneratedMsg> roomLootGeneratedMsgPub, AppStartHandler appStartHandler,
-            IGameManager gameManager)
+            IGameManager gameManager, IObjectResolver resolver)
         {
             _log = log;
+            _resolver = resolver;
             _roomData = settingsProvider.GetRoomSettings(Id);
             _roomLootGeneratedMsgPub = roomLootGeneratedMsgPub;
 
@@ -66,17 +70,28 @@ namespace _StoryGame.Game.Room.Abstract
 
         private void Awake()
         {
-            var conditionals = FindObjectsByType<UnlockableDoor>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var conditionals = FindObjectsByType<Passable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             _conditionalObjects.AddRange(conditionals);
 
             foreach (var exit in exits)
                 _exitDoors.TryAdd(exit.exit, exit.door);
 
-            // UpdateStateForConditionalObjects();
+            foreach (var effectable in effectables)
+                _resolver.Inject(effectable);
+
+            var interactables =
+                FindObjectsByType<ANewInteractable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var interactable in interactables)
+                _resolver.Inject(interactable);
         }
 
-        private void OnAppStarted(Unit _)
+        private void Start()
+        {
+            _log.Warn("Room started. " + gameObject.name);
+        }
+
+        private async void OnAppStarted(Unit _)
         {
             _roomLootGeneratedMsgPub.Publish(new RoomLootGeneratedMsg(roomId));
         }
@@ -90,7 +105,7 @@ namespace _StoryGame.Game.Room.Abstract
 
 #endif
 
-        public UnlockableDoor GetExitPointFor(EExit exitType)
+        public Passable GetExitPointFor(EExit exitType)
         {
             if (!_exitDoors.TryGetValue(exitType, out var exit))
                 throw new Exception($"Exit to {exitType} not found in room {Id} {Name}.");
@@ -120,21 +135,6 @@ namespace _StoryGame.Game.Room.Abstract
                 return false;
             }
 
-            // foreach (var conditionalObject in _conditionalObjects)
-            // {
-            //     var hasItem = _gameManager.IsPlayerHasItem(conditionalObject.GetSpecialItemId());
-            //     var hasConditionItems = _gameManager.IsPlayerHasConditionalItems(conditionalObject.ConditionalItems);
-            //
-            //     if (hasItem)
-            //         conditionalObject.SetConditionalState(EConditionalState.Looted);
-            //     else if (hasConditionItems)
-            //         conditionalObject.SetConditionalState(EConditionalState.Unlocked);
-            //     else
-            //         conditionalObject.SetConditionalState(EConditionalState.Locked);
-            //
-            //     // _log.Debug($"Init state for {conditionalObject.Id} / Player already has item: {hasItem} / Has items for unlock: {hasConditionItems}");
-            // }
-
             return true;
         }
 
@@ -142,13 +142,13 @@ namespace _StoryGame.Game.Room.Abstract
 
         public void Hide()
         {
-            _log.Debug("Hide " + name);
+            // _log.Info("Hide " + name);
             gameObject.SetActive(false);
         }
 
         public void Show()
         {
-            _log.Debug("Show " + name);
+            // _log.Info("Show " + name);
             gameObject.SetActive(true);
         }
     }

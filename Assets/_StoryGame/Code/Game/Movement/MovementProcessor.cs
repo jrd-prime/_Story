@@ -40,20 +40,16 @@ namespace _StoryGame.Game.Movement
             var entryPoint = interactable.GetEntryPoint();
 
             await _player.MoveToPointAsync(entryPoint, EDestinationPoint.Entrance);
-            // _log.Debug($"MoveToInteractable: {entryPoint} done");
 
             _selfMsgPub.Publish(new InteractRequestMsg(interactable));
         }
 
-        private async UniTask MoveToPoint(Vector3 position)
-        {
+        private async UniTask MoveToPoint(Vector3 position) =>
             await _player.MoveToPointAsync(position, EDestinationPoint.Ground);
-            // _log.Debug($"MoveToPoint: {position} done");
-        }
+
 
         private void OnMovementHandlerMsg(IMovementHandlerMsg message)
         {
-            // _log.Debug($"OnMovementHandlerMsg: {message.GetType().Name}");
             switch (message)
             {
                 case MoveToInteractableHandlerMsg msg:
@@ -69,10 +65,5 @@ namespace _StoryGame.Game.Movement
         }
 
         public void Dispose() => _disposables?.Dispose();
-    }
-
-    public record InteractRequestMsg(IInteractable Interactable) : IInteractProcessorMsg
-    {
-        public IInteractable Interactable { get; } = Interactable;
     }
 }

@@ -1,0 +1,7 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="main-cont" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; align-items: center; justify-content: center; align-self: center; align-content: center;">
+        <engine:VisualElement name="cont" picking-mode="Ignore" style="flex-grow: 0; width: 100%; -unity-text-align: middle-left; flex-wrap: wrap; white-space: normal; text-overflow: clip; border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; background-color: rgb(30, 30, 33); color: rgb(255, 255, 255); padding-top: 6px; padding-bottom: 6px; padding-right: 24px; padding-left: 24px; font-size: 18px; -unity-font-definition: url(&quot;project://database/Assets/_StoryGame/Static/Font/Nunito/Nunito-Regular.ttf?fileID=12800000&amp;guid=3a9957c37bcbacd4aa7d1e01faa1316c&amp;type=3#Nunito-Regular&quot;);">
+            <engine:Label text="Some text. Long long long long long long long long long long long text" name="text-lab" picking-mode="Ignore" style="white-space: normal; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

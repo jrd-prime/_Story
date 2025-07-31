@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bd3d3f1de14e109c0cc8e0d58dbe6d, type: 3}
   m_Name: B3_B3_cMain_to_vault
   m_EditorClassIdentifier: 
+  exit: 17
   fromRoom: 14
   toRoom: 18
   doorRotation: 1

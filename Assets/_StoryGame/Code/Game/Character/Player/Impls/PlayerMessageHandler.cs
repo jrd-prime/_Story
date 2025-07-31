@@ -1,5 +1,6 @@
 ﻿using System;
 using _StoryGame.Core.Animations.Messages;
+using _StoryGame.Core.Character.Common.Interfaces;
 using _StoryGame.Core.Character.Player.Interfaces;
 using _StoryGame.Core.Messaging.Interfaces;
 using MessagePipe;
@@ -33,7 +34,17 @@ namespace _StoryGame.Game.Character.Player.Impls
                     animator.ResetTrigger(message.TriggerName);
                     break;
                 case SetBoolMsg message:
+                    if (message.Value)
+                    {
+                        _player.SetState(ECharacterState.Interacting);
+                    }
+                    else
+                    {
+                        _player.SetState(ECharacterState.Idle);
+                    }
+
                     animator.SetBool(message.Id, message.Value);
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(msg), msg, null);

@@ -1,6 +1,5 @@
 ﻿using _StoryGame.Game.UI.Impls.Bootstrap;
 using _StoryGame.Infrastructure.Bootstrap;
-using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -10,7 +9,7 @@ namespace _StoryGame.Infrastructure.Scopes.Bootstrap
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log($"<color=cyan>{nameof(BootstrapScope)}</color>");
+            //  Debug.Log($"<color=cyan>{nameof(BootstrapScope)}</color>");
 
             BindBootstrap(builder);
 

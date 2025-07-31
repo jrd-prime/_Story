@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: df304b3f73301364c9558a63c9fe1a4c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -97,9 +101,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: df304b3f73301364c9558a63c9fe1a4c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7383203828460033139}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: df304b3f73301364c9558a63c9fe1a4c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 458962793853017783}
   m_SourcePrefab: {fileID: 100100000, guid: df304b3f73301364c9558a63c9fe1a4c, type: 3}
 --- !u!1 &262010486398758428 stripped
 GameObject:
@@ -127,26 +128,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.031150043, y: 2.25, z: 1.2000003}
   m_Center: {x: -0.00000003352762, y: 1.125, z: 0.60000205}
---- !u!114 &458962793853017783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262010486398758428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61a16d62277c4430a69be5978ed6055b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 
-  objName: Not set
-  interactionTipNameId: 
-  localizationKey: 
-  _entrance: {fileID: 8111454881689930494}
-  useAction: 0
-  door: {fileID: 262010486398758428}
-  exitQuestionLocalizationKey: 
 --- !u!4 &642054913065088166 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: df304b3f73301364c9558a63c9fe1a4c, type: 3}

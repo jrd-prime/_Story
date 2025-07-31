@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Core.WalletNew.Messages;
 using MessagePipe;
-using UnityEngine;
 
 namespace _StoryGame.Core.WalletNew.Impls
 {

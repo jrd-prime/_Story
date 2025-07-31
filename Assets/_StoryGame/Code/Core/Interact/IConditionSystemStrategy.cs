@@ -1,6 +1,4 @@
 ﻿using _StoryGame.Core.Interact.Interactables;
-using _StoryGame.Game.Interact.Interactables;
-using _StoryGame.Game.Interact.Interactables.Unlock;
 
 namespace _StoryGame.Core.Interact
 {
@@ -16,7 +14,7 @@ namespace _StoryGame.Core.Interact
     {
     }
 
-    public interface IUnlockSystemStrategy : IInteractableSystemStrategy<IUnlockable>
+    public interface IPassSystemStrategy : IInteractableSystemStrategy<IPassable>
     {
     }
 }

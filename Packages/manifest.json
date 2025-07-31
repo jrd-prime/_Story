@@ -5,6 +5,7 @@
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#2.5.10",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.unity.2d.sprite": "1.0.0",
+    "com.unity.visualeffectgraph": "17.1.0",
     "com.unity.adaptiveperformance": "5.1.4",
     "com.unity.adaptiveperformance.google.android": "5.1.4",
     "com.unity.addressables": "2.4.6",

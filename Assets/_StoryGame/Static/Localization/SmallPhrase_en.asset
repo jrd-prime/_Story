@@ -154,6 +154,11 @@ MonoBehaviour:
     m_Localized: I have a stepladder. Descending will be much safer than with a rope.
     m_Metadata:
       m_Items: []
+  - m_Id: 15544836055564292
+    m_Localized: "The flowing water makes it dangerous to approach the electrical
+      box. It\u2019s safer to shut off the supply first."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

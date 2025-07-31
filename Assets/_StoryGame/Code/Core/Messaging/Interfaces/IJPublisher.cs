@@ -1,5 +1,4 @@
 ﻿using _StoryGame.Core.HSM.Interfaces;
-using _StoryGame.Core.HSM.Messages;
 using _StoryGame.Core.Input.Interfaces;
 using _StoryGame.Core.UI.Interfaces;
 
@@ -15,5 +14,6 @@ namespace _StoryGame.Core.Messaging.Interfaces
         void ForInteractProcessor(IInteractProcessorMsg msg);
         void ForHSM(IHSMMsg msg);
         void ForRoomsDispatcher(IRoomsDispatcherMsg msg);
+        void ForConditionRegistry(IConditionRegistryMsg msg);
     }
 }

@@ -4,7 +4,7 @@ using _StoryGame.Core.Currency.Interfaces;
 using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Core.Providers.Localization;
 using _StoryGame.Data.Loot;
-using _StoryGame.Game.Interact.Interactables;
+using _StoryGame.Game.Interact.Inspectable;
 
 namespace _StoryGame.Game.Loot
 {

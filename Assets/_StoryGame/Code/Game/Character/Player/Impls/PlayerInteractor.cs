@@ -47,6 +47,8 @@ namespace _StoryGame.Game.Character.Player.Impls
         private readonly IPublisher<IPlayerMsg> _selfMsgPub;
         private readonly IJLog _log;
         private readonly PlayerMessageHandler _messageHandler;
+        private readonly IJPublisher _publisher;
+        private readonly CompositeDisposable Disposables = new();
 
         public PlayerInteractor(
             PlayerService service,
@@ -54,13 +56,15 @@ namespace _StoryGame.Game.Character.Player.Impls
             IJLog log,
             IWalletService walletService,
             IPublisher<IPlayerMsg> selfMsgPub,
-            ISubscriber<IPlayerAnimatorMsg> playerAnimatorMsgSub)
+            ISubscriber<IPlayerAnimatorMsg> playerAnimatorMsgSub,
+            IJPublisher publisher)
         {
             _playerView = playerView;
             _service = service;
             _log = log;
             _wallet = walletService.GetOrCreate(Id);
             _selfMsgPub = selfMsgPub;
+            _publisher = publisher;
 
             _messageHandler = new PlayerMessageHandler(this, playerAnimatorMsgSub);
         }
@@ -69,10 +73,12 @@ namespace _StoryGame.Game.Character.Player.Impls
         {
             SetState(ECharacterState.Idle);
             _maxEnergy.Value = _service.MaxEnergy;
+            _playerView.State.Subscribe(SetState).AddTo(Disposables);
         }
 
         public void SetState(ECharacterState state)
         {
+            // _log.Debug("Player SetState > " + state);
             _state.Value = state;
             PublishState(state);
         }
@@ -183,8 +189,4 @@ namespace _StoryGame.Game.Character.Player.Impls
             return true;
         }
     }
-
-    public record NotEnoughEnergyMsg : IPlayerMsg;
-
-    public record OutOfEnergyMsg : IPlayerMsg;
 }

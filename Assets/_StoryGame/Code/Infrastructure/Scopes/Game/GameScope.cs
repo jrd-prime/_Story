@@ -5,15 +5,20 @@ using _StoryGame.Core.WalletNew.Interfaces;
 using _StoryGame.Game.Character.Player.Impls;
 using _StoryGame.Game.Interact;
 using _StoryGame.Game.Interact.Abstract;
-using _StoryGame.Game.Interact.Interactables;
-using _StoryGame.Game.Interact.Interactables.Unlock;
-using _StoryGame.Game.Interact.Systems;
-using _StoryGame.Game.Interact.Systems.Conditional;
-using _StoryGame.Game.Interact.Systems.Inspect;
-using _StoryGame.Game.Interact.Systems.Use;
+using _StoryGame.Game.Interact.Inspectable.Providers;
+using _StoryGame.Game.Interact.Inspectable.Systems;
+using _StoryGame.Game.Interact.Passable.Providers;
+using _StoryGame.Game.Interact.Passable.Systems;
+using _StoryGame.Game.Interact.SortMbDelete;
+using _StoryGame.Game.Interact.SortMbDelete.Conditional;
+using _StoryGame.Game.Interact.SortMbDelete.Toggle;
+using _StoryGame.Game.Interact.SortMbDelete.Use;
+using _StoryGame.Game.Interact.Switchable.Systems;
+using _StoryGame.Game.Interact.todecor;
 using _StoryGame.Game.Loot;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
+using _StoryGame.Game.Managers.Condition;
 using _StoryGame.Game.Managers.Game;
 using _StoryGame.Game.Managers.Interfaces;
 using _StoryGame.Game.Managers.Room;
@@ -44,10 +49,9 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
+            // Debug.Log($"<color=cyan>{nameof(GameScope)}</color>");
 
             RegisterStateMachine(builder);
-
 
             // Поиск объекта --- MAIN
             _mainEmpty = GameObject.Find("--- MAIN");
@@ -92,13 +96,14 @@ namespace _StoryGame.Infrastructure.Scopes.Game
             builder.Register<LootGenerator>(Lifetime.Singleton).AsSelf();
 
             builder.Register<ConditionChecker>(Lifetime.Singleton).AsSelf();
-            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsSelf();
+            builder.Register<ConditionRegistry>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.Register<InteractSystemDepFlyweight>(Lifetime.Singleton).AsSelf();
             builder.Register<ConditionalStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<InspectStrategyProvider>(Lifetime.Singleton).AsSelf();
             builder.Register<UseStrategyProvider>(Lifetime.Singleton).AsSelf();
-            builder.Register<UnlockableStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<PassableStrategyProvider>(Lifetime.Singleton).AsSelf();
+            builder.Register<ToggleStrategyProvider>(Lifetime.Singleton).AsSelf();
         }
 
 
@@ -117,8 +122,10 @@ namespace _StoryGame.Infrastructure.Scopes.Game
         {
             builder.Register<InspectSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<UseSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<ConditionalSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<UnlockSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<PassSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<ToggleSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<SimpleSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<DynamicOnConditionSwitchSystem>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
 
         protected override void Awake()
@@ -127,7 +134,9 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             var interactables =
                 FindObjectsByType<AInteractableBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            Debug.Log($"Interact on scene: {interactables.Length}");
+
+            // Debug.Log($"Interact on scene: {interactables.Length}");
+
             foreach (var interactable in interactables)
                 Container.Inject(interactable);
         }
