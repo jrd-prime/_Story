@@ -12,6 +12,7 @@ using _StoryGame.Data.Room;
 using _StoryGame.Data.SO.Room;
 using _StoryGame.Game.Interact.Passable;
 using _StoryGame.Game.Interact.todecor.Abstract;
+using _StoryGame.Game.Interact.todecor.Impl;
 using _StoryGame.Game.Room.Messages;
 using _StoryGame.Infrastructure.AppStarter;
 using MessagePipe;
@@ -42,8 +43,8 @@ namespace _StoryGame.Game.Room.Abstract
         private IGameManager _gameManager;
 
         private readonly CompositeDisposable _disposables = new();
-        private readonly Dictionary<EExit, Passable> _exitDoors = new(); // <exit, door>
-        private readonly List<IPassable> _conditionalObjects = new();
+        private readonly Dictionary<EExit, Passage> _exitDoors = new(); // <exit, door>
+        private readonly List<Passage> _conditionalObjects = new();
         private IObjectResolver _resolver;
 
         [Inject]
@@ -70,7 +71,7 @@ namespace _StoryGame.Game.Room.Abstract
 
         private void Awake()
         {
-            var conditionals = FindObjectsByType<Passable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var conditionals = FindObjectsByType<Passage>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             _conditionalObjects.AddRange(conditionals);
 
@@ -105,10 +106,13 @@ namespace _StoryGame.Game.Room.Abstract
 
 #endif
 
-        public Passable GetExitPointFor(EExit exitType)
+        public Passage GetExitPointFor(EExit exitType)
         {
             if (!_exitDoors.TryGetValue(exitType, out var exit))
+            {
+                _log.Error($"Exit to {exitType} not found in room {Id} {Name}.");
                 throw new Exception($"Exit to {exitType} not found in room {Id} {Name}.");
+            }
 
             return exit;
         }

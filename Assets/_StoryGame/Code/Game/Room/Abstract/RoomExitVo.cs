@@ -1,6 +1,7 @@
 ﻿using System;
 using _StoryGame.Core.Room;
 using _StoryGame.Game.Interact.Passable;
+using _StoryGame.Game.Interact.todecor.Impl;
 
 namespace _StoryGame.Game.Room.Abstract
 {
@@ -8,6 +9,6 @@ namespace _StoryGame.Game.Room.Abstract
     public struct RoomExitVo
     {
         public EExit exit;
-        public Passable door;
+        public Passage door;
     }
 }

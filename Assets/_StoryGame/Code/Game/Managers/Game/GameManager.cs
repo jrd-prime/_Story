@@ -119,6 +119,7 @@ namespace _StoryGame.Game.Managers.Game
         {
             Debug.Log($"OnMessage: {obj.GetType().Name}");
             var msg = obj as GoToRoomRequestMsg ?? throw new ArgumentNullException(nameof(obj));
+            Debug.Log($"<color=green>OnMessage: {msg.ToExit} {msg.FromRoom} {msg.ToRoom}</color>");
             _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(msg.ToExit, msg.FromRoom, msg.ToRoom));
         }
 

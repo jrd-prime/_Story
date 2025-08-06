@@ -51,6 +51,7 @@ MonoBehaviour:
   objName: Not set
   localizationKey: double_bed
   _entrance: {fileID: 6519620807710657170}
+  interactEnergyCost: 0
   loot:
   - chance: 100
     currency: {fileID: 11400000, guid: 90737c0c580c1ad42b51e419ef172792, type: 2}
@@ -197,6 +198,38 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &635514718744902941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9117423304585785070}
+  m_Layer: 0
+  m_Name: _Passage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9117423304585785070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635514718744902941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7627080931285948064}
+  m_Father: {fileID: 6194788463576063446}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1060828894740986201
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,11 +679,12 @@ GameObject:
   - component: {fileID: 1133632138346470411}
   - component: {fileID: 6899975320540819185}
   - component: {fileID: 5179224220646210511}
-  - component: {fileID: 5236621716474068095}
+  - component: {fileID: 6731060719225601381}
+  - component: {fileID: 8717717490976528064}
   m_Layer: 31
-  m_Name: B2CLive
+  m_Name: ToB2CLive
   m_TagString: Untagged
-  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
@@ -668,7 +702,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8702181120132883938}
-  m_Father: {fileID: 5216658012932017190}
+  m_Father: {fileID: 9117423304585785070}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1133632138346470411
 MeshFilter:
@@ -744,7 +778,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.031150043, y: 2.25, z: 1.2000003}
   m_Center: {x: -0.00000003352762, y: 1.125, z: 0.60000205}
---- !u!114 &5236621716474068095
+--- !u!114 &6731060719225601381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -753,20 +787,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 5946569067632425530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85ba3b5230cd427286463bc9166ae8e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 459e4629d5194aa0b69e5865fc6cd378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
   objName: Not set
   localizationKey: door_wooden
-  _entrance: {fileID: 8702181120132883938}
-  unlockConditions:
-    conditions: []
-    requiredItems: []
-    oneOfItem:
-      thoughtKey: 
-      items: []
-  doorData: {fileID: 11400000, guid: 44fa694f58b3a6440b6910a60fdb7618, type: 2}
+  entrancePoint: {fileID: 8702181120132883938}
+  interactEnergyCost: 0
+  initialState: 1
+  disableColliders: 0
+  globalConditionEffectVo:
+    condition: 0
+    isInverse: 0
+--- !u!114 &8717717490976528064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946569067632425530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 494e63cea9824c119b45101319092011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  passableData: {fileID: 11400000, guid: 44fa694f58b3a6440b6910a60fdb7618, type: 2}
 --- !u!1 &6129986914591938090
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +922,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7627080931285948064}
   - {fileID: 3531576487571336853}
   m_Father: {fileID: 6194788463576063446}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -912,6 +958,7 @@ Transform:
   - {fileID: 5216658012932017190}
   - {fileID: 3832330349650928389}
   - {fileID: 4579745849194666875}
+  - {fileID: 9117423304585785070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &6460387748221235105
@@ -928,15 +975,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomId: room_prototype
   roomName: 
-  interactables:
-    core: {fileID: 0}
-    hidden: []
-    inspectables: []
   spawnPoint: {fileID: 3832330349650928389}
   type: 12
   exits:
-  - exit: 201
-    door: {fileID: 5236621716474068095}
+  - exit: 6
+    door: {fileID: 6731060719225601381}
+  effectables: []
 --- !u!1 &8003220579491336894
 GameObject:
   m_ObjectHideFlags: 0

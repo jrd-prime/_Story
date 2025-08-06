@@ -1,5 +1,6 @@
 ﻿using _StoryGame.Data.Room;
 using _StoryGame.Game.Interact.Passable;
+using _StoryGame.Game.Interact.todecor.Impl;
 using UnityEngine;
 
 namespace _StoryGame.Core.Room.Interfaces
@@ -16,6 +17,6 @@ namespace _StoryGame.Core.Room.Interfaces
         void Show();
         ERoom Type { get; }
 
-        Passable GetExitPointFor(EExit type);
+        Passage GetExitPointFor(EExit type);
     }
 }
