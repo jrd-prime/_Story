@@ -6,5 +6,6 @@
         Switcher = 0,
         Dependent = 1,
         Passage = 2,
+        Device = 3
     }
 }

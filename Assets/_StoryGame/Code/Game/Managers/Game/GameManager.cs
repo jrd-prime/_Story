@@ -101,6 +101,13 @@ namespace _StoryGame.Game.Managers.Game
             _player.Wallet.Add("rope", 1);
         }
 
+        private void OnAppStarted(Unit _)
+        {
+            _log.Info("App started!");
+            _gameService.StartHSM();
+            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B1B2Ladder, ERoom.NotSet,
+                ERoom.B1SurfaceAccess));
+        }
 
         public bool IsPlayerHasItem(string itemId) => _player.Wallet.Has(itemId, 1);
 
@@ -181,14 +188,7 @@ namespace _StoryGame.Game.Managers.Game
             }
         }
 
-        private void OnAppStarted(Unit _)
-        {
-            _log.Info("App started!");
-            _gameService.StartHSM();
-            _publisher.ForRoomsDispatcher(new ChangeRoomRequestMsg(EExit.B2B3Ladder, ERoom.NotSet,
-                ERoom.CorridorMainB3));
-        }
-        
+
         public void GameOver()
         {
             _log.Info("<color=red>GAME OVER</color>");

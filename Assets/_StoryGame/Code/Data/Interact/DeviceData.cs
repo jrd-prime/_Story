@@ -8,12 +8,13 @@ using UnityEngine;
 namespace _StoryGame.Data.Interact
 {
     [CreateAssetMenu(
-        fileName = nameof(PassableData),
-        menuName = SOPathConst.Interactables + nameof(PassableData),
+        fileName = nameof(DeviceData),
+        menuName = SOPathConst.Interactables + nameof(DeviceData),
         order = 0
     )]
-    public sealed class PassableData : ASettingsBase
+    public sealed class DeviceData : ASettingsBase
     {
+        public string afas = "DEVICE";
         public EExit exit = EExit.NotSet;
         public ERoom fromRoom = ERoom.NotSet;
         public ERoom toRoom = ERoom.NotSet;

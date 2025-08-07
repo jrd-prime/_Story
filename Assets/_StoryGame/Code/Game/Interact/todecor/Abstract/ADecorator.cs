@@ -1,4 +1,5 @@
-﻿using _StoryGame.Core.Interact.Interactables;
+﻿using System;
+using _StoryGame.Core.Interact.Interactables;
 using _StoryGame.Infrastructure.Interact;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
@@ -14,19 +15,19 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         public bool IsEnabled => isEnabled;
 
         protected bool IsInitialized;
-        protected InteractSystemDepFlyweight Dep;
 
-        [Inject]
-        private void Construct(InteractSystemDepFlyweight dep)
-        {
-            Dep = dep;
-            Dep.Log.Warn("ADecorator Construct " + this);
-        }
+        [Inject] protected InteractSystemDepFlyweight Dep;
 
         public void Initialize()
         {
             InitializeInternal();
             IsInitialized = true;
+        }
+
+        private void Start()
+        {
+            if (Dep == null)
+                throw new NullReferenceException("Dep is null.");
         }
 
         public UniTask<EDecoratorResult> Process(IInteractable interactable)

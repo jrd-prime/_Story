@@ -3,7 +3,7 @@
     public enum ERoom
     {
         NotSet = -1,
-        SurfaceAccessModuleB1 = 0,
+        B1SurfaceAccess = 0,
         CorridorMainB2 = 1,
         CorridorLivingQuartersB2 = 2,
         ServerFacilityModuleB2 = 3,

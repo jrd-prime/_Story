@@ -77,7 +77,7 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         protected IPlayer _player;
         protected ISubscriber<RoomLootGeneratedMsg> _roomLootGeneratedMsgSub;
         protected ISubscriber<ItemAmountChangedMsg> _itemLootedMsgSub;
-        protected IJLog _log;
+        protected IJLog LOG;
         protected IJPublisher _publisher;
 
         #endregion
@@ -94,9 +94,8 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
             IJPublisher publisher, ConditionChecker conditionChecker
         )
         {
-            Debug.LogWarning("Construct called for " + gameObject.name);
             _resolver = resolver;
-            _log = resolver.Resolve<IJLog>();
+            LOG = resolver.Resolve<IJLog>();
             _uiViewerMessagePublisher = uiViewerMessagePublisher;
             _il10NProvider = il10NProvider;
             _roomLootGeneratedMsgSub = roomLootGeneratedMsgSub;
@@ -111,7 +110,7 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
         private void Awake()
         {
-            Debug.LogWarning("Awake called for " + gameObject.name);
+            // Debug.LogWarning("Awake called for " + gameObject.name);
 
             Validate();
 
@@ -130,15 +129,14 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
         private void Start()
         {
-            Debug.LogWarning("Start called for " + gameObject.name);
-            
-            if(_resolver == null)
+            // Debug.LogWarning("Start called for " + gameObject.name);
+
+            if (_resolver == null)
                 throw new NullReferenceException("Resolver is null. " + gameObject.name);
-            
+
             CollectAndInjectDecorators();
-            
-            
-            
+
+
             SetState(initialState);
             UpdatePassiveState();
             _isInitialized = true;
@@ -146,8 +144,6 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
         public async void UpdatePassiveState()
         {
-            _log.Warn("--- UpdatePassiveState called for " + gameObject.name);
-
             IsBlocked = false;
 
             await ProcessPassiveDecorators();
@@ -156,50 +152,46 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
         private async UniTask ProcessPassiveDecorators()
         {
-            _log.Warn("<color=yellow>Start Passive Decorators</color>");
-
             var prevState = CurrentState;
+
+            LOG.Warn($"<color=yellow>{gameObject.name} >>> Passive Decorators > {prevState}/{CurrentState}</color>");
+
             foreach (var decorator in _passiveDecorators)
             {
                 if (!decorator.IsEnabled)
                     continue;
 
-                _log.Warn($"{decorator.GetType().Name} / {decorator.Priority}");
+                LOG.Warn($"{decorator.GetType().Name} / {decorator.Priority}");
                 var result = await decorator.Process(this);
                 if (result == EDecoratorResult.Suspend)
-                {
-                    _log.Warn($"Suspend result from {decorator.GetType().Name} / {decorator.Priority}");
-                }
+                    LOG.Warn($"Suspend result from {decorator.GetType().Name} / {decorator.Priority}");
             }
 
             if (prevState != CurrentState)
             {
-                _log.Warn(
+                LOG.Warn(
                     $"<color=cyan>Кто-то изменил состояние с {prevState} на {CurrentState}. Перезапустить процесс пассивных декораторов</color>");
                 await ProcessPassiveDecorators();
             }
 
-            _log.Warn("<color=yellow>End Passive Decorators</color>");
+            LOG.Warn("<color=yellow>End Passive Decorators</color>");
         }
 
         private async UniTask ProcessActiveDecorators()
         {
-            _log.Warn("<color=green>Start Active Decorators</color>");
             var prevState = CurrentState;
+            LOG.Warn($"<color=green>{gameObject.name} >>> Active Decorators > {prevState}/{CurrentState}</color>");
 
-            _log.Warn("ProcessActiveDecorators previous state: " + prevState + " / current state: " + CurrentState);
             foreach (var decorator in _activeDecorators)
             {
                 if (!decorator.IsEnabled)
                     continue;
 
-                _log.Warn($"{decorator.GetType().Name} / {decorator.Priority}");
+                LOG.Warn($"{decorator.GetType().Name} / {decorator.Priority}");
                 var result = await decorator.Process(this);
 
                 if (result == EDecoratorResult.Suspend)
-                {
-                    _log.Warn($"Suspend result from {decorator.GetType().Name} / {decorator.Priority}");
-                }
+                    LOG.Warn($"Suspend result from {decorator.GetType().Name} / {decorator.Priority}");
 
                 // if (!result)
                 // {
@@ -208,15 +200,14 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
                 // }
             }
 
-            _log.Warn("ProcessActiveDecorators previous state: " + prevState + " / current state: " + CurrentState);
             if (prevState != CurrentState)
             {
-                _log.Warn(
+                LOG.Warn(
                     $"<color=cyan>Кто-то изменил состояние с {prevState} на {CurrentState}. Перезапустить процесс пассивных декораторов</color>");
                 await ProcessPassiveDecorators();
             }
 
-            _log.Warn("<color=green>End Active Decorators</color>");
+            LOG.Warn("<color=green>End Active Decorators</color>");
         }
 
 
@@ -306,14 +297,14 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
         {
             if (string.IsNullOrEmpty(localizationKey))
             {
-                _log.Error($"{nameof(localizationKey)} not found. {name}");
+                LOG.Error($"{nameof(localizationKey)} not found. {name}");
                 enabled = false;
                 return;
             }
 
             if (initialState == EInteractableState.NotSet)
             {
-                _log.Error($"{nameof(initialState)} not set. {name}");
+                LOG.Error($"{nameof(initialState)} not set. {name}");
                 enabled = false;
                 return;
             }
@@ -323,7 +314,7 @@ namespace _StoryGame.Game.Interact.todecor.Abstract
 
             if (!entrancePoint)
             {
-                _log.Error($"{nameof(entrancePoint)} not found. {name}");
+                LOG.Error($"{nameof(entrancePoint)} not found. {name}");
                 enabled = false;
                 return;
             }
