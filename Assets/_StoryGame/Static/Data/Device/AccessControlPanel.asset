@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AccessControlPanel
   m_EditorClassIdentifier: 
   afas: DEVICE
-  exit: -1
-  fromRoom: -1
-  toRoom: -1
-  doorRotation: -1
-  doorAction: -1
+  exit: 0
+  fromRoom: 1
+  toRoom: 2
+  doorRotation: 3
+  doorAction: 0
   usePrice: 2

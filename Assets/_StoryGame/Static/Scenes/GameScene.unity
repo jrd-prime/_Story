@@ -2367,6 +2367,14 @@ PrefabInstance:
       propertyPath: deviceData
       value: 
       objectReference: {fileID: 11400000, guid: 4ffb928e8d2c0f04aac4fca27fc06e55, type: 2}
+    - target: {fileID: 8223769209847633634, guid: 43ac28df6fd125d4fb91c80eeee94691, type: 3}
+      propertyPath: deviceSystem
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043617175916167846, guid: 43ac28df6fd125d4fb91c80eeee94691, type: 3}
+      propertyPath: mainLabKey
+      value: UIP_gateway_control_panel_title
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

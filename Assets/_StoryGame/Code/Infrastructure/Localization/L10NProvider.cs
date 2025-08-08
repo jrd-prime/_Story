@@ -87,7 +87,7 @@ namespace _StoryGame.Infrastructure.Localization
             string value;
             if (entry == null)
             {
-                _log.Error($"Localization key '{key}' not found.");
+                _log.Warn($"Localization key '{key}' not found. Table: {tableType}");
                 value = "Not localized";
             }
             else value = entry.GetLocalizedString();

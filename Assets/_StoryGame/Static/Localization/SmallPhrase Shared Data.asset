@@ -79,8 +79,8 @@ MonoBehaviour:
     m_Key: td_woodenbox_locked_text
     m_Metadata:
       m_Items: []
-  - m_Id: 24930421144748032
-    m_Key: New Entry 1
+  - m_Id: 25705195265523712
+    m_Key: New Entry
     m_Metadata:
       m_Items: []
   - m_Id: 8256410704871426
@@ -103,8 +103,8 @@ MonoBehaviour:
     m_Key: cond_sys_looted_05
     m_Metadata:
       m_Items: []
-  - m_Id: 24930421144748033
-    m_Key: New Entry 3
+  - m_Id: 25705195307466752
+    m_Key: New Entry 2
     m_Metadata:
       m_Items: []
   - m_Id: 8341090586263553
@@ -119,12 +119,12 @@ MonoBehaviour:
     m_Key: entrance_habMod1_ExitQuestion
     m_Metadata:
       m_Items: []
-  - m_Id: 24930421144748034
-    m_Key: New Entry 5
+  - m_Id: 25705195311661056
+    m_Key: New Entry 4
     m_Metadata:
       m_Items: []
-  - m_Id: 24930421144748035
-    m_Key: New Entry 6
+  - m_Id: 25705195311661057
+    m_Key: New Entry 7
     m_Metadata:
       m_Items: []
   - m_Id: 11235941120147458
@@ -157,6 +157,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 15544836055564292
     m_Key: TH_mech_water_under_electricbox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25705195311661058
+    m_Key: New Entry 8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25705195311661059
+    m_Key: UIP_gateway_control_panel_title
     m_Metadata:
       m_Items: []
   m_Metadata:

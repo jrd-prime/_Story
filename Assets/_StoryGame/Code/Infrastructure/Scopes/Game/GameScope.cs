@@ -15,6 +15,7 @@ using _StoryGame.Game.Interact.SortMbDelete.Toggle;
 using _StoryGame.Game.Interact.SortMbDelete.Use;
 using _StoryGame.Game.Interact.Switchable.Systems;
 using _StoryGame.Game.Interact.todecor;
+using _StoryGame.Game.Interact.todecor.Impl.DeviceSystems;
 using _StoryGame.Game.Loot;
 using _StoryGame.Game.Managers;
 using _StoryGame.Game.Managers._Game._Scripts.Framework.Manager.JCamera;
@@ -139,6 +140,11 @@ namespace _StoryGame.Infrastructure.Scopes.Game
 
             foreach (var interactable in interactables)
                 Container.Inject(interactable);
+
+            var deviceUI = FindObjectsByType<ADeviceUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            foreach (var device in deviceUI)
+                Container.Inject(device);
         }
 
         private void RegisterStateMachine(IContainerBuilder builder)
